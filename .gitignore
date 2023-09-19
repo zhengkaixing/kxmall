@@ -1,9 +1,9 @@
 /.idea
 /*.iml
 /kxmall-admin-api/target
-/kxmall-biz/target
-/kxmall-core/target
-/kxmall-data/target
+/kxmall-common/target
+/kxmall-system/target
+/kxmall-framework/target
 /kxmall-admin/target
 /*.log
 /*.gz
@@ -11,9 +11,9 @@
 /kxmall-app-api/*.iml
 /kxmall-service-message/target
 /kxmall-admin-api/kxmall-admin-api.iml
-/kxmall-biz/kxmall-biz.iml
-/kxmall-core/kxmall-core.iml
-/kxmall-data/kxmall-data.iml
+/kxmall-common/kxmall-biz.iml
+/kxmall-framework/kxmall-core.iml
+/kxmall-system/kxmall-data.iml
 /kxmall-admin/kxmall-admin.iml
 /kxmall-plugin-core/kxmall-plugin-core.iml
 /kxmall-plugin-core/target
