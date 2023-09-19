@@ -215,82 +215,8 @@
             size="mini"
             @click="handleOperation(row.id,'completeDelivery')"
           >完成配送</el-button>
-          <!--<el-button
-            v-if="(row.status===20||row.status===32||row.status===30) && row.orderType===1"
-            type="success"
-            size="mini"
-            @click="completeRider(row.storeId,row.orderNo)"
-          >完成取货</el-button> -->
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="orderId" width="200" label="订单号" header-align="center">
-        <template slot-scope="{row}">
-          <div>{{ row.orderId }}</div>
-          <div>{{ row.pinkName }}</div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="realName" label="用户昵称" header-align="center">
-        <template slot-scope="{row}">
-          <span>{{ row.realName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="cartInfoList" width="400" label="商品信息" header-align="center">
-        <template slot-scope="{row}">
-          <div v-for="(item, index) in row.cartInfoList" :key="index">
-            <span v-if="item.cartInfoMap.productInfo.attrInfo">
-              <img style="width: 30px;height: 30px;margin:0;" :src="item.cartInfoMap.productInfo.attrInfo.image">
-            </span>
-            <span v-else>
-              <img style="width: 30px;height: 30px;margin:0;" :src="item.cartInfoMap.productInfo.image">
-            </span>
-            <span>
-              {{ item.cartInfoMap.productInfo.storeName }}
-              <span v-if="item.cartInfoMap.productInfo.attrInfo">&nbsp;{{ item.cartInfoMap.productInfo.attrInfo.sku
-              }}</span>
-            </span>
-            <span> | ￥{{ multiply(item.cartInfoMap.truePrice, item.cartInfoMap.cartNum) }}</span>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column prop="payPrice" label="实际支付" header-align="center" align="right" />
-      <el-table-column prop="payIntegral" label="消费积分" align="center" />
-      <el-table-column prop="payTypeName" label="支付状态" align="center" />
-      <el-table-column prop="statusName" label="订单状态" header-align="center">
-        <template slot-scope="{row}">
-          <span v-html="row.statusName" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="createTime" width="160" label="创建时间" align="center" :formatter="formatDate" />
-      <el-table-column label="操作" align="center" class-name="small-padding" fixed="right" width="200">
-        <template slot-scope="{row}">
-          <el-button size="mini" type="primary" style="margin-right: 5px;" @click="viewDetail(row.id)">
-            订单详情
-          </el-button>
-          <el-dropdown size="mini" split-button type="success" trigger="click" @command="c => onCommand(c, row)">
-            操作
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="remark">
-                订单备注
-              </el-dropdown-item>
-              <el-dropdown-item v-if="row._status == 2" command="deliver">
-                去发货
-              </el-dropdown-item>
-              <el-dropdown-item v-if="row._status == 4" command="express">
-                修改快递
-              </el-dropdown-item>
-              <el-dropdown-item v-if="row._status == 3" command="refund">
-                立刻退款
-              </el-dropdown-item>
-              <el-dropdown-item v-if="row._status == 1" v-hasPermi="['order:storeOrder:edit']" command="update">
-                修改
-              </el-dropdown-item>
-              <el-dropdown-item v-if="row._status == 1" v-hasPermi="['order:storeOrder:remove']" command="delete">
-                删除
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </template>
-      </el-table-column> -->
     </el-table>
 
     <pagination
@@ -429,16 +355,13 @@
       </el-form>
     </el-dialog>
 
-    <!-- <print-dialog :visible.sync="printDialog.open" :list="printDialog.list" /> -->
   </div>
 </template>
 
 <script>
-// import dayjs from 'dayjs'
 import { multiply } from '@/utils/math'
 import { listStoreOrder /** delStoreOrder, addStoreOrder, updateStoreOrder*/, getStoreOrder, startStocking, completeAllocation, merchantDistribution, completeDelivery } from '@/api/order/storeOrder'
 import { listAllStorage } from '@/api/storage/storage'
-// import PrintDialog from './PrintDialog'
 
 export default {
   name: 'StoreOrder',
@@ -477,54 +400,12 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      // rules: {
-      // },
-      // types: [
-      //   { value: 'orderId', label: '订单号' },
-      //   { value: 'realName', label: '用户姓名' },
-      //   { value: 'userPhone', label: '用户电话' }
-      // ],
-      // orderTypes: [
-      //   { value: '0', label: '所有订单' },
-      //   { value: '1', label: '普通订单' },
-      //   { value: '2', label: '拼团订单' },
-      //   { value: '3', label: '秒杀订单' },
-      //   { value: '4', label: '砍价订单' },
-      //   { value: '5', label: '核销订单' },
-      //   { value: '6', label: '积分订单' }
-      // ],
-      // printDialog: {
-      //   open: false,
-      //   list: []
-      // },
-      // overview: {},
-      // dialog: {
-      //   modes: {
-      //     remark: {
-      //       title: '修改订单'
-      //     },
-      //     deliver: {
-      //       title: '去发货'
-      //     },
-      //     express: {
-      //       title: '修改快递'
-      //     },
-      //     refund: {
-      //       title: '退款'
-      //     },
-      //     update: {
-      //       title: '修改订单'
-      //     }
-      //   },
-      //   currentMode: ''
-      // },
-      // express: [],
       status: [
         { label: '待配货', name: '14' },
         { label: '配货中', name: '16' },
         { label: '待配送', name: '20' },
         { label: '配送中', name: '30' },
-        { label: '已完成', name: '50' },
+        { label: '已完成', name: '40,50' },
         { label: '配送异常', name: '32' },
         { label: '超时订单', name: '34' },
         { label: '待支付', name: '10' },
@@ -581,92 +462,9 @@ export default {
       this.queryParams.pageNum = 1
       this.getList()
     },
-    /** 重置按钮操作 */
-    // resetQuery() {
-    //   this.resetForm('queryForm')
-    //   this.handleQuery()
-    // },
-    // 多选框选中数据
-    // handleSelectionChange(selection) {
-    //   this.ids = selection.map(item => item)
-    //   this.single = selection.length !== 1
-    //   this.multiple = !selection.length
-    // },
-    /** 提交按钮 */
-    // submitForm() {
-    //   this.$refs['form'].validate(valid => {
-    //     if (valid) {
-    //       this.buttonLoading = true
-    //       if (this.form.id != null) {
-    //         updateStoreOrder(this.form).then(response => {
-    //           this.$modal.msgSuccess('修改成功')
-    //           this.open = false
-    //           this.getList()
-    //         }).finally(() => {
-    //           this.buttonLoading = false
-    //         })
-    //       } else {
-    //         addStoreOrder(this.form).then(response => {
-    //           this.$modal.msgSuccess('新增成功')
-    //           this.open = false
-    //           this.getList()
-    //         }).finally(() => {
-    //           this.buttonLoading = false
-    //         })
-    //       }
-    //     }
-    //   })
-    // },
-    /** 删除按钮操作 */
-    // handleDelete(row) {
-    //   const ids = row.id || this.ids
-    //   this.$modal.confirm('是否确认删除订单编号为"' + ids + '"的数据项？').then(() => {
-    //     this.loading = true
-    //     return delStoreOrder(ids)
-    //   }).then(() => {
-    //     this.loading = false
-    //     this.getList()
-    //     this.$modal.msgSuccess('删除成功')
-    //   }).catch(() => {
-    //   }).finally(() => {
-    //     this.loading = false
-    //   })
-    // },
-    /** 导出按钮操作 */
-    //     handleExport(command) {
-    //       /** page: 0
-    // size: 10000
-    // sort: id,desc
-    // orderStatus: -9
-    // orderType: 0
-    // createTime:
-    // listContent: ["1627920685013663744","1627930721404321792","1627864121783353344"] */
-    //       if (command === '0') {
-    //         this.download('order/storeOrder/export', {}, `storeOrder_${new Date().getTime()}.xlsx`)
-    //       } else if (command === '1') {
-    //         const listContent = this.ids.map(item => item.id)
-    //         this.download('order/storeOrder/export', { listContent: JSON.stringify(listContent) }, `storeOrder_${new Date().getTime()}.xlsx`)
-    //       }
-    //     },
     onOrderStatusChange() {
       this.handleQuery()
     },
-    // handlePrint() {
-    //   this.printDialog.list = this.ids
-    //   this.printDialog.open = true
-    // },
-    // formatDate(row) {
-    //   return dayjs(row.createTime).format('YYYY-MM-DD HH:mm:ss')
-    // },
-    // onCommand(c, row) {
-    //   if (c === 'delete') {
-    //     this.handleDelete(row)
-    //   } else {
-    //     this.dialog.currentMode = c
-    //     this.reset(row)
-    //     this.open = true
-    //   }
-    // },
     viewDetail(id) {
       getStoreOrder(id).then(({ data }) => {
         this.form = data
