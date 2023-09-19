@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.recommend.mapper.KxRecommendMapper">
+
+    <resultMap type="com.kxmall.recommend.domain.KxRecommend" id="KxRecommendResult">
+        <result property="id" column="id"/>
+        <result property="productId" column="product_id"/>
+        <result property="recommendType" column="recommend_type"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+    <select id="getRecommendByStorage" resultType="com.kxmall.recommend.domain.vo.KxRecommendVo">
+        SELECT
+        re.id as id,
+        re.recommend_type as recommendType,
+        re.product_id as productId,
+        sp.ot_price as originalPrice,
+        st.price as price,
+        sp.vip_price as vipPrice,
+        st.sales as sales,
+        sp.image as img,
+        sp.store_name as title,
+        sp.cate_id as categoryId,
+        st.product_attr_id as productAttrId,
+        sp.unit_name as unitName
+        FROM
+        kx_recommend re,
+        kx_store_product sp
+        left join kx_stock st on st.product_id = sp.id
+        WHERE
+        re.product_id = sp.id
+        and sp.id in (select c.product_id from kx_stock c where c.status = 1 and c.storage_id = #{storageId})
+        and st.storage_id = #{storageId}
+        and st.stock != 0
+        and re.recommend_type = #{recommendType}
+        and sp.is_show = 1
+        <if test="recommendType == 11">
+            and sp.id not in (select tt.product_id from kx_recommend tt where tt.recommend_type = 1)
+            order by st.sales
+        </if>
+        <if test="offset != null">
+            limit #{offset},#{size}
+        </if>
+    </select>
+
+
+    <select id="getRecommendByStorageCount" resultType="java.lang.Long">
+        SELECT
+         count(re.id)
+        FROM
+        kx_recommend re,
+        kx_store_product sp
+        left join kx_stock st on st.product_id = sp.id
+        WHERE
+        re.product_id = sp.id
+        and sp.id in (select c.product_id from kx_stock c where c.status = 1 and c.storage_id = #{storageId})
+        and st.storage_id = #{storageId}
+        and st.stock != 0
+        and re.recommend_type = #{recommendType}
+        and sp.is_show = 1
+        <if test="recommendType == 11">
+            and sp.id not in (select tt.product_id from kx_recommend tt where tt.recommend_type = 1)
+            order by st.sales
+        </if>
+    </select>
+
+    <select id="selectVoPageBySQL" resultType="com.kxmall.recommend.domain.vo.KxRecommendVo">
+        SELECT
+            re.id as id,
+            re.recommend_type as recommendType,
+            re.product_id as productId,
+            sp.ot_price as originalPrice,
+            sp.vip_price as vipPrice,
+            sp.image as img,
+            sp.store_name as productName,
+            sp.cate_id as categoryId,
+            sp.unit_name as unitName
+        FROM
+            kx_recommend re
+            left join kx_store_product sp on re.product_id = sp.id
+        ${ew.getCustomSqlSegment}
+    </select>
+
+</mapper>

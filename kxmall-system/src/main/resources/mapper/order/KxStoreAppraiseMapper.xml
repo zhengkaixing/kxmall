@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.order.mapper.KxStoreAppraiseMapper">
+
+
+    <select id="selectProductAppraiseByPage" resultType="com.kxmall.order.domain.vo.KxStoreAppraiseVo">
+        select
+            a.id as id,
+            a.create_time as createTime,
+            a.update_time as updateTime,
+            a.content as content,
+            a.score as score,
+            a.user_id as userId,
+            u.nickname as userNickName,
+            u.avatar as userAvatarUrl,
+            a.order_id as orderId,
+            a.product_id as productId,
+            a.product_attr_id as productAttrId,
+            sp.store_name as productName,
+            sp.store_name as productAttrName
+        from
+            kx_store_appraise a,
+            kx_user u,
+            kx_store_product sp
+        where
+            a.user_id = u.uid
+          and a.product_id = sp.id
+          and a.product_id = #{productId}
+        order by a.id desc
+            limit #{offset},#{size}
+    </select>
+</mapper>

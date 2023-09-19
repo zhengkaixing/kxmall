@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.storage.mapper.KxStorageMapper">
+
+    <resultMap type="com.kxmall.storage.domain.KxStorage" id="KxStorageResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="county" column="county"/>
+        <result property="address" column="address"/>
+        <result property="adcode" column="adcode"/>
+        <result property="remark" column="remark"/>
+        <result property="state" column="state"/>
+        <result property="longitude" column="longitude"/>
+        <result property="latitude" column="latitude"/>
+        <result property="phone" column="phone"/>
+        <result property="leaderName" column="leader_name"/>
+        <result property="gmtUpdate" column="gmt_update"/>
+        <result property="gmtCreate" column="gmt_create"/>
+        <result property="gmtUpdateUserId" column="gmt_update_user_id"/>
+        <result property="gmtCreateUserId" column="gmt_create_user_id"/>
+        <result property="operatingState" column="operating_state"/>
+        <result property="businessStartTime" column="business_start_time"/>
+        <result property="deliveryStartTime" column="delivery_start_time"/>
+        <result property="businessStopTime" column="business_stop_time"/>
+        <result property="deliveryStopTime" column="delivery_stop_time"/>
+        <result property="deliveryRadius" column="delivery_radius"/>
+        <result property="automatic" column="automatic"/>
+        <result property="printSwitch" column="print_switch"/>
+        <result property="printAcount" column="print_acount"/>
+        <result property="printUkey" column="print_ukey"/>
+        <result property="printSn" column="print_sn"/>
+    </resultMap>
+
+    <update id="batchUpdateState" parameterType="map">
+        UPDATE kx_storage SET state = #{state} WHERE id in
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="batchUpdateOperatingState" parameterType="map">
+        UPDATE kx_storage SET operating_state = #{operatingState} WHERE id in
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="getStorageNameAll" resultType="com.kxmall.storage.domain.vo.KxStorageVo">
+        select u.id,u.name from kx_storage AS u where u.state = #{state}
+        <if test="storageIds != null and storageIds.size()!=0">
+            and u.id in
+            <foreach collection="storageIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+    </select>
+
+
+</mapper>

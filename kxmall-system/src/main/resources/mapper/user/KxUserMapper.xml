@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.user.mapper.KxUserMapper">
+
+    <resultMap type="com.kxmall.user.domain.KxUser" id="WmUserResult">
+        <result property="uid" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="realName" column="real_name"/>
+        <result property="birthday" column="birthday"/>
+        <result property="cardId" column="card_id"/>
+        <result property="mark" column="mark"/>
+        <result property="partnerId" column="partner_id"/>
+        <result property="groupId" column="group_id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="avatar" column="avatar"/>
+        <result property="phone" column="phone"/>
+        <result property="addIp" column="add_ip"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="lastIp" column="last_ip"/>
+        <result property="nowMoney" column="now_money"/>
+        <result property="brokeragePrice" column="brokerage_price"/>
+        <result property="integral" column="integral"/>
+        <result property="signNum" column="sign_num"/>
+        <result property="status" column="status"/>
+        <result property="level" column="level"/>
+        <result property="spreadUid" column="spread_uid"/>
+        <result property="spreadTime" column="spread_time"/>
+        <result property="userType" column="user_type"/>
+        <result property="isPromoter" column="is_promoter"/>
+        <result property="payCount" column="pay_count"/>
+        <result property="spreadCount" column="spread_count"/>
+        <result property="addres" column="addres"/>
+        <result property="adminid" column="adminid"/>
+        <result property="loginType" column="login_type"/>
+        <result property="wxProfile" column="wx_profile"/>
+        <result property="isDel" column="is_del"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+
+</mapper>

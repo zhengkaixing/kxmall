@@ -1,0 +1,169 @@
+
+/* 字体大小 */
+
+.lem-text-sm{
+	font-size: 20rpx;
+	line-height: 28rpx;
+}
+
+.lem-text-df{
+	font-size: 24rpx;
+	line-height: 34rpx;
+}
+
+.lem-text-lg{
+	font-size: 26rpx;
+	line-height: 36rpx;
+}
+
+.lem-text-xl{
+	font-size: 28rpx;
+	line-height: 38rpx;
+}
+
+.lem-text-xxl{
+	font-size: 32rpx;
+	line-height: 46rpx;
+}
+
+.lem-text-xsl{
+	font-size: 34rpx;
+	line-height: 48rpx;
+}
+
+.lem-text-title{
+	font-size: 36rpx;
+	line-height: 50rpx;
+}
+
+.lem-text-banner{
+	font-size: 40rpx;
+	line-height: 64rpx;
+}
+
+/* 背景色 */
+
+.lem-bg-main{
+	background-color: #2aac34;
+	color: #ffffff;
+}
+
+.lem-bg-main-light{
+	background-color: #8ad61d;
+	color: #ffffff;
+}
+
+.lem-bg-sub{
+	background-color: #fc6620;
+	color: #ffffff;
+}
+
+.lem-bg-sub-light{
+	background-color: #ff473c;
+	color: #ffffff;
+}
+
+.lem-bg-gray{
+	background-color: #f2f2f2;
+}
+
+/* 文字颜色 */
+
+.lem-text-black{
+	color: #1b1c33;
+}
+
+.lem-text-grey{
+	color: #5e5e66;
+}
+
+.lem-text-gray{
+	color: #8d8e99;
+}
+
+.lem-text-tip{
+	color: #c4c4cc;
+}
+
+.lem-text-border{
+	color: #f2f2f2;
+}
+
+.lem-border{
+	border-radius: 12rpx;
+}
+
+.lem-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+  height: 64rpx;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  overflow: visible;
+  margin-left: initial;
+  transform: translate(0rpx, 0rpx);
+  margin-right: initial;
+}
+
+.lem-btn::after {
+  display: none;
+}
+
+.lem-btn:not([class*="bg-"]) {
+  background-color: #f0f0f0;
+}
+
+.lem-btn[class*="line"] {
+  background-color: transparent;
+}
+
+.lem-btn[class*="line"]::after {
+  content: " ";
+  display: block;
+  width: 200%;
+  height: 200%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1rpx solid currentColor;
+  transform: scale(0.5);
+  transform-origin: 0 0;
+  box-sizing: border-box;
+  border-radius: 24rpx;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.lem-btn.round[class*="line"]::after {
+  border-radius: 1000rpx;
+}
+
+.lem-btn[class*="lines"]::after {
+  border: 6rpx solid currentColor;
+}
+
+.lem-btn[class*="bg-"]::after {
+  display: none;
+}
+
+.lem-btn.sm {
+  padding: 0 20rpx;
+  font-size: 20rpx;
+  height: 48rpx;
+}
+
+.lem-btn.lg {
+  padding: 0 40rpx;
+  font-size: 32rpx;
+  height: 80rpx;
+}
+
+.line-grey::after, .lines-grey::after {
+  border-color: #acacac;
+}
