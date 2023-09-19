@@ -158,6 +158,10 @@ Redis安装可直接使用yum安装
 
 个人学习可免费使用，进QQ讨论群（838613833）联系群主。
 
+| 软著声明 |
+| :----: | 
+| ![软著](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/soft.jpg)  | 
+
 
 ### SaaS服务
 
