@@ -7,6 +7,7 @@
 /kxmall-framework/target
 /kxmall-generator/target
 /kxmall-system/target
+/logs/*.log
 /*.log
 /*.gz
 /kxmall-admin/kxmall-admin.iml
