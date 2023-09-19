@@ -16,19 +16,16 @@ kxmall项目结构:
     - kxmall-admin-api: 提供管理员管理系统的WebApi
     - kxmall-app-api: 提供APP、小程序、H5用户请求的WebApi
     - kxmall-rider-api: 提供骑手APP、小程序、H5用户请求的WebApi
-    - kxmall-biz: 提供通用业务代码
-    - kxmall-data: 提供数据模型以及数据访问层封装
-    - kxmall-core: 提供注解、工具类等
+    - kxmall-framework: 提供通用业务代码
+    - kxmall-system: 提供数据模型以及数据访问层封装
+    - kxmall-common: 提供注解、工具类等
+    - kxmall-generator: 代码生成器
     
 - Vue 前端页面
     - kxmall-admin-ui: 基于element-ui的后台管理页面
     - kxmall-app-ui: 基于uniapp的小程序、H5、APP前端代码
     - kxmall-rider-ui: 基于uniapp的小程序、H5、APP骑手代码
   
-- kxmall代码生成器-自动生成代码（独立项目）
-    - reverse-kxmall-launch: 自动生成代码启动器
-    - reverse-kxmall-ui：自动生成代码前端
-    - 下载地址 https://download.csdn.net/download/qq_38377190/87213044
 - 常见问题汇总（持续更新中）
   - 常见问题总体解决方案
   - [点我进入](https://gitee.com/zhengkaixing/kxmall/wikis/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/%E5%89%8D%E7%AB%AFbuild%E6%89%93%E5%8C%85%E4%B8%80%E7%9B%B4%E5%8D%A1%E4%BD%8F)&nbsp;&nbsp;
@@ -88,7 +85,7 @@ kxmall项目结构:
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-1.png)  
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-2.png)  
 ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-3.png)   
-![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-4.jpg)   
+![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-admin-4.png)   
 
 
 #### 骑手端系统演示
