@@ -142,7 +142,8 @@ Redis安装可直接使用yum安装
 
 [kxmalls源码地址](https://gitee.com/zhengkaixing/kxmalls.git) https://gitee.com/zhengkaixing/kxmalls.git
 
-体验账号（了解加QQ群：587493946）（体验流程，可使用余额支付）
+体验账号（了解加QQ群：[qq群](https://gitee.com/zhengkaixing/kxmalls.git)
+）（体验流程，可使用余额支付）
 
 客户端 http://www.kxmalls.vip
 
