@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.order.mapper.KxStoreCartMapper">
+
+
+    <select id="countCart" resultType="java.lang.Long">
+        SELECT
+            sum( c.cart_num )
+        FROM
+            kx_store_cart AS c
+            left join kx_stock as s on s.product_id = c.product_id
+        WHERE
+            c.uid = #{userId} and s.storage_id = #{storageId}
+    </select>
+
+
+
+    <select id="getCartList" resultType="com.kxmall.order.domain.vo.KxStoreCartVo">
+        SELECT
+            c.id,
+            c.product_id AS productAttrId,
+            p.store_name AS productAttrName,
+            c.product_id AS productId,
+            p.store_name as productName,
+            c.cart_num as cartNum,
+            s.price,
+            p.ot_price AS otPrice,
+            p.image AS productImg,
+            p.image AS productAttrImg,
+            s.stock,
+            p.cate_id AS cateId
+        FROM
+            kx_store_cart AS c
+                left join kx_store_product  p on p.id = c.product_id
+                left join kx_stock  s on s.product_id = c.product_id
+        WHERE
+            c.uid = #{userId}  and s.storage_id = #{storageId}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.user.mapper.KxUserCollectMapper">
+
+
+    <select id="getCollectAll" resultType="com.kxmall.user.domain.vo.KxUserCollectVo">
+        SELECT
+            c.id as id,
+            c.user_id as userId,
+            c.create_time as createTime,
+            c.update_time as updateTime,
+            c.product_id as productId,
+            s.ot_price as otPrice,
+            s.price as price,
+            s.vip_price as vipPrice,
+            s.store_name as productName,
+            s.sales as sales,
+            s.image as img,
+            s.description as description,
+            s.unit_name as unitName,
+            s.is_show as status
+        from
+            kx_user_collect as c,
+            kx_store_product as s
+        where
+            c.user_id = #{userId}
+          and c.product_id = s.id
+        <if test="offset != null">
+            limit #{offset},#{size}
+        </if>
+    </select>
+    <select id="getCollectAllByCount" resultType="java.lang.Long">
+        SELECT
+            count(c.id)
+        from
+            kx_user_collect as c,
+            kx_store_product as s
+        where
+            c.user_id = #{userId}
+          and c.product_id = s.id
+    </select>
+</mapper>

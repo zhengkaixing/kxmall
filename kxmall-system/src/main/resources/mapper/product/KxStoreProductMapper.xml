@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.product.mapper.KxStoreProductMapper">
+
+    <resultMap type="com.kxmall.product.domain.KxStoreProduct" id="WmStoreProductResult">
+        <result property="id" column="id"/>
+        <result property="merId" column="mer_id"/>
+        <result property="image" column="image"/>
+        <result property="sliderImage" column="slider_image"/>
+        <result property="storeName" column="store_name"/>
+        <result property="storeInfo" column="store_info"/>
+        <result property="keyword" column="keyword"/>
+        <result property="barCode" column="bar_code"/>
+        <result property="cateId" column="cate_id"/>
+        <result property="price" column="price"/>
+        <result property="vipPrice" column="vip_price"/>
+        <result property="otPrice" column="ot_price"/>
+        <result property="postage" column="postage"/>
+        <result property="unitName" column="unit_name"/>
+        <result property="sort" column="sort"/>
+        <result property="sales" column="sales"/>
+        <result property="stock" column="stock"/>
+        <result property="isShow" column="is_show"/>
+        <result property="isHot" column="is_hot"/>
+        <result property="isBenefit" column="is_benefit"/>
+        <result property="isBest" column="is_best"/>
+        <result property="isNew" column="is_new"/>
+        <result property="description" column="description"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isPostage" column="is_postage"/>
+        <result property="isDel" column="is_del"/>
+        <result property="merUse" column="mer_use"/>
+        <result property="giveIntegral" column="give_integral"/>
+        <result property="cost" column="cost"/>
+        <result property="isSeckill" column="is_seckill"/>
+        <result property="isBargain" column="is_bargain"/>
+        <result property="isGood" column="is_good"/>
+        <result property="ficti" column="ficti"/>
+        <result property="browse" column="browse"/>
+        <result property="codePath" column="code_path"/>
+        <result property="isSub" column="is_sub"/>
+        <result property="tempId" column="temp_id"/>
+        <result property="specType" column="spec_type"/>
+        <result property="isIntegral" column="is_integral"/>
+        <result property="integral" column="integral"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+    <update id="decSkuStock">
+        UPDATE kx_stock SET stock = stock - #{num}, frezz_stock = frezz_stock + #{num} WHERE id = #{productId} and storage_id = #{storeId}
+    </update>
+
+    <select id="selectPageByStorage" resultType="com.kxmall.product.domain.vo.KxStoreProductVo">
+        select
+        a.id,a.store_name as storeName,
+        a.ot_price as otPrice,
+        b.price as 'kxStockVo.price',
+        a.store_name as storeName,
+        a.image,
+        a.description,
+        a.cate_id as cateId,
+        a.unit_name as unitName,
+        a.is_show as isShow,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        b.sales as 'kxStockVo.sales',
+        b.stock as 'kxStockVo.stock'
+        from  kx_store_product a
+        LEFT JOIN kx_stock b on a.id = b.product_id
+        WHERE a.id in (select c.product_id from kx_stock c where c.status = 1 and  c.storage_id = #{storageId})
+        and b.is_delete = 0
+        and b.storage_id = #{storageId}
+        and a.is_show = 1
+        and b.status= 1
+        <if test="title != null">
+            and a.title like CONCAT('%',#{title},'%')
+        </if>
+        <if test="categoryId != null">
+            and a.cate_id = #{categoryId}
+        </if>
+        <if test="childrenIds != null and childrenIds.size()!=0">
+            and a.cate_id in
+            <foreach collection="childrenIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+        <if test="orderBy != null">
+            order by ${orderBy} <if test="isAsc"> asc </if> <if test="!isAsc"> desc </if>
+        </if>
+        <if test="offset != null">
+            limit #{offset},#{size}
+        </if>
+    </select>
+
+    <select id="selectPageByStorageCount" resultType="java.lang.Long">
+        select
+          count(a.id)
+        from  kx_store_product a
+        LEFT JOIN kx_stock b on a.id = b.product_id
+        WHERE a.id in (select c.product_id from kx_stock c where c.status = 1 and  c.storage_id = #{storageId})
+        and b.is_delete = 0
+        and b.storage_id = #{storageId}
+        and a.is_show = 1
+        and b.status= 1
+        <if test="title != null">
+            and a.title like CONCAT('%',#{title},'%')
+        </if>
+        <if test="categoryId != null">
+            and a.cate_id = #{categoryId}
+        </if>
+        <if test="childrenIds != null and childrenIds.size()!=0">
+            and a.cate_id in
+            <foreach collection="childrenIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+        <if test="orderBy != null">
+            order by ${orderBy} <if test="isAsc"> asc </if> <if test="!isAsc"> desc </if>
+        </if>
+    </select>
+
+    <select id="getProductTitleAll" resultType="com.kxmall.product.domain.KxStoreProduct">
+        SELECT id,store_name as storeName,cate_id as cateId FROM kx_store_product ORDER BY cate_id
+    </select>
+
+    <select id="getProductByIdAndStorageId" resultType="com.kxmall.product.domain.vo.KxStoreProductVo">
+        select
+        a.id,a.store_name as storeName,
+        a.ot_price as otPrice,
+        b.price as 'kxStockVo.price',
+        a.store_name as storeName,
+        a.image,
+        a.description,
+        a.cate_id as cateId,
+        a.unit_name as unitName,
+        a.is_show as isShow,
+        a.create_time AS createTime,
+        a.update_time AS updateTime,
+        b.sales as 'kxStockVo.sales',
+        b.stock as 'kxStockVo.stock'
+        from  kx_store_product a
+        LEFT JOIN kx_stock b on a.id = b.product_id
+        WHERE  b.storage_id = #{storageId} and a.id = #{productId}
+    </select>
+
+
+</mapper>

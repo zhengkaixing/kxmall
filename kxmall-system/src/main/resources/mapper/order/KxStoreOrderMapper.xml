@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.order.mapper.KxStoreOrderMapper">
+
+
+    <select id="selectOrderPages" resultType="com.kxmall.order.domain.vo.KxStoreOrderVo">
+        SELECT
+        id,
+        order_id AS orderId,
+        `status`,
+        pay_price AS payPrice,
+        create_time AS createTime
+        FROM
+        kx_store_order
+        WHERE
+        uid = #{userId}
+        <if test="status != null and status.size() > 0">
+            and `status` in
+            <foreach collection="status" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        ORDER BY id DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="countOrders" resultType="java.lang.Long">
+        SELECT
+        count(1)
+        FROM
+        kx_store_order
+        WHERE
+        uid = #{userId}
+        <if test="status != null and status.size() > 0">
+            AND `status` = #{status}
+        </if>
+    </select>
+</mapper>

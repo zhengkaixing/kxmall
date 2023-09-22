@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.storage.mapper.KxStockMapper">
+
+    <resultMap type="com.kxmall.storage.domain.KxStock" id="KxStockResult">
+        <result property="id" column="id"/>
+        <result property="productId" column="product_id"/>
+        <result property="productAttrId" column="product_attr_id"/>
+        <result property="storageId" column="storage_id"/>
+        <result property="status" column="status"/>
+        <result property="stock" column="stock"/>
+        <result property="sales" column="sales"/>
+        <result property="frezzStock" column="frezz_stock"/>
+        <result property="price" column="price"/>
+        <result property="warningNum" column="warning_num"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <update id="updateSockForAdd">
+        update kx_stock set stock = stock + #{stockNum} where product_attr_id = #{productAttrId} and storage_id= #{storageId}
+    </update>
+
+    <update id="updateSock">
+        update kx_stock set stock = stock + #{stockNum} where product_attr_id = #{productAttrId} and storage_id= #{storageId}
+    </update>
+
+    <select id="warningListByStoragePage" resultType="com.kxmall.storage.domain.vo.KxStockVo">
+        select sto.name as 'storageName',sto.id as 'storageId',ca.cate_name as 'categoryName',sp.bar_code as 'barCode',
+        sp.id as 'productId',sp.id as 'productAttrId',sp.store_name as 'productName',sp.store_name as 'productAttrName',(st.frezz_stock+st.stock) as 'nowStock',
+        st.stock as 'stock',st.frezz_stock as 'frezzStock',st.warning_num as 'warningNum',sp.unit_name as 'unitName'
+        from kx_stock st
+        left join kx_store_product sp on sp.id = st.product_id
+        LEFT JOIN kx_storage sto on sto.id = st.storage_id
+        LEFT JOIN kx_store_category ca on ca.id = sp.cate_id
+        where st.status = 1
+        <if test="bo.storageId != null">
+            and st.storage_id = #{bo.storageId}
+        </if>
+        <if test="bo.categoryId != null">
+            and sp.cate_id = #{bo.categoryId}
+        </if>
+        <if test="bo.childrenIds != null and bo.childrenIds.size()!=0">
+            and sp.cate_id in
+            <foreach collection="bo.childrenIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+        <if test="bo.name != null">
+            and ( sp.id like CONCAT('%',#{bo.name},'%') or sp.title like CONCAT('%',#{bo.name},'%')  or sk.bar_code like CONCAT('%',#{bo.name},'%') )
+        </if>
+        <if test="bo.minNum != null and bo.maxNum != null">
+            <if test="type == 1">
+                and (st.frezz_stock + st.stock) >= ${bo.minNum}
+                <![CDATA[
+                and  (st.frezz_stock + st.stock) <= ${bo.maxNum}
+                ]]>
+            </if>
+            <if test="bo.type == 2">
+                and st.stock >= ${bo.minNum}
+                <![CDATA[
+                and  st.stock <= ${bo.maxNum}
+                ]]>
+            </if>
+            <if test="bo.type == 3">
+                and st.frezz_stock >= ${minNum}
+                <![CDATA[
+                and  st.frezz_stock <= ${maxNum}
+                ]]>
+            </if>
+        </if>
+        <if test="bo.showType">
+            <![CDATA[
+                and st.stock <= st.warning_num
+            ]]>
+        </if>
+        <if test="bo.storageIds != null and bo.storageIds.size()!=0">
+            and st.storage_id in
+            <foreach collection="bo.storageIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+        <if test="offset != null">
+            limit #{offset},#{size}
+        </if>
+    </select>
+
+    <select id="warningListByStoragePageCount" resultType="java.lang.Long">
+        select count(st.id)
+        from kx_stock st
+        left join kx_store_product sp on sp.id = st.product_id
+        LEFT JOIN kx_storage sto on sto.id = st.storage_id
+        LEFT JOIN kx_store_category ca on ca.id = sp.cate_id
+        where st.status = 1
+        <if test="bo.storageId != null">
+            and st.storage_id = #{bo.storageId}
+        </if>
+        <if test="bo.categoryId != null">
+            and sp.cate_id = #{bo.categoryId}
+        </if>
+        <if test="bo.childrenIds != null and bo.childrenIds.size()!=0">
+            and sp.cate_id in
+            <foreach collection="bo.childrenIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+        <if test="bo.name != null">
+            and ( sp.id like CONCAT('%',#{bo.name},'%') or sp.title like CONCAT('%',#{bo.name},'%')  or sk.bar_code like CONCAT('%',#{bo.name},'%') )
+        </if>
+        <if test="bo.minNum != null and bo.maxNum != null">
+            <if test="type == 1">
+                and (st.frezz_stock + st.stock) >= ${bo.minNum}
+                <![CDATA[
+                and  (st.frezz_stock + st.stock) <= ${bo.maxNum}
+                ]]>
+            </if>
+            <if test="bo.type == 2">
+                and st.stock >= ${bo.minNum}
+                <![CDATA[
+                and  st.stock <= ${bo.maxNum}
+                ]]>
+            </if>
+            <if test="bo.type == 3">
+                and st.frezz_stock >= ${minNum}
+                <![CDATA[
+                and  st.frezz_stock <= ${maxNum}
+                ]]>
+            </if>
+        </if>
+        <if test="bo.showType">
+            <![CDATA[
+                and st.stock <= st.warning_num
+            ]]>
+        </if>
+        <if test="bo.storageIds != null and bo.storageIds.size()!=0">
+            and st.storage_id in
+            <foreach collection="bo.storageIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="selectVoBySQL" resultType="com.kxmall.storage.domain.vo.KxStockVo">
+        SELECT
+            s.id,
+            s.storage_id as storageId,
+            sto.name as storageName,
+            ca.cate_name as categoryName,
+            ca.id as categoryId,
+            spu.bar_code as barCode,
+            s.product_id as productId,
+            s.product_attr_id as productAttrId,
+            s.frezz_stock as frezzStock,
+            spu.store_name as productName,
+            spu.store_name as productAttrName,
+            s.status as  status,
+            s.stock as stock,
+            s.sales,
+            spu.unit_name as unitName,
+            spu.ot_price as originalPrice,
+            s.price as price,
+            s.update_time as updateTime,
+            s.create_time as createTime
+        FROM kx_stock s
+         inner JOIN kx_store_product spu on s.product_id = spu.id
+         inner JOIN kx_store_category ca on spu.cate_id = ca.id
+         inner join kx_storage sto on s.storage_id = sto.id
+        WHERE s.is_delete = 0
+        <if test="storageId != null">
+            and s.storage_id = #{storageId}
+        </if>
+        <if test="categoryId != null">
+            and ca.id = #{categoryId}
+        </if>
+        <if test="status != null">
+            and s.status = #{status}
+        </if>
+        <if test="keyword != null">
+            and (
+            spu.id like CONCAT('%',#{keyword},'%')
+            or spu.store_name like CONCAT('%',#{keyword},'%')
+            or spu.bar_code like CONCAT('%',#{keyword},'%')
+            )
+        </if>
+        <if test="notIds != null">
+            and s.product_id not in
+            <foreach collection="notIds" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+        order by s.storage_id,s.create_time,s.id
+        <if test="offset != null">
+            limit #{offset},#{size}
+        </if>
+    </select>
+
+    <select id="selectVoBySQLCount" resultType="java.lang.Long">
+        SELECT
+        count(s.id)
+        FROM kx_stock s
+        inner JOIN kx_store_product spu on s.product_id = spu.id
+        inner JOIN kx_store_category ca on spu.cate_id = ca.id
+        inner join kx_storage sto on s.storage_id = sto.id
+        WHERE s.is_delete = 0
+        <if test="storageId != null">
+            and s.storage_id = #{storageId}
+        </if>
+        <if test="categoryId != null">
+            and ca.id = #{categoryId}
+        </if>
+        <if test="keyword != null">
+            and (
+            spu.id like CONCAT('%',#{keyword},'%')
+            or spu.store_name like CONCAT('%',#{keyword},'%')
+            or spu.bar_code like CONCAT('%',#{keyword},'%')
+            )
+        </if>
+        <if test="status != null">
+            and s.status = #{status}
+        </if>
+        <if test="notIds != null">
+            and spu.id not in
+            <foreach collection="notIds" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+
+
+</mapper>

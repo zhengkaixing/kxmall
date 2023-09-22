@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.storage.mapper.KxGoodsInStockMapper">
+
+    <resultMap type="com.kxmall.storage.domain.KxGoodsInStock" id="KxGoodsInStockResult">
+        <result property="id" column="id"/>
+        <result property="storageId" column="storage_id"/>
+        <result property="inStockNumbers" column="in_stock_numbers"/>
+        <result property="states" column="states"/>
+        <result property="ingoingPerson" column="ingoing_person"/>
+        <result property="ingoingTime" column="ingoing_time"/>
+        <result property="remarks" column="remarks"/>
+        <result property="outgoingDay" column="outgoing_day"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <select id="selectByMax" resultType="com.kxmall.storage.domain.KxGoodsInStock">
+        SELECT * from kx_goods_in_stock where id = (SELECT max(id) FROM kx_goods_in_stock)
+    </select>
+
+
+</mapper>

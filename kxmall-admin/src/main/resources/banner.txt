@@ -1,0 +1,2 @@
+Application Version: ${kxmall.version}
+Spring Boot Version: ${spring-boot.version}

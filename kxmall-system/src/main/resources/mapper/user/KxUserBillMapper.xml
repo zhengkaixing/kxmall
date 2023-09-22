@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.user.mapper.KxUserBillMapper">
+
+    <resultMap type="com.kxmall.user.domain.KxUserBill" id="WmUserBillResult">
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="linkId" column="link_id"/>
+        <result property="pm" column="pm"/>
+        <result property="title" column="title"/>
+        <result property="category" column="category"/>
+        <result property="type" column="type"/>
+        <result property="number" column="number"/>
+        <result property="balance" column="balance"/>
+        <result property="mark" column="mark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="status" column="status"/>
+        <result property="isDel" column="is_del"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+    <select id="selectVoPageList" resultType="com.kxmall.user.domain.vo.KxUserBillVo">
+        select b.title,b.pm,b.category,b.type,b.number,b.create_time ,u.nickname from
+            kx_user_bill b left join kx_user u on b.uid = u.uid
+            ${ew.getCustomSqlSegment}
+    </select>
+
+
+</mapper>
