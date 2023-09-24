@@ -8,7 +8,7 @@ RUN mkdir -p /kxmall/server/logs \
 
 WORKDIR /kxmall/server
 
-ENV SERVER_PORT=8080
+ENV SERVER_PORT=8585
 
 EXPOSE ${SERVER_PORT}
 

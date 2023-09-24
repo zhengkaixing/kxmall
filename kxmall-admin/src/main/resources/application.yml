@@ -26,8 +26,8 @@ captcha:
 
 # 开发环境配置
 server:
-  # 服务器的HTTP端口，默认为8080
-  port: 8080
+  # 服务器的HTTP端口，默认为8585
+  port: 8585
   servlet:
     # 应用的访问路径
     context-path: /
