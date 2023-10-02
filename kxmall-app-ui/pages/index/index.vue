@@ -1,7 +1,7 @@
 <template>
 	<view style="overflow-x: hidden;">
 		<view>
-			<view id="top" style="background-image: url(http://qiniuoss.nauzone.cn/%E9%A1%B6%E9%83%A8.png);background-repeat: no-repeat; background-size: cover; width: 750rpx;position: fixed;top: 0;z-index: 999;">
+			<view id="top" style="background-image: url(https://kxmalls.oss-cn-hangzhou.aliyuncs.com/bg/top.png);background-repeat: no-repeat; background-size: cover; width: 750rpx;position: fixed;top: 0;z-index: 999;">
 				<view class="status-bar"></view>
 				<view class="flex align-center justify-center text-white" style="font-size: 36rpx;font-weight: 500; position: absolute;width: 750rpx;"
 				 :style="'top:'+navbarTop+'px;height:'+navHeight+'px;'">
@@ -38,7 +38,7 @@
 			</view>
 		</view>
 		<view :style="'height: '+topHeight+'px;'" style="width: 100%;display: flex; position: relative;"></view>
-		<view v-if="storage" id="sw" style="z-index: 999;background-image: url(http://qiniuoss.nauzone.cn/%E5%BA%95%E9%83%A8.png);background-repeat: no-repeat; background-size: 750rpx 200rpx;"
+		<view v-if="storage" id="sw" style="z-index: 999;background-image: url(https://kxmalls.oss-cn-hangzhou.aliyuncs.com/bg/bottom.png);background-repeat: no-repeat; background-size: 750rpx 200rpx;"
 		 class="padding-top-sm">
 			<swiper autoplay="true" interval="2000" duration="400" class="carousel" circular @change="swiperChange"
 			 previous-margin="27rpx" next-margin="27rpx">
