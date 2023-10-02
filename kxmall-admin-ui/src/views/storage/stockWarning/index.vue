@@ -124,7 +124,11 @@
           {{ (Number(row.frezzStock)+Number(row.stock)).toFixed(0) }}
         </template>
       </el-table-column>
-      <el-table-column label="可售量" align="center" header-align="center" prop="stock" />
+      <el-table-column label="可售量" align="center" header-align="center" prop="stock">
+        <template slot-scope="{row}">
+          <div :class="{'stock--warning': row.stock < row.warningNum}">{{ row.stock }}</div>
+        </template>
+      </el-table-column>
       <el-table-column label="锁定量" align="center" header-align="center" prop="frezzStock" />
       <el-table-column label="预警量" align="center" header-align="center" prop="warningNum">
         <template slot-scope="{row}">
@@ -439,3 +443,17 @@ export default {
   }
 }
 </script>
+<style>
+
+.stock--warning {
+  background: #f00;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+</style>
