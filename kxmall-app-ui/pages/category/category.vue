@@ -1,7 +1,7 @@
 <template>
 	<view >
 		<view id="top"
-		style="background-image: url(http://qiniuoss.nauzone.cn/%E9%A1%B6%E9%83%A8.png);background-repeat: no-repeat; background-size: cover; width: 750rpx;position: fixed;top: 0;z-index: 999;">
+		style="background-image: url(https://kxmalls.oss-cn-hangzhou.aliyuncs.com/bg/top.png);background-repeat: no-repeat; background-size: cover; width: 750rpx;position: fixed;top: 0;z-index: 999;">
 			<view class="status-bar"></view>
 			<view class="flex align-center justify-center text-white"
 			style="font-size: 36rpx;font-weight: 500; position: absolute;width: 750rpx;"
