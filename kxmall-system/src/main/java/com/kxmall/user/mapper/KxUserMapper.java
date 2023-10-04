@@ -21,8 +21,8 @@ public interface KxUserMapper extends BaseMapperPlus<KxUserMapper, KxUser, KxUse
 
     @Select("<script>SELECT u.uid,u.nickname,u.avatar,DATE_FORMAT(u.create_time,'%Y/%m/%d') as time," +
         "u.spread_count as childCount,COUNT(o.id) as orderCount," +
-        "IFNULL(SUM(o.pay_price),0) as numberCount FROM yx_user u " +
-        "LEFT JOIN yx_store_order o ON u.uid=o.uid " +
+        "IFNULL(SUM(o.pay_price),0) as numberCount FROM kx_user u " +
+        "LEFT JOIN kx_store_order o ON u.uid=o.uid " +
         "WHERE u.uid in <foreach item='id' index='index' collection='uids' " +
         " open='(' separator=',' close=')'>" +
         "   #{id}" +
