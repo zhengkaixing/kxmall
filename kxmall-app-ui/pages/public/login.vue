@@ -71,10 +71,10 @@
 				<button v-if="!puserInfo.phone" open-type="getPhoneNumber"
 				 @getphonenumber="miniWechatLogin" class="round bg-gradual-green"
 				style="height: 96rpx;width: 640rpx;margin-top: 174rpx;line-height: 96rpx; font-size: 32rpx;font-weight: 600;"
-				>微信授权登录</button>
+				>一键登录</button>
 				<button v-else @click="fakeLogin" class="round bg-gradual-green"
 				style="height: 96rpx;width: 640rpx;margin-top: 174rpx;line-height: 96rpx; font-size: 32rpx;font-weight: 600;"
-				>微信授权登录</button>
+				>一键登录</button>
 				<view @click="mobileLogin = true" class="lem-text-xl" style="margin-top: 60rpx;color: #bbbbbb;line-height: 30rpx;font-weight: 600;">
 					手机验证码、注册登录
 				</view>
