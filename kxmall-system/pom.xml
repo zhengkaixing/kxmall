@@ -29,7 +29,7 @@
             <artifactId>aws-java-sdk-s3</artifactId>
         </dependency>
 
-        <!-- SMS功能模块 -->
+        <!-- SMS功能模块-需要什么模块就打开哪个模块的注解 -->
 
         <dependency>
             <groupId>com.aliyun</groupId>
@@ -37,11 +37,11 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>com.tencentcloudapi</groupId>
-            <artifactId>tencentcloud-sdk-java-sms</artifactId>
-            <optional>true</optional>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.tencentcloudapi</groupId>-->
+<!--            <artifactId>tencentcloud-sdk-java-sms</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
 
     </dependencies>
 
