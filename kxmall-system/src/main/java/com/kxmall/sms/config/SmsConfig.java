@@ -30,16 +30,16 @@ public class SmsConfig {
 
     }
 
-    @Configuration
-    @ConditionalOnProperty(value = "sms.enabled", havingValue = "true")
-    @ConditionalOnClass(com.tencentcloudapi.sms.v20190711.SmsClient.class)
-    static class TencentSmsConfig {
-
-        @Bean
-        public SmsTemplate tencentSmsTemplate(SmsProperties smsProperties) {
-            return new TencentSmsTemplate(smsProperties);
-        }
-
-    }
+//    @Configuration
+//    @ConditionalOnProperty(value = "sms.enabled", havingValue = "true")
+//    @ConditionalOnClass(com.tencentcloudapi.sms.v20190711.SmsClient.class)
+//    static class TencentSmsConfig {
+//
+//        @Bean
+//        public SmsTemplate tencentSmsTemplate(SmsProperties smsProperties) {
+//            return new TencentSmsTemplate(smsProperties);
+//        }
+//
+//    }
 
 }
