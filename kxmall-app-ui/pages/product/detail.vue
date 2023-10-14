@@ -471,19 +471,19 @@
 					that.toggleCallback = that.buy
 				} else {
 					let skuItem = {
-						productId: that.selectedSku.id,
-						num: 1,
-						title: that.goods.title,
-						otPrice: that.selectedSku.otPrice,
-						price: that.selectedSku.price,
-						vipPrice: that.selectedSku.vipPrice,
-						skuTitle: that.selectedSku.title,
-						spuImg: that.goods.img,
-						skuImg: that.selectedSku.img,
-						stock: that.selectedSku.stock,
-						productId: that.goods.id,
-						categoryId: that.goods.categoryId,
-						cateIdList: that.goods.categoryIds
+            productAttrId: that.goods.kxStockVo.productAttrId,
+            cartNum: 1,
+            title: that.goods.title,
+            otPrice: that.goods.otPrice,
+            price: that.goods.kxStockVo.price,
+            vipPrice: that.selectedSku.vipPrice,
+            productAttrName: that.goods.storeName,
+            productImg: that.goods.image,
+            productAttrImg: that.goods.image,
+            stock: that.goods.kxStockVo.stock,
+            productId: that.goods.id,
+            categoryId: that.goods.cateId,
+            cateIdList: that.goods.cateIdList
 					}
 					if (that.goods.groupShop) {
 						skuItem['groupShopId'] = that.goods.groupShop.id
