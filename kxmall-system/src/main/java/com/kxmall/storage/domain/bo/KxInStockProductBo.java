@@ -64,5 +64,8 @@ public class KxInStockProductBo extends BaseEntity {
      */
     private Long productAttrId;
 
-
+    /**
+     * 仓库ids
+     */
+    private Set<Long> storageIds;
 }
