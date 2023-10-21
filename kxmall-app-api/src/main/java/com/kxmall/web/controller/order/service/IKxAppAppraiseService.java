@@ -1,9 +1,8 @@
 package com.kxmall.web.controller.order.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kxmall.common.core.page.TableDataInfo;
+import com.kxmall.order.domain.bo.AppraiseRequestBo;
 import com.kxmall.order.domain.vo.KxStoreAppraiseVo;
-import com.kxmall.storage.domain.vo.KxStockVo;
 
 /**
  * @author kaixin
@@ -21,4 +20,12 @@ public interface IKxAppAppraiseService {
      * @return
      */
     TableDataInfo<KxStoreAppraiseVo> getProductAppraiseByPage(Long producId, Integer pageNo, Integer pageSize, Integer state);
+
+
+    /**
+     * 增加评价
+     * @param bo
+     */
+    Boolean addAppraise(AppraiseRequestBo bo, Long userId);
+
 }

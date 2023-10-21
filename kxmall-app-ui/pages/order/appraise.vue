@@ -131,15 +131,14 @@
 				})
 
 				that.appraiseRequest.orderId = that.orderDetail.id
+        that.appraiseRequest.storageId = that.orderDetail.storeId
 				that.appraiseRequest.appraiseDTOList = requestItems
 
-				that.$api.request('get', '/addAppraise', {
-					appraiseRequestDTO : JSON.stringify(that.appraiseRequest)
-				}).then(res => {
-					that.$api.msg('评价成功！')
-					that.$api.prePage().loadData('refresh')
-					uni.navigateBack()
-				})
+        that.$api.request('post', 'appraise/app/addAppraise', JSON.stringify(that.appraiseRequest)).then(res => {
+          that.$api.msg('评价成功！')
+          that.$api.prePage().loadData('refresh')
+          uni.navigateBack()
+        })
             }
         }
     }
