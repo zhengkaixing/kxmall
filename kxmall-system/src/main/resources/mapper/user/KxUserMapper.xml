@@ -42,5 +42,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy" column="update_by"/>
     </resultMap>
 
+    <select id="countTotalUser" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            kx_user
+        WHERE
+            create_time &lt;= #{date}
+    </select>
+    <select id="countNewUser" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            kx_user
+        WHERE
+            create_time between #{start} and #{end}
+    </select>
 
+    <select id="countOnlineUser" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            kx_user
+        WHERE
+            update_time between #{start} and #{end}
+    </select>
+
+    <select id="countOrderUser" resultType="java.lang.Integer">
+        SELECT count(DISTINCT(o.uid)) as num FROM `kx_store_order` o
+        where o.status in (20,30,40,50)
+          and
+            update_time between #{start} and #{end}
+    </select>
+
+    <select id="countFirstOrderUser" resultType="java.lang.Integer">
+        SELECT count(DISTINCT(o.uid)) as num FROM `kx_store_order` o
+                                                      left join kx_user u on o.uid = u.uid
+        where u.create_time between #{start} and #{start}
+          and o.create_time between #{start} and #{start}
+    </select>
 </mapper>

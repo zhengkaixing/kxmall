@@ -38,4 +38,165 @@
             AND `status` = #{status}
         </if>
     </select>
+
+
+    <select id="getSalesCategoryRank" resultType="com.kxmall.dashboard.domain.SalesStatementDTO">
+        SELECT
+        tt.cate_id AS categoryId,
+        tt.title AS categoryTitle,
+        ifnull( sum( price ), 0 ) AS totalSalesVolume,
+        count( 1 ) AS totalSales
+        FROM
+        (
+        SELECT
+        spu.cate_id,
+        t.pid,
+        t.title AS cate_name,
+        o.store_id,
+        os.product_attr_id,
+        os.product_id,
+        os.product_title AS title,
+        os.price
+        FROM
+        kx_store_order_product os
+        LEFT JOIN kx_store_order o ON o.order_id = os.order_no
+        LEFT JOIN kx_store_product spu ON os.product_id = spu.id
+        LEFT JOIN (
+        SELECT
+        c.id,
+        c.pid,
+        c.cate_name AS title
+        FROM
+        `kx_store_category` c
+        WHERE
+        c.pid = 0
+        ) t ON spu.cate_id = t.id
+        WHERE
+        o.STATUS IN ( 14, 16, 20, 30, 32, 34, 40, 50 )
+        AND TO_DAYS( o.update_time ) = TO_DAYS( NOW( ) )
+        <if test="storageId != null">
+            AND o.store_id = #{storageId}
+        </if>
+        <if test="storageIds != null and storageIds.size()!=0">
+            and o.store_id in
+            <foreach collection="storageIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+        ) tt
+        GROUP BY
+        tt.pid,
+        tt.title,
+        tt.product_id
+        ORDER BY
+        totalSalesVolume,
+        totalSales DESC
+        LIMIT 10
+    </select>
+
+    <select id="getSalesCategoryRanTopFive" resultType="com.kxmall.dashboard.domain.SalesTopDTO">
+        SELECT
+        tt.cate_id AS categoryId,
+        tt.title AS categoryTitle,
+        ifnull( sum( price ), 0 ) AS totalSalesVolume,
+        count( 1 ) AS totalSales
+        FROM
+        (
+        SELECT
+        spu.cate_id,
+        t.pid,
+        t.title AS cate_name,
+        o.store_id,
+        os.product_attr_id,
+        os.product_id,
+        os.product_title AS title,
+        os.price
+        FROM
+        kx_store_order_product os
+        LEFT JOIN kx_store_order o ON o.order_id = os.order_no
+        LEFT JOIN kx_store_product spu ON os.product_id = spu.id
+        LEFT JOIN (
+        SELECT
+        c.id,
+        c.pid,
+        c.cate_name AS title
+        FROM
+        `kx_store_category` c
+        WHERE
+        c.pid = 0
+        ) t ON spu.cate_id = t.id
+        WHERE
+        o.STATUS IN ( 14, 16, 20, 30, 32, 34, 40, 50 )
+        AND TO_DAYS( o.update_time ) = TO_DAYS( NOW( ) )
+        <if test="storageId != null">
+            AND o.store_id = #{storageId}
+        </if>
+        <if test="storageIds != null and storageIds.size()!=0">
+            and o.store_id in
+            <foreach collection="storageIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+        ) tt
+        GROUP BY
+        tt.pid,
+        tt.title,
+        tt.product_id,
+        tt.product_attr_id,
+        tt.cate_name,
+        tt.price
+        ORDER BY
+        totalSalesVolume,
+        totalSales DESC
+        LIMIT 10
+    </select>
+    <select id="getTodaySales" resultType="com.kxmall.dashboard.domain.SalesStatementDTO">
+
+        SELECT ifnull(sum(pay_price),0) totalSalesVolume,count(1) totalSales  FROM kx_store_order o
+        where o.status in (14,16,20,30,32,34,40,50)
+        <if test="storageId != null">
+            AND o.store_id = #{storageId}
+        </if>
+        <if test="storageIds != null and storageIds.size()!=0">
+            and o.store_id in
+            <foreach collection="storageIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+        and
+        TO_DAYS(o.update_time) = TO_DAYS(NOW())
+
+    </select>
+
+
+    <select id="getYesterdaySales" resultType="com.kxmall.dashboard.domain.SalesStatementDTO">
+        SELECT ifnull(sum(pay_price),0) totalSalesVolume,count(1) totalSales  FROM kx_store_order o
+        where o.status in (14,16,20,30,32,34,40,50)
+        <if test="storageId != null">
+            AND o.store_id = #{storageId}
+        </if>
+        <if test="storageIds != null and storageIds.size()!=0">
+            and o.store_id in
+            <foreach collection="storageIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+        and
+        TO_DAYS( NOW( ) ) - TO_DAYS(o.update_time) = 1
+    </select>
+
+    <select id="getSalesByHour" resultType="com.kxmall.dashboard.domain.SalesStatementDTO">
+        SELECT ifnull(sum(pay_price),0) totalSalesVolume,count(1) totalSales  FROM kx_store_order o
+        where o.status in (14,16,20,30,32,34,40,50)
+        <if test="storageId != null">
+            AND o.store_id = #{storageId}
+        </if>
+        <if test="storageIds != null and storageIds.size()!=0">
+            and o.store_id in
+            <foreach collection="storageIds" item="list" index="index" open="(" close=")" separator=",">
+                #{list}
+            </foreach>
+        </if>
+        and o.update_time BETWEEN #{start} and #{end}
+    </select>
 </mapper>

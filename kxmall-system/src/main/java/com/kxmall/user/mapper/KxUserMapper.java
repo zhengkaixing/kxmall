@@ -8,6 +8,7 @@ import com.kxmall.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,4 +35,49 @@ public interface KxUserMapper extends BaseMapperPlus<KxUserMapper, KxUser, KxUse
                                               @Param("uids") List uids,
                                               @Param("keyword") String keyword,
                                               @Param("orderByStr") String orderBy);
+
+
+
+    /**
+     * 总用户数
+     * @param date
+     * @return
+     */
+    Integer countTotalUser(@Param("date") Date date);
+
+    /**
+     * 新注册用户数
+     * @param start
+     * @param end
+     * @return
+     */
+    Integer countNewUser(
+            @Param("start") Date start,@Param("end") Date end);
+
+    /**
+     * 在线用户数
+     * @param start
+     * @param end
+     * @return
+     */
+    Integer countOnlineUser(
+            @Param("start") Date start,@Param("end") Date end);
+
+    /**
+     * 下单用户数
+     * @param start
+     * @param end
+     * @return
+     */
+    Integer countOrderUser(
+            @Param("start") Date start,@Param("end") Date end);
+
+    /**
+     * 首单用户数
+     * @param start
+     * @param end
+     * @return
+     */
+    Integer countFirstOrderUser(
+            @Param("start") Date start,@Param("end") Date end);
 }
