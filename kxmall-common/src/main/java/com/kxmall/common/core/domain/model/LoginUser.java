@@ -87,6 +87,11 @@ public class LoginUser implements Serializable {
     private Set<String> rolePermission;
 
     /**
+     * 仓库权限
+     */
+    private Set<Long> storagePermission;
+
+    /**
      * 用户名
      */
     private String username;
