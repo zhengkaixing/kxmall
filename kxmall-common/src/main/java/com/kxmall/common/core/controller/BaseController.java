@@ -1,12 +1,11 @@
 package com.kxmall.common.core.controller;
 
+import com.kxmall.common.core.domain.R;
+import com.kxmall.common.core.domain.model.LoginUser;
 import com.kxmall.common.enums.DeviceType;
-import com.kxmall.common.enums.UserType;
 import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.helper.LoginHelper;
 import com.kxmall.common.utils.StringUtils;
-import com.kxmall.common.core.domain.R;
-import com.kxmall.common.core.domain.model.LoginUser;
 
 /**
  * web层通用数据处理
@@ -46,6 +45,9 @@ public class BaseController {
      * 获取用户缓存信息
      */
     public LoginUser getLoginUser() {
+        if (!DeviceType.PC.equals(LoginHelper.getDeviceType())) {
+            throw new ServiceException("用户类型不正确");
+        }
         return LoginHelper.getLoginUser();
     }
 
@@ -53,6 +55,9 @@ public class BaseController {
      * 获取登录用户id
      */
     public Long getUserId() {
+        if (!DeviceType.PC.equals(LoginHelper.getDeviceType())) {
+            throw new ServiceException("用户类型不正确");
+        }
         return LoginHelper.getUserId();
     }
 
@@ -60,6 +65,9 @@ public class BaseController {
      * 获取登录部门id
      */
     public Long getDeptId() {
+        if (!DeviceType.PC.equals(LoginHelper.getDeviceType())) {
+            throw new ServiceException("用户类型不正确");
+        }
         return LoginHelper.getDeptId();
     }
 
@@ -67,6 +75,9 @@ public class BaseController {
      * 获取登录用户名
      */
     public String getUsername() {
+        if (!DeviceType.PC.equals(LoginHelper.getDeviceType())) {
+            throw new ServiceException("用户类型不正确");
+        }
         return LoginHelper.getUsername();
     }
 }
