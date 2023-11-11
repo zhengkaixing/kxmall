@@ -4,9 +4,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.binarywang.wxpay.bean.notify.WxPayNotifyResponse;
 import com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResult;
+import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.service.WxPayService;
 import com.kxmall.common.enums.OrderStatusType;
+import com.kxmall.common.enums.PayMethodEnum;
 import com.kxmall.order.domain.KxStoreOrder;
 import com.kxmall.web.controller.order.service.IKxAppOrderService;
+import com.kxmall.wechat.WxPayConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +44,13 @@ public class CallbackController {
 //        ============微信支付回调代码 prod 开始============
 //        WxPayOrderNotifyResult result = null;
 //        try {
+//            WxPayService wxPayService = WxPayConfiguration.getPayService(PayMethodEnum.H5);
+//            if(wxPayService == null) {
+//                wxPayService = WxPayConfiguration.getPayService(PayMethodEnum.MINI);
+//            }
+//            if(wxPayService == null) {
+//                wxPayService = WxPayConfiguration.getPayService(PayMethodEnum.APP);
+//            }
 //            result = wxPayService.parseOrderNotifyResult(body);
 //        } catch (WxPayException e) {
 //            logger.error("[微信解析回调请求] 异常", e);
