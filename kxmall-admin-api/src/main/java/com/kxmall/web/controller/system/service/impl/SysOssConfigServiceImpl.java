@@ -182,6 +182,7 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
     @EventListener
     public void updateConfigCache(SysOssConfig config) {
         CacheUtils.put(CacheNames.SYS_OSS_CONFIG, config.getConfigKey(), JsonUtils.toJsonString(config));
+        RedisUtils.setCacheObject(OssConstant.DEFAULT_CONFIG_KEY, config.getConfigKey());
         RedisUtils.publish(OssConstant.DEFAULT_CONFIG_KEY, config.getConfigKey(), msg -> {
             log.info("发布刷新OSS配置 => " + msg);
         });
