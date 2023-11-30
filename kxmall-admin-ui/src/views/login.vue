@@ -108,7 +108,7 @@ export default {
       pwdType: 'password',
       loginForm: {
         username: "admin",
-        password: "admin123",
+        password: "es110212",
         rememberMe: false,
         code: "",
         uuid: ""
