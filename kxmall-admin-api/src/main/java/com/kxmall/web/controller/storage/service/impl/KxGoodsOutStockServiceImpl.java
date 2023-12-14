@@ -220,13 +220,13 @@ public class KxGoodsOutStockServiceImpl implements IKxGoodsOutStockService {
         }
         //根据入库的商品数量更新仓库的数量
         LambdaQueryWrapper<KxOutStockProduct> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(KxOutStockProduct::getOutStockNumbers, bo.getOutStockProductVoList());
+        wrapper.eq(KxOutStockProduct::getOutStockNumbers, bo.getOutStockNumbers());
         List<KxOutStockProduct> outStockProducts = outStockProductMapper.selectList(wrapper);
-        Long inStockNum;//入库数量
+        Long outStockNum;//入库数量
         for (KxOutStockProduct outStockProduct : outStockProducts) {
-            inStockNum = outStockProduct.getOutStockNum();
+            outStockNum = outStockProduct.getOutStockNum();
             Long productAttrId = outStockProduct.getProductAttrId();
-            if (stockMapper.updateSock(bo.getStorageId(), productAttrId, inStockNum) <= 0) {
+            if (stockMapper.updateSock(bo.getStorageId(), productAttrId, outStockNum) <= 0) {
                 throw new ServiceException("更新商品库存失败");
             }
         }
@@ -239,7 +239,7 @@ public class KxGoodsOutStockServiceImpl implements IKxGoodsOutStockService {
         LambdaQueryWrapper<KxGoodsOutStock> wrapper1 = new LambdaQueryWrapper<>();
         wrapper1.eq(KxGoodsOutStock::getOutStockNumbers, bo.getOutStockNumbers());
         if (baseMapper.update(kxGoodsOutStock, wrapper1) <= 0) {
-            throw new ServiceException("商品入库失败");
+            throw new ServiceException("商品出库失败");
         }
         return true;
     }
