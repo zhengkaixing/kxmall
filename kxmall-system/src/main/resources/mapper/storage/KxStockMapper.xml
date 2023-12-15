@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <update id="updateSock">
-        update kx_stock set stock = stock + #{stockNum} where product_attr_id = #{productAttrId} and storage_id= #{storageId}
+        update kx_stock set stock = stock - #{stockNum} where product_attr_id = #{productAttrId} and storage_id= #{storageId}
     </update>
 
     <select id="warningListByStoragePage" resultType="com.kxmall.storage.domain.vo.KxStockVo">

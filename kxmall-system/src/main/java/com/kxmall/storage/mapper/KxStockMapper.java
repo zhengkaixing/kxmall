@@ -45,10 +45,10 @@ public interface KxStockMapper extends BaseMapperPlus<KxStockMapper, KxStock, Kx
      * 出库
      * @param storageId
      * @param productAttrId
-     * @param inStockNum
+     * @param outStockNum
      * @return
      */
-    Integer updateSock(@Param("storageId") Long storageId, @Param("productAttrId") Long productAttrId, @Param("stockNum") Long inStockNum);
+    Integer updateSock(@Param("storageId") Long storageId, @Param("productAttrId") Long productAttrId, @Param("stockNum") Long outStockNum);
 
     /**
      * 分页查询
