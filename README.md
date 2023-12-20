@@ -155,9 +155,9 @@ Redis安装可直接使用yum安装
 
 超级管理员  admin 账号密码 （公众号上有）
 
-客户端   http://h5.kxmalls.vip   账号 16666666666  密码 123456
+客户端   https://h5.kxmalls.vip   账号 16666666666  密码 123456
 
-骑手端   http://rider.kxmalls.vip   账号 13333333333   密码 123456
+骑手端   https://rider.kxmalls.vip   账号 13333333333   密码 123456
 
 #### 版权声明
 
