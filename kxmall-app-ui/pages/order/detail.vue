@@ -326,7 +326,7 @@
 				this.Total = x
 			},
 			countDown(){
-				let date=this.orderDetail.createTime.getTime() //现在的时间戳
+        let date=new Date(this.orderDetail.createTime).getTime() //现在的时间戳
 				let datenew=new Date().getTime() //现在的时间戳
 				// that.orderDetail.gmtCreate
 				let date1=date+(60000*15)  //十五分钟后的时间戳
