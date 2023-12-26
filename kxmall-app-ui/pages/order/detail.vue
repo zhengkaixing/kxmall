@@ -281,7 +281,7 @@
 						if (e.confirm) {
 							// that.submiting = true
 							that.$api.request('get', 'order/app/cancel', {
-								orderNo: this.orderDetail.orderNo
+								orderNo: this.orderDetail.orderId
 							}, failres => {
 								// that.submiting = false
 								that.$api.msg(failres.msg)
@@ -409,7 +409,7 @@
 				uni.showLoading({})
 				const that = this
 				that.$api.request('post', 'order/app/wxPrepay', {
-					orderNo : this.orderDetail.orderNo
+					orderNo : this.orderDetail.orderId
 				}, failres => {
 					that.submiting = false
 					that.$api.msg(failres.msg)
