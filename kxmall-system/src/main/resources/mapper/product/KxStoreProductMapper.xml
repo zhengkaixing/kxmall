@@ -75,8 +75,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and b.storage_id = #{storageId}
         and a.is_show = 1
         and b.status= 1
-        <if test="title != null">
-            and a.title like CONCAT('%',#{title},'%')
+        <if test="title != null  and title != ''">
+            and a.store_name like CONCAT('%',#{title},'%')
         </if>
         <if test="categoryId != null">
             and a.cate_id = #{categoryId}
@@ -105,8 +105,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and b.storage_id = #{storageId}
         and a.is_show = 1
         and b.status= 1
-        <if test="title != null">
-            and a.title like CONCAT('%',#{title},'%')
+        <if test="title != null and title != ''">
+            and a.store_name like CONCAT('%',#{title},'%')
         </if>
         <if test="categoryId != null">
             and a.cate_id = #{categoryId}
