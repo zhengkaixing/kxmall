@@ -2,6 +2,7 @@ package com.kxmall.order.domain.bo;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +17,9 @@ public class OrderRequestBo {
     /**
      * 商品支付总价
      */
-    private Integer totalPrice;
+    private BigDecimal totalPrice;
 
-    private Integer totalOriginalPrice;
+    private BigDecimal totalOriginalPrice;
 
     private Long addressId;
 
@@ -31,7 +32,7 @@ public class OrderRequestBo {
      */
     private String takeWay;
 
-    private Integer freightPrice;
+    private BigDecimal freightPrice;
 
     /**
      * 预计到达时间

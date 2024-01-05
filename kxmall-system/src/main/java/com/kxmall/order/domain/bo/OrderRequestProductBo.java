@@ -2,6 +2,8 @@ package com.kxmall.order.domain.bo;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * Created by admin on 2019/7/6.
  */
@@ -10,7 +12,7 @@ public class OrderRequestProductBo {
 
     private Long productId;
 
-    private Integer price;
+    private BigDecimal price;
 
     private Integer cartNum;
 

@@ -79,7 +79,7 @@ public class OrderConcreteBuilder extends OrderBuilder {
         if (CollectionUtils.isEmpty(skuList) || orderRequest.getTotalPrice() == null) {
             throw new ServiceException("参数校验失败");
         }
-        if (orderRequest.getTotalPrice() <= 0) {
+        if (orderRequest.getTotalPrice().compareTo(BigDecimal.ZERO) <= 0) {
             throw new ServiceException("订单金额必须大于0");
         }
     }
