@@ -66,6 +66,8 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
 
     private final KxStockMapper kxStockMapper;
 
+    private final KxStoreCategoryMapper categoryMapper;
+
     /**
      * 查询商品
      */
@@ -220,7 +222,11 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
             bo.setDescription(RegexUtil.converProductDescription(bo.getDescription()));
         }
         ProductResultVo resultDTO = this.computedProduct(bo.getAttrs());
-
+        //只能是二级分类
+        Long count = categoryMapper.selectCount(new LambdaQueryWrapper<KxStoreCategory>().ne(KxStoreCategory::getPid, 0L).eq(KxStoreCategory::getId, bo.getCateId()));
+        if (count == 0L) {
+            throw new ServiceException("请选择二级分类");
+        }
         //添加商品
         KxStoreProduct kxStoreProduct = new KxStoreProduct();
         BeanUtil.copyProperties(bo, kxStoreProduct, "sliderImage");

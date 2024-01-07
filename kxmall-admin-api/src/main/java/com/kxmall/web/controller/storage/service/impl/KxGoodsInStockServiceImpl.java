@@ -98,6 +98,7 @@ public class KxGoodsInStockServiceImpl implements IKxGoodsInStockService {
         lqw.eq(bo.getIngoingTime() != null, KxGoodsInStock::getIngoingTime, bo.getIngoingTime());
         lqw.eq(StringUtils.isNotBlank(bo.getRemarks()), KxGoodsInStock::getRemarks, bo.getRemarks());
         lqw.eq(StringUtils.isNotBlank(bo.getOutgoingDay()), KxGoodsInStock::getOutgoingDay, bo.getOutgoingDay());
+        lqw.orderByDesc(KxGoodsInStock::getId);
         return lqw;
     }
 
