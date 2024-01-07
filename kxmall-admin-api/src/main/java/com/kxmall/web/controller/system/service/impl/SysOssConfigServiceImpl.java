@@ -58,8 +58,8 @@ public class SysOssConfigServiceImpl implements ISysOssConfigService {
             String configKey = config.getConfigKey();
             if ("0".equals(config.getStatus())) {
                 RedisUtils.setCacheObject(OssConstant.DEFAULT_CONFIG_KEY, configKey);
+                SpringUtils.context().publishEvent(config);
             }
-            SpringUtils.context().publishEvent(config);
         }
         // 初始化OSS工厂
         OssFactory.init();
