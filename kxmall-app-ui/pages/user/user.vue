@@ -80,6 +80,11 @@
                  style="width: 32rpx;height: 36rpx;"></image>
           <view class="padding-left-sm lem-text-black" style="font-size: 28rpx;">设置</view>
         </view>
+        <view @click="navTo('/pages/notice/notice')" class="flex align-center padding">
+          <image src="../../static/user/notice@3x.png" mode="aspectFit"
+                 style="width: 32rpx;height: 36rpx;"></image>
+          <view class="padding-left-sm lem-text-black" style="font-size: 28rpx;">通知</view>
+        </view>
       </view>
     </view>
     <view v-else style="padding-top: 180rpx;padding-bottom: 180rpx;">
