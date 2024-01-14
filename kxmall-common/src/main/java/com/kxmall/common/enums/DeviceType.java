@@ -30,7 +30,8 @@ public enum DeviceType {
                 return value;
             }
         }
-        throw new RuntimeException("'DeviceType' not found By " + str);
+        return null;
+        //throw new RuntimeException("'DeviceType' not found By " + str);
     }
 
     private final String device;

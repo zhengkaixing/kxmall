@@ -3,11 +3,14 @@ package com.kxmall.web.controller.product;
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.kxmall.common.core.controller.BaseAppController;
 import com.kxmall.common.core.domain.R;
+import com.kxmall.common.enums.DeviceType;
+import com.kxmall.common.helper.LoginHelper;
 import com.kxmall.product.domain.vo.KxStoreCategoryVo;
 import com.kxmall.product.domain.vo.KxStoreProductVo;
 import com.kxmall.web.controller.product.service.IKxAppCategoryService;
 import com.kxmall.web.controller.product.service.IKxAppProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +41,11 @@ public class KxAppProductController extends BaseAppController {
     @SaIgnore
     @GetMapping("/getGoodsByStorage")
     public R<KxStoreProductVo> getGoodsByStorage(Long storageId, Long productId) {
-        Long userId = getAppLoginUser().getUserId();
+        Long userId = 0L;
+        DeviceType deviceType = LoginHelper.getDeviceType();
+        if (!ObjectUtils.isEmpty(deviceType)) {
+            userId = getAppLoginUser().getUserId();
+        }
         return R.ok(appProductService.getGoodsByStorage(storageId, productId, userId));
     }
 

@@ -2,18 +2,18 @@ package com.kxmall.web.controller.order;
 
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.kxmall.common.core.controller.BaseAppController;
-import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.R;
+import com.kxmall.common.enums.DeviceType;
+import com.kxmall.common.helper.LoginHelper;
 import com.kxmall.order.domain.vo.KxStoreCartVo;
-import com.kxmall.storage.domain.vo.RecentlyStorageVo;
 import com.kxmall.web.controller.order.service.IKxAppCartService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -36,18 +36,28 @@ public class KxAppCartController extends BaseAppController {
      * 获取购物车数量
      */
     @GetMapping("/countCart")
+    @SaIgnore
     public R<Long> countCart(Long storageId) {
-        Long userId = getAppLoginUser().getUserId();
-        return R.ok(kxAppCartService.countCart(storageId,userId));
+        Long userId = 0L;
+        DeviceType deviceType = LoginHelper.getDeviceType();
+        if (!ObjectUtils.isEmpty(deviceType)) {
+            userId = getAppLoginUser().getUserId();
+        }
+        return R.ok(kxAppCartService.countCart(storageId, userId));
     }
 
     /**
      * 获取购物车商品列表
      */
     @GetMapping("/getCartList")
+    @SaIgnore
     public R<List<KxStoreCartVo>> getCartList(Long storageId) {
-        Long userId = getAppLoginUser().getUserId();
-        return R.ok(kxAppCartService.getCartList(storageId,userId));
+        Long userId = 0L;
+        DeviceType deviceType = LoginHelper.getDeviceType();
+        if (!ObjectUtils.isEmpty(deviceType)) {
+            userId = getAppLoginUser().getUserId();
+        }
+        return R.ok(kxAppCartService.getCartList(storageId, userId));
     }
 
 
@@ -55,9 +65,9 @@ public class KxAppCartController extends BaseAppController {
      * 获取购物车商品列表
      */
     @GetMapping("/addCartItem")
-    public R<KxStoreCartVo> addCartItem(Long productId,Long num) {
+    public R<KxStoreCartVo> addCartItem(Long productId, Long num) {
         Long userId = getAppLoginUser().getUserId();
-        return R.ok(kxAppCartService.addCartItem(productId,num,userId));
+        return R.ok(kxAppCartService.addCartItem(productId, num, userId));
     }
 
 
@@ -65,9 +75,9 @@ public class KxAppCartController extends BaseAppController {
      * 更新购物车数量
      */
     @GetMapping("/updateCartItemNum")
-    public R<Long> updateCartItemNum(Long cartId,Long num) {
+    public R<Long> updateCartItemNum(Long cartId, Long num) {
         Long userId = getAppLoginUser().getUserId();
-        return R.ok(kxAppCartService.updateCartItemNum(cartId,num,userId));
+        return R.ok(kxAppCartService.updateCartItemNum(cartId, num, userId));
     }
 
     /**
@@ -76,6 +86,6 @@ public class KxAppCartController extends BaseAppController {
     @GetMapping("/removeCartItem")
     public R<Boolean> removeCartItem(Long cartId) {
         Long userId = getAppLoginUser().getUserId();
-        return R.ok(kxAppCartService.removeCartItem(cartId,userId));
+        return R.ok(kxAppCartService.removeCartItem(cartId, userId));
     }
 }
