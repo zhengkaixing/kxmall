@@ -282,7 +282,7 @@
 			})
 			that.$api.request('get', 'product/app/getGoodsByStorage', {
 				productId: options.id,
-				storageId:this.storageId
+        storageId: options.storageId ? options.storageId : this.storageId
 			}, failres => {
 				that.$api.msg(failres.msg)
 				uni.hideLoading()
@@ -314,9 +314,9 @@
 		},
 		onShareAppMessage() {
 			return {
-				title: (this.goods.groupShop ? '立即拼团-' : '好货分享-') + this.goods.title,
+				title: (this.goods.groupShop ? '立即拼团-' : '好货分享-') + this.goods.storeName,
 				imageUrl: this.goods.img,
-				path: '/pages/product/detail?id=' + this.goods.id + (this.goods.groupShop ? '&gid=' + this.goods.groupShop.id : '')
+				path: '/pages/product/detail?id=' + this.goods.id + (this.goods.groupShop ? '&gid=' + this.goods.groupShop.id : '')+'&storageId='+this.$store.state.storageId
 			}
 		},
 		methods: {
@@ -341,7 +341,7 @@
 				console.log(type)
 				if(type == 'miniwechat'){
 					uni.showShareMenu({
-						title: (this.goods.groupShop ? '立即拼团-' : '好货分享-') + this.goods.title,
+						title: (this.goods.groupShop ? '立即拼团-' : '好货分享-') + this.goods.storeName,
 						imageUrl: this.goods.img,
 						path: '/pages/product/detail?id=' + this.goods.id + (this.goods.groupShop ? '&gid=' + this.goods.groupShop.id : '')
 					})
