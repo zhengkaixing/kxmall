@@ -17,7 +17,7 @@
 					<view v-for="(item,index) in tabItem.orderList" :key="index" class="order-item">
 						<navigator :url="'/pages/order/detail?orderid=' + item.id">
 							<view class="i-top b-b">
-								<text class="time">{{item.createTime | dateFormat}}</text>
+								<text class="time">{{item.createTime}}</text>
 								<text class="state">{{item.stateText}}</text>
 							</view>
 
