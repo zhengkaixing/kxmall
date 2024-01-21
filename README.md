@@ -169,7 +169,7 @@ Redis安装可直接使用yum安装
 
 ### 贡献说明
 
-如果你有好的意见或建议，欢迎给我们提 Issues 或 Pull Requests，为Kxmall开源商城贡献力量。
+如果你有好的意见或建议，欢迎给我们提 Issues 或 Pull Requests，为kxmall开源商城贡献力量。
 
 
 ### SaaS服务
