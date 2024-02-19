@@ -220,6 +220,12 @@
 			missing
 		},
 		async onLoad(options) {
+      //#ifdef MP-WEIXIN
+      wx.showShareMenu({
+        withShareTicket: true,
+        menus: ['shareAppMessage', 'shareTimeline']
+      });
+      //#endif
 			//#ifdef H5
 			//H5进入，有可能是回调进来的
 			if (options.code && options.state) {
@@ -362,6 +368,18 @@
 				// #endif
 			}).exec();
 		},
+    onShareAppMessage(res) { //发送给朋友
+      return {
+        title: this.share.title,
+        imageUrl: this.share.imageUrl,
+      }
+    },
+    onShareTimeline(res) {//分享到朋友圈
+      return {
+        title: this.share.title,
+        imageUrl: this.share.imageUrl,
+      }
+    },
 		methods: {
 			async loadData(id) {
 				const that = this
