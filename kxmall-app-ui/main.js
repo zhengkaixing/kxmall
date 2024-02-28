@@ -154,56 +154,52 @@ const request = (method, endpoint, data = {}, failCallback) => {
 }
 
 const uploadImg = (num = 9,successCallback) => {
+	userInfo = uni.getStorageSync('userInfo');
+	var accessToken = userInfo ? userInfo.accessToken : '';
 	let baseUrl = config.def().baseUrl
 	uni.chooseImage({
-		sizeType: ['compressed'],
-		count:num,
-		success: function(res) {
-			for (let i = 0; i < res.tempFilePaths.length; i++) {
-				uni.request({
-					url: baseUrl + '/upload',
-					method: 'get',
-					success: function(signRes) {
-						uni.showLoading({
-							title: '图片上传中',
-						})
-						let fileName = ('imgs/' + random_string(15) + get_suffix(res.tempFilePaths[i]))
-						uni.uploadFile({
-							url: signRes.data.baseUrl,
-							filePath: res.tempFilePaths[i],
-							name: 'file',
-							formData: {
-								name: res.tempFilePaths[i],
-								key: fileName,
-								policy: signRes.data.policy,
-								OSSAccessKeyId: signRes.data.accessid,
-								success_action_status: '200',
-								signature: signRes.data.signature
-							},
-							success: function(uploadRes) {
-								uni.hideLoading()
-								if (uploadRes.code === 200) {
-									if (successCallback) {
-										successCallback(signRes.data.baseUrl + fileName)
-									} else {
-										uni.showToast({
-											title: '上传成功',
-											icon: 'none'
-										})
-									}
-								} else {
-									uni.hideLoading()
-									uni.showToast({
-										title: '网络错误 code=' + uploadRes.code,
-										icon: 'none'
-									})
-								}
+		count: 1,
+		sourceType: ['album'],
+		success: res => {
+			uni.getImageInfo({
+				src: res.tempFilePaths[0],
+				success: image => {
+					console.log(image)
+					uni.showLoading({ title: '图片上传中', mask: true })
+					uni.uploadFile({
+						url: baseUrl + `/oss/app/upload`,
+						file: image,
+						filePath: image.path,
+						header: {
+							Authorization: 'Bearer ' + accessToken,
+						},
+						name: 'file',
+						success: res => {
+							if (successCallback) {
+								successCallback(JSON.parse(res.data).data.url)
 							}
-						})
-					}
-				})
-			}
-		}
+						},
+						fail: err => {
+							uni.showToast({
+								title: '上传图片失败',
+								icon: 'none',
+								duration: 2000,
+							})
+						},
+						complete: res => {
+							uni.hideLoading()
+						},
+					})
+				},
+				fail: err => {
+					uni.showToast({
+						title: '获取图片信息失败',
+						icon: 'none',
+						duration: 2000,
+					})
+				},
+			})
+		},
 	})
 }
 
