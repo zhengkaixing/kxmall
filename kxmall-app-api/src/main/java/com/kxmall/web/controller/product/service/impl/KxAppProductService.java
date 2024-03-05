@@ -188,6 +188,17 @@ public class KxAppProductService implements IKxAppProductService {
             if (userId != null) {
                 userFootprintService.addOrUpdateFootprint(userId, productId);
             }
+            //查询库存信息
+            KxStock kxStock = new KxStock();
+            kxStock.setProductId(productId);
+            kxStock.setStorageId(storageId);
+            kxStock = stockMapper.selectOne(new QueryWrapper<>(kxStock));
+
+            KxStockVo stockVo = new KxStockVo();
+            if (!ObjectUtils.isEmpty(kxStock)) {
+                BeanUtils.copyProperties(kxStock, stockVo);
+            }
+            storeProductVo.setKxStockVo(stockVo);
             return storeProductVo;
         }
         //是否为活动商品
