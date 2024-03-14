@@ -183,6 +183,7 @@
 			}).then( res => {
 				uni.hideLoading()
 				this.tlist = this.tlist.concat(res.data.rows)
+        this.loadCartData()
 				this.count = res.data.total / this.pageSize + (res.data.total % this.pageSize == 0 ? 0 : 1)
 			})
 		},
