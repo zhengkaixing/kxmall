@@ -278,8 +278,8 @@
                     cateName:'全部',
 					id:this.currentId
 				}
-				if(item.childrenList){
-                    this.slist = this.slist.concat(item.childrenList)
+				if(item.children){
+                    this.slist = this.slist.concat(item.children)
                     this.sTitle = this.slist[1].cateName
                 }
 				console.log(this.slist)
