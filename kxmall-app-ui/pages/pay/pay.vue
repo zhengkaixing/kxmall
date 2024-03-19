@@ -72,8 +72,8 @@
 				const that = this
 				if (that.payType === 1) {
 					that.submiting = true
-					that.$api.request('post', 'order/app/wxPrepay', {
-						orderNo : that.orderNo
+					that.$api.request('get', 'order/app/wxPrepay', {
+						orderId : that.orderNo
 					}, failres => {
 						that.submiting = false
 						that.$api.msg(failres.msg)
