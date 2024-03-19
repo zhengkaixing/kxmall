@@ -66,7 +66,7 @@
 			</view>
 		</view>
 		<view v-if="storage" class="bg-white padding-lr">
-			<image @click="naviageToPage(indexBanner.url)" src="https://s1.ax1x.com/2020/04/07/G2urVA.png"
+			<image @click="naviageToPage(indexBanner.url)" src="https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/G2urVA.png"
 			 mode="aspectFit" style="width: 690rpx;height:174rpx ;padding-top: 8rpx;"></image>
 			<view class="cate-section">
 				<view v-for="(item, index) in categoryButtomList" :key="index" @click="naviageToPage(item.url+('&id='+item.id),item.title)"
