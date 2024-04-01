@@ -100,7 +100,7 @@ public class KxStoreProductRuleController extends BaseController {
     @Log(title = "商品规格", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
     public R<Void> remove(@NotEmpty(message = "主键不能为空")
-                          @PathVariable Integer[] ids) {
+                          @PathVariable Long[] ids) {
         return toAjax(iWmStoreProductRuleService.deleteWithValidByIds(Arrays.asList(ids), true));
     }
 }

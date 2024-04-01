@@ -100,7 +100,7 @@ public class KxStoreProductRuleServiceImpl implements IKxStoreProductRuleService
      * 批量删除商品规格
      */
     @Override
-    public Boolean deleteWithValidByIds(Collection<Integer> ids, Boolean isValid) {
+    public Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid) {
         if(isValid){
             //TODO 做一些业务上的校验,判断是否需要校验
         }

@@ -44,7 +44,7 @@ public interface IKxStoreProductRuleService {
     /**
      * 校验并批量删除商品规格信息
      */
-    Boolean deleteWithValidByIds(Collection<Integer> ids, Boolean isValid);
+    Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid);
 
     List<KxStoreProductRuleVo> queryListAll();
 }
