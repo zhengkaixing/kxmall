@@ -401,14 +401,16 @@
 					//橱窗
 					that.windowSpuList = data.cheapRecommend
 					//轮播
-					data.carouseList.t1.forEach(item => {
-						if (!item.color) {
-							item.color = 'rgb(205, 215, 218)'
-						}
-					})
-					that.carouselList = data.carouseList.t1
-					that.swiperLength = data.carouseList.t1.length
-					that.titleNViewBackground = data.carouseList.t1[0].color
+          if(data.carouseList.t1) {
+            data.carouseList.t1.forEach(item => {
+              if (!item.color) {
+                item.color = 'rgb(205, 215, 218)'
+              }
+            })
+            that.carouselList = data.carouseList.t1
+            that.swiperLength = data.carouseList.t1.length
+            that.titleNViewBackground = data.carouseList.t1[0].color
+          }
 					if (data.cheapRecommend) {
 						that.cheapRecommend = data.cheapRecommend
 					}
