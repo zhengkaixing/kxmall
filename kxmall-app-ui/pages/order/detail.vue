@@ -409,8 +409,8 @@
 				// #endif
 				uni.showLoading({})
 				const that = this
-				that.$api.request('post', 'order/app/wxPrepay', {
-					orderNo : this.orderDetail.orderId
+				that.$api.request('get', 'order/app/wxPrepay', {
+					orderId : this.orderDetail.orderId
 				}, failres => {
 					that.submiting = false
 					that.$api.msg(failres.msg)
