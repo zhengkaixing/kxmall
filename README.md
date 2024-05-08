@@ -54,6 +54,7 @@ kxmall项目结构:
 
 ---
 - H5客户端（可打包成小程序、APP）
+  - app(apk下载地址): [kxmall-apk](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall.apk)
   - 演示地址: [https://h5.kxmall.vip](https://h5.kxmall.vip)
   - 登录名:13333333333 验证码:666666 （访问请打开浏览器F12开发模式,使用手机模式进行操作）
   - 客户端由于调用地图需要https，所以程序目前固定id为11仓库
