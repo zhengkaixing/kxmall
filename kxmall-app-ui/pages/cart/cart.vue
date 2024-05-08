@@ -479,6 +479,9 @@
     /* #ifdef MP-WEIXIN */
     bottom: 0px;
     /* #endif */
+    /* #ifdef APP-PLUS */
+    bottom: 0px;
+    /* #endif */
     width: 750rpx;
     z-index: 99999;
   }
