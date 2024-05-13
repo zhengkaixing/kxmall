@@ -65,4 +65,9 @@ public class KxCarouselVo {
      * 附加广告数据
      */
     private Object data;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
 }

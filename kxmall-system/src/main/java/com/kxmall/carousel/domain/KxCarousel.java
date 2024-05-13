@@ -49,4 +49,9 @@ public class KxCarousel extends BaseEntity {
      */
     private String outUrl;
 
+    /**
+     * 排序
+     */
+    private Integer sort;
+
 }

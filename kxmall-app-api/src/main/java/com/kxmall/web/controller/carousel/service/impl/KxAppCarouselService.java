@@ -35,6 +35,7 @@ public class KxAppCarouselService implements IKxAppCarouselService {
             if (adType != 99) {
                 wrapper.eq(KxCarousel::getAdType, adType);
             }
+            wrapper.orderByDesc(KxCarousel::getSort);
             cacheList = baseMapper.selectList(wrapper);
             RedisUtils.setCacheList(ADVERTISEMENT_NAME + adType, cacheList);
         }
