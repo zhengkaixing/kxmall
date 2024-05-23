@@ -17,6 +17,14 @@ export function getConfig(configId) {
   })
 }
 
+// 查询参数详细
+export function getCategoryConfig(category) {
+  return request({
+    url: '/system/config/configKey/category/' + category,
+    method: 'get'
+  })
+}
+
 // 根据参数键名查询参数值
 export function getConfigKey(configKey) {
   return request({
@@ -29,6 +37,16 @@ export function getConfigKey(configKey) {
 export function addConfig(data) {
   return request({
     url: '/system/config',
+    method: 'post',
+    data: data
+  })
+}
+
+
+// 新增参数配置
+export function saveConfig(data) {
+  return request({
+    url: '/system/config/saveConfig',
     method: 'post',
     data: data
   })
