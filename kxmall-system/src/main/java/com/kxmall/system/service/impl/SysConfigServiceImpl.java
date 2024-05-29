@@ -2,8 +2,10 @@ package com.kxmall.system.service.impl;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kxmall.common.constant.CacheNames;
 import com.kxmall.common.constant.UserConstants;
@@ -11,6 +13,7 @@ import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.core.service.ConfigService;
 import com.kxmall.common.exception.ServiceException;
+import com.kxmall.common.helper.LoginHelper;
 import com.kxmall.common.utils.StringUtils;
 import com.kxmall.common.utils.redis.CacheUtils;
 import com.kxmall.common.utils.spring.SpringUtils;
@@ -23,6 +26,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +45,11 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
     public TableDataInfo<SysConfig> selectPageConfigList(SysConfig config, PageQuery pageQuery) {
         Map<String, Object> params = config.getParams();
         LambdaQueryWrapper<SysConfig> lqw = new LambdaQueryWrapper<SysConfig>()
-            .like(StringUtils.isNotBlank(config.getConfigName()), SysConfig::getConfigName, config.getConfigName())
-            .eq(StringUtils.isNotBlank(config.getConfigType()), SysConfig::getConfigType, config.getConfigType())
-            .like(StringUtils.isNotBlank(config.getConfigKey()), SysConfig::getConfigKey, config.getConfigKey())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysConfig::getCreateTime, params.get("beginTime"), params.get("endTime"));
+                .like(StringUtils.isNotBlank(config.getConfigName()), SysConfig::getConfigName, config.getConfigName())
+                .eq(StringUtils.isNotBlank(config.getConfigType()), SysConfig::getConfigType, config.getConfigType())
+                .like(StringUtils.isNotBlank(config.getConfigKey()), SysConfig::getConfigKey, config.getConfigKey())
+                .between(params.get("beginTime") != null && params.get("endTime") != null,
+                        SysConfig::getCreateTime, params.get("beginTime"), params.get("endTime"));
         Page<SysConfig> page = baseMapper.selectPage(pageQuery.build(), lqw);
         return TableDataInfo.build(page);
     }
@@ -72,7 +76,22 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
     @Override
     public String selectConfigByKey(String configKey) {
         SysConfig retConfig = baseMapper.selectOne(new LambdaQueryWrapper<SysConfig>()
-            .eq(SysConfig::getConfigKey, configKey));
+                .eq(SysConfig::getConfigKey, configKey));
+        if (ObjectUtil.isNotNull(retConfig)) {
+            return retConfig.getConfigValue();
+        }
+        return StringUtils.EMPTY;
+    }
+
+    /**
+     * 没有缓存
+     * @param configKey 参数键名
+     * @return
+     */
+    @Override
+    public String selectConfigByKeyNoCache(String configKey) {
+        SysConfig retConfig = baseMapper.selectOne(new LambdaQueryWrapper<SysConfig>()
+                .eq(SysConfig::getConfigKey, configKey));
         if (ObjectUtil.isNotNull(retConfig)) {
             return retConfig.getConfigValue();
         }
@@ -103,11 +122,11 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
     public List<SysConfig> selectConfigList(SysConfig config) {
         Map<String, Object> params = config.getParams();
         LambdaQueryWrapper<SysConfig> lqw = new LambdaQueryWrapper<SysConfig>()
-            .like(StringUtils.isNotBlank(config.getConfigName()), SysConfig::getConfigName, config.getConfigName())
-            .eq(StringUtils.isNotBlank(config.getConfigType()), SysConfig::getConfigType, config.getConfigType())
-            .like(StringUtils.isNotBlank(config.getConfigKey()), SysConfig::getConfigKey, config.getConfigKey())
-            .between(params.get("beginTime") != null && params.get("endTime") != null,
-                SysConfig::getCreateTime, params.get("beginTime"), params.get("endTime"));
+                .like(StringUtils.isNotBlank(config.getConfigName()), SysConfig::getConfigName, config.getConfigName())
+                .eq(StringUtils.isNotBlank(config.getConfigType()), SysConfig::getConfigType, config.getConfigType())
+                .like(StringUtils.isNotBlank(config.getConfigKey()), SysConfig::getConfigKey, config.getConfigKey())
+                .between(params.get("beginTime") != null && params.get("endTime") != null,
+                        SysConfig::getCreateTime, params.get("beginTime"), params.get("endTime"));
         return baseMapper.selectList(lqw);
     }
 
@@ -145,7 +164,7 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
             row = baseMapper.updateById(config);
         } else {
             row = baseMapper.update(config, new LambdaQueryWrapper<SysConfig>()
-                .eq(SysConfig::getConfigKey, config.getConfigKey()));
+                    .eq(SysConfig::getConfigKey, config.getConfigKey()));
         }
         if (row > 0) {
             return config.getConfigValue();
@@ -177,7 +196,7 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
     public void loadingConfigCache() {
         List<SysConfig> configsList = selectConfigList(new SysConfig());
         configsList.forEach(config ->
-            CacheUtils.put(CacheNames.SYS_CONFIG, config.getConfigKey(), config.getConfigValue()));
+                CacheUtils.put(CacheNames.SYS_CONFIG, config.getConfigKey(), config.getConfigValue()));
     }
 
     /**
@@ -211,6 +230,53 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
+    }
+
+    @Override
+    @CachePut(cacheNames = CacheNames.SYS_CONFIG,key = "#category")
+    public List<SysConfig> saveConfig(String category,JSONObject jsonObject) {
+        jsonObject.forEach(
+                (key, value) -> {
+                    if ("category".equals(key)) {
+                        return;
+                    }
+                    SysConfig query = new SysConfig();
+                    query.setConfigKey(key);
+                    query.setCategory(category);
+                    SysConfig sysConfig = baseMapper.selectOne(new QueryWrapper<>(query));
+                    SysConfig kxmallSystemConfigModel = new SysConfig();
+                    kxmallSystemConfigModel.setConfigName(key);
+                    kxmallSystemConfigModel.setConfigKey(key);
+                    kxmallSystemConfigModel.setConfigValue(value.toString());
+                    kxmallSystemConfigModel.setCategory(category);
+                    kxmallSystemConfigModel.setRemark("自定义配置");
+                    kxmallSystemConfigModel.setConfigType("Y");
+
+                    Date now = new Date();
+                    kxmallSystemConfigModel.setUpdateTime(now);
+                    if (ObjectUtil.isNull(sysConfig)) {
+                        kxmallSystemConfigModel.setCreateTime(now);
+                        kxmallSystemConfigModel.setCreateBy(LoginHelper.getUsername());
+                        baseMapper.insert(kxmallSystemConfigModel);
+                    } else {
+                        kxmallSystemConfigModel.setConfigId(sysConfig.getConfigId());
+                        kxmallSystemConfigModel.setUpdateBy(LoginHelper.getUsername());
+                        baseMapper.updateById(kxmallSystemConfigModel);
+                    }
+                }
+        );
+        this.resetConfigCache();
+        LambdaQueryWrapper<SysConfig> lqw = new LambdaQueryWrapper<SysConfig>()
+                .eq(StringUtils.isNotBlank(category), SysConfig::getCategory, category);
+        return baseMapper.selectList(lqw);
+    }
+
+    @Override
+    @Cacheable(cacheNames = CacheNames.SYS_CONFIG, key = "#category")
+    public List<SysConfig> selectConfigCategoryByKey(String category) {
+        LambdaQueryWrapper<SysConfig> lqw = new LambdaQueryWrapper<SysConfig>()
+                .eq(StringUtils.isNotBlank(category), SysConfig::getCategory, category);
+        return baseMapper.selectList(lqw);
     }
 
     /**

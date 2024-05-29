@@ -1,8 +1,9 @@
 package com.kxmall.system.service;
 
-import com.kxmall.system.domain.SysConfig;
+import com.alibaba.fastjson.JSONObject;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.page.TableDataInfo;
+import com.kxmall.system.domain.SysConfig;
 
 import java.util.List;
 
@@ -31,6 +32,15 @@ public interface ISysConfigService {
      * @return 参数键值
      */
     String selectConfigByKey(String configKey);
+
+
+    /**
+     * 根据键名查询参数配置信息
+     *
+     * @param configKey 参数键名
+     * @return 参数键值
+     */
+    String selectConfigByKeyNoCache(String configKey);
 
     /**
      * 获取验证码开关
@@ -92,5 +102,18 @@ public interface ISysConfigService {
      * @return 结果
      */
     String checkConfigKeyUnique(SysConfig config);
+
+    /**
+     * 保存指定参数（自定义）
+     * @param jsonStr
+     */
+    List<SysConfig> saveConfig(String category,JSONObject jsonObject);
+
+    /**
+     * 查询分组下参数
+     * @param category
+     * @return
+     */
+    List<SysConfig> selectConfigCategoryByKey(String category);
 
 }

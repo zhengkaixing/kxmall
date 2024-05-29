@@ -68,4 +68,9 @@ public class SysConfig extends BaseEntity {
      */
     private String remark;
 
+    /**
+     * 分组
+     */
+    private String category;
+
 }

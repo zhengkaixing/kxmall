@@ -1,6 +1,8 @@
 package com.kxmall.web.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.kxmall.common.annotation.Log;
 import com.kxmall.common.constant.UserConstants;
 import com.kxmall.common.core.controller.BaseController;
@@ -9,6 +11,7 @@ import com.kxmall.common.core.domain.R;
 import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.enums.BusinessType;
 import com.kxmall.common.utils.poi.ExcelUtil;
+import com.kxmall.common.utils.redis.RedisUtils;
 import com.kxmall.system.domain.SysConfig;
 import com.kxmall.system.service.ISysConfigService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +33,11 @@ import java.util.List;
 public class SysConfigController extends BaseController {
 
     private final ISysConfigService configService;
+
+    /**
+     * 缓存  CA_PRODUCT_+productId
+     */
+    public static final String CA_PRODUCT_PREFIX = "CA_PRODUCT_";
 
     /**
      * 获取参数配置列表
@@ -73,6 +81,16 @@ public class SysConfigController extends BaseController {
     }
 
     /**
+     * 根据分组参数键名查询参数值
+     *
+     * @param category 参数Key
+     */
+    @GetMapping(value = "/configKey/category/{category}")
+    public R<List<SysConfig>> getConfigCategoryKey(@PathVariable String category) {
+        return R.ok(configService.selectConfigCategoryByKey(category));
+    }
+
+    /**
      * 新增参数配置
      */
     @SaCheckPermission("system:config:add")
@@ -83,6 +101,20 @@ public class SysConfigController extends BaseController {
             return R.fail("新增参数'" + config.getConfigName() + "'失败，参数键名已存在");
         }
         configService.insertConfig(config);
+        return R.ok();
+    }
+
+    /**
+     * 新增参数配置(自定义)
+     */
+    @PostMapping("/saveConfig")
+    public R<Void> saveConfig(@RequestBody String jsonStr) {
+        JSONObject jsonObject = JSON.parseObject(jsonStr);
+        String category = jsonObject.getString("category");
+        configService.saveConfig(category,jsonObject);
+
+        //保存成功删除对应缓存
+        RedisUtils.deleteKeys(CA_PRODUCT_PREFIX + "*");
         return R.ok();
     }
 
