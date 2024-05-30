@@ -241,7 +241,7 @@
 					// uni.redirectTo({
 					// 	url: '/pages/pay/pay?orderno=' + res.data + '&price=' + that.orderReqeust.totalPrice
 					// })
-					that.confirm(res.data)
+          that.confirm(res.msg,(that.orderReqeust.totalPrice))
 				})
 
 			},
