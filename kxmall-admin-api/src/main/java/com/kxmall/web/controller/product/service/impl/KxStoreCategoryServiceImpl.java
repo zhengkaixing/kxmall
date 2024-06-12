@@ -1,6 +1,7 @@
 package com.kxmall.web.controller.product.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.kxmall.common.utils.redis.RedisUtils;
 import com.kxmall.product.domain.KxStoreCategory;
 import com.kxmall.product.domain.bo.KxStoreCategoryBo;
 import com.kxmall.common.core.page.TableDataInfo;
@@ -30,6 +31,8 @@ import java.util.stream.Collectors;
 public class KxStoreCategoryServiceImpl implements IKxStoreCategoryService {
 
     private final KxStoreCategoryMapper baseMapper;
+
+    public static final String CA_CATEGORY_LIST = "CA_CATEGORY_LIST";
 
     /**
      * 查询商品分类
@@ -80,6 +83,8 @@ public class KxStoreCategoryServiceImpl implements IKxStoreCategoryService {
         if (flag) {
             bo.setId(add.getId());
         }
+        //清除缓存
+        RedisUtils.deleteObject(CA_CATEGORY_LIST);
         return flag;
     }
 
@@ -90,6 +95,8 @@ public class KxStoreCategoryServiceImpl implements IKxStoreCategoryService {
     public Boolean updateByBo(KxStoreCategoryBo bo) {
         KxStoreCategory update = BeanUtil.toBean(bo, KxStoreCategory.class);
         validEntityBeforeSave(update);
+        //清除缓存
+        RedisUtils.deleteObject(CA_CATEGORY_LIST);
         return baseMapper.updateById(update) > 0;
     }
 
@@ -108,6 +115,8 @@ public class KxStoreCategoryServiceImpl implements IKxStoreCategoryService {
         if(isValid){
             //TODO 做一些业务上的校验,判断是否需要校验
         }
+        //清除缓存
+        RedisUtils.deleteObject(CA_CATEGORY_LIST);
         return baseMapper.deleteBatchIds(ids) > 0;
     }
 
