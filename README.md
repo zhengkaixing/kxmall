@@ -31,6 +31,7 @@ kxmall项目结构:
   
 - sql: 数据库初始化SQL脚本
 
+* 官网介绍：[点我进入](https://a.kxmall.vip)&nbsp;&nbsp;
 * 阿里云折扣场：[点我进入](https://www.aliyun.com/minisite/goods?userCode=gclm7a7u)&nbsp;&nbsp;
 * 腾讯云秒杀场：[点我进入](https://url.cn/G0fq6Mm5)&nbsp;&nbsp;
 
