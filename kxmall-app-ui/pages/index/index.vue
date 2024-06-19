@@ -361,7 +361,12 @@
 			query.select('#top').boundingClientRect(data => {
 				console.log("得到布局位置信息" + JSON.stringify(data));
 				console.log("节点离页面顶部的距离为" + data.top);
-				that.topHeight = data.height + that.statusHeight - 5
+        // that.topHeight = data.height + that.statusHeight - 5
+        if (this.appear) {
+          that.topHeight = data.height - 5
+        }else {
+          that.topHeight = data.height + 40
+        }
 				// #ifdef APP-PLUS
 				that.topHeight = data.height + 20
 				console.log('占位元素高度为' + that.topHeight)
