@@ -57,4 +57,9 @@ public interface KxStoreOrderMapper extends BaseMapperPlus<KxStoreOrderMapper, K
      * @return
      */
     SalesStatementDTO getSalesByHour(@Param("storageId") Long storageId, @Param("start") Date start, @Param("end") Date end, @Param("storageIds") Set<Long> storageIds);
+
+
+    List<String> selectExpireOrderNos(@Param("status") Integer status, @Param("time") Date time);
+
+
 }

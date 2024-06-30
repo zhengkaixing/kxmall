@@ -199,4 +199,15 @@
         </if>
         and o.update_time BETWEEN #{start} and #{end}
     </select>
+
+
+    <select id="selectExpireOrderNos" resultType="java.lang.String">
+        SELECT
+            order_id
+        FROM
+            kx_store_order
+        WHERE
+            `status` = #{status}
+          AND update_time &lt; #{time}
+    </select>
 </mapper>
