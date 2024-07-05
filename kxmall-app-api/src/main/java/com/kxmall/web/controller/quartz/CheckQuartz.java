@@ -1,35 +1,22 @@
 package com.kxmall.web.controller.quartz;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.kxmall.common.enums.GroupShopAutomaticRefundType;
 import com.kxmall.common.enums.OrderStatusType;
-import com.kxmall.common.enums.StatusType;
-import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.utils.redis.RedisUtils;
-import com.kxmall.group.domain.KxGroupShop;
-import com.kxmall.group.mapper.KxGroupShopMapper;
 import com.kxmall.order.biz.OrderBizService;
 import com.kxmall.order.domain.KxStoreOrder;
 import com.kxmall.order.mapper.KxStoreOrderMapper;
-import com.kxmall.product.domain.KxStoreProduct;
-import com.kxmall.product.mapper.KxStoreProductMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
-import java.util.stream.Collectors;
 
 /**
  * 定时任务
