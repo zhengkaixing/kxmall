@@ -36,6 +36,11 @@ kxmall项目结构:
 * 阿里云折扣场：[点我进入](https://www.aliyun.com/minisite/goods?userCode=gclm7a7u)&nbsp;&nbsp;
 * 腾讯云秒杀场：[点我进入](https://url.cn/G0fq6Mm5)&nbsp;&nbsp;
 
+#### 付费社群
+[![社群](doc/media/shequ.png "shequ")](https://t.zsxq.com/pqIxF)
+> 收费是为了提供更好的服务，也是对作者更大的激励。加入星球的用户三天后可以私信我留下微信号，我会拉大家入群。加入三天内不满意可以直接退款，大家不需要有顾虑，来白嫖三天也不是不可以。
+
+
 #### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
 ---
 #### 优先更新地址
