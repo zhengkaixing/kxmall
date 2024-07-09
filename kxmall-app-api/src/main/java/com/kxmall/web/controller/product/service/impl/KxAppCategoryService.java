@@ -80,7 +80,7 @@ public class KxAppCategoryService implements IKxAppCategoryService {
     @Override
     public List<KxStoreCategoryVo> categoryList() {
         List<KxStoreCategoryVo> categoryDTOListFormCache = RedisUtils.getCacheList(CA_CATEGORY_LIST);
-        if (CollectionUtils.isEmpty(categoryDTOListFormCache)) {
+        if (!CollectionUtils.isEmpty(categoryDTOListFormCache)) {
             return categoryDTOListFormCache;
         }
         //从数据库查询
