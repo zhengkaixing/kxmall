@@ -107,7 +107,7 @@
 			</view>
 		</scroll-view>
 		<view v-if="salesTop.length > 0 && storage" class="bg-white padding-lr padding-tb-sm margin-top-sm"
-		@click="naviageToPage('/pages/parity/parity?title=热卖推荐')">
+		@click="naviageToPage('/pages/parity/parity?title=热卖推荐&id=11')">
 			<image src="../../static/index/command.png" mode="aspectFit" style="width: 690rpx;height: 210rpx;"></image>
 		</view>
 		<view style="padding: 20rpx 12rpx 20rpx 30rpx;">
