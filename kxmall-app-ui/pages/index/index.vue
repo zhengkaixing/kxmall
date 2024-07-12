@@ -85,7 +85,7 @@
 			</view>
 		</view>
 
-		<view v-if="cheapRecommend.length > 0 && storage" @click="naviageToPage('/pages/parity/parity?title=今日特价')" style="padding-left: 30rpx;padding-right: 26rpx;">
+		<view v-if="cheapRecommend.length > 0 && storage" @click="naviageToPage('/pages/parity/parity?title=今日特价&id=1')" style="padding-left: 30rpx;padding-right: 26rpx;">
 
 			<image src="../../static/index/bought.png" mode="aspectFit" style="width: 694rpx;height: 94rpx;"></image>
 		</view>
