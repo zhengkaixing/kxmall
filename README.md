@@ -3,7 +3,7 @@
 
 ---
 
-QQ讨论群：[838613833] (http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Tmntgm16kubKFIFSSbMUp3KjERTJHpQi&authKey=DPCNngqy99EVQIBS0qGZML8nKxey8%2FScE2cHcD65JfKjv218a2fR6aEA%2BZnuqiRI&noverify=0&group_code=838613833
+* QQ讨论群：[838613833] (http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Tmntgm16kubKFIFSSbMUp3KjERTJHpQi&authKey=DPCNngqy99EVQIBS0qGZML8nKxey8%2FScE2cHcD65JfKjv218a2fR6aEA%2BZnuqiRI&noverify=0&group_code=838613833
 )&nbsp;&nbsp;
 (进群前，请在网页右上角点star)
 
