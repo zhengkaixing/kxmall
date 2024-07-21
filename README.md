@@ -3,7 +3,8 @@
 
 ---
 
-QQ讨论群：838613833 (进群前，请在网页右上角点star)
+QQ讨论群：838613833 (http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Tmntgm16kubKFIFSSbMUp3KjERTJHpQi&authKey=DPCNngqy99EVQIBS0qGZML8nKxey8%2FScE2cHcD65JfKjv218a2fR6aEA%2BZnuqiRI&noverify=0&group_code=838613833
+)(进群前，请在网页右上角点star)
 
 #### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
 ---
