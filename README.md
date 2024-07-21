@@ -5,13 +5,14 @@
 * QQ讨论群：[838613833](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Tmntgm16kubKFIFSSbMUp3KjERTJHpQi&authKey=DPCNngqy99EVQIBS0qGZML8nKxey8%2FScE2cHcD65JfKjv218a2fR6aEA%2BZnuqiRI&noverify=0&group_code=838613833)&nbsp;&nbsp;![输入图片说明](doc/media/0E9E3781.png)点击可直接进入
 (进群前，请在网页右上角点star)
 
+#### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
+
 ## 社区
 
 | 微信扫我商务合作 | 公众号 |    [QQ群:838613833](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Tmntgm16kubKFIFSSbMUp3KjERTJHpQi&authKey=DPCNngqy99EVQIBS0qGZML8nKxey8%2FScE2cHcD65JfKjv218a2fR6aEA%2BZnuqiRI&noverify=0&group_code=838613833)  |
 | ---- | ------ | ---- |
 | ![qq](./doc/media/wx.png) | ![wx](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/PublicQr.jpg) | ![qq](./doc/media/qq.jpg) |
 
-#### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
 ---
 #### 优先更新地址
 
