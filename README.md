@@ -2,9 +2,7 @@
 > > kxmall 针对中小商户、企业和个人学习者开发。使用Java编码，采用SpringBoot、Mybatis-Plus等易用框架，适合个人学习研究。同时支持单机部署、集群部署，用户与店铺范围动态定位，中小商户企业可根据业务动态扩容。kxmall使用uniapp前端框架，可同时编译到 微信小程序、H5、Android App、iOS App等几个平台，可为中小商户企业节约大量维护成本。也可支撑中小商户企业前期平台横扩需求。
 
 ---
-
-* QQ讨论群：[838613833] (http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Tmntgm16kubKFIFSSbMUp3KjERTJHpQi&authKey=DPCNngqy99EVQIBS0qGZML8nKxey8%2FScE2cHcD65JfKjv218a2fR6aEA%2BZnuqiRI&noverify=0&group_code=838613833
-)&nbsp;&nbsp;
+* QQ讨论群：[838613833] (http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Tmntgm16kubKFIFSSbMUp3KjERTJHpQi&authKey=DPCNngqy99EVQIBS0qGZML8nKxey8%2FScE2cHcD65JfKjv218a2fR6aEA%2BZnuqiRI&noverify=0&group_code=838613833)&nbsp;&nbsp;
 (进群前，请在网页右上角点star)
 
 #### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
