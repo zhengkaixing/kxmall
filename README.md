@@ -31,15 +31,6 @@ kxmall项目结构:
   
 - sql: 数据库初始化SQL脚本
 
-* 官网介绍：[点我进入](https://a.kxmall.vip)&nbsp;&nbsp;
-* 阿里云折扣场：[点我进入](https://www.aliyun.com/minisite/goods?userCode=gclm7a7u)&nbsp;&nbsp;
-* 腾讯云秒杀场：[点我进入](https://url.cn/G0fq6Mm5)&nbsp;&nbsp;
-
-#### 付费社群
-[![社群](doc/media/shequ.png "shequ")](https://t.zsxq.com/pqIxF)
-> 收费是为了提供更好的服务，也是对作者更大的激励。加入星球的用户三天后可以私信我留下微信号，我会拉大家入群。加入三天内不满意可以直接退款，大家不需要有顾虑，来白嫖三天也不是不可以。
-
-
 #### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
 ---
 #### 优先更新地址
@@ -119,8 +110,6 @@ kxmall项目结构:
 >项目部署
 ##### ⓪ 服务器推荐
 服务器可根据自身业务来选购，单机环境推荐2C4G
-* 阿里云折扣场：[点我进入](https://www.aliyun.com/minisite/goods?userCode=gclm7a7u)&nbsp;&nbsp;
-* 腾讯云秒杀场：[点我进入](https://curl.qcloud.com/XslPhodG)&nbsp;&nbsp;
 
 ##### ① 基础运行环境
 
