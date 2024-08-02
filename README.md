@@ -38,11 +38,6 @@ kxmall项目结构:
 [01-kxmall源码地址](https://gitee.com/zhengkaixing/kxmall.git) https://gitee.com/zhengkaixing/kxmall.git
 
 ---
-#### 项目定制开发服务
-
-若需要软件需求外包，小程序、App、网站、微信定制开发，请联系微信：kaixing87V5（请备注意图）
-
----
 #### 用户端系统演示
 
 下面是微信小程序真机模式调试的界面，可Android安装Apk,也可同时支持苹果。
