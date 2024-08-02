@@ -1,17 +1,9 @@
-![logo](doc/media/logo.png)
 > > kxmall 针对中小商户、企业和个人学习者开发。使用Java编码，采用SpringBoot、Mybatis-Plus等易用框架，适合个人学习研究。同时支持单机部署、集群部署，用户与店铺范围动态定位，中小商户企业可根据业务动态扩容。kxmall使用uniapp前端框架，可同时编译到 微信小程序、H5、Android App、iOS App等几个平台，可为中小商户企业节约大量维护成本。也可支撑中小商户企业前期平台横扩需求。
 
 ---
-* QQ讨论群：[838613833](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Tmntgm16kubKFIFSSbMUp3KjERTJHpQi&authKey=DPCNngqy99EVQIBS0qGZML8nKxey8%2FScE2cHcD65JfKjv218a2fR6aEA%2BZnuqiRI&noverify=0&group_code=838613833)&nbsp;&nbsp;![输入图片说明](doc/media/0E9E3781.png)点击可直接进入
-(进群前，请在网页右上角点star)
+* QQ讨论群：[838613833]
 
 #### 数据库初始化sql文件，请进入讨论交流群，群文件自行下载，欢迎讨论与交流
-
-## 社区
-
-| 微信扫我商务合作 | 公众号 |    [QQ群:838613833](http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Tmntgm16kubKFIFSSbMUp3KjERTJHpQi&authKey=DPCNngqy99EVQIBS0qGZML8nKxey8%2FScE2cHcD65JfKjv218a2fR6aEA%2BZnuqiRI&noverify=0&group_code=838613833)  |
-| ---- | ------ | ---- |
-| ![qq](./doc/media/wx.png) | ![wx](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/PublicQr.jpg) | ![qq](./doc/media/qq.jpg) |
 
 ---
 #### 优先更新地址
@@ -150,43 +142,3 @@ Redis安装可直接使用yum安装
 本地部署文档
 
 [kxmall本地项目启动文档](doc/kxmall本地项目启动文档.doc)
-****
-========================分割线===========================
-****
-### 生鲜多商户商城上线拉！！！！！
----
-| kxmalls客户端 | kxmalls骑手端 |
-| :----: | :----: |
-| ![生鲜多商户](https://kxmalls.oss-cn-hangzhou.aliyuncs.com/kxmalls1.png)  |  ![生鲜多商户](https://kxmalls.oss-cn-hangzhou.aliyuncs.com/kxmalls2.png) |
-
-[kxmalls源码地址](https://gitee.com/zhengkaixing/kxmalls.git) https://gitee.com/zhengkaixing/kxmalls.git
-
-体验账号（了解加QQ群：[qq群](https://gitee.com/zhengkaixing/kxmalls.git)
-）（体验流程，可使用余额支付）
-
-客户端 http://www.kxmalls.vip
-
-商家账号 账号：小黑水果生鲜  密码： 123456
-
-超级管理员  admin 账号密码 （公众号上有）
-
-客户端   https://h5.kxmalls.vip   账号 16666666666  密码 123456
-
-骑手端   https://rider.kxmalls.vip   账号 13333333333   密码 123456
-
-#### 版权声明
-
-个人学习可免费使用，进QQ讨论群（838613833）联系群主。
-
-| 软著声明 |
-| :----: | 
-| ![软著](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/soft.jpg)  | 
-
-### 贡献说明
-
-如果你有好的意见或建议，欢迎给我们提 Issues 或 Pull Requests，为kxmall开源商城贡献力量。
-
-
-### SaaS服务
-
-正在研发中...
