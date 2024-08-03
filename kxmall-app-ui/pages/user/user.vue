@@ -48,7 +48,7 @@
         </view>
       </view>
       <view class="padding-lr padding-tb-sm">
-        <image src="https://s1.ax1x.com/2020/04/07/G2usUI.png" mode="aspectFit"
+        <image src="https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/G2usUI.png" mode="aspectFit"
                style="width: 690rpx;height: 184rpx;"></image>
       </view>
 

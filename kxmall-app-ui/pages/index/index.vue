@@ -115,13 +115,13 @@
 				<view v-for="(item,index) in salesTop" :key="index" class="margin-bottom-sm bg-white flex align-center justify-center flex-direction"
 				 style="width: 335rpx;height: 520rpx;padding: 10rpx;margin-right: 18rpx;border-radius: 8rpx;"
 				 @click="navToDetailPage(item.productId)">
-					<image style="width: 280rpx;height: 280rpx;margin: 10rpx;" :src="item.spuImg" mode="aspectFit"></image>
+					<image style="width: 280rpx;height: 280rpx;margin: 10rpx;" :src="JSON.parse(item.img)[0].url" mode="aspectFit"></image>
 					<view style="padding-top: 28rpx;">
-						<view class="text-cut" style="width: 294rpx;height: 40rpx;font-size: 28rpx;font-weight: Medium; color: #2D4454;">{{item.spuTitle}}</view>
-						<view class="text-cut margin-tb-xs" style="width: 294rpx;height: 40rpx;font-size: 28rpx;color: #999999;">{{item.spuTitle}}</view>
+						<view class="text-cut" style="width: 294rpx;height: 40rpx;font-size: 28rpx;font-weight: Medium; color: #2D4454;">{{item.title}}</view>
+						<view class="text-cut margin-tb-xs" style="width: 294rpx;height: 40rpx;font-size: 28rpx;color: #999999;">{{item.title}}</view>
 						<view style="padding-top: 6rpx;" class="flex align-center justify-between">
-							<view style="width: 114rpx;height: 42rpx;line-height: 42rpx;font-size: 24rpx;color:#F62929;">￥{{item.spuPrice}}</view>
-							<view style="color: #B0B0B0;font-size: 24rpx;">{{item.spuUnit}}/份</view>
+							<view style="width: 114rpx;height: 42rpx;line-height: 42rpx;font-size: 24rpx;color:#F62929;">￥{{item.price}}</view>
+							<view style="color: #B0B0B0;font-size: 24rpx;">{{item.unitName}}/份</view>
 
 							<image @click.stop="addCart(item)" style="width: 48rpx;height: 48rpx;" src="../../static/index/cart.png"
 							 mode="aspectFit" class="round"></image>
@@ -363,7 +363,7 @@
 				console.log("节点离页面顶部的距离为" + data.top);
         // that.topHeight = data.height + that.statusHeight - 5
         if (this.appear) {
-          that.topHeight = data.height - 5
+          that.topHeight = data.height + 40
         }else {
           that.topHeight = data.height + 40
         }

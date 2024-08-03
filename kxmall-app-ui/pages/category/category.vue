@@ -72,7 +72,7 @@
 			</view>
 			<view :style="'top:'+topHeight+'px;'"
 			 style="padding-left: 140rpx;padding-top: 90rpx;">
-				<image src="https://s1.ax1x.com/2020/04/07/G2uavD.png" mode="aspectFit"
+				<image src="https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/G2uavD.png" mode="aspectFit"
 				style="margin: 30rpx;width: 550rpx;height: 160rpx;border-radius: 15rpx;"></image>
 				<view style="padding:0rpx 20rpx 30rpx 20rpx;">
 					{{sTitle}}
