@@ -501,7 +501,7 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
         bo.getIds().stream().forEach(id -> {
             KxStoreProduct storeProducts = baseMapper.selectOne(new LambdaQueryWrapper<KxStoreProduct>().eq(KxStoreProduct::getId, id));
             KxStock kxStock = new KxStock();
-            kxStock.setPrice(storeProducts.getOtPrice());
+            kxStock.setPrice(storeProducts.getPrice());
             kxStock.setProductId(id);
             kxStock.setProductAttrId(id);
             kxStock.setStorageId(bo.getStorageId());
