@@ -16,7 +16,7 @@
 
 			<view class="flex align-start justify-between padding-top-sm">
 				<view class="text-cut" style="width: 580rpx;font-size: 28rpx;line-height: 40rpx;color: #8D8E99;">
-					{{goods.description}}
+					{{goods.storeInfo}}
 				</view>
 				<view class="flex">
           <view @click="toFavorite" style="text-align: center;">
@@ -138,7 +138,7 @@
 				商品详情
 			</view>
 			<!-- <u-parse className="rich-img" :content="goods.detail"></u-parse> -->
-			<rich-text style="font-size: 28rpx;" :nodes="goods.detail"></rich-text>
+			<rich-text style="font-size: 28rpx;" :nodes="detail"></rich-text>
 		</view>
 		<view class="bg-white flex align-end"
 		style="position: fixed;bottom: 0;width: 750rpx;height: 98rpx;padding-left: 38rpx;">
@@ -265,7 +265,8 @@
 				submiting: false,
 				cartNum:0,
 				shareShow:0,
-				zhekou:-1
+				zhekou:-1,
+        detail: ''
 			};
 		},
 		onShow() {
@@ -289,6 +290,7 @@
 			}).then(res => {
 				that.goods = res.data
 				that.zhekou = ((res.data.kxStockVo.price/res.data.otPrice)*10).toFixed(1)
+        that.detail = res.data.description.replace(/<img/gi,'<img style="max-width:100%;height:auto;margin:0 auto;display:block"')
 				// that.zhekou = ((30/90)*10).toFixed(1)
 				if (that.goods.groupShop) {
 					//若存在团购信息，将价格更新到团购价格
