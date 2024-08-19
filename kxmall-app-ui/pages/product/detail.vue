@@ -37,12 +37,12 @@
 						<view class="text-green" style="font-size: 40rpx;line-height: 56rpx;font-weight: 600;">
 							￥{{goods.kxStockVo.price}}
 						</view>
-						<view class="bg-gradual-orange margin-left-sm" v-if="zhekou >= 0"
+						<view class="bg-gradual-orange margin-left-sm" v-if="zhekou >= 0 && zhekou < 10.0"
 						style="border-radius: 4rpx;padding: 0 8rpx;line-height: 34rpx;font-size: 24rpx;">
 							{{zhekou}}折
 						</view>
 					</view>
-					<view style="font-size: 28rpx;color: #8D8E99;line-height: 40rpx;text-decoration: line-through;padding: 10rpx;">
+					<view style="font-size: 28rpx;color: #8D8E99;line-height: 40rpx;text-decoration: line-through;padding: 10rpx;" v-if="zhekou >= 0 && zhekou < 10.0">
 						￥{{goods.otPrice}}/{{goods.unitName}}
 					</view>
 				</view>
