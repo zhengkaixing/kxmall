@@ -3,7 +3,7 @@
     <el-form ref="form" :model="form" :rules="rules" size="small" label-width="150px">
       <el-form-item label="积分抵用比例">
         <el-input v-model="form.integral_ratio" style="width: 370px;" />
-        <p style="color: red">积分抵用比例(1积分抵多少金额)</p>
+        <p style="color: red">积分抵用比例(1积分抵多少金额(元))</p>
       </el-form-item>
       <el-form-item label="满多少可以抵扣">
         <el-input v-model="form.integral_full" style="width: 370px;" />
