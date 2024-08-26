@@ -45,6 +45,11 @@
           @click="toggleExpandAll"
         >展开/折叠</el-button>
       </el-col>
+      <el-col :span="1.5">
+        <el-button @click="refreshMenu" type="danger" icon="el-icon-refresh-right">
+          刷新菜单缓存
+        </el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -438,6 +443,18 @@ export default {
           }
         }
       });
+    },
+    /** 刷新菜单缓存按钮操作 */
+    refreshMenu() {
+
+      this.$modal.confirm('即将更新缓存刷新浏览器！', '刷新菜单缓存').then(function () {
+        // 清空，从而触发刷新
+        // wsCache.delete(CACHE_KEY.USER)
+        // wsCache.delete(CACHE_KEY.ROLE_ROUTERS)
+        // 刷新浏览器
+        location.reload()
+      }).catch(() => {});
+
     },
     /** 删除按钮操作 */
     handleDelete(row) {
