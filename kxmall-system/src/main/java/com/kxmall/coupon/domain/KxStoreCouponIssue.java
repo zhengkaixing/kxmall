@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * 优惠券前台领取对象 kx_store_coupon_issue
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-17
  */
 @Data

@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 /**
  * 短信登录对象
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

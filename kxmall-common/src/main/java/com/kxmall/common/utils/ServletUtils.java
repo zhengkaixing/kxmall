@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * 客户端工具类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ServletUtils extends ServletUtil {

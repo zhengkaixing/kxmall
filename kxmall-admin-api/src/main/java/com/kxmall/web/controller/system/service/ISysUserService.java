@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 用户 业务层
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface ISysUserService {
 

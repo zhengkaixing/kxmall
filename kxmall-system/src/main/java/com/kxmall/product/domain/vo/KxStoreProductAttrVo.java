@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * 商品属性视图对象 kx_store_product_attr
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-13
  */
 @Data

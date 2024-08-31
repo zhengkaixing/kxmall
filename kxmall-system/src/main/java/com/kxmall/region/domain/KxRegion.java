@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * 中国地区信息对象 kx_region
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 @Data

@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * 用户对象导入VO
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

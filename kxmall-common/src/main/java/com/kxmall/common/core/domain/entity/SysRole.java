@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * 角色表 sys_role
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

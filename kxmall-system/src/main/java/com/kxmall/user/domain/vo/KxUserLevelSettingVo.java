@@ -13,7 +13,7 @@ import lombok.Data;
 /**
  * 设置用户等级视图对象 kx_user_level_setting
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-21
  */
 @Data

@@ -11,7 +11,7 @@ import lombok.Data;
 /**
  * 用户下单地址视图对象 kx_address
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-04-06
  */
 @Data

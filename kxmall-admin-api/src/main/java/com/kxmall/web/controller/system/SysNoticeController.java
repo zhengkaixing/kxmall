@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 公告 信息操作处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Validated
 @RequiredArgsConstructor

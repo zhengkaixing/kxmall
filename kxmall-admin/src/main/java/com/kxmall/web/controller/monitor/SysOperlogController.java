@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 操作日志记录
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Validated
 @RequiredArgsConstructor

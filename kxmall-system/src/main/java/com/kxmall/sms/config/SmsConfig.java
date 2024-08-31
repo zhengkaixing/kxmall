@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 短信配置类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @version 4.2.0
  */
 @Configuration

@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * 数据权限组
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @version 3.5.0
  */
 @Target({ElementType.METHOD, ElementType.TYPE})

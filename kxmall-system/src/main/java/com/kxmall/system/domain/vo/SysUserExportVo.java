@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * 用户对象导出VO
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

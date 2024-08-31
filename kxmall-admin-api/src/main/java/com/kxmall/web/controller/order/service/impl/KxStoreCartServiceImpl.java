@@ -22,7 +22,7 @@ import java.util.Collection;
 /**
  * 购物车Service业务层处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-15
  */
 @RequiredArgsConstructor

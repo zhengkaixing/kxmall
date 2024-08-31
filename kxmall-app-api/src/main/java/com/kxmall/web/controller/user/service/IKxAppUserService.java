@@ -6,7 +6,7 @@ import com.kxmall.user.domain.vo.KxUserVo;
 /**
  * 足迹Service接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-04-06
  */
 public interface IKxAppUserService {

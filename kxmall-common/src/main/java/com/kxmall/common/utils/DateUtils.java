@@ -17,7 +17,7 @@ import java.util.Date;
 /**
  * 时间工具类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {

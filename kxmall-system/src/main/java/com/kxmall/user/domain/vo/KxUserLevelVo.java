@@ -9,7 +9,7 @@ import lombok.Data;
 /**
  * 用户等级视图对象 kx_user_level
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-14
  */
 @Data

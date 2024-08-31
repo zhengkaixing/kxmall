@@ -20,7 +20,7 @@ import java.util.*;
 /**
  * 模板处理工具类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VelocityUtils {

@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * 微信公众号模板枚举
  */
 @Getter

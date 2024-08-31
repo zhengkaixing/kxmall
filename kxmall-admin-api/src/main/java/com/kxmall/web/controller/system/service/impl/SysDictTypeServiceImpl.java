@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 /**
  * 字典 业务层处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @RequiredArgsConstructor
 @Service

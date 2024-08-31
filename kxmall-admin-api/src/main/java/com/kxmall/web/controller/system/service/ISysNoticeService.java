@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 公告 服务层
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface ISysNoticeService {
 

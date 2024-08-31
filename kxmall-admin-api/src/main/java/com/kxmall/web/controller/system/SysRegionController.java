@@ -28,7 +28,7 @@ import com.kxmall.common.core.page.TableDataInfo;
 /**
  * 中国地区系统
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-08
  */
 @Validated

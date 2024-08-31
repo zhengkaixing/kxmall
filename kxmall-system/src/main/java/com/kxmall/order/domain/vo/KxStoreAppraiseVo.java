@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * 评论管理视图对象 kx_store_appraise
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 @Data

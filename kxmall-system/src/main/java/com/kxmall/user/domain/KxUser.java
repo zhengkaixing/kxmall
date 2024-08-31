@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * 用户对象 kx_user
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-14
  */
 @Data

@@ -22,7 +22,7 @@ import java.util.Collection;
 /**
  * 中国地区系统Service业务层处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-08
  */
 @RequiredArgsConstructor

@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 客户收藏
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-04-06
  */
 @Validated

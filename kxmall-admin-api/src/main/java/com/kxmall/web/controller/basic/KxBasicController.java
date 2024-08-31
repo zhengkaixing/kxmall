@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 基础信息
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 @Validated

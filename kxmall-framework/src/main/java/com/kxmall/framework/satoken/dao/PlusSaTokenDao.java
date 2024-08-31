@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Sa-Token持久层接口(使用框架自带RedisUtils实现 协议统一)
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Component
 public class PlusSaTokenDao implements SaTokenDao {

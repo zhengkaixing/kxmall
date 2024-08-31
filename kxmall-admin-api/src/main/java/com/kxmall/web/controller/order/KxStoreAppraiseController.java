@@ -26,7 +26,7 @@ import com.kxmall.common.core.page.TableDataInfo;
 /**
  * 评论管理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 @Validated

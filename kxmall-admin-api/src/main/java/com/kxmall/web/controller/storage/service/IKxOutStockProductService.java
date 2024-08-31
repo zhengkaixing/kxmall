@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 出库商品Service接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-29
  */
 public interface IKxOutStockProductService {

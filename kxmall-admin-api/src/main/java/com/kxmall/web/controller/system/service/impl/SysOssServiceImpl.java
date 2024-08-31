@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 /**
  * 文件上传 服务层实现
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @RequiredArgsConstructor
 @Service

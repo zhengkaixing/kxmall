@@ -3,7 +3,7 @@ package com.kxmall.common.constant;
 /**
  * 通用常量信息
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface Constants {
 

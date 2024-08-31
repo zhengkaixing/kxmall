@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 推荐管理业务对象 kx_recommend
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 

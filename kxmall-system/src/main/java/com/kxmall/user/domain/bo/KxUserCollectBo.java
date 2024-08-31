@@ -10,7 +10,7 @@ import javax.validation.constraints.*;
 /**
  * 客户收藏业务对象 kx_user_collect
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-04-06
  */
 

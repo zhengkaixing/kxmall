@@ -7,7 +7,7 @@ import com.kxmall.common.core.mapper.BaseMapperPlus;
 /**
  * 商品出库Mapper接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 public interface KxGoodsOutStockMapper extends BaseMapperPlus<KxGoodsOutStockMapper, KxGoodsOutStock, KxGoodsOutStockVo> {

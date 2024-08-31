@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * 部门管理 服务实现
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @RequiredArgsConstructor
 @Service

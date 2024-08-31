@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * sa-token 配置
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @RequiredArgsConstructor
 @Slf4j

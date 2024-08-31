@@ -3,7 +3,7 @@ package com.kxmall.common.enums;
 /**
  * 用户状态
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public enum UserStatus {
     OK("0", "正常"), DISABLE("1", "停用"), DELETED("2", "删除");

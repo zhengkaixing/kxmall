@@ -7,7 +7,7 @@ import com.kxmall.common.core.mapper.BaseMapperPlus;
 /**
  * 用户下单地址Mapper接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-04-06
  */
 public interface KxAddressMapper extends BaseMapperPlus<KxAddressMapper, KxAddress, KxAddressVo> {

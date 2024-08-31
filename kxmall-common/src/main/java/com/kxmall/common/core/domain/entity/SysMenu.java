@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 /**
  * 菜单权限表 sys_menu
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

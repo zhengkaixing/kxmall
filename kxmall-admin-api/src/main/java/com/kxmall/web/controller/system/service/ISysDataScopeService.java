@@ -3,7 +3,7 @@ package com.kxmall.web.controller.system.service;
 /**
  * 通用 数据权限 服务
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface ISysDataScopeService {
 

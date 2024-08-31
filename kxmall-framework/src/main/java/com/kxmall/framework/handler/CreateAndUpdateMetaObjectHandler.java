@@ -16,7 +16,7 @@ import java.util.Date;
 /**
  * MP注入处理器
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2021/4/25
  */
 @Slf4j

@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 /**
  * 参数配置表 sys_config
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

@@ -7,7 +7,7 @@ import lombok.Getter;
 /**
  * 数据库类型
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Getter
 @AllArgsConstructor

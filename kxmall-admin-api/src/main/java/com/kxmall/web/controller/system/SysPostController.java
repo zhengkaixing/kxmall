@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 岗位信息操作处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Validated
 @RequiredArgsConstructor

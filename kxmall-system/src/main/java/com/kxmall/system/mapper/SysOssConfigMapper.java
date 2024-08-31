@@ -7,7 +7,7 @@ import com.kxmall.system.domain.vo.SysOssConfigVo;
 /**
  * 对象存储配置Mapper接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @author 孤舟烟雨
  * @date 2021-08-13
  */

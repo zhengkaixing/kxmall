@@ -9,7 +9,7 @@ import java.util.concurrent.*;
 /**
  * 线程相关工具类.
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

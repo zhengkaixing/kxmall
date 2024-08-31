@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 /**
  * 限流注解
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

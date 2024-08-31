@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * XSS过滤处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     /**

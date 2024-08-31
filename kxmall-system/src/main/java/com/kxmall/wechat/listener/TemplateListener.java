@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * 异步监听模板通知事件
  */
 @Slf4j

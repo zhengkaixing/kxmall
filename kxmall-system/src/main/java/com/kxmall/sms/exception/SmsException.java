@@ -3,7 +3,7 @@ package com.kxmall.sms.exception;
 /**
  * Sms异常类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public class SmsException extends RuntimeException {
 

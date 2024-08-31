@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 角色
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

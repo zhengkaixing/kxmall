@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * 订单对象 kx_store_order
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-15
  */
 @Data

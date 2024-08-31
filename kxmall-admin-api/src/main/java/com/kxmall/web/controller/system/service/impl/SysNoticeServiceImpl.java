@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 公告 服务层实现
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @RequiredArgsConstructor
 @Service

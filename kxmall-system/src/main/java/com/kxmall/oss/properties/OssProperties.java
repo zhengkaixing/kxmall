@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * OSS对象存储 配置属性
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Data
 public class OssProperties {

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 /**
  * 商品对象 kx_store_product
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-13
  */
 @Data

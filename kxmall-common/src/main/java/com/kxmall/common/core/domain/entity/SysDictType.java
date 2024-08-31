@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 /**
  * 字典类型表 sys_dict_type
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

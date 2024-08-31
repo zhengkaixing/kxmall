@@ -15,7 +15,7 @@ import java.util.Date;
 /**
  * 商品规格视图对象 kx_store_product_rule
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-08
  */
 @Data

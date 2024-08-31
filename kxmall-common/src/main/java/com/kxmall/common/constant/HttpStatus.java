@@ -3,7 +3,7 @@ package com.kxmall.common.constant;
 /**
  * 返回状态码
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface HttpStatus {
     /**

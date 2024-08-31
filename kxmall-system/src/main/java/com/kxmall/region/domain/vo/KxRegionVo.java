@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * 中国地区信息视图对象 kx_region
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 @Data

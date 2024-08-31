@@ -26,7 +26,7 @@ import javax.validation.ConstraintViolationException;
 /**
  * 全局异常处理器
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Slf4j
 @RestControllerAdvice

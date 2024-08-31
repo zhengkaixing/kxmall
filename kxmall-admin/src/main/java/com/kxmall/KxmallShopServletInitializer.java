@@ -6,7 +6,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 /**
  * web容器中进行部署
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public class KxmallShopServletInitializer extends SpringBootServletInitializer {
 

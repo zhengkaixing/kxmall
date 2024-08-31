@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 商品属性业务对象 kx_store_product_attr
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-13
  */
 

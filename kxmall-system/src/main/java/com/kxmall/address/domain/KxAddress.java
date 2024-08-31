@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 /**
  * 用户下单地址对象 kx_address
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-04-06
  */
 @Data

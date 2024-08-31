@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 /**
  * 岗位表 sys_post
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

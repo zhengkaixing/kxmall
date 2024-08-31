@@ -3,7 +3,7 @@ package com.kxmall.common.enums;
 /**
  * 操作人类别
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public enum OperatorType {
     /**

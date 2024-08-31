@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 /**
  * redis 工具类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @version 3.1.0 新增
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

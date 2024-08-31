@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 前置仓商品Service接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 public interface IKxStockService {

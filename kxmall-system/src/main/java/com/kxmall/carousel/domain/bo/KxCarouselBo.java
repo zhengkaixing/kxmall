@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
 /**
  * 商铺广告业务对象 kx_carousel
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 

@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 快递公司对象 sys_express
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-17
  */
 @Data

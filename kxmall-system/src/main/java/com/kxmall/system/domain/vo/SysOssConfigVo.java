@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 对象存储配置视图对象 sys_oss_config
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @author 孤舟烟雨
  * @date 2021-08-13
  */

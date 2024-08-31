@@ -6,7 +6,7 @@ import com.kxmall.system.domain.SysConfig;
 /**
  * 参数配置 数据层
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface SysConfigMapper extends BaseMapperPlus<SysConfigMapper, SysConfig, SysConfig> {
 

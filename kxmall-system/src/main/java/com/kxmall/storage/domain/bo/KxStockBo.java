@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 前置仓商品业务对象 kx_stock
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 

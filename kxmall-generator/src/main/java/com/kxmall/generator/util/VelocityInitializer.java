@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * VelocityEngine工厂
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class VelocityInitializer {

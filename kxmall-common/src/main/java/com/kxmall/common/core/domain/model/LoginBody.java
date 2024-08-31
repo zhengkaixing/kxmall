@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 /**
  * 用户登录对象
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

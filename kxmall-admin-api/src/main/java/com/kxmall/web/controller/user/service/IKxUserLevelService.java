@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 用户等级Service接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-14
  */
 public interface IKxUserLevelService {

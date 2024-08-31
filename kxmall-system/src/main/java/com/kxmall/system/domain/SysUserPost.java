@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * 用户和岗位关联 sys_user_post
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

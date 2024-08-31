@@ -6,7 +6,7 @@ import com.kxmall.common.core.mapper.BaseMapperPlus;
 /**
  * 通知公告表 数据层
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface SysNoticeMapper extends BaseMapperPlus<SysNoticeMapper, SysNotice, SysNotice> {
 

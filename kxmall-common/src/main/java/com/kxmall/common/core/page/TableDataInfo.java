@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 表格分页数据对象
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

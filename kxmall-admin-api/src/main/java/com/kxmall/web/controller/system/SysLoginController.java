@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * 登录验证
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Validated
 @RequiredArgsConstructor

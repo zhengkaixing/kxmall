@@ -13,7 +13,7 @@ import java.util.Properties;
 /**
  * 校验框架配置类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Configuration
 public class ValidatorConfig {

@@ -3,7 +3,7 @@ package com.kxmall.common.exception.user;
 /**
  * 用户错误最大次数异常类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public class UserPasswordRetryLimitExceedException extends UserException {
 

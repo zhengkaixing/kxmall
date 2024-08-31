@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * SMS短信 配置属性
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @version 4.2.0
  */
 @Data

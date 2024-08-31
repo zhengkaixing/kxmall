@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * 操作日志事件
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

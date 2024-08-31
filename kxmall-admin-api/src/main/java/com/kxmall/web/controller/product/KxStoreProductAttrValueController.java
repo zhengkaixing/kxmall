@@ -26,7 +26,7 @@ import com.kxmall.common.core.page.TableDataInfo;
 /**
  * 商品属性值
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-13
  */
 @Validated

@@ -3,7 +3,7 @@ package com.kxmall.common.utils.file;
 /**
  * 媒体类型工具类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public class MimeTypeUtils {
     public static final String IMAGE_PNG = "image/png";

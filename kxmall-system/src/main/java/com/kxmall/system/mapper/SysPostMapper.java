@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 岗位信息 数据层
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface SysPostMapper extends BaseMapperPlus<SysPostMapper, SysPost, SysPost> {
 

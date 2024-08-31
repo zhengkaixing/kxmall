@@ -22,7 +22,7 @@ import java.time.Duration;
 /**
  * 用户行为 侦听器的实现
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @RequiredArgsConstructor
 @Component

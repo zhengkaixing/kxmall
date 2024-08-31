@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * 中国地区信息Service接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 public interface IKxRegionService {

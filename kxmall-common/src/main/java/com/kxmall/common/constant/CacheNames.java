@@ -11,7 +11,7 @@ package com.kxmall.common.constant;
  * <p>
  * 例子: test#60s、test#0#60s、test#0#1m#1000、test#1h#0#500
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface CacheNames {
 

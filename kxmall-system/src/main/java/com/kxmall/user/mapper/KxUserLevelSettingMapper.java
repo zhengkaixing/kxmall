@@ -7,7 +7,7 @@ import com.kxmall.common.core.mapper.BaseMapperPlus;
 /**
  * 设置用户等级Mapper接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-21
  */
 public interface KxUserLevelSettingMapper extends BaseMapperPlus<KxUserLevelSettingMapper, KxUserLevelSetting, KxUserLevelSettingVo> {

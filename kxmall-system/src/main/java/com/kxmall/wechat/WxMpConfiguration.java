@@ -22,7 +22,7 @@ import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType;
 /**
  * 公众号配置
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2022/01/20
  */
 @Configuration(proxyBeanMethods = false)

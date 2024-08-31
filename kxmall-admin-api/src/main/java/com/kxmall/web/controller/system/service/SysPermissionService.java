@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * 用户权限处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @RequiredArgsConstructor
 @Service

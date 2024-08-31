@@ -7,7 +7,7 @@ import com.kxmall.common.core.mapper.BaseMapperPlus;
 /**
  * 商品分类Mapper接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-07
  */
 public interface KxStoreCategoryMapper extends BaseMapperPlus<KxStoreCategoryMapper, KxStoreCategory, KxStoreCategoryVo> {

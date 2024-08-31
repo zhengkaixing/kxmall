@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 业务字段 数据层
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @InterceptorIgnore(dataPermission = "true")
 public interface GenTableColumnMapper extends BaseMapperPlus<GenTableColumnMapper, GenTableColumn, GenTableColumn> {

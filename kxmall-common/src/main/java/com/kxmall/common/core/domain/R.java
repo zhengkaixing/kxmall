@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 响应信息主体
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Data
 @NoArgsConstructor

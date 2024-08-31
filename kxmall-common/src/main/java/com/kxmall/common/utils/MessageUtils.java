@@ -9,7 +9,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 /**
  * 获取i18n资源文件
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class MessageUtils {

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 /**
  * 初始化 system 模块对应业务数据
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Slf4j
 @RequiredArgsConstructor

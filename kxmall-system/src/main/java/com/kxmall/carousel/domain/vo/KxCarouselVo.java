@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * 商铺广告视图对象 kx_carousel
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 @Data

@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Aliyun 短信模板
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @version 4.2.0
  */
 public class AliyunSmsTemplate implements SmsTemplate {

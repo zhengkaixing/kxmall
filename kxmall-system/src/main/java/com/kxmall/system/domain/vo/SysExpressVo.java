@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * 快递公司视图对象 sys_express
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-17
  */
 @Data

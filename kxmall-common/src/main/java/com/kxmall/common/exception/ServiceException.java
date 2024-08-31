@@ -3,7 +3,7 @@ package com.kxmall.common.exception;
 /**
  * 业务异常
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public final class ServiceException extends RuntimeException {
     private static final long serialVersionUID = 1L;

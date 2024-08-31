@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * 超出 JS 最大最小值 处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @JacksonStdImpl
 public class BigNumberSerializer extends NumberSerializer {

@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * 快递公司
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-17
  */
 @Validated

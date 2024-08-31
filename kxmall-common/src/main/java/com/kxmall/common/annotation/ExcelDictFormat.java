@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * 字典格式化
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

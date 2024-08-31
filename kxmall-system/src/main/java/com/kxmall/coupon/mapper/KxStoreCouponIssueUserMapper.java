@@ -7,7 +7,7 @@ import com.kxmall.common.core.mapper.BaseMapperPlus;
 /**
  * 优惠券前台用户领取记录Mapper接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-17
  */
 public interface KxStoreCouponIssueUserMapper extends BaseMapperPlus<KxStoreCouponIssueUserMapper, KxStoreCouponIssueUser, KxStoreCouponIssueUserVo> {

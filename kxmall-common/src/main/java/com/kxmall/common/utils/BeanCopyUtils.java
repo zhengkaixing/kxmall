@@ -22,7 +22,7 @@ import java.util.Map;
  * 例如: 源对象 拷贝到 目标(链式对象)
  * 请区分好`浅拷贝`和`深拷贝`再做使用
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BeanCopyUtils {

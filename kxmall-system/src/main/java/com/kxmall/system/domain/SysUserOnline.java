@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 当前在线会话
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

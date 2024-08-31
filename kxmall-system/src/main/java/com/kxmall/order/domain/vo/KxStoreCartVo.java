@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 购物车视图对象 kx_store_cart
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-15
  */
 @Data

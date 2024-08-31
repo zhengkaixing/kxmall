@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 操作日志记录表 oper_log
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

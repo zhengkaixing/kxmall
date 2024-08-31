@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * 登录用户身份权限
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

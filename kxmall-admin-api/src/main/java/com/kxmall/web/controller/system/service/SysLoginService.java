@@ -41,7 +41,7 @@ import java.util.function.Supplier;
 /**
  * 登录校验方法
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @RequiredArgsConstructor
 @Slf4j

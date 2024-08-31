@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * 上传返回体
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Data
 @Builder

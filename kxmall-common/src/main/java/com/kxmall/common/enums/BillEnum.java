@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.stream.Stream;
 
 /**
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * 账单相关枚举
  */
 @Getter

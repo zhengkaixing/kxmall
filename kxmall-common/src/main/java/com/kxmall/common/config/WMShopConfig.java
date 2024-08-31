@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * 读取项目相关配置
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

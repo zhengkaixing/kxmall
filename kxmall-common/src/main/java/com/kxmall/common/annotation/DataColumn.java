@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  *
  * 一个注解只能对应一个模板
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @version 3.5.0
  */
 @Target(ElementType.METHOD)

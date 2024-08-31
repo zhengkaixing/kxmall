@@ -5,7 +5,7 @@ import com.kxmall.common.exception.base.BaseException;
 /**
  * 文件信息异常类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public class FileException extends BaseException {
     private static final long serialVersionUID = 1L;

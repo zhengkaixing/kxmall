@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 用户对象 sys_user
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

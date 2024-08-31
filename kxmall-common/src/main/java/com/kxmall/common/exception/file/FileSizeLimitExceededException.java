@@ -3,7 +3,7 @@ package com.kxmall.common.exception.file;
 /**
  * 文件名大小限制异常类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public class FileSizeLimitExceededException extends FileException {
     private static final long serialVersionUID = 1L;

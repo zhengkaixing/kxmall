@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 /**
  * 数据权限过滤
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @version 3.5.0
  */
 @Slf4j

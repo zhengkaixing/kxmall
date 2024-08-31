@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
 /**
  * 评论管理业务对象 kx_store_appraise
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-27
  */
 

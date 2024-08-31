@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * 入库商品业务对象 kx_in_stock_product
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-29
  */
 

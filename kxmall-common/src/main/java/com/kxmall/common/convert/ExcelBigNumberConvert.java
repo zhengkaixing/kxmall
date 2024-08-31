@@ -16,7 +16,7 @@ import java.math.BigDecimal;
  * 大数值转换
  * Excel 数值长度位15位 大于15位的数值转换位字符串
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Slf4j
 public class ExcelBigNumberConvert implements Converter<Long> {

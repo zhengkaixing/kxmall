@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * 读取代码生成相关配置
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Component
 @ConfigurationProperties(prefix = "gen")

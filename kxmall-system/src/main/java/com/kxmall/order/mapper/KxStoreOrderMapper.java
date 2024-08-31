@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * 订单Mapper接口
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-15
  */
 public interface KxStoreOrderMapper extends BaseMapperPlus<KxStoreOrderMapper, KxStoreOrder, KxStoreOrderVo> {

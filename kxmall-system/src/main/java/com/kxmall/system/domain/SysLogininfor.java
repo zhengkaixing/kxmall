@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * 系统访问记录表 sys_logininfor
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

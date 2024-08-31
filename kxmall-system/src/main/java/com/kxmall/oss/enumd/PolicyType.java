@@ -6,7 +6,7 @@ import lombok.Getter;
 /**
  * minio策略配置
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Getter
 @AllArgsConstructor

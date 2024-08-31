@@ -8,7 +8,7 @@ import lombok.Getter;
  * 设备类型
  * 针对多套 用户体系
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Getter
 @AllArgsConstructor

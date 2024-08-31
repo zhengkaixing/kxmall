@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 /**
  * 限流处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Slf4j
 @Aspect

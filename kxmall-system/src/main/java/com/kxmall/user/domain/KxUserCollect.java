@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 客户收藏对象 kx_user_collect
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-04-06
  */
 @Data

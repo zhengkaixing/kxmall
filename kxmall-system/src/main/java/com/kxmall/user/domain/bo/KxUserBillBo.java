@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * 用户账单业务对象 kx_user_bill
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-14
  */
 

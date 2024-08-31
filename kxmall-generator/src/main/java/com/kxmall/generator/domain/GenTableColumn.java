@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 /**
  * 代码生成业务字段表 gen_table_column
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

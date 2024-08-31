@@ -6,7 +6,7 @@ import com.kxmall.common.core.mapper.BaseMapperPlus;
 /**
  * 操作日志 数据层
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface SysOperLogMapper extends BaseMapperPlus<SysOperLogMapper, SysOperLog, SysOperLog> {
 

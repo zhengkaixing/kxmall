@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 分页查询实体类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

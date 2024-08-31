@@ -3,7 +3,7 @@ package com.kxmall.common.constant;
 /**
  * 缓存的key 常量
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface CacheConstants {
 

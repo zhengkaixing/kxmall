@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 路由配置信息
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

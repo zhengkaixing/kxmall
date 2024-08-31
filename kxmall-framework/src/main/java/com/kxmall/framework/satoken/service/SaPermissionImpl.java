@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * sa-token 权限管理实现类
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Component
 public class SaPermissionImpl implements StpInterface {

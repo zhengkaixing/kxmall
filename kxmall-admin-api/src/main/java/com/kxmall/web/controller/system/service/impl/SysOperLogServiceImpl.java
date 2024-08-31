@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * 操作日志 服务层处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @RequiredArgsConstructor
 @Service

@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 /**
  * 优惠券业务对象 kx_store_coupon
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-17
  */
 

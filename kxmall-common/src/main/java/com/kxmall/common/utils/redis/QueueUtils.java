@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  * 轻量级队列 重量级数据量 请使用 MQ
  * 要求 redis 5.X 以上
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @version 3.6.0 新增
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

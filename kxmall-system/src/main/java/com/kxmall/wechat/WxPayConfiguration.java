@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * 支付配置
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2020/03/01
  */
 @Slf4j

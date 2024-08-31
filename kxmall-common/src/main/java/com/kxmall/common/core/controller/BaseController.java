@@ -10,7 +10,7 @@ import com.kxmall.common.utils.StringUtils;
 /**
  * web层通用数据处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public class BaseController {
 

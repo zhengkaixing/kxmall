@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * 文件上传 服务层
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface ISysAppOssService {
 

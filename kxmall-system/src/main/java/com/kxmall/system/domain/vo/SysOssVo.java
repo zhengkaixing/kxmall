@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * OSS对象存储视图对象 sys_oss
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Data
 public class SysOssVo {

@@ -9,7 +9,7 @@ import lombok.Getter;
 /**
  * 验证码类型
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Getter
 @AllArgsConstructor

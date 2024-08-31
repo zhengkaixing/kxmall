@@ -8,7 +8,7 @@ import lombok.Data;
 /**
  * 角色和菜单关联 sys_role_menu
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 
 @Data

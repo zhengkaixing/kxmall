@@ -3,7 +3,7 @@ package com.kxmall.common.core.service;
 /**
  * 通用 字典服务
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface DictService {
 

@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * 注册校验方法
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @RequiredArgsConstructor
 @Service

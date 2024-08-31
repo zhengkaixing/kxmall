@@ -3,7 +3,7 @@ package com.kxmall.common.exception;
 /**
  * 全局异常
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public class GlobalException extends RuntimeException {
 

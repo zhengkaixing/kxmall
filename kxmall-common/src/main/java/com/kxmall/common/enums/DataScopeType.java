@@ -15,7 +15,7 @@ import lombok.Getter;
  * 内置服务 sdss 系统数据权限服务 内容参考 SysDataScopeService
  * 如需扩展更多自定义服务 可以参考 sdss 自行编写
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @version 3.5.0
  */
 @Getter

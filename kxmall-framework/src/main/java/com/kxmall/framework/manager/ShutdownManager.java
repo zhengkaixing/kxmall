@@ -12,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 /**
  * 确保应用退出时能关闭后台线程
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Slf4j
 @Component

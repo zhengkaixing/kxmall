@@ -24,7 +24,7 @@ import java.util.Map;
  * @param <M> mapper 泛型
  * @param <T> table 泛型
  * @param <V> vo 泛型
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @since 2021-05-13
  */
 @SuppressWarnings("unchecked")

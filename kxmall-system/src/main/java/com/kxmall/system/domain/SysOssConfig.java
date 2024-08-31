@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 对象存储配置对象 sys_oss_config
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

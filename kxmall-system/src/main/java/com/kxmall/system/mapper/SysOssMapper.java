@@ -7,7 +7,7 @@ import com.kxmall.system.domain.vo.SysOssVo;
 /**
  * 文件上传 数据层
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public interface SysOssMapper extends BaseMapperPlus<SysOssMapper, SysOss, SysOssVo> {
 }

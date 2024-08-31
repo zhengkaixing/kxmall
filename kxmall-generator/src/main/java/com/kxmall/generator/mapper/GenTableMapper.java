@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 业务 数据层
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @InterceptorIgnore(dataPermission = "true")
 public interface GenTableMapper extends BaseMapperPlus<GenTableMapper, GenTable, GenTable> {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 /**
  * Security 配置属性
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Data
 @Component

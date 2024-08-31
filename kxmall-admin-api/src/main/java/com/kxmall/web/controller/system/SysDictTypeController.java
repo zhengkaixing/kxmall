@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 数据字典信息
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Validated
 @RequiredArgsConstructor

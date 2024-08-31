@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * 操作日志记录处理
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 @Slf4j
 @Aspect

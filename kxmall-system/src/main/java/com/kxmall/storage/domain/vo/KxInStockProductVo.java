@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * 入库商品视图对象 kx_in_stock_product
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-08-29
  */
 @Data

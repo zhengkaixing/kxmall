@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 优惠券前台用户领取记录业务对象 kx_store_coupon_issue_user
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  * @date 2023-02-17
  */
 

@@ -9,7 +9,7 @@ import com.kxmall.common.utils.StringUtils;
 /**
  * 无符号计算生成器
  *
- * @author kxmall
+ * @author 郅兴开源团队-小黑
  */
 public class UnsignedMathGenerator implements CodeGenerator {
 
