@@ -85,20 +85,27 @@
       <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
     </el-row> -->
 
-    <el-table v-loading="loading" :data="stockList">
+    <el-table v-loading="loading" :data="stockList" size="small">
       <!-- <el-table-column type="selection" width="55" align="center" /> -->
       <el-table-column label="序号" width="80" align="center">
         <template slot-scope="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
-      <el-table-column label="前置仓" align="left" header-align="center" prop="storageName" />
+      <el-table-column label="前置仓" align="left" header-align="center" prop="storageName" width="120"/>
       <el-table-column label="商品类目" align="left" header-align="center" prop="categoryName" />
-      <el-table-column label="商品条码" align="left" header-align="center" prop="barCode" />
-      <el-table-column label="商品ID" align="left" header-align="center" prop="productId" />
-      <el-table-column label="商品名称" align="left" header-align="center" prop="productName" />
+      <!--      <el-table-column label="商品条码" align="left" header-align="center" prop="barCode" />-->
+      <!--      <el-table-column label="商品ID" align="left" header-align="center" prop="productId" width="180"/>-->
+      <el-table-column label="商品名称" align="left" header-align="center" prop="productName" width="180"/>
+      <el-table-column label="图片" align="center">
+        <template slot-scope="{row}">
+          <el-link :href="row.image|getStringOSSURL" target="_blank" :underline="false">
+            <el-image :src="row.image|getStringOSSURL" title="点击打开" class="el-avatar" />
+          </el-link>
+        </template>
+      </el-table-column>
       <!-- <el-table-column v-if="true" label="主键" align="center" prop="id" /> -->
-      <el-table-column label="商品规格" align="left" header-align="center" prop="productAttrName" />
+      <!--      <el-table-column label="商品规格" align="left" header-align="center" prop="productAttrName" />-->
       <el-table-column label="销售状态" align="center">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sale_status" :value="scope.row.status" />
@@ -122,7 +129,7 @@
       </el-table-column>
       <el-table-column label="导入时间" align="center" prop="createTime" width="150" />
       <el-table-column label="修改时间" align="center" prop="updateTime" width="150" />
-      <el-table-column label="操作" align="center" class-name="small-padding" width="180">
+      <el-table-column label="操作" align="center" class-name="small-padding" width="120">
         <template slot-scope="scope">
           <el-button
             v-if="scope.row.status===0"
@@ -201,10 +208,12 @@ import { listStock, /** getStock*/ delStock, /** addStock, updateStock*/updatePr
 import { listAllStorage } from '@/api/storage/storage'
 import { listStoreCategoryTree } from '@/api/product/storeCategory'
 import NP from 'number-precision'
+import getStringOSSURL from '@/mixin/getStringOSSURL'
 
 export default {
   name: 'Stock',
   dicts: ['sale_status'],
+  mixins: [getStringOSSURL],
   data() {
     return {
       // 按钮loading

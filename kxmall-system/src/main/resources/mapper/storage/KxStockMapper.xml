@@ -163,6 +163,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             spu.unit_name as unitName,
             spu.ot_price as originalPrice,
             s.price as price,
+            spu.image as image,
             s.update_time as updateTime,
             s.create_time as createTime
         FROM kx_stock s

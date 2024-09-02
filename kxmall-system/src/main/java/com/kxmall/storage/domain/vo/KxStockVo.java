@@ -18,7 +18,7 @@ import java.util.Date;
 /**
  * 前置仓商品视图对象 kx_stock
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-08-27
  */
 @Data
@@ -69,6 +69,10 @@ public class KxStockVo {
     @ExcelProperty(value = "商品规格id")
     private Long productAttrId;
 
+    /**
+     * 图片
+     */
+    private String image;
     /**
      * 商品规格名称
      */
