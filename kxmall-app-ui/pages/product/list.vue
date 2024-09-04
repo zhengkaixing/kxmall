@@ -12,27 +12,27 @@
 				</view>
 			</view>
 		</view>
-		<view class="goods-list">
-			<view v-for="(item, index) in goodsList" :key="index" class="goods-item" @click="navToDetailPage(item)">
-				<view class="image-wrapper">
-					<image :src="item.img " mode="aspectFill"></image>
-				</view>
-				<text class="title clamp">{{item.title}}</text>
-				<!-- <view class="price-box"> -->
-					<!-- <text class="price">{{isVip? (item.vipPrice / 100.0 + ' [VIP]') : (item.price / 100.0)}}<text class="text-df text-gray">/{{item.unit}}</text></text> -->
-					<view class="price-box">
-						<view class="">
-							<text style="font-size: 36rpx;" class="price">{{item.kxStockVo.price}}</text>
-							<text class="text-gray text-df" style="font-size: 24rpx;">/{{item.unit}}</text>
+    <view class="goods-list">
+      <view v-for="(item, index) in goodsList" :key="index" class="goods-item" @click="navToDetailPage(item)">
+        <view class="image-wrapper">
+          <image :src="JSON.parse(item.image)[0].url " mode="aspectFill"></image>
+        </view>
+        <text class="title clamp">{{item.storeName}}</text>
+        <!-- <view class="price-box"> -->
+        <!-- <text class="price">{{isVip? (item.vipPrice / 100.0 + ' [VIP]') : (item.price / 100.0)}}<text class="text-df text-gray">/{{item.unit}}</text></text> -->
+        <view class="price-box">
+          <view class="">
+            <text style="font-size: 36rpx;" class="price">{{item.kxStockVo.price}}</text>
+            <text class="text-gray text-df" style="font-size: 24rpx;">/{{item.unitName}}</text>
 
-						</view>
-						<!-- <text v-if="item.spuotPrice > (isVip ? item.spuVipPrice : item.spuPrice)" class="m-price">￥{{item.spuotPrice / 100}}</text> -->
-						<text>{{item.sales?item.sales:0}}人已购买</text>
-					</view>
-					<!-- <text>{{item.sales?item.sales:0}}人已购买</text> -->
-				<!-- </view> -->
-			</view>
-		</view>
+          </view>
+          <!-- <text v-if="item.spuotPrice > (isVip ? item.spuVipPrice : item.spuPrice)" class="m-price">￥{{item.spuotPrice / 100}}</text> -->
+          <text>{{item.kxStockVo.sales?item.kxStockVo.sales:0}}人已购买</text>
+        </view>
+        <!-- <text>{{item.sales?item.sales:0}}人已购买</text> -->
+        <!-- </view> -->
+      </view>
+    </view>
 		<uni-load-more :status="loadingType"></uni-load-more>
 
 	</view>
