@@ -5,7 +5,7 @@ import com.kxmall.order.domain.KxStoreOrder;
 /**
  * 观察者对象
  *
- * @author kaixin
+ * @author 郅兴开源团队-小黑
  */
 public class OrderUpdater {
 

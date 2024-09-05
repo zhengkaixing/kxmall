@@ -3,7 +3,7 @@ package com.kxmall.common.enums;
 /**
  * 通用状态枚举  仅激活 冻结
  *
- * @author kaixin
+ * @author 郅兴开源团队-小黑
  * @date 2020/3/10
  */
 public enum StatusType {

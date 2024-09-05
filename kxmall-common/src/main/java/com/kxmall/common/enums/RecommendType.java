@@ -2,7 +2,7 @@ package com.kxmall.common.enums;
 
 /**
  *
- * @author kaixin
+ * @author 郅兴开源团队-小黑
  */
 public enum RecommendType {
     /**

@@ -14,7 +14,7 @@ import java.util.Vector;
 /**
  * 活动类观察者
  *
- * @author kaixin
+ * @author 郅兴开源团队-小黑
  */
 @Component
 public class OrderObserveAble implements InitializingBean {

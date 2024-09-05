@@ -23,19 +23,16 @@ import com.kxmall.wechat.WxPayConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * @author kaixin
+ * @author 郅兴开源团队-小黑
  * @version 1.0
  * @date 2023/9/6
  */

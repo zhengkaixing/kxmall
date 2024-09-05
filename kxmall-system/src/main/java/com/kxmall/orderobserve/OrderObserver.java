@@ -3,7 +3,7 @@ package com.kxmall.orderobserve;
 /**
  * 监听器
  *
- * @author kaixin
+ * @author 郅兴开源团队-小黑
  */
 public interface OrderObserver {
 

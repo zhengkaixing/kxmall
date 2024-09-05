@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * app端登录
  *
- * @author kaixin
+ * @author 郅兴开源团队-小黑
  * @version 1.0
  * @date 2023/9/1
  */

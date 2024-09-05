@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * 首页聚合接口DTO
  *
- * @author kaixin
+ * @author 郅兴开源团队-小黑
  * @date 2022/7/14
  */
 @Data
