@@ -1,4 +1,4 @@
-package com.kxmall.web.controller.system.service.impl;
+package com.kxmall.system.service.impl;
 
 import cn.dev33.satoken.context.SaHolder;
 import cn.hutool.core.collection.CollUtil;
@@ -21,7 +21,7 @@ import com.kxmall.common.utils.redis.CacheUtils;
 import com.kxmall.common.utils.spring.SpringUtils;
 import com.kxmall.system.mapper.SysDictDataMapper;
 import com.kxmall.system.mapper.SysDictTypeMapper;
-import com.kxmall.web.controller.system.service.ISysDictTypeService;
+import com.kxmall.system.service.ISysDictTypeService;
 import com.kxmall.wechat.WxMaConfiguration;
 import com.kxmall.wechat.WxMpConfiguration;
 import com.kxmall.wechat.WxPayConfiguration;

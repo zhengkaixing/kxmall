@@ -1,4 +1,4 @@
-package com.kxmall.web.controller.system.service;
+package com.kxmall.system.service;
 
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.domain.entity.SysDictData;

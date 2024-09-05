@@ -1,8 +1,7 @@
-package com.kxmall.web.controller.system.service.impl;
+package com.kxmall.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.kxmall.system.mapper.SysDictDataMapper;
 import com.kxmall.common.constant.CacheNames;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.domain.entity.SysDictData;
@@ -10,7 +9,8 @@ import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.utils.StringUtils;
 import com.kxmall.common.utils.redis.CacheUtils;
-import com.kxmall.web.controller.system.service.ISysDictDataService;
+import com.kxmall.system.mapper.SysDictDataMapper;
+import com.kxmall.system.service.ISysDictDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;

@@ -10,7 +10,7 @@ import com.kxmall.common.core.domain.entity.SysDictType;
 import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.enums.BusinessType;
 import com.kxmall.common.utils.poi.ExcelUtil;
-import com.kxmall.web.controller.system.service.ISysDictTypeService;
+import com.kxmall.system.service.ISysDictTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

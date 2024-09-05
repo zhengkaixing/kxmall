@@ -1,7 +1,7 @@
 package com.kxmall.web.controller.system.runner;
 
 import com.kxmall.system.service.ISysConfigService;
-import com.kxmall.web.controller.system.service.ISysDictTypeService;
+import com.kxmall.system.service.ISysDictTypeService;
 import com.kxmall.web.controller.system.service.ISysOssConfigService;
 import com.kxmall.common.config.WMShopConfig;
 import lombok.RequiredArgsConstructor;
