@@ -57,6 +57,7 @@ public class WxPayConfiguration {
             payConfig.setMchId(configService.selectConfigByKey("wxpay_mchId"));
             payConfig.setMchKey(configService.selectConfigByKey("wxpay_mchKey"));
             payConfig.setKeyPath(configService.selectConfigByKey("wxpay_keyPath"));
+            payConfig.setNotifyUrl(configService.selectConfigByKey("wxpay_notifyUrl"));
             // 可以指定是否使用沙箱环境
             payConfig.setUseSandboxEnv(false);
             wxPayService = new WxPayServiceImpl();
