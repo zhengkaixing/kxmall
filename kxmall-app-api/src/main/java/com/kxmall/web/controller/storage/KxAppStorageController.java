@@ -50,8 +50,8 @@ public class KxAppStorageController extends BaseAppController {
      */
     @SaIgnore
     @GetMapping("/getRecentlyStorage")
-    public R<RecentlyStorageVo> getRecentlyStorage(BigDecimal longitude, BigDecimal latitude) {
-        return R.ok(iKxAppStorageService.getRecentlyStorage(longitude, latitude));
+    public R<RecentlyStorageVo> getRecentlyStorage(BigDecimal lng, BigDecimal lat) {
+        return R.ok(iKxAppStorageService.getRecentlyStorage(lng, lat));
     }
 
 
