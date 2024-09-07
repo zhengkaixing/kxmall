@@ -319,9 +319,9 @@
 			},
 			sum() {
 				var x = 0;
-				for (var i = 0; i < this.orderDetail1.productList.length; ++i) {
-					x += this.orderDetail1.productList[i].price;
-				}
+        for (var i = 0; i < this.orderDetail1.skuList.length; ++i) {
+          x += this.orderDetail1.skuList[i].price;
+        }
 				console.log(x)
 				this.Total = x
 			},
@@ -395,6 +395,9 @@
 
 			},
 			timeFormat(time){
+        if(time == undefined){
+          return
+        }
         time = time.replace(/\-/g, '/')
 				var date = new Date(time);
 				var month = date.getMonth()+1>9?date.getMonth()+1:'0'+parseInt(date.getMonth()+1)
