@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </foreach>
         </if>
         <if test="bo.name != null">
-            and ( sp.id like CONCAT('%',#{bo.name},'%') or sp.title like CONCAT('%',#{bo.name},'%')  or sk.bar_code like CONCAT('%',#{bo.name},'%') )
+            and ( sp.id like CONCAT('%',#{bo.name},'%') or sp.store_name like CONCAT('%',#{bo.name},'%')  or sp.bar_code like CONCAT('%',#{bo.name},'%') )
         </if>
         <if test="bo.minNum != null and bo.maxNum != null">
             <if test="type == 1">
@@ -109,7 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </foreach>
         </if>
         <if test="bo.name != null">
-            and ( sp.id like CONCAT('%',#{bo.name},'%') or sp.title like CONCAT('%',#{bo.name},'%')  or sk.bar_code like CONCAT('%',#{bo.name},'%') )
+            and ( sp.id like CONCAT('%',#{bo.name},'%') or sp.store_name like CONCAT('%',#{bo.name},'%')  or sp.bar_code like CONCAT('%',#{bo.name},'%') )
         </if>
         <if test="bo.minNum != null and bo.maxNum != null">
             <if test="type == 1">
