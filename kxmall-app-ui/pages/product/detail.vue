@@ -2,11 +2,11 @@
 	<view class="container">
 		<view class="carousel">
 			<swiper indicator-active-color="#2AAC34" indicator-dots circular=true duration="400">
-				<swiper-item  class="swiper-item" v-for="(item,index) in goods.sliderImage" :key="item.ossId">
-					<view class="image-wrapper">
-						<image :src="item.url" class="loaded" mode="aspectFit"></image>
-					</view>
-				</swiper-item>
+        <swiper-item class="swiper-item" v-for="(item,index) in goods.sliderImage" :key="index">
+          <view class="image-wrapper">
+            <image :src="item.url" class="loaded" mode="aspectFit"></image>
+          </view>
+        </swiper-item>
 			</swiper>
 		</view>
 
