@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="carousel">
 			<swiper indicator-active-color="#2AAC34" indicator-dots circular=true duration="400">
-				<swiper-item  class="swiper-item" v-for="(item,index) in JSON.parse(goods.sliderImage)" :key="item.ossId">
+				<swiper-item  class="swiper-item" v-for="(item,index) in goods.sliderImage" :key="item.ossId">
 					<view class="image-wrapper">
 						<image :src="item.url" class="loaded" mode="aspectFit"></image>
 					</view>
@@ -252,7 +252,8 @@
 					freightTemplate: undefined,
 					skuList: [],
 					categoryList: [],
-					appraisePage: undefined
+					appraisePage: undefined,
+          sliderImage: []
 				},
 				isVip: false,
 				specClass: 'none',
@@ -289,6 +290,7 @@
 				uni.hideLoading()
 			}).then(res => {
 				that.goods = res.data
+        that.goods.sliderImage = JSON.parse(res.data.sliderImage)
 				that.zhekou = ((res.data.kxStockVo.price/res.data.otPrice)*10).toFixed(1)
         that.detail = res.data.description.replace(/<img/gi,'<img style="max-width:100%;height:auto;margin:0 auto;display:block"')
 				// that.zhekou = ((30/90)*10).toFixed(1)
