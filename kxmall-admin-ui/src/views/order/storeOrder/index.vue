@@ -437,8 +437,10 @@ export default {
       this.loading = true
       this.storeOrderList = []
       const params = { ...this.queryParams }
-      params.startTime = params.createTime[0]
-      params.endTime = params.createTime[1]
+      if(params.createTime){
+        params.startTime = params.createTime[0]
+        params.endTime = params.createTime[1]
+      }
       delete params.createTime
       listStoreOrder(params).then(response => {
         this.storeOrderList = response.rows
