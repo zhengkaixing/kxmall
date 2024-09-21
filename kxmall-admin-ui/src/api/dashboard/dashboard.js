@@ -1,6 +1,13 @@
 import request from '@/utils/request'
 
 
+// 首行统计内容
+export function dataCount(data) {
+  return request({
+    method: 'get',
+    url: '/dashboard/dashboard/data/count?storageId='+data
+  })
+}
 // 用户数量统计
 export function countUser(data) {
   return request({
