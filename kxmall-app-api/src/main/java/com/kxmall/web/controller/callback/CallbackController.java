@@ -42,26 +42,26 @@ public class CallbackController {
     @Transactional(rollbackFor = Exception.class)
     public Object wxpay(@RequestBody String body) throws Exception {
 //        ============微信支付回调代码 prod 开始============
-//        WxPayOrderNotifyResult result = null;
-//        try {
-//            WxPayService wxPayService = WxPayConfiguration.getPayService(PayMethodEnum.H5);
-//            if(wxPayService == null) {
-//                wxPayService = WxPayConfiguration.getPayService(PayMethodEnum.MINI);
-//            }
-//            if(wxPayService == null) {
-//                wxPayService = WxPayConfiguration.getPayService(PayMethodEnum.APP);
-//            }
-//            result = wxPayService.parseOrderNotifyResult(body);
-//        } catch (WxPayException e) {
-//            logger.error("[微信解析回调请求] 异常", e);
-//            return WxPayNotifyResponse.fail(e.getMessage());
-//        }
-//        logger.info("处理腾讯支付平台的订单支付");
-//        logger.info(JSONObject.toJSONString(result));
+        WxPayOrderNotifyResult result;
+        try {
+            WxPayService wxPayService = WxPayConfiguration.getPayService(PayMethodEnum.H5);
+            if(wxPayService == null) {
+                wxPayService = WxPayConfiguration.getPayService(PayMethodEnum.MINI);
+            }
+            if(wxPayService == null) {
+                wxPayService = WxPayConfiguration.getPayService(PayMethodEnum.APP);
+            }
+            result = wxPayService.parseOrderNotifyResult(body);
+        } catch (WxPayException e) {
+            logger.error("[微信解析回调请求] 异常", e);
+            return WxPayNotifyResponse.fail(e.getMessage());
+        }
+        logger.info("处理腾讯支付平台的订单支付");
+        logger.info(JSONObject.toJSONString(result));
 //        ============微信支付回调代码 prod 结束============
 
 //        ============微信支付回调代码 dev 开始============
-        WxPayOrderNotifyResult result = JSONObject.parseObject(body, WxPayOrderNotifyResult.class);
+//        WxPayOrderNotifyResult result = JSONObject.parseObject(body, WxPayOrderNotifyResult.class);
 //        ============微信支付回调代码 dev 结束============
         /* 之前传过去的我们系统的订单ID */
         String orderNo = result.getOutTradeNo();
