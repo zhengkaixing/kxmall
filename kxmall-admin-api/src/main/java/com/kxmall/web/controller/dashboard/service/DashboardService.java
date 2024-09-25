@@ -1,5 +1,6 @@
 package com.kxmall.web.controller.dashboard.service;
 
+import com.kxmall.dashboard.domain.OrderTimeDataDTO;
 import com.kxmall.dashboard.domain.SalesStatementDTO;
 import com.kxmall.dashboard.domain.UserStatementDTO;
 
@@ -47,5 +48,14 @@ public interface DashboardService {
      * @return
      */
     List<SalesStatementDTO> getSalesByHour(Long storageId, Set<Long> storagePermission);
+
+
+    /**
+     * 首页订单/用户等统计
+     * @return OrderTimeDataDto
+     * @param storageId
+     */
+    OrderTimeDataDTO getCount(Long storageId);
+
 
 }

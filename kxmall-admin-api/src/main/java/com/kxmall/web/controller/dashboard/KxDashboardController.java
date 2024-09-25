@@ -2,6 +2,7 @@ package com.kxmall.web.controller.dashboard;
 
 import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.R;
+import com.kxmall.dashboard.domain.OrderTimeDataDTO;
 import com.kxmall.dashboard.domain.SalesStatementDTO;
 import com.kxmall.dashboard.domain.UserStatementDTO;
 import com.kxmall.web.controller.dashboard.service.DashboardService;
@@ -17,7 +18,7 @@ import java.util.Set;
 /**
  * 商铺广告
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-08-27
  */
 @Validated
@@ -37,6 +38,16 @@ public class KxDashboardController extends BaseController {
     @GetMapping("/countUser")
     public R<List<UserStatementDTO>> countUser() {
         return R.ok(dashboardService.countUser());
+    }
+
+
+    /**
+     * 首页订单/用户等统计
+     * @return OrderTimeDataDto
+     */
+    @GetMapping("/data/count")
+    public R<OrderTimeDataDTO> getCount(Long storageId) {
+        return R.ok(dashboardService.getCount(storageId));
     }
 
     /**
