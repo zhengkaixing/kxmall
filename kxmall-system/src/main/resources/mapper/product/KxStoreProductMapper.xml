@@ -81,6 +81,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="categoryId != null">
             and a.cate_id = #{categoryId}
         </if>
+        <if test="type != null and type != 0">
+            and a.is_integral = #{type}
+        </if>
         <if test="childrenIds != null and childrenIds.size()!=0">
             and a.cate_id in
             <foreach collection="childrenIds" item="list" index="index" open="(" close=")" separator=",">

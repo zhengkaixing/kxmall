@@ -134,7 +134,7 @@ public class KxAppProductService implements IKxAppProductService {
     }
 
     @Override
-    public TableDataInfo<KxStoreProductVo> getGoodsPageByStorage(Long storageId, Integer pageNo, Integer pageSize, Long categoryId, String orderBy, Boolean isAsc, String title) {
+    public TableDataInfo<KxStoreProductVo> getGoodsPageByStorage(Long storageId, Integer pageNo, Integer pageSize, Long categoryId, String orderBy, Boolean isAsc, String title,Integer type) {
         //缓存key
         String keyCache = CA_PRODUCT_PAGE_PREFIX + storageId + "_" + categoryId + "_" + pageNo + "_" + pageSize + "_" + orderBy + "_" + isAsc;
         //开始组装条件search
@@ -163,7 +163,7 @@ public class KxAppProductService implements IKxAppProductService {
         Integer offset = (pageNo - 1) * pageSize;
         Integer size = pageSize;
 
-        List<KxStoreProductVo> productPage = baseMapper.selectPageByStorage(offset,size, title, categoryId, childrenIds, storageId, orderBy, isAsc);
+        List<KxStoreProductVo> productPage = baseMapper.selectPageByStorage(offset,size, title, categoryId, childrenIds, storageId, orderBy, isAsc,type);
 
         Long count = baseMapper.selectPageByStorageCount(title, categoryId, childrenIds, storageId, orderBy, isAsc);
 

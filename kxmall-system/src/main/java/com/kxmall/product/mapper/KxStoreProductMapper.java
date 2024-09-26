@@ -23,7 +23,8 @@ public interface KxStoreProductMapper extends BaseMapperPlus<KxStoreProductMappe
                                                @Param("childrenIds") LinkedList<Long> childrenIds,
                                                @Param("storageId") Long storageId,
                                                @Param("orderBy") String orderBy,
-                                               @Param("isAsc") Boolean isAsc);
+                                               @Param("isAsc") Boolean isAsc,
+                                               @Param("type") Integer type);
 
     Long selectPageByStorageCount(@Param("title") String title,
                                   @Param("categoryId") Long categoryId,

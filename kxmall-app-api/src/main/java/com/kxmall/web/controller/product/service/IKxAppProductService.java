@@ -36,7 +36,7 @@ public interface IKxAppProductService {
      * @param title
      * @return
      */
-    TableDataInfo<KxStoreProductVo> getGoodsPageByStorage(Long storageId, Integer pageNo, Integer pageSize, Long categoryId, String orderBy, Boolean isAsc, String title);
+    TableDataInfo<KxStoreProductVo> getGoodsPageByStorage(Long storageId, Integer pageNo, Integer pageSize, Long categoryId, String orderBy, Boolean isAsc, String title,Integer type);
 
     /**
      * 指定仓库下获取商品详情

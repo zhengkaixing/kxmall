@@ -79,7 +79,7 @@ public class KxAppStorageController extends BaseAppController {
                                                                     String orderBy,
                                                                     Boolean isAsc,
                                                                     String title) {
-        TableDataInfo<KxStoreProductVo> storage = appProductService.getGoodsPageByStorage(storageId, pageNo, pageSize, categoryId, orderBy, isAsc, title);
+        TableDataInfo<KxStoreProductVo> storage = appProductService.getGoodsPageByStorage(storageId, pageNo, pageSize, categoryId, orderBy, isAsc, title,0);
         return R.ok(storage);
     }
 

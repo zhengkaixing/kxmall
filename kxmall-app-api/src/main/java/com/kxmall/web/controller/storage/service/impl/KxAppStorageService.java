@@ -158,7 +158,7 @@ public class KxAppStorageService implements IKxAppStorageService {
         integralIndexDataVo.setCheapRecommend(cheapRecommend);
 
         // 最近上新
-        List<KxStoreProductVo> newTop = productService.getGoodsPageByStorage(storageId, 1, 10, null, "id", false, null).getRows();
+        List<KxStoreProductVo> newTop = productService.getGoodsPageByStorage(storageId, 1, 10, null, "id", false, null,0).getRows();
         integralIndexDataVo.setNewTop(newTop);
 
         // 新鲜时报
