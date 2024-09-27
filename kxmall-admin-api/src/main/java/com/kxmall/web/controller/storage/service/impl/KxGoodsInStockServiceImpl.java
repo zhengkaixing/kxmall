@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -95,7 +96,9 @@ public class KxGoodsInStockServiceImpl implements IKxGoodsInStockService {
         lqw.eq(StringUtils.isNotBlank(bo.getInStockNumbers()), KxGoodsInStock::getInStockNumbers, bo.getInStockNumbers());
         lqw.eq(bo.getStates() != null, KxGoodsInStock::getStates, bo.getStates());
         lqw.eq(StringUtils.isNotBlank(bo.getIngoingPerson()), KxGoodsInStock::getIngoingPerson, bo.getIngoingPerson());
-        lqw.eq(bo.getIngoingTime() != null, KxGoodsInStock::getIngoingTime, bo.getIngoingTime());
+        if(bo.getIngoingTime() != null){
+            lqw.between(bo.getIngoingTime() != null, KxGoodsInStock::getIngoingTime, bo.getIngoingTime().atStartOfDay(),bo.getIngoingTime().atTime(LocalTime.MAX));
+        }
         lqw.eq(StringUtils.isNotBlank(bo.getRemarks()), KxGoodsInStock::getRemarks, bo.getRemarks());
         lqw.eq(StringUtils.isNotBlank(bo.getOutgoingDay()), KxGoodsInStock::getOutgoingDay, bo.getOutgoingDay());
         lqw.orderByDesc(KxGoodsInStock::getId);

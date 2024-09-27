@@ -29,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -94,7 +95,9 @@ public class KxGoodsOutStockServiceImpl implements IKxGoodsOutStockService {
         lqw.eq(StringUtils.isNotBlank(bo.getOutStockNumbers()), KxGoodsOutStock::getOutStockNumbers, bo.getOutStockNumbers());
         lqw.eq(bo.getStates() != null, KxGoodsOutStock::getStates, bo.getStates());
         lqw.eq(StringUtils.isNotBlank(bo.getOutgoingPerson()), KxGoodsOutStock::getOutgoingPerson, bo.getOutgoingPerson());
-        lqw.eq(bo.getOutgoingTime() != null, KxGoodsOutStock::getOutgoingTime, bo.getOutgoingTime());
+        if(bo.getOutgoingTime() != null){
+            lqw.between(bo.getOutgoingTime() != null, KxGoodsOutStock::getOutgoingTime, bo.getOutgoingTime().atStartOfDay(),bo.getOutgoingTime().atTime(LocalTime.MAX));
+        }
         lqw.eq(StringUtils.isNotBlank(bo.getRemarks()), KxGoodsOutStock::getRemarks, bo.getRemarks());
         lqw.eq(StringUtils.isNotBlank(bo.getOutgoingDay()), KxGoodsOutStock::getOutgoingDay, bo.getOutgoingDay());
         lqw.orderByDesc(KxGoodsOutStock::getId);
