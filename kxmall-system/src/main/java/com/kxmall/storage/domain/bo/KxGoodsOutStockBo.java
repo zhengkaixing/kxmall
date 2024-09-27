@@ -9,10 +9,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.validation.constraints.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 商品出库业务对象 kx_goods_out_stock
@@ -54,7 +56,9 @@ public class KxGoodsOutStockBo extends BaseEntity {
     /**
      * 出库时间
      */
-    private Date outgoingTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private LocalDate outgoingTime;
 
     /**
      * 备注
