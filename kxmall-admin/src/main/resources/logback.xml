@@ -55,6 +55,21 @@
         </filter>
     </appender>
 
+    <appender name="WeCom" class="com.kxmall.web.controller.logback.WeComAppender">
+        <webhookUrl>https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=你的群聊机器人key</webhookUrl>
+        <application>kxmall</application>-->
+        <enabled>true</enabled>
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
     <appender name="file_error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.path}/sys-error.log</file>
         <!-- 循环政策：基于时间创建日志文件 -->
@@ -123,7 +138,8 @@
         <appender-ref ref="async_info" />
         <appender-ref ref="async_error" />
         <appender-ref ref="file_console" />
-<!--        <appender-ref ref="sky_log"/>-->
+        <appender-ref ref="WeCom"/>
+        <!--        <appender-ref ref="sky_log"/>-->
     </root>
 
 </configuration>
