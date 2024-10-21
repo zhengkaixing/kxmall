@@ -1,4 +1,4 @@
-package com.kxmall.web.controller;
+package com.kxmall.web.controller.logback;
 
 import ch.qos.logback.core.OutputStreamAppender;
 import org.springframework.util.StringUtils;

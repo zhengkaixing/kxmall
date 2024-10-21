@@ -1,4 +1,4 @@
-package com.kxmall.web.controller;
+package com.kxmall.web.controller.logback;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.http.HttpEntity;
