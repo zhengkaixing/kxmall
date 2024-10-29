@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.activity.mapper.KxStoreActivityProductMapper">
+
+    <resultMap type="com.kxmall.activity.domain.KxStoreActivityProduct" id="KxStoreActivityProductResult">
+        <result property="id" column="id"/>
+        <result property="productId" column="product_id"/>
+        <result property="activityId" column="activity_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+    <select id="selectVoPageBySQL" resultType="com.kxmall.activity.domain.vo.KxStoreActivityProductVo">
+        SELECT
+            sap.id as id,
+            sap.activity_id as activityId,
+            sap.product_id as productId,
+            sap.activity_price as activityPrice,
+            sp.price as price,
+            sp.ot_price as originalPrice,
+            sp.vip_price as vipPrice,
+            sp.image as img,
+            sp.store_name as productName,
+            sp.cate_id as categoryId,
+            sp.unit_name as unitName,
+            sa.title as activityTitle
+        FROM
+            kx_store_activity_product sap
+                left join kx_store_product sp on sap.product_id = sp.id
+                left join kx_store_activity sa on sap.activity_id = sa.id
+            ${ew.getCustomSqlSegment}
+    </select>
+
+    <select id="getActivityProductByStorage" resultType="com.kxmall.activity.domain.vo.KxStoreActivityProductVo">
+        SELECT
+        sap.id as id,
+        sap.activity_id as activityId,
+        sap.product_id as productId,
+        sp.ot_price as originalPrice,
+        st.price as price,
+        sap.activity_price as activityPrice,
+        sp.vip_price as vipPrice,
+        st.sales as sales,
+        sp.image as img,
+        sp.store_name as title,
+        sp.cate_id as categoryId,
+        st.product_attr_id as productAttrId,
+        sp.unit_name as unitName,
+        sp.store_info as storeInfo
+        FROM
+        kx_store_activity_product sap,
+        kx_store_product sp
+        left join kx_stock st on st.product_id = sp.id
+        WHERE
+        sap.product_id = sp.id
+        and sp.id in (select c.product_id from kx_stock c where c.status = 1 and c.storage_id = #{storageId})
+        and st.storage_id = #{storageId}
+        and st.stock != 0
+        and sap.activity_id = #{activityId}
+        and sp.is_show = 1
+        <if test="offset != null">
+            limit #{offset},#{size}
+        </if>
+    </select>
+
+
+    <select id="getActivityProductByStorageCount" resultType="java.lang.Long">
+        SELECT
+            count(sap.id)
+        FROM
+            kx_store_activity_product sap,
+            kx_store_product sp
+                left join kx_stock st on st.product_id = sp.id
+        WHERE
+            sap.product_id = sp.id
+          and sp.id in (select c.product_id from kx_stock c where c.status = 1 and c.storage_id = #{storageId})
+          and st.storage_id = #{storageId}
+          and st.stock != 0
+          and sap.activity_id = #{activityId}
+          and sp.is_show = 1
+    </select>
+
+</mapper>
