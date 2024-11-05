@@ -86,6 +86,7 @@ public class KxAppOrderService implements IKxAppOrderService {
             orderRequest.setSpbillCreateIp(IpUtil.getLocalIP());
             orderRequest.setTradeType(tradeType);
             orderRequest.setNonceStr(nonceStr);
+            orderRequest.setNotifyUrl(wxPayService.getConfig().getNotifyUrl());
             result = wxPayService.createOrder(orderRequest);
         } catch (WxPayException e) {
             logger.error("[微信支付] 异常", e);
