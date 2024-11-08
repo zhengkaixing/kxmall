@@ -53,6 +53,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         UPDATE kx_stock SET stock = stock - #{num}, frezz_stock = frezz_stock + #{num} WHERE id = #{productId} and storage_id = #{storeId}
     </update>
 
+    <update id="restoreSkuStock">
+        UPDATE kx_stock SET stock = stock + #{num}, frezz_stock = frezz_stock - #{num} WHERE id = #{productId} and storage_id = #{storeId}
+    </update>
+
+    <update id="incSales">
+        UPDATE kx_stock SET sales = sales + #{num} WHERE product_id = #{productId}
+    </update>
+
+    <update id="decSeckillStock">
+        update kx_store_seckill set stock=stock-#{cartNum}, sales=sales+#{cartNum} where id=#{seckillId} and stock >= #{cartNum}  and storage_id = #{storeId}
+    </update>
+
     <select id="selectPageByStorage" resultType="com.kxmall.product.domain.vo.KxStoreProductVo">
         select
         a.id,a.store_name as storeName,
@@ -149,5 +161,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE  b.storage_id = #{storageId} and a.id = #{productId}
     </select>
 
+
+    <select id="getProductTitleAllByStorageId" resultType="com.kxmall.product.domain.KxStoreProduct">
+        SELECT a.id,a.store_name as storeName,a.cate_id as cateId
+        FROM kx_store_product a
+                 left join kx_stock b on a.id = b.product_id
+        where b.storage_id = #{storageId}
+        ORDER BY cate_id
+    </select>
+
+    <select id="selectListByStorage" resultType="com.kxmall.product.domain.KxStoreProduct">
+        select
+            a.*
+        from  kx_store_product a
+                  LEFT JOIN kx_stock b on a.id = b.product_id
+        WHERE  b.storage_id = #{storageId} and a.common_id = #{commonId}
+    </select>
 
 </mapper>
