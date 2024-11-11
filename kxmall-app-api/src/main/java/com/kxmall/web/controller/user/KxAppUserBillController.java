@@ -1,5 +1,6 @@
 package com.kxmall.web.controller.user;
 
+import com.kxmall.common.core.controller.BaseAppController;
 import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.page.TableDataInfo;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/app/userBill")
-public class KxAppUserBillController extends BaseController {
+public class KxAppUserBillController extends BaseAppController {
 
     private final IKxAppUserBillService kxAppUserBillService;
 
@@ -31,6 +32,8 @@ public class KxAppUserBillController extends BaseController {
      */
     @GetMapping("/list")
     public TableDataInfo<KxUserBillVo> list(KxUserBillBo bo, PageQuery pageQuery) {
+        Long userId = getAppLoginUser().getUserId();
+        bo.setUid(userId);
         bo.setCategory("integral");
         return kxAppUserBillService.queryPageList(bo, pageQuery);
     }
