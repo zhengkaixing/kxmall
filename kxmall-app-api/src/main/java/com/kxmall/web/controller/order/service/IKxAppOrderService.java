@@ -73,4 +73,7 @@ public interface IKxAppOrderService {
      * @return
      */
     KxStoreOrderVo getOrderDetail(Long orderId, Long userId);
+
+
+    List<KxStoreOrderVo> selectListVoByWrapper(QueryWrapper<KxStoreOrder> orderId);
 }

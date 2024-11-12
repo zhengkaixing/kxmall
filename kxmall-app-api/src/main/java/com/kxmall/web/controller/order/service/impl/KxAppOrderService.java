@@ -200,4 +200,9 @@ public class KxAppOrderService implements IKxAppOrderService {
         orderDTO.setProductList(storeOrderProductVoList);
         return orderDTO;
     }
+
+    @Override
+    public List<KxStoreOrderVo> selectListVoByWrapper(QueryWrapper<KxStoreOrder> wrapper) {
+        return baseMapper.selectVoList(wrapper);
+    }
 }
