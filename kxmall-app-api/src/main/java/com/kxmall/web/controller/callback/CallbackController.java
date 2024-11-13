@@ -9,6 +9,11 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import com.kxmall.common.enums.OrderStatusType;
 import com.kxmall.common.enums.PayMethodEnum;
 import com.kxmall.order.domain.KxStoreOrder;
+import com.kxmall.order.domain.KxStoreOrderProduct;
+import com.kxmall.order.domain.vo.KxStoreOrderProductVo;
+import com.kxmall.order.domain.vo.KxStoreOrderVo;
+import com.kxmall.order.mapper.KxStoreOrderProductMapper;
+import com.kxmall.product.mapper.KxStoreProductMapper;
 import com.kxmall.web.controller.order.service.IKxAppOrderService;
 import com.kxmall.wechat.WxPayConfiguration;
 import org.slf4j.Logger;
@@ -35,6 +40,13 @@ public class CallbackController {
 
     @Autowired
     private IKxAppOrderService appOrderService;
+
+    @Autowired
+    private KxStoreOrderProductMapper orderProductMapper;
+
+    @Autowired
+    private KxStoreProductMapper storeProductMapper;
+
 
     private static final Logger logger = LoggerFactory.getLogger(CallbackController.class);
 
@@ -67,7 +79,7 @@ public class CallbackController {
         String orderNo = result.getOutTradeNo();
         String payId = result.getTransactionId();
 
-        List<KxStoreOrder> KxStoreOrderList = appOrderService.selectListByWrapper(
+        List<KxStoreOrderVo> KxStoreOrderList = appOrderService.selectListVoByWrapper(
             new QueryWrapper<KxStoreOrder>()
                 .eq("order_id", orderNo));
 
@@ -75,7 +87,7 @@ public class CallbackController {
             return WxPayNotifyResponse.fail("订单不存在 orderNo=" + orderNo);
         }
 
-        KxStoreOrder order = KxStoreOrderList.get(0);
+        KxStoreOrderVo order = KxStoreOrderList.get(0);
 
         // 检查这个订单是否已经处理过
         if (order.getStatus() != OrderStatusType.UNPAY.getCode()) {
@@ -99,6 +111,16 @@ public class CallbackController {
         updateOrderDO.setUpdateTime(order.getPayTime());
         updateOrderDO.setStatus(OrderStatusType.WAIT_PREPARE_GOODS.getCode());
         appOrderService.changeOrderStatus(orderNo, OrderStatusType.UNPAY.getCode(), updateOrderDO);
+
+        //扣款
+
+        List<KxStoreOrderProductVo> orderProducts = orderProductMapper.selectVoList(new QueryWrapper<KxStoreOrderProduct>().eq("order_id", order.getId()));
+        order.setProductList(orderProducts);
+        orderProducts.forEach(item -> {
+            //增加销量
+            storeProductMapper.incSales(item.getProductId(), item.getNum());
+        });
+
 
         return WxPayNotifyResponse.success("支付成功");
     }
