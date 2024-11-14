@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import static com.kxmall.common.constant.ProductCacheConstants.ADVERTISEMENT_NAME;
+
 /**
  * 商铺广告Service业务层处理
  *
@@ -33,8 +35,6 @@ import java.util.Map;
 public class KxCarouselServiceImpl implements IKxCarouselService {
 
     private final KxCarouselMapper baseMapper;
-
-    private final static String ADVERTISEMENT_NAME = "ADVERTISEMENT_TYPE_";
 
     /**
      * 查询商铺广告

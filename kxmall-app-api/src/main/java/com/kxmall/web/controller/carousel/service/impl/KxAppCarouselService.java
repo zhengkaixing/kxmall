@@ -12,6 +12,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+import static com.kxmall.common.constant.ProductCacheConstants.ADVERTISEMENT_NAME;
+
 /**
  * @author 郅兴开源团队-小黑
  * @version 1.0
@@ -23,7 +25,7 @@ public class KxAppCarouselService implements IKxAppCarouselService {
 
     private final KxCarouselMapper baseMapper;
 
-    private final static String ADVERTISEMENT_NAME = "ADVERTISEMENT_TYPE_";
+
 
     @Override
     public List<KxCarousel> listAll(Integer adType) {

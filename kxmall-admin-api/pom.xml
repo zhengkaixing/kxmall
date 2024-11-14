@@ -29,6 +29,11 @@
 
         <dependency>
             <groupId>com.kxmall</groupId>
+            <artifactId>kxmall-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.kxmall</groupId>
             <artifactId>kxmall-system</artifactId>
         </dependency>
 
