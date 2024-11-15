@@ -37,6 +37,7 @@ import com.kxmall.web.controller.product.service.IKxStoreProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -232,6 +233,9 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
         BeanUtil.copyProperties(bo, kxStoreProduct, "sliderImage");
         if (bo.getSliderImage().isEmpty()) {
             throw new ServiceException("请上传轮播图");
+        }
+        if (ObjectUtils.isEmpty(bo.getImage())) {
+            throw new ServiceException("请上传商品封面图");
         }
 
         kxStoreProduct.setPrice(BigDecimal.valueOf(resultDTO.getMinPrice()));
