@@ -737,7 +737,9 @@ export default {
             this.form.attrs = this.attrs
           }
           if (this.form.specType === 1 && this.attrs.length === 0) {
-            return this.$message.warning('请点击生成规格！')
+            this.$message.warning('请点击生成规格！')
+            this.buttonLoading = false
+            return
           }
           const params = { ...this.form }
           const { image, sliderImage } = params
