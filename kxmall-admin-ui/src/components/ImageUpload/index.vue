@@ -62,7 +62,7 @@ export default {
     // 文件类型, 例如['png', 'jpg', 'jpeg']
     fileType: {
       type: Array,
-      default: () => ["png", "jpg", "jpeg"],
+      default: () => ["png", "jpg", "jpeg","ico"],
     },
     // 是否显示提示
     isShowTip: {
