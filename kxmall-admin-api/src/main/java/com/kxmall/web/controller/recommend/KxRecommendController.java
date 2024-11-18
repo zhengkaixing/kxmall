@@ -37,7 +37,6 @@ public class KxRecommendController extends BaseController {
 
     private final IKxRecommendService iKxRecommendService;
 
-    private final static String RECOMMEND_NAME = "RECOMMEND_TYPE_";
 
     /**
      * 查询推荐管理列表

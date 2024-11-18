@@ -7,8 +7,14 @@ package com.kxmall.common.constant;
  */
 public interface ProductCacheConstants {
 
-
+   /**
+    * 广告
+    */
    String ADVERTISEMENT_NAME = "ADVERTISEMENT_TYPE_";
 
 
+   /**
+    * 推荐
+    */
+   String RECOMMEND_NAME = "RECOMMEND_TYPE_";
 }

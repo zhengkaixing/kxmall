@@ -14,6 +14,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+import static com.kxmall.common.constant.ProductCacheConstants.RECOMMEND_NAME;
+
 /**
  * @author 郅兴开源团队-小黑
  * @version 1.0
@@ -26,8 +28,6 @@ public class KxAppRecommendService implements IKxAppRecommendService {
     private final KxRecommendMapper baseMapper;
 
     private final SysDictDataMapper dictDataMapper;
-
-    private static final String RECOMMEND_NAME = "RECOMMEND_TYPE_";
 
     @Override
     public TableDataInfo<KxRecommendVo> getRecommendByType(Long storageId, Integer recommendType, Integer pageNo, Integer pageSize) {

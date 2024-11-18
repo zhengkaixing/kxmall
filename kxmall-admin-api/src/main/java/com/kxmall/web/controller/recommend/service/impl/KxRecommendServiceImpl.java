@@ -25,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+import static com.kxmall.common.constant.ProductCacheConstants.RECOMMEND_NAME;
+
 /**
  * 推荐管理Service业务层处理
  *
@@ -39,7 +41,6 @@ public class KxRecommendServiceImpl implements IKxRecommendService {
 
     private final IKxStoreProductService productService;
 
-    private final static String RECOMMEND_NAME = "RECOMMEND_TYPE_";
 
     /**
      * 查询推荐管理
