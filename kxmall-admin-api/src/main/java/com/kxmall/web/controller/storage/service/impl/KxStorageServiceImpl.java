@@ -25,6 +25,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static com.kxmall.common.constant.ProductCacheConstants.STORAGE_INFO_PREFIX;
+
 /**
  * 仓库管理Service业务层处理
  *
@@ -35,7 +37,6 @@ import java.util.Map;
 @Service
 public class KxStorageServiceImpl implements IKxStorageService {
 
-    private static final String STORAGE_INFO_PREFIX = "STORAGE_INFO_";
 
     private final KxStorageMapper baseMapper;
 

@@ -17,4 +17,10 @@ public interface ProductCacheConstants {
     * 推荐
     */
    String RECOMMEND_NAME = "RECOMMEND_TYPE_";
+
+
+   /**
+    * 仓库缓存key
+    */
+   String STORAGE_INFO_PREFIX = "STORAGE_INFO_";
 }

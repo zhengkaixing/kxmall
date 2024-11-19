@@ -27,6 +27,8 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.kxmall.common.constant.ProductCacheConstants.STORAGE_INFO_PREFIX;
+
 /**
  * @author 郅兴开源团队-小黑
  * @version 1.0
@@ -36,7 +38,6 @@ import java.util.stream.Collectors;
 @Service
 public class KxAppStorageService implements IKxAppStorageService {
 
-    private static final String STORAGE_INFO_PREFIX = "STORAGE_INFO_";
 
     private final KxStorageMapper storageMapper;
 
