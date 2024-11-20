@@ -55,6 +55,8 @@ public class CheckQuartz {
                             updateOrderDO.setStatus(OrderStatusType.CANCELED_SYS.getCode());
                             updateOrderDO.setUpdateTime(now);
                             orderBizService.changeOrderStatus(no, OrderStatusType.UNPAY.getCode(), updateOrderDO);
+                            //将冻结库存还回去
+                            orderBizService.callbackStock(no);
                         } catch (Exception e) {
                             logger.error("[未付款检测] 异常", e);
                         }

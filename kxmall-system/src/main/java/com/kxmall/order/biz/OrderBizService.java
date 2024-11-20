@@ -1,5 +1,6 @@
 package com.kxmall.order.biz;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest;
 import com.github.binarywang.wxpay.bean.result.WxPayRefundResult;
@@ -10,7 +11,10 @@ import com.kxmall.common.enums.UserLoginType;
 import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.utils.redis.RedisUtils;
 import com.kxmall.order.domain.KxStoreOrder;
+import com.kxmall.order.domain.KxStoreOrderProduct;
 import com.kxmall.order.mapper.KxStoreOrderMapper;
+import com.kxmall.order.mapper.KxStoreOrderProductMapper;
+import com.kxmall.product.mapper.KxStoreProductMapper;
 import com.kxmall.user.domain.KxUser;
 import com.kxmall.user.mapper.KxUserMapper;
 import com.kxmall.wechat.WxPayConfiguration;
@@ -41,6 +45,12 @@ public class OrderBizService {
 
     @Autowired
     private KxStoreOrderMapper orderMapper;
+
+    @Autowired
+    private KxStoreOrderProductMapper orderProductMapper;
+
+    @Autowired
+    private KxStoreProductMapper storeProductMapper;
 
     @Autowired
     private KxUserMapper userMapper;
@@ -165,5 +175,16 @@ public class OrderBizService {
         }
     }
 
+    /**
+     * 将冻结库存还回去
+     * @param no
+     */
+    public void callbackStock(String no) {
+        KxStoreOrder storeOrder = orderMapper.selectOne(new LambdaQueryWrapper<KxStoreOrder>().eq(KxStoreOrder::getOrderId, no));
+        List<KxStoreOrderProduct> orderId = orderProductMapper.selectList(new QueryWrapper<KxStoreOrderProduct>().eq("order_id", no));
+        for (KxStoreOrderProduct storeOrderProduct : orderId) {
+            storeProductMapper.restoreSkuStock(storeOrderProduct.getProductId(), storeOrderProduct.getNum(), storeOrder.getStoreId());
+        }
+    }
 
 }
