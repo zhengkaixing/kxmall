@@ -108,6 +108,8 @@ public class KxAppAppraiseService implements IKxAppAppraiseService {
             appraiseDO.setUserId(userId);
             appraiseDO.setUpdateTime(now);
             appraiseDO.setCreateTime(now);
+            // TODO 预留
+            //appraiseDO.setStorageId(bo.getStorageId());
             appraiseDO.setContent(appraiseDTO.getContent());
             baseMapper.insert(appraiseDO);  //插入该订单该商品评价
             RedisUtils.deleteKeys(CA_APPRAISE_KEY + appraiseDO.getProductId()+"*"); //删除商品评论缓存
