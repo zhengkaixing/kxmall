@@ -111,13 +111,15 @@
           <el-button
             v-hasPermi="['carousel:carousel:edit']"
             size="mini"
-            type="primary"
+            type="text"
+            style="color: #409EFF;"
             @click="handleUpdate(scope.row)"
           >编辑</el-button>
           <el-button
             v-hasPermi="['carousel:carousel:remove']"
             size="mini"
-            type="danger"
+            type="text"
+            style="color: #F56C6C;"
             @click="handleDelete(scope.row)"
           >删除</el-button>
         </template>
