@@ -2,7 +2,12 @@ package com.kxmall.web.controller.recommend;
 
 import java.util.List;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.kxmall.carousel.domain.KxCarousel;
+import com.kxmall.carousel.domain.vo.KxCarouselVo;
+import com.kxmall.carousel.mapper.KxCarouselMapper;
 import lombok.RequiredArgsConstructor;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.*;
@@ -37,6 +42,7 @@ public class KxRecommendController extends BaseController {
 
     private final IKxRecommendService iKxRecommendService;
 
+    private final KxCarouselMapper baseMapper;
 
     /**
      * 查询推荐管理列表
@@ -74,8 +80,18 @@ public class KxRecommendController extends BaseController {
     @SaCheckPermission("recommend:recommend:query")
     @GetMapping("/{id}")
     public R<KxRecommendVo> getInfo(@NotNull(message = "主键不能为空")
-                                     @PathVariable Long id) {
+                                    @PathVariable Long id) {
         return R.ok(iKxRecommendService.queryById(id));
+    }
+    /**
+     * 获取推荐类型信息
+     */
+    @GetMapping("/listRecommendType")
+    public R<List<KxCarouselVo>> listRecommendType() {
+        List<KxCarouselVo> carouselVos = baseMapper.selectVoList(new LambdaQueryWrapper<KxCarousel>().eq(KxCarousel::getAdType, 4));
+        return R.ok(carouselVos.stream()
+                .filter(vo -> vo.getUrl().contains("/pages/parity/parity"))
+                .collect(Collectors.toList()));
     }
 
     /**

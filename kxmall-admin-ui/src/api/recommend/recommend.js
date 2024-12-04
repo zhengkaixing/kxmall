@@ -17,6 +17,14 @@ export function getRecommend(id) {
   })
 }
 
+// 查询推荐类型
+export function listRecommendType() {
+  return request({
+    url: '/recommend/recommend/listRecommendType',
+    method: 'get'
+  })
+}
+
 // 新增推荐管理
 export function addRecommend(data) {
   return request({

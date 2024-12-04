@@ -4,10 +4,10 @@
       <el-form-item prop="recommendType">
         <el-select v-model="queryParams.recommendType" clearable placeholder="请选择推荐类型">
           <el-option
-            v-for="dict in dict.type.recommend_type"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
+            v-for="dict in recommendTypeList"
+            :key="dict.id"
+            :label="dict.title"
+            :value="dict.id"
           />
         </el-select>
       </el-form-item>
@@ -81,22 +81,16 @@
       <el-table-column label="推荐商品" align="center" prop="productName" />
       <el-table-column label="推荐类型" align="center" prop="recommendType">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.recommend_type" :value="scope.row.recommendType" />
+          {{ recommendTypeMap[scope.row.recommendType] }}
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding" width="120">
         <template slot-scope="scope">
-          <!-- <el-button
-            v-hasPermi="['recommend:recommend:edit']"
-            size="mini"
-            type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-          >修改</el-button> -->
           <el-button
             v-hasPermi="['recommend:recommend:remove']"
             size="mini"
-            type="danger"
+            type="text"
+            style="color: #F56C6C;"
             @click="handleDelete(scope.row)"
           >删除</el-button>
         </template>
@@ -117,10 +111,10 @@
         <el-form-item prop="recommendType" label="推荐类型">
           <el-select v-model="form.recommendType" clearable placeholder="请选择推荐类型">
             <el-option
-              v-for="dict in dict.type.recommend_type"
-              :key="dict.value"
-              :label="dict.label"
-              :value="dict.value"
+              v-for="dict in recommendTypeList"
+              :key="dict.id"
+              :label="dict.title"
+              :value="dict.id"
             />
           </el-select>
         </el-form-item>
@@ -145,12 +139,12 @@
 </template>
 
 <script>
-import { listRecommend, /** getRecommend,*/ delRecommend, addRecommendBatch /** updateRecommend*/ } from '@/api/recommend/recommend'
+import { listRecommend, /** getRecommend,*/ delRecommend, addRecommendBatch /** updateRecommend*/,listRecommendType } from '@/api/recommend/recommend'
 import { getProductBigTree } from '@/api/product/storeProduct.js'
 
 export default {
   name: 'Recommend',
-  dicts: ['recommend_type'],
+  // dicts: ['recommend_type'],
   data() {
     return {
       // 按钮loading
@@ -200,10 +194,13 @@ export default {
         multiple: true,
         value: 'id'
       },
-      productsTree: []
+      productsTree: [],
+      recommendTypeList: [],
+      recommendTypeMap: []
     }
   },
   created() {
+    this.getTypeList()
     this.getList()
     this.getProductBigTree()
   },
@@ -219,6 +216,22 @@ export default {
       listRecommend(this.queryParams).then(response => {
         this.recommendList = response.rows
         this.total = response.total
+        this.loading = false
+      })
+    },
+    /** 查询推荐类型列表 */
+    getTypeList() {
+      this.loading = true
+      listRecommendType().then(response => {
+        this.recommendTypeList= response.data
+        debugger
+        //添加两个固定的id
+        this.recommendTypeList.push({id:1,title:"今日特价"})
+        this.recommendTypeList.push({id:11,title:"热卖推荐"})
+
+        this.recommendTypeList.forEach(item => {
+          this.recommendTypeMap[item.id] = item.title
+        })
         this.loading = false
       })
     },
