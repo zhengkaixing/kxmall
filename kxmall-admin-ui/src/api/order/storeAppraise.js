@@ -42,3 +42,12 @@ export function delStoreAppraise(id) {
     method: 'delete'
   })
 }
+
+
+// 通过评论管理
+export function changeState(id) {
+  return request({
+    url: '/order/storeAppraise/changeState/' + id,
+    method: 'get'
+  })
+}

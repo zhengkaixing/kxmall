@@ -45,4 +45,11 @@ public interface IKxStoreAppraiseService {
      * 校验并批量删除评论管理信息
      */
     Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid);
+
+    /**
+     * 通过评论
+     * @param id
+     * @return
+     */
+    int changeState(Long id);
 }

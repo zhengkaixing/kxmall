@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.kxmall.common.utils.StringUtils;
+import com.kxmall.common.utils.redis.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.kxmall.order.domain.bo.KxStoreAppraiseBo;
@@ -28,6 +29,8 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @Service
 public class KxStoreAppraiseServiceImpl implements IKxStoreAppraiseService {
+
+    public static final String CA_APPRAISE_KEY = "CA_APPRAISE_";
 
     private final KxStoreAppraiseMapper baseMapper;
 
@@ -111,5 +114,17 @@ public class KxStoreAppraiseServiceImpl implements IKxStoreAppraiseService {
             //TODO 做一些业务上的校验,判断是否需要校验
         }
         return baseMapper.deleteBatchIds(ids) > 0;
+    }
+
+    @Override
+    public int changeState(Long id) {
+        KxStoreAppraise byId = baseMapper.selectById(id);
+
+        KxStoreAppraise update = new KxStoreAppraise();
+        update.setId(id);
+        update.setState(1L);
+        baseMapper.updateById(update);
+        RedisUtils.deleteKeys(CA_APPRAISE_KEY + byId.getProductId() + "*"); //删除商品评论缓存
+        return 1;
     }
 }

@@ -1,4 +1,4 @@
-package com.kxmall.order.controller;
+package com.kxmall.web.controller.order;
 
 import java.util.List;
 import java.util.Arrays;
@@ -64,8 +64,7 @@ public class KxStoreAppraiseController extends BaseController {
      */
     @SaCheckPermission("order:storeAppraise:query")
     @GetMapping("/{id}")
-    public R<KxStoreAppraiseVo> getInfo(@NotNull(message = "主键不能为空")
-                                     @PathVariable Long id) {
+    public R<KxStoreAppraiseVo> getInfo(@NotNull(message = "主键不能为空") @PathVariable Long id) {
         return R.ok(iKxStoreAppraiseService.queryById(id));
     }
 
@@ -99,8 +98,17 @@ public class KxStoreAppraiseController extends BaseController {
     @SaCheckPermission("order:storeAppraise:remove")
     @Log(title = "评论管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public R<Void> remove(@NotEmpty(message = "主键不能为空")
-                          @PathVariable Long[] ids) {
+    public R<Void> remove(@NotEmpty(message = "主键不能为空") @PathVariable Long[] ids) {
         return toAjax(iKxStoreAppraiseService.deleteWithValidByIds(Arrays.asList(ids), true));
+    }
+
+    /**
+     * 通过评论管理
+     *
+     * @param id 主键串
+     */
+    @GetMapping("/changeState/{id}")
+    public R<Void> changeState(@PathVariable Long id) {
+        return toAjax(iKxStoreAppraiseService.changeState(id));
     }
 }

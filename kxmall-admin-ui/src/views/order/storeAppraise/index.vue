@@ -9,14 +9,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="规格id" prop="skuId">
-        <el-input
-          v-model="queryParams.skuId"
-          placeholder="请输入规格id"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="订单id" prop="orderId">
         <el-input
           v-model="queryParams.orderId"
@@ -33,14 +26,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="打分" prop="score">
-        <el-input
-          v-model="queryParams.score"
-          placeholder="请输入打分"
-          clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
+
       <el-form-item label="1表示已通过" prop="state">
         <el-input
           v-model="queryParams.state"
@@ -55,78 +41,79 @@
       </el-form-item>
     </el-form>
 
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button
-          type="primary"
-          plain
-          icon="el-icon-plus"
-          size="mini"
-          @click="handleAdd"
-          v-hasPermi="['order:storeAppraise:add']"
-        >新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['order:storeAppraise:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['order:storeAppraise:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['order:storeAppraise:export']"
-        >导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
+    <!--    <el-row :gutter="10" class="mb8">-->
+    <!--      <el-col :span="1.5">-->
+    <!--        <el-button-->
+    <!--          type="primary"-->
+    <!--          plain-->
+    <!--          icon="el-icon-plus"-->
+    <!--          size="mini"-->
+    <!--          @click="handleAdd"-->
+    <!--          v-hasPermi="['order:storeAppraise:add']"-->
+    <!--        >新增</el-button>-->
+    <!--      </el-col>-->
+    <!--      <el-col :span="1.5">-->
+    <!--        <el-button-->
+    <!--          type="success"-->
+    <!--          plain-->
+    <!--          icon="el-icon-edit"-->
+    <!--          size="mini"-->
+    <!--          :disabled="single"-->
+    <!--          @click="handleUpdate"-->
+    <!--          v-hasPermi="['order:storeAppraise:edit']"-->
+    <!--        >修改</el-button>-->
+    <!--      </el-col>-->
+    <!--      <el-col :span="1.5">-->
+    <!--        <el-button-->
+    <!--          type="danger"-->
+    <!--          plain-->
+    <!--          icon="el-icon-delete"-->
+    <!--          size="mini"-->
+    <!--          :disabled="multiple"-->
+    <!--          @click="handleDelete"-->
+    <!--          v-hasPermi="['order:storeAppraise:remove']"-->
+    <!--        >删除</el-button>-->
+    <!--      </el-col>-->
+    <!--      <el-col :span="1.5">-->
+    <!--        <el-button-->
+    <!--          type="warning"-->
+    <!--          plain-->
+    <!--          icon="el-icon-download"-->
+    <!--          size="mini"-->
+    <!--          @click="handleExport"-->
+    <!--          v-hasPermi="['order:storeAppraise:export']"-->
+    <!--        >导出</el-button>-->
+    <!--      </el-col>-->
+    <!--      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>-->
+    <!--    </el-row>-->
 
     <el-table v-loading="loading" :data="storeAppraiseList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键" align="center" prop="id" v-if="true"/>
-      <el-table-column label="商品id" align="center" prop="spuId" />
-      <el-table-column label="规格id" align="center" prop="skuId" />
+      <el-table-column label="商品id" align="center" prop="productId" />
       <el-table-column label="订单id" align="center" prop="orderId" />
       <el-table-column label="用户id" align="center" prop="userId" />
       <el-table-column label="评论内容" align="center" prop="content" />
       <el-table-column label="打分" align="center" prop="score" />
       <el-table-column label="1表示已通过" align="center" prop="state" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column align="center" label="操作" width="300">
         <template slot-scope="scope">
           <el-button
-            size="mini"
+            v-if="!scope.row.state"
             type="text"
-            icon="el-icon-edit"
-            @click="handleUpdate(scope.row)"
-            v-hasPermi="['order:storeAppraise:edit']"
-          >修改</el-button>
+            size="mini"
+            @click="changeState(scope.row.id)"
+          >通过</el-button>
+
           <el-button
-            size="mini"
+            v-permission="['operation:appraise:delete']"
             type="text"
+            size="mini"
             icon="el-icon-delete"
+            style="color: red;"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['order:storeAppraise:remove']"
           >删除</el-button>
+
         </template>
       </el-table-column>
     </el-table>
@@ -173,7 +160,7 @@
 </template>
 
 <script>
-import { listStoreAppraise, getStoreAppraise, delStoreAppraise, addStoreAppraise, updateStoreAppraise } from "@/api/order/storeAppraise";
+import { listStoreAppraise, getStoreAppraise, delStoreAppraise, addStoreAppraise, updateStoreAppraise, changeState } from "@/api/order/storeAppraise";
 
 export default {
   name: "StoreAppraise",
@@ -360,6 +347,11 @@ export default {
       this.download('order/storeAppraise/export', {
         ...this.queryParams
       }, `storeAppraise_${new Date().getTime()}.xlsx`)
+    },
+    changeState(val) {
+      changeState(val).then(res => {
+        this.getList()
+      })
     }
   }
 };
