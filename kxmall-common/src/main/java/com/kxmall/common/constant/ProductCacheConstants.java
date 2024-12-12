@@ -23,4 +23,10 @@ public interface ProductCacheConstants {
     * 仓库缓存key
     */
    String STORAGE_INFO_PREFIX = "STORAGE_INFO_";
+
+
+   /**
+    * 评价key
+    */
+   String CA_APPRAISE_KEY = "CA_APPRAISE_";
 }

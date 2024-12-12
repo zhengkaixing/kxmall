@@ -24,6 +24,8 @@ import org.springframework.util.CollectionUtils;
 import java.util.Date;
 import java.util.List;
 
+import static com.kxmall.common.constant.ProductCacheConstants.CA_APPRAISE_KEY;
+
 /**
  * @author 郅兴开源团队-小黑
  * @version 1.0
@@ -41,7 +43,6 @@ public class KxAppAppraiseService implements IKxAppAppraiseService {
 
     private final KxStoreAppraiseMapper baseMapper;
 
-    public static final String CA_APPRAISE_KEY = "CA_APPRAISE_";
 
     @Override
     public TableDataInfo<KxStoreAppraiseVo> getProductAppraiseByPage(Long productId, Integer pageNo, Integer pageSize, Integer state) {

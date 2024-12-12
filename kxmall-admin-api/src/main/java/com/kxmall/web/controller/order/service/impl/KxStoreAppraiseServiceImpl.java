@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Collection;
 
+import static com.kxmall.common.constant.ProductCacheConstants.CA_APPRAISE_KEY;
+
 /**
  * 评论管理Service业务层处理
  *
@@ -29,8 +31,6 @@ import java.util.Collection;
 @RequiredArgsConstructor
 @Service
 public class KxStoreAppraiseServiceImpl implements IKxStoreAppraiseService {
-
-    public static final String CA_APPRAISE_KEY = "CA_APPRAISE_";
 
     private final KxStoreAppraiseMapper baseMapper;
 
