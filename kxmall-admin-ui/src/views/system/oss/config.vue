@@ -128,49 +128,78 @@
     <!-- 添加或修改对象存储配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-        <el-form-item label="配置key" prop="configKey">
-          <el-input v-model="form.configKey" placeholder="请输入配置key" />
+        <!-- 配置类型下拉框 -->
+        <el-form-item label="存储类型" prop="storageType">
+          <el-select v-model="form.storageType" placeholder="请选择存储类型" :disabled="!isAdd">
+            <el-option label="S3" value="s3" />
+            <el-option label="数据库" value="database" />
+            <el-option label="本地磁盘" value="disk" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="访问站点" prop="endpoint">
-          <el-input v-model="form.endpoint" placeholder="请输入访问站点" />
-        </el-form-item>
-        <el-form-item label="自定义域名" prop="domain">
-          <el-input v-model="form.domain" placeholder="请输入自定义域名" />
-        </el-form-item>
-        <el-form-item label="accessKey" prop="accessKey">
-          <el-input v-model="form.accessKey" placeholder="请输入accessKey" />
-        </el-form-item>
-        <el-form-item label="secretKey" prop="secretKey">
-          <el-input v-model="form.secretKey" placeholder="请输入秘钥" show-password />
-        </el-form-item>
-        <el-form-item label="桶名称" prop="bucketName">
-          <el-input v-model="form.bucketName" placeholder="请输入桶名称" />
-        </el-form-item>
-        <el-form-item label="前缀" prop="prefix">
-          <el-input v-model="form.prefix" placeholder="请输入前缀" />
-        </el-form-item>
-        <el-form-item label="是否HTTPS">
-          <el-radio-group v-model="form.isHttps">
-            <el-radio
-              v-for="dict in dict.type.sys_yes_no"
-              :key="dict.value"
-              :label="dict.value"
-            >{{dict.label}}</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="桶权限类型">
-          <el-radio-group v-model="form.accessPolicy">
-            <el-radio label="0">private</el-radio>
-            <el-radio label="1">public</el-radio>
-            <el-radio label="2">custom</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="域" prop="region">
-          <el-input v-model="form.region" placeholder="请输入域" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
+
+        <!-- S3 的字段 -->
+        <template v-if="form.storageType === 's3'">
+          <el-form-item label="配置key" prop="configKey">
+            <el-input v-model="form.configKey" placeholder="请输入配置key" />
+          </el-form-item>
+          <el-form-item label="访问站点" prop="endpoint">
+            <el-input v-model="form.endpoint" placeholder="请输入访问站点" />
+          </el-form-item>
+          <el-form-item label="自定义域名" prop="domain">
+            <el-input v-model="form.domain" placeholder="请输入自定义域名" />
+          </el-form-item>
+          <el-form-item label="accessKey" prop="accessKey">
+            <el-input v-model="form.accessKey" placeholder="请输入accessKey" />
+          </el-form-item>
+          <el-form-item label="secretKey" prop="secretKey">
+            <el-input v-model="form.secretKey" placeholder="请输入秘钥" show-password />
+          </el-form-item>
+          <el-form-item label="桶名称" prop="bucketName">
+            <el-input v-model="form.bucketName" placeholder="请输入桶名称" />
+          </el-form-item>
+          <el-form-item label="前缀" prop="prefix">
+            <el-input v-model="form.prefix" placeholder="请输入前缀" />
+          </el-form-item>
+          <el-form-item label="是否HTTPS">
+            <el-radio-group v-model="form.isHttps">
+              <el-radio
+                v-for="dict in dict.type.sys_yes_no"
+                :key="dict.value"
+                :label="dict.value"
+              >{{dict.label}}</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="桶权限类型">
+            <el-radio-group v-model="form.accessPolicy">
+              <el-radio label="0">private</el-radio>
+              <el-radio label="1">public</el-radio>
+              <el-radio label="2">custom</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="域" prop="region">
+            <el-input v-model="form.region" placeholder="请输入域" />
+          </el-form-item>
+          <el-form-item label="备注" prop="remark">
+            <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+          </el-form-item>
+        </template>
+
+        <!-- 数据库的字段 -->
+        <template v-if="form.storageType === 'database'">
+          <el-form-item label="访问站点" prop="endpoint">
+            <el-input v-model="form.endpoint" placeholder="请输入访问站点" />
+          </el-form-item>
+        </template>
+
+        <!-- 本地磁盘的字段 -->
+        <template v-if="form.storageType === 'disk'">
+          <el-form-item label="访问站点" prop="endpoint">
+            <el-input v-model="form.endpoint" placeholder="请输入访问站点" />
+          </el-form-item>
+          <el-form-item label="基础路径" prop="basePath">
+            <el-input v-model="form.domain" placeholder="请输入基础路径" />
+          </el-form-item>
+        </template>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
@@ -196,6 +225,24 @@ export default {
   dicts: ['sys_yes_no', 'sys_normal_disable'],
   data() {
     return {
+      isAdd: true, // 是否是新增状态
+      // 表单参数
+      form: {
+        storageType: 's3', // 默认类型为 S3
+        configKey: undefined,
+        accessKey: undefined,
+        secretKey: undefined,
+        bucketName: undefined,
+        prefix: undefined,
+        endpoint: undefined,
+        domain: undefined,
+        isHttps: "N",
+        accessPolicy: "1",
+        region: undefined,
+        status: "1",
+        remark: undefined,
+        basePath: undefined, // 本地磁盘专用
+      },
       // 按钮loading
       buttonLoading: false,
       // 遮罩层
@@ -230,51 +277,19 @@ export default {
         bucketName: undefined,
         status: undefined,
       },
-      // 表单参数
-      form: {},
       // 表单校验
       rules: {
+        storageType: [
+          { required: true, message: "请选择存储类型", trigger: "change" },
+        ],
         configKey: [
           { required: true, message: "configKey不能为空", trigger: "blur" },
         ],
-        accessKey: [
-          { required: true, message: "accessKey不能为空", trigger: "blur" },
-          {
-            min: 2,
-            max: 200,
-            message: "accessKey长度必须介于 2 和 100 之间",
-            trigger: "blur",
-          },
-        ],
-        secretKey: [
-          { required: true, message: "secretKey不能为空", trigger: "blur" },
-          {
-            min: 2,
-            max: 100,
-            message: "secretKey长度必须介于 2 和 100 之间",
-            trigger: "blur",
-          },
-        ],
-        bucketName: [
-          { required: true, message: "bucketName不能为空", trigger: "blur" },
-          {
-            min: 2,
-            max: 100,
-            message: "bucketName长度必须介于 2 和 100 之间",
-            trigger: "blur",
-          },
-        ],
         endpoint: [
           { required: true, message: "endpoint不能为空", trigger: "blur" },
-          {
-            min: 2,
-            max: 100,
-            message: "endpoint名称长度必须介于 2 和 100 之间",
-            trigger: "blur",
-          },
         ],
-        accessPolicy:[
-          { required: true, message: "accessPolicy不能为空", trigger: "blur" }
+        domain: [
+          { required: true, message: "基础路径不能为空", trigger: "blur" },
         ]
       },
     };
@@ -337,17 +352,27 @@ export default {
       this.reset();
       this.open = true;
       this.title = "添加对象存储配置";
+      this.isAdd = true; // 设置为新增状态
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.loading = true;
       this.reset();
+      this.isAdd = false; // 设置为修改状态
       const ossConfigId = row.ossConfigId || this.ids;
       getOssConfig(ossConfigId).then((response) => {
         this.loading = false;
         this.form = response.data;
         this.open = true;
         this.title = "修改对象存储配置";
+        // 根据 configKey 判断存储类型
+        if (this.form.configKey === "database") {
+          this.form.storageType = "database";
+        } else if (this.form.configKey === "disk") {
+          this.form.storageType = "disk";
+        } else {
+          this.form.storageType = "s3";
+        }
       });
     },
     /** 提交按钮 */
