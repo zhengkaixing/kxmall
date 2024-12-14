@@ -50,6 +50,21 @@ public class OssFactory {
         }
         return instance(configKey);
     }
+    /**
+     * 获取默认实例
+     */
+    public static OssProperties instanceConfig() {
+        // 获取redis 默认类型
+        String configKey = RedisUtils.getCacheObject(OssConstant.DEFAULT_CONFIG_KEY);
+        if (StringUtils.isEmpty(configKey)) {
+            throw new OssException("文件存储服务类型无法找到!");
+        }
+        String json = CacheUtils.get(CacheNames.SYS_OSS_CONFIG, configKey);
+        if (json == null) {
+            throw new OssException("系统异常, '" + configKey + "'配置信息不存在!");
+        }
+        return JsonUtils.parseObject(json, OssProperties.class);
+    }
 
     /**
      * 根据类型获取实例

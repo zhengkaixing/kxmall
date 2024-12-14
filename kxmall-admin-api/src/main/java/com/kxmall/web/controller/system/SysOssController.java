@@ -2,7 +2,10 @@ package com.kxmall.web.controller.system;
 
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 import com.kxmall.common.annotation.Log;
 import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.PageQuery;
@@ -11,15 +14,19 @@ import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.core.validate.QueryGroup;
 import com.kxmall.common.enums.BusinessType;
 import com.kxmall.common.exception.ServiceException;
+import com.kxmall.common.servlet.ServletUtils;
 import com.kxmall.system.domain.bo.SysOssBo;
 import com.kxmall.system.domain.vo.SysOssVo;
 import com.kxmall.web.controller.system.service.ISysOssService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotEmpty;
 import java.io.IOException;
@@ -61,6 +68,31 @@ public class SysOssController extends BaseController {
                                        @PathVariable Long[] ossIds) {
         List<SysOssVo> list = iSysOssService.listByIds(Arrays.asList(ossIds));
         return R.ok(list);
+    }
+
+
+
+    @GetMapping("/{configKey}/get/**")
+    @SaIgnore
+    @Parameter(name = "configKey", description = "配置key",  required = true)
+    public void getFileContent(HttpServletRequest request,
+                               HttpServletResponse response,
+                               @PathVariable("configKey") String configKey) throws Exception {
+        // 获取请求的路径
+        String path = StrUtil.subAfter(request.getRequestURI(), "/get/", false);
+        if (StrUtil.isEmpty(path)) {
+            throw new IllegalArgumentException("结尾的 path 路径必须传递");
+        }
+        // 解码，解决中文路径的问题 https://gitee.com/zhijiantianya/ruoyi-vue-pro/pulls/807/
+        path = URLUtil.decode(path);
+
+        // 读取内容
+        byte[] content = iSysOssService.getFileContent(configKey, path);
+        if (content == null) {
+            response.setStatus(HttpStatus.NOT_FOUND.value());
+            return;
+        }
+        ServletUtils.writeAttachment(response, path, content);
     }
 
     /**

@@ -62,4 +62,9 @@ public interface ISysOssConfigService {
      */
     int updateOssConfigStatus(SysOssConfigBo bo);
 
+    /**
+     * 获取默认值的配置
+     * @return
+     */
+    SysOssConfigVo selectDefault();
 }

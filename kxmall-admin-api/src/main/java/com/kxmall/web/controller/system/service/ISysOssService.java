@@ -30,4 +30,26 @@ public interface ISysOssService {
 
     Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid);
 
+    /**
+     * 磁盘存放
+     * @param file
+     * @return
+     */
+    SysOssVo disk(MultipartFile file);
+
+    /**
+     * 数据库存放
+     * @param file
+     * @return
+     */
+    SysOssVo database(MultipartFile file);
+
+    /**
+     * 获取图片二进制流
+     * @param configKey
+     * @param path
+     * @return
+     */
+    byte[] getFileContent(String configKey, String path);
+
 }
