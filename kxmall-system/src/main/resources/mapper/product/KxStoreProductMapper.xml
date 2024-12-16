@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kxmall.product.mapper.KxStoreProductMapper">
 
     <resultMap type="com.kxmall.product.domain.KxStoreProduct" id="WmStoreProductResult">
@@ -50,11 +50,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy" column="update_by"/>
     </resultMap>
     <update id="decSkuStock">
-        UPDATE kx_stock SET stock = stock - #{num}, frezz_stock = frezz_stock + #{num} WHERE id = #{productId} and storage_id = #{storeId}
+        UPDATE kx_stock SET stock = stock - #{num}, frezz_stock = frezz_stock + #{num} WHERE product_id = #{productId} and storage_id = #{storeId}
     </update>
 
     <update id="restoreSkuStock">
-        UPDATE kx_stock SET stock = stock + #{num}, frezz_stock = frezz_stock - #{num} WHERE id = #{productId} and storage_id = #{storeId}
+        UPDATE kx_stock SET stock = stock + #{num}, frezz_stock = frezz_stock - #{num} WHERE product_id = #{productId} and storage_id = #{storeId}
     </update>
 
     <update id="incSales">
@@ -78,6 +78,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         a.is_show as isShow,
         a.create_time AS createTime,
         a.update_time AS updateTime,
+        a.is_integral AS isIntegral,
+        a.integral AS integral,
         b.sales as 'kxStockVo.sales',
         b.stock as 'kxStockVo.stock'
         from  kx_store_product a
@@ -112,7 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectPageByStorageCount" resultType="java.lang.Long">
         select
-          count(a.id)
+        count(a.id)
         from  kx_store_product a
         LEFT JOIN kx_stock b on a.id = b.product_id
         WHERE a.id in (select c.product_id from kx_stock c where c.status = 1 and  c.storage_id = #{storageId})
@@ -143,24 +145,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getProductByIdAndStorageId" resultType="com.kxmall.product.domain.vo.KxStoreProductVo">
         select
-        a.id,a.store_name as storeName,
-        a.ot_price as otPrice,
-        b.price as 'kxStockVo.price',
-        a.store_name as storeName,
-        a.image,
-        a.description,
-        a.cate_id as cateId,
-        a.unit_name as unitName,
-        a.is_show as isShow,
-        a.create_time AS createTime,
-        a.update_time AS updateTime,
-        b.sales as 'kxStockVo.sales',
-        b.stock as 'kxStockVo.stock'
+            a.id,a.store_name as storeName,
+            a.ot_price as otPrice,
+            b.price as 'kxStockVo.price',
+                a.store_name as storeName,
+            a.image,
+            a.description,
+            a.cate_id as cateId,
+            a.unit_name as unitName,
+            a.is_show as isShow,
+            a.create_time AS createTime,
+            a.update_time AS updateTime,
+            b.sales as 'kxStockVo.sales',
+                b.stock as 'kxStockVo.stock'
         from  kx_store_product a
-        LEFT JOIN kx_stock b on a.id = b.product_id
+                  LEFT JOIN kx_stock b on a.id = b.product_id
         WHERE  b.storage_id = #{storageId} and a.id = #{productId}
     </select>
-
 
     <select id="getProductTitleAllByStorageId" resultType="com.kxmall.product.domain.KxStoreProduct">
         SELECT a.id,a.store_name as storeName,a.cate_id as cateId
@@ -169,7 +170,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where b.storage_id = #{storageId}
         ORDER BY cate_id
     </select>
-
     <select id="selectListByStorage" resultType="com.kxmall.product.domain.KxStoreProduct">
         select
             a.*
@@ -177,5 +177,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                   LEFT JOIN kx_stock b on a.id = b.product_id
         WHERE  b.storage_id = #{storageId} and a.common_id = #{commonId}
     </select>
+
 
 </mapper>
