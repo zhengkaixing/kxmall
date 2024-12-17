@@ -146,29 +146,24 @@
       <el-table-column label="操作" align="center" class-name="small-padding" width="300"><!-- fixed-width -->
         <template slot-scope="{row}">
           <el-button
-            v-hasPermi="['storage:storage:edit']"
-            size="mini"
-            type="primary"
-            @click="handleView(row)"
-          >详情</el-button>
-          <el-button
             v-show="row.state===1"
             v-hasPermi="['storage:storage:edit']"
-            size="mini"
-            type="primary"
+            type="text"
+            style="color: #409EFF;"
             @click="handleUpdate(row)"
           >修改</el-button>
           <el-button
             v-hasPermi="['storage:storage:edit']"
-            size="mini"
-            :type="row.state===1?'danger':'success'"
+            type="text"
+            :style="{ color: row.state === 1 ? '#F56C6C' : '#67C23A' }"
             @click="updateState(row)"
           >{{ row.state===1?'禁用':'启用' }}</el-button>
           <el-button
             v-show="row.state===1"
             v-hasPermi="['storage:storage:edit']"
             size="mini"
-            :type="row.operatingState===1?'warning':'success'"
+            type="text"
+            :style="{ color: row.operatingState === 1 ? '#E6A23C' : '#67C23A' }"
             @click="updateBusinessState(row)"
           >{{ row.operatingState===1?'休息':'营业' }}</el-button>
         </template>
