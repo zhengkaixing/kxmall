@@ -142,30 +142,35 @@
           <el-button
             v-hasPermi="['storage:goodsOutStock:edit']"
             size="mini"
-            type="primary"
+            type="text"
+            style="color: #409EFF;"
             @click="handleView(scope.row)"
           >详情</el-button>
-          <template v-if="scope.row.states===0">
+          <template v-if="scope.row.states === 0">
             <el-button
               v-hasPermi="['storage:goodsOutStock:edit']"
               size="mini"
-              type="primary"
+              type="text"
+              style="color: #409EFF;"
               @click="handleUpdate(scope.row)"
             >修改</el-button>
             <el-button
               v-hasPermi="['storage:goodsOutStock:edit']"
               size="mini"
-              type="primary"
+              type="text"
+              style="color: #67C23A;"
               @click="handleStockIn(scope.row)"
             >出库</el-button>
             <el-button
               v-hasPermi="['storage:goodsOutStock:remove']"
               size="mini"
-              type="danger"
+              type="text"
+              style="color: #F56C6C;"
               @click="handleDelete(scope.row)"
             >删除</el-button>
           </template>
         </template>
+
       </el-table-column>
     </el-table>
 
