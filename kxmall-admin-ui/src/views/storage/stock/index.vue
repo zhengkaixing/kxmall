@@ -132,30 +132,34 @@
       <el-table-column label="操作" align="center" class-name="small-padding" width="120">
         <template slot-scope="scope">
           <el-button
-            v-if="scope.row.status===0"
+            v-if="scope.row.status === 0"
             v-hasPermi="['storage:stock:edit']"
             size="mini"
-            type="primary"
+            type="text"
+            style="color: #67C23A;"
             icon="el-icon-edit"
-            @click="updateStatus(scope.row,1)"
+            @click="updateStatus(scope.row, 1)"
           >上架</el-button>
           <el-button
             v-else
             v-hasPermi="['storage:stock:edit']"
             size="mini"
-            type="danger"
+            type="text"
+            style="color: #F56C6C;"
             icon="el-icon-edit"
-            @click="updateStatus(scope.row,0)"
+            @click="updateStatus(scope.row, 0)"
           >下架</el-button>
           <el-button
-            v-if="scope.row.status===0"
+            v-if="scope.row.status === 0"
             v-hasPermi="['storage:stock:remove']"
             size="mini"
-            type="danger"
+            type="text"
+            style="color: #F56C6C;"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
           >删除</el-button>
         </template>
+
       </el-table-column>
     </el-table>
 
