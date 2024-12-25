@@ -107,10 +107,10 @@ public class OrderConcreteBuilder extends OrderBuilder {
         for (OrderRequestProductBo orderRequestKxStoreProduct : skuList) {
             //每个地方仓库的价格不一样，所以需要查询各自商户设置的价格
             product = productMapper.getProductByIdAndStorageId(orderRequestKxStoreProduct.getProductId(), orderRequest.getStorageId());
-            productIdDTOMap.put(product.getId(), product);
             if (product == null) {
                 throw new ServiceException("商品并不存在");
             }
+            productIdDTOMap.put(product.getId(), product);
             if (product.getKxStockVo().getStock() < orderRequestKxStoreProduct.getCartNum()) {
                 throw new ServiceException("商品库存不足～");
             }
