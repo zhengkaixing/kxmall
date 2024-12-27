@@ -214,4 +214,9 @@ public class KxUserVo {
     private Integer isDel;
 
 
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
 }
