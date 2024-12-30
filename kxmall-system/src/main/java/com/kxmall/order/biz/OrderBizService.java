@@ -181,7 +181,7 @@ public class OrderBizService {
      */
     public void callbackStock(String no) {
         KxStoreOrder storeOrder = orderMapper.selectOne(new LambdaQueryWrapper<KxStoreOrder>().eq(KxStoreOrder::getOrderId, no));
-        List<KxStoreOrderProduct> orderId = orderProductMapper.selectList(new QueryWrapper<KxStoreOrderProduct>().eq("order_id", no));
+        List<KxStoreOrderProduct> orderId = orderProductMapper.selectList(new QueryWrapper<KxStoreOrderProduct>().eq("order_id", storeOrder.getId()));
         for (KxStoreOrderProduct storeOrderProduct : orderId) {
             storeProductMapper.restoreSkuStock(storeOrderProduct.getProductId(), storeOrderProduct.getNum(), storeOrder.getStoreId());
         }
