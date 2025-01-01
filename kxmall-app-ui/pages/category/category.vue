@@ -223,7 +223,7 @@
 			  console.log("得到布局位置信息" + JSON.stringify(data));
 			  console.log("节点离页面顶部的距离为" + data.top);
 			  that.topHeight = data.height + that.statusHeight - 2
-			  that.scollHeight = res.screenHeight - 50 - that.topHeight
+			  that.scollHeight = res.screenHeight - 75 - that.topHeight
 			  // #ifdef APP-PLUS
 			  that.topHeight = data.height + (that.statusHeight/2)
 			  // that.topHeight = 146
