@@ -27,7 +27,7 @@
 		<view style="height: 120rpx;"
 		class="solid-top bg-white flex justify-between align-center margin-bottom-sm padding-lr padding-tb-s">
 			<view class="title text-black">头像</view>
-			<image @click="chooseImg" :src="userInfo.avatarUrl ? userInfo.avatarUrl :'../../static/user/touxiang-@2x.png'"
+			<image @click="chooseImg" :src="userInfo.avatar ? userInfo.avatar :'../../static/user/touxiang-@2x.png'"
 			class="round" mode="aspectFill"
 			style="width: 90rpx;height: 90rpx;"></image>
 		</view>
@@ -114,7 +114,7 @@
 			chooseImg(){
 				this.$api.uploadImg(1,(res)=>{
 					console.log(res)
-					this.userInfo.avatarUrl = res
+					this.userInfo.avatar = res
 					var info = this.userInfo
 					var tempObj = Object.assign({},this.userInfo,info)
 					this.userInfo = this.login(tempObj)

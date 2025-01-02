@@ -4,7 +4,7 @@
 			<view class="index">
 				{{i+1}}
 			</view>
-			<image :src="item.userDO.avatarUrl" mode="" class="img"></image>
+			<image :src="item.userDO.avatar" mode="" class="img"></image>
 			<view class="" class="name">
 				{{item.userDO.nickname}}
 			</view>

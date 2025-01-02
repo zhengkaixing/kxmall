@@ -133,9 +133,9 @@ public class SysAppLoginController extends BaseAppController {
                                  Integer loginType,
                                  String session_key,
                                  String openId,
-                                 String avatarUrl,
+                                 String avatar,
                                  String nickName) {
-        return R.ok(appLoginService.authPhone(encryptedData,iv,loginType,session_key,openId,avatarUrl,nickName));
+        return R.ok(appLoginService.authPhone(encryptedData,iv,loginType,session_key,openId,avatar,nickName));
     }
 
 }

@@ -15,7 +15,7 @@
             </view>
           </view>
           <view @click="navTo('/pages/user/profile')" style="position: relative;padding-right: 8rpx;">
-            <image :src="hasLogin && userInfo.avatarUrl ? userInfo.avatarUrl :'../../static/user/touxiang-@2x.png'"
+            <image :src="hasLogin && userInfo.avatar ? userInfo.avatar :'../../static/user/touxiang-@2x.png'"
                    class="round" mode="aspectFill"
                    style="width: 144rpx;height: 144rpx;"></image>
             <view v-if="hasLogin" class="flex align-center justify-center" style="position: absolute;bottom: 0rpx;left: 29rpx; background-color: #8AD62A;border-radius: 200rpx;width: 86rpx;height: 38rpx;color: #FFFFFF;font-size: 22rpx;"

@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             a.score as score,
             a.user_id as userId,
             u.nickname as userNickName,
-            u.avatar as userAvatarUrl,
+            u.avatar as userAvatar,
             a.order_id as orderId,
             a.product_id as productId,
             a.product_attr_id as productAttrId,

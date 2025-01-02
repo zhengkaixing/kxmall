@@ -239,7 +239,7 @@ public class SysAppLoginService implements ISysAppLoginService {
                               Integer loginType,
                               String session_key,
                               String openId,
-                              String avatarUrl,
+                              String avatar,
                               String nickName) {
 
         WxMaService wxMaService = WxMaConfiguration.getWxMaService();
@@ -254,7 +254,7 @@ public class SysAppLoginService implements ISysAppLoginService {
             newUserDO.setLoginType(UserLoginType.MP_WEIXIN.getCode());
             newUserDO.setNickname(nickName);
             newUserDO.setPhone(phoneNoInfo.getPhoneNumber());
-            newUserDO.setAvatar(avatarUrl);
+            newUserDO.setAvatar(avatar);
             newUserDO.setOpenId(openId);
             newUserDO.setUpdateTime(now);
             newUserDO.setCreateTime(now);

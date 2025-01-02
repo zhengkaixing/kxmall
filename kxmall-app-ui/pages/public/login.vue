@@ -416,7 +416,7 @@
 									that.$api.request('post', 'user/app/updateUser', e.userInfo).then(syncRes => {
 										//同步过后
 										res.data.nickname = e.userInfo.nickName
-										res.data.avatarUrl = e.userInfo.avatarUrl
+										res.data.avatar = e.userInfo.avatar
 										res.data.gender = e.userInfo.gender
 										uni.setStorageSync('userInfo', res.data)
 										that.$store.commit('login', res.data)

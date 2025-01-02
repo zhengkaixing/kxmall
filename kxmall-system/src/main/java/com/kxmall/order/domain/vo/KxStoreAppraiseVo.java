@@ -92,7 +92,7 @@ public class KxStoreAppraiseVo {
     /**
      * 头像
      */
-    private String userAvatarUrl;
+    private String userAvatar;
 
 
 }

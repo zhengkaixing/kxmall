@@ -63,7 +63,7 @@ public interface ISysAppLoginService {
      * @param loginType
      * @param session_key
      * @param openId
-     * @param avatarUrl
+     * @param avatar
      * @param nickName
      * @return
      */
@@ -72,6 +72,6 @@ public interface ISysAppLoginService {
                        Integer loginType,
                        String session_key,
                        String openId,
-                       String avatarUrl,
+                       String avatar,
                        String nickName);
 }

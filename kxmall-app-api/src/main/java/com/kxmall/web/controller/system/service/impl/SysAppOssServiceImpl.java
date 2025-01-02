@@ -71,7 +71,6 @@ public class SysAppOssServiceImpl implements ISysAppOssService {
         return this.matchingUrl(sysOssVo);
     }
 
-
     /**
      * 匹配Url
      *

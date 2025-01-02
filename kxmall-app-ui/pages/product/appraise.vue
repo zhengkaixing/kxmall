@@ -7,7 +7,7 @@
 			</view>
 
 			<view v-for="(item,index) in page.items" :key="index" class="eva-box">
-				<image class="portrait" :src="item.userAvatarUrl ? item.userAvatarUrl : '/static/user/touxiang-@2x.png'" mode="aspectFill"></image>
+				<image class="portrait" :src="item.userAvatar ? item.userAvatar : '/static/user/touxiang-@2x.png'" mode="aspectFill"></image>
 				<view class="right">
 					<text class="name">{{item.userNickName?item.userNickName:('用户' + item.userId)}}</text>
 					<text class="con">{{item.content}}</text>

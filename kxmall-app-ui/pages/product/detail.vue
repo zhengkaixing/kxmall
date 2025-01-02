@@ -116,7 +116,7 @@
 				<text class="yticon icon-you"></text>
 			</view>
 			<view class="eva-box">
-				<image class="portrait" :src="goods.appraisePage[0].userAvatarUrl ? goods.appraisePage[0].userAvatarUrl : '/static/user/touxiang-@2x.png'"
+				<image class="portrait" :src="goods.appraisePage[0].userAvatar ? goods.appraisePage[0].userAvatar : '/static/user/touxiang-@2x.png'"
 				 mode="aspectFill"></image>
 				<view class="right">
 					<text class="name">{{goods.appraisePage[0].userNickName?goods.appraisePage[0].userNickName:('用户' + goods.appraisePage[0].userId)}}</text>
