@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * 验证码操作处理
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  */
 @SaIgnore
 @Slf4j
