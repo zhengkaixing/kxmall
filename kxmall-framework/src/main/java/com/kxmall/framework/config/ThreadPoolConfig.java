@@ -1,7 +1,7 @@
 package com.kxmall.framework.config;
 
-import com.kxmall.framework.config.properties.ThreadPoolProperties;
 import com.kxmall.common.utils.Threads;
+import com.kxmall.framework.config.properties.ThreadPoolProperties;
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

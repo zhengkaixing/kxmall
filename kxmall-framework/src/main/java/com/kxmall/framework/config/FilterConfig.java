@@ -1,9 +1,10 @@
 package com.kxmall.framework.config;
 
-import com.kxmall.framework.config.properties.XssProperties;
+import com.kxmall.common.filter.DemoFilter;
 import com.kxmall.common.filter.RepeatableFilter;
 import com.kxmall.common.filter.XssFilter;
 import com.kxmall.common.utils.StringUtils;
+import com.kxmall.framework.config.properties.XssProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,4 +54,18 @@ public class FilterConfig {
         return registration;
     }
 
+    /**
+     * 创建 DemoFilter Bean，演示模式
+     */
+    @Bean
+    @ConditionalOnProperty(value = "com.kxmall.demo", havingValue = "true")
+    public FilterRegistrationBean<DemoFilter> demoFilter() {
+        return createFilterBean(new DemoFilter(), Integer.MAX_VALUE);
+    }
+
+    public static <T extends Filter> FilterRegistrationBean<T> createFilterBean(T filter, Integer order) {
+        FilterRegistrationBean<T> bean = new FilterRegistrationBean<>(filter);
+        bean.setOrder(order);
+        return bean;
+    }
 }
