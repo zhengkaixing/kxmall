@@ -1,9 +1,9 @@
 package com.kxmall.web.controller.storage.service;
 
-import com.kxmall.storage.domain.vo.KxOutStockProductVo;
-import com.kxmall.storage.domain.bo.KxOutStockProductBo;
-import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.core.domain.PageQuery;
+import com.kxmall.common.core.page.TableDataInfo;
+import com.kxmall.storage.domain.bo.KxOutStockProductBo;
+import com.kxmall.storage.domain.vo.KxOutStockProductVo;
 
 import java.util.Collection;
 import java.util.List;
