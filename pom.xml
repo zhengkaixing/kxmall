@@ -46,6 +46,8 @@
         <tencent.sms.version>3.1.660</tencent.sms.version>
         <fastjson.version>1.2.83</fastjson.version>
         <weixin-java.version>4.3.0</weixin-java.version>
+        <google-zxing.version>3.4.1</google-zxing.version>
+        <jts-core.version>1.17.1</jts-core.version>
     </properties>
 
     <profiles>
@@ -279,7 +281,12 @@
                 <version>${snakeyaml.version}</version>
             </dependency>
 
-
+            <!--经纬度计算-->
+            <dependency>
+                <groupId>org.locationtech.jts</groupId>
+                <artifactId>jts-core</artifactId>
+                <version>${jts-core.version}</version>
+            </dependency>
 
             <!-- 代码生成-->
             <dependency>
