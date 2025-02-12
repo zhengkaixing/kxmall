@@ -1,13 +1,15 @@
 package com.kxmall.storage.domain.vo;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.kxmall.common.annotation.ExcelDictFormat;
 import com.kxmall.common.convert.ExcelDictConvert;
+import com.kxmall.storage.domain.bo.PointBo;
 import lombok.Data;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -176,5 +178,21 @@ public class KxStorageVo {
      * 距离
      */
     private BigDecimal distance;
+
+
+    /**
+     * 公众号openId
+     */
+    private String openId;
+
+    /**
+     * 定位范围
+     */
+    private List<List<PointBo>> paths;
+
+    /**
+     * 今日收益
+     */
+    private BigDecimal todayEarnings =  BigDecimal.ZERO;
 
 }
