@@ -5,18 +5,47 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 /**
  * 文件处理工具类
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FileUtils extends FileUtil {
 
+
+
+    public static String fileToBase64(File file) {
+        return Base64.getEncoder().encodeToString(fileToByte(file));
+    }
+
+
+    /**
+     * 文件File类型转byte[]
+     *
+     * @param file
+     * @return
+     */
+    public static byte[] fileToByte(File file) {
+        byte[] fileBytes = null;
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            fileBytes = new byte[(int) file.length()];
+            fis.read(fileBytes);
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fileBytes;
+    }
     /**
      * 下载文件名重新编码
      *
