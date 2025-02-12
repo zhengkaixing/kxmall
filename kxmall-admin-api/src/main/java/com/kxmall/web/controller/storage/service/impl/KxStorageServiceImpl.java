@@ -1,7 +1,9 @@
 package com.kxmall.web.controller.storage.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,20 +12,23 @@ import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.enums.StorageBusinessStatusType;
 import com.kxmall.common.enums.StorageStatusType;
 import com.kxmall.common.exception.ServiceException;
+import com.kxmall.common.utils.FeieyunPrint;
 import com.kxmall.common.utils.StringUtils;
+import com.kxmall.common.utils.file.FileUtils;
 import com.kxmall.common.utils.redis.RedisUtils;
 import com.kxmall.storage.domain.KxStorage;
 import com.kxmall.storage.domain.bo.KxStorageBo;
 import com.kxmall.storage.domain.vo.KxStorageVo;
 import com.kxmall.storage.mapper.KxStorageMapper;
+import com.kxmall.system.service.ISysConfigService;
 import com.kxmall.web.controller.storage.service.IKxStorageService;
+import com.kxmall.wechat.WxMpConfiguration;
 import lombok.RequiredArgsConstructor;
+import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.*;
 
 import static com.kxmall.common.constant.ProductCacheConstants.STORAGE_INFO_PREFIX;
 
@@ -40,12 +45,18 @@ public class KxStorageServiceImpl implements IKxStorageService {
 
     private final KxStorageMapper baseMapper;
 
+    private final ISysConfigService configService;
+
     /**
      * 查询仓库管理
      */
     @Override
     public KxStorageVo queryById(Long id) {
-        return baseMapper.selectVoById(id);
+        KxStorageVo kxStorageVo = baseMapper.selectVoById(id);
+        if (CollectionUtils.isEmpty(kxStorageVo.getPaths())) {
+            kxStorageVo.setPaths(new ArrayList<>());
+        }
+        return kxStorageVo;
     }
 
     /**
@@ -92,6 +103,7 @@ public class KxStorageServiceImpl implements IKxStorageService {
         lqw.eq(StringUtils.isNotBlank(bo.getPrintAcount()), KxStorage::getPrintAcount, bo.getPrintAcount());
         lqw.eq(StringUtils.isNotBlank(bo.getPrintUkey()), KxStorage::getPrintUkey, bo.getPrintUkey());
         lqw.eq(StringUtils.isNotBlank(bo.getPrintSn()), KxStorage::getPrintSn, bo.getPrintSn());
+        lqw.in(CollectionUtils.isNotEmpty(bo.getStorageIds()), KxStorage::getId, bo.getStorageIds());
         return lqw;
     }
 
@@ -203,13 +215,38 @@ public class KxStorageServiceImpl implements IKxStorageService {
     }
 
     @Override
-    public String getStorageQrcodeImage() {
-        return null;
+    public String getStorageQrcodeImage(Long storageId) {
+        try {
+            if (org.springframework.util.ObjectUtils.isEmpty(storageId)) {
+                throw new ServiceException("管理员系统未知异常");
+            }
+            Map<String, Object> sendObject = new HashMap<>(1);
+            sendObject.put("storageId", storageId);
+            //判断一下h5是否配置
+            String appid = configService.selectConfigByKeyNoCache("h5_appid");
+            if (StringUtils.isEmpty(appid)) {
+                return "";
+            }
+            WxMpQrCodeTicket mpQrCodeTicket = WxMpConfiguration.getWxMpService().getQrcodeService().qrCodeCreateTmpTicket(JSONObject.toJSONString(sendObject), 7200);
+            File file = WxMpConfiguration.getWxMpService().getQrcodeService().qrCodePicture(mpQrCodeTicket);
+            return FileUtils.fileToBase64(file);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage(),500);
+        }
     }
 
     @Override
-    public Boolean printTest(KxStorageBo bo) {
-        return null;
+    public String printTest(KxStorageBo bo) {
+        if (StringUtils.isEmpty(bo.getPrintSn())) {
+            throw new ServiceException("sn不能为空",500);
+        }
+        if (StringUtils.isEmpty(bo.getPrintUkey())) {
+            throw new ServiceException("Ukey不能为空",500);
+        }
+        if (StringUtils.isEmpty(bo.getPrintAcount())) {
+            throw new ServiceException("Acount不能为空",500);
+        }
+        return FeieyunPrint.printTset(bo.getPrintSn(),bo.getPrintUkey(),bo.getPrintAcount());
     }
 
 

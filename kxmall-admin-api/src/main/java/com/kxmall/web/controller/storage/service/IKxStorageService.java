@@ -75,7 +75,7 @@ public interface IKxStorageService {
      * 获取指定仓库的推送订阅二维码
      * @return
      */
-    String getStorageQrcodeImage();
+    String getStorageQrcodeImage(Long storageId);
 
-    Boolean printTest(KxStorageBo bo);
+    String printTest(KxStorageBo bo);
 }
