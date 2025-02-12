@@ -1,32 +1,33 @@
 package com.kxmall.web.controller.storage;
 
-import java.util.List;
-import java.util.Arrays;
-
-import lombok.RequiredArgsConstructor;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.*;
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.annotation.Validated;
-import com.kxmall.common.annotation.RepeatSubmit;
 import com.kxmall.common.annotation.Log;
+import com.kxmall.common.annotation.RepeatSubmit;
 import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.domain.R;
+import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.core.validate.AddGroup;
 import com.kxmall.common.core.validate.EditGroup;
 import com.kxmall.common.enums.BusinessType;
 import com.kxmall.common.utils.poi.ExcelUtil;
-import com.kxmall.storage.domain.vo.KxStorageVo;
 import com.kxmall.storage.domain.bo.KxStorageBo;
+import com.kxmall.storage.domain.vo.KxStorageVo;
 import com.kxmall.web.controller.storage.service.IKxStorageService;
-import com.kxmall.common.core.page.TableDataInfo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 仓库管理
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-08-27
  */
 @Validated
@@ -43,6 +44,7 @@ public class KxStorageController extends BaseController {
     @SaCheckPermission("storage:storage:list")
     @GetMapping("/list")
     public TableDataInfo<KxStorageVo> list(KxStorageBo bo, PageQuery pageQuery) {
+        bo.setStorageIds(getLoginUser().getStoragePermission());
         return iKxStorageService.queryPageList(bo, pageQuery);
     }
 
@@ -51,6 +53,7 @@ public class KxStorageController extends BaseController {
      */
     @GetMapping("/listAll")
     public R<List<KxStorageVo>> listAll(KxStorageBo bo) {
+        bo.setStorageIds(getLoginUser().getStoragePermission());
         return R.ok(iKxStorageService.queryList(bo));
     }
 
@@ -61,6 +64,7 @@ public class KxStorageController extends BaseController {
     @Log(title = "仓库管理", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(KxStorageBo bo, HttpServletResponse response) {
+        bo.setStorageIds(getLoginUser().getStoragePermission());
         List<KxStorageVo> list = iKxStorageService.queryList(bo);
         ExcelUtil.exportExcel(list, "仓库管理", KxStorageVo.class, response);
     }
@@ -166,9 +170,9 @@ public class KxStorageController extends BaseController {
     /**
      * 获取指定仓库的推送订阅二维码
      */
-    @PostMapping("/getStorageQrcodeImage")
-    public R<String> getStorageQrcodeImage(){
-        return R.ok(iKxStorageService.getStorageQrcodeImage());
+    @GetMapping("/getStorageQrcodeImage")
+    public R<String> getStorageQrcodeImage(Long storageId){
+        return R.ok("操作成功",iKxStorageService.getStorageQrcodeImage(storageId));
     }
 
 
@@ -176,8 +180,8 @@ public class KxStorageController extends BaseController {
      * 打印测试
      */
     @PostMapping("/printTest")
-    public R<Boolean> printTest(@RequestBody KxStorageBo bo){
-        return R.ok(iKxStorageService.printTest(bo));
+    public R<String> printTest(@RequestBody KxStorageBo bo){
+        return R.ok("操作成功",iKxStorageService.printTest(bo));
     }
 
 
