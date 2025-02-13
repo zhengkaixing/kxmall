@@ -1,13 +1,14 @@
 package com.kxmall.storage.domain.bo;
 
 import com.kxmall.common.core.domain.BaseEntity;
-import com.kxmall.common.core.validate.AddGroup;
 import com.kxmall.common.core.validate.EditGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -85,5 +86,8 @@ public class KxStockBo extends BaseEntity {
      */
     private List<Long> notIds;
 
-
+    /**
+     * 仓库权限参数
+     */
+    private Set<Long> storageIds;
 }
