@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * 商品入库Service业务层处理
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-08-27
  */
 @RequiredArgsConstructor
@@ -101,6 +101,7 @@ public class KxGoodsInStockServiceImpl implements IKxGoodsInStockService {
         }
         lqw.eq(StringUtils.isNotBlank(bo.getRemarks()), KxGoodsInStock::getRemarks, bo.getRemarks());
         lqw.eq(StringUtils.isNotBlank(bo.getOutgoingDay()), KxGoodsInStock::getOutgoingDay, bo.getOutgoingDay());
+        lqw.in(CollectionUtils.isNotEmpty(bo.getStorageIds()), KxGoodsInStock::getStorageId, bo.getStorageIds());
         lqw.orderByDesc(KxGoodsInStock::getId);
         return lqw;
     }
