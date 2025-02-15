@@ -3,9 +3,10 @@ package com.kxmall.web.controller.storage.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.page.TableDataInfo;
+import com.kxmall.common.exception.ServiceException;
+import com.kxmall.common.utils.QRCodeGenerator;
 import com.kxmall.product.domain.KxStoreCategory;
 import com.kxmall.product.mapper.KxStoreCategoryMapper;
 import com.kxmall.storage.domain.KxStock;
@@ -15,6 +16,7 @@ import com.kxmall.storage.domain.vo.KxStockVo;
 import com.kxmall.storage.mapper.KxStockMapper;
 import com.kxmall.web.controller.storage.service.IKxStockService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -23,7 +25,7 @@ import java.util.*;
 /**
  * 前置仓商品Service业务层处理
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-08-27
  */
 @RequiredArgsConstructor
@@ -33,6 +35,10 @@ public class KxStockServiceImpl implements IKxStockService {
     private final KxStockMapper baseMapper;
 
     private final KxStoreCategoryMapper categoryMapper;
+
+
+    @Value("${com.kxmall.domainName}")
+    private String domainName;
 
     /**
      * 查询前置仓商品
@@ -176,6 +182,17 @@ public class KxStockServiceImpl implements IKxStockService {
                                         .eq(KxStock::getStorageId, bo.getStorageId())
                                         .eq(KxStock::getProductId,bo.getProductId())
                                         .eq(KxStock::getProductAttrId,bo.getProductAttrId())) > 0;
+    }
+
+    @Override
+    public String warehouseCode(WarningStockBo bo) {
+        String base64QRCode;
+        try {
+            base64QRCode = QRCodeGenerator.generateQRCodeBase64(domainName+"?storageId="+bo.getStorageId(), 350, 350);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage(),500);
+        }
+        return base64QRCode;
     }
 
 

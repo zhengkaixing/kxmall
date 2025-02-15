@@ -1,10 +1,10 @@
 package com.kxmall.web.controller.storage.service;
 
+import com.kxmall.common.core.domain.PageQuery;
+import com.kxmall.common.core.page.TableDataInfo;
+import com.kxmall.storage.domain.bo.KxStockBo;
 import com.kxmall.storage.domain.bo.WarningStockBo;
 import com.kxmall.storage.domain.vo.KxStockVo;
-import com.kxmall.storage.domain.bo.KxStockBo;
-import com.kxmall.common.core.page.TableDataInfo;
-import com.kxmall.common.core.domain.PageQuery;
 
 import java.util.Collection;
 import java.util.List;
@@ -81,4 +81,11 @@ public interface IKxStockService {
      * @return
      */
     Boolean warningUpdate(WarningStockBo bo);
+
+    /**
+     * 获取二维码
+     * @param bo
+     * @return
+     */
+    String warehouseCode(WarningStockBo bo);
 }
