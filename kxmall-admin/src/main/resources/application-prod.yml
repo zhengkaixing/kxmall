@@ -176,6 +176,7 @@ sms:
 ########################################################
 com:
   kxmall:
+    domainName: https://www.kxmall.vip
     address:
       map:
         key: YNQBZ-TFA34-JLEUL-DWDYN-FWPOK-2ABYX
