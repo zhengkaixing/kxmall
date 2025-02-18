@@ -136,6 +136,7 @@
 	export default {
 		data() {
 			return {
+        isUpdating: false, // 新增状态字段
 				sizeCalcState: false,
 				tabScrollTop: 0,
 				currentId: 1,
@@ -361,22 +362,32 @@
 				})
 			},
 			//数量
-			numberChange(data){
-				const that = this
-				if(data.number == 0){
-					this.deleteCartItem(data.index)
-					return
-				}
-				that.$api.request('get','cart/app/updateCartItemNum', {
-					cartId: this.tlist[data.index].cartId,
-					num: data.number
-				}).then(res => {
-					that.$api.msg('添加购物车成功')
-					this.tlist[data.index].num=data.number
-					this.cartNumFn()
-					this.countTabNum()
-				})
-			},
+      numberChange(data) {
+        const that = this
+        const index = data.index;
+        const item = this.tlist[index];
+        // 如果正在更新，直接返回
+        if (item.isUpdating) return;
+        // 标记为更新中
+        item.isUpdating = true;
+        if (data.number == 0) {
+          this.deleteCartItem(data.index)
+          item.isUpdating = false; // 删除操作后重置状态
+          return
+        }
+        that.$api.request('get', 'cart/app/updateCartItemNum', {
+          cartId: this.tlist[data.index].cartId,
+          num: data.number
+        }).then(res => {
+          this.tlist[data.index].num = data.number
+          this.cartNumFn()
+          this.countTabNum()
+        }).catch(err => {
+          console.error("更新购物车失败:", err);
+        }).finally(() => {
+          item.isUpdating = false; // 无论成功失败，重置状态
+        });
+      },
 			loadCartData(){
 				const that = this
 				that.$api.request('get', 'cart/app/getCartList',{
