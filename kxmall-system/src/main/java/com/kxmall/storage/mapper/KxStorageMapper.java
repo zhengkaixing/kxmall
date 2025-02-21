@@ -1,16 +1,17 @@
 package com.kxmall.storage.mapper;
 
+import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.storage.domain.KxStorage;
 import com.kxmall.storage.domain.vo.KxStorageVo;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 仓库管理Mapper接口
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-08-27
  */
 public interface KxStorageMapper extends BaseMapperPlus<KxStorageMapper, KxStorage, KxStorageVo> {
@@ -40,6 +41,6 @@ public interface KxStorageMapper extends BaseMapperPlus<KxStorageMapper, KxStora
      * @param storageIds
      * @return
      */
-    List<KxStorageVo> getStorageNameAll(int state, @Param("storageIds") List<Long> storageIds);
+    List<KxStorageVo> getStorageNameAll(int state, @Param("storageIds") Set<Long> storageIds);
 
 }
