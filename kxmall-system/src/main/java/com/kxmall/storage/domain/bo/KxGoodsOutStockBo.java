@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -73,7 +74,7 @@ public class KxGoodsOutStockBo extends BaseEntity {
     /**
      * 仓库ids
      */
-    private List<Long> storageIds;
+    private Set<Long> storageIds;
 
 
     private List<KxOutStockProductVo> outStockProductVoList;
