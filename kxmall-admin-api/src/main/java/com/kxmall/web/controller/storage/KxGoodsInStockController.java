@@ -1,33 +1,34 @@
 package com.kxmall.web.controller.storage;
 
-import java.util.List;
-import java.util.Arrays;
-
-import com.kxmall.storage.domain.vo.KxStorageVo;
-import lombok.RequiredArgsConstructor;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.*;
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.annotation.Validated;
-import com.kxmall.common.annotation.RepeatSubmit;
 import com.kxmall.common.annotation.Log;
+import com.kxmall.common.annotation.RepeatSubmit;
 import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.domain.R;
+import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.core.validate.AddGroup;
 import com.kxmall.common.core.validate.EditGroup;
 import com.kxmall.common.enums.BusinessType;
 import com.kxmall.common.utils.poi.ExcelUtil;
-import com.kxmall.storage.domain.vo.KxGoodsInStockVo;
 import com.kxmall.storage.domain.bo.KxGoodsInStockBo;
+import com.kxmall.storage.domain.vo.KxGoodsInStockVo;
+import com.kxmall.storage.domain.vo.KxStorageVo;
 import com.kxmall.web.controller.storage.service.IKxGoodsInStockService;
-import com.kxmall.common.core.page.TableDataInfo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 商品入库
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-08-27
  */
 @Validated
@@ -44,6 +45,7 @@ public class KxGoodsInStockController extends BaseController {
     @SaCheckPermission("storage:goodsInStock:list")
     @GetMapping("/list")
     public TableDataInfo<KxGoodsInStockVo> list(KxGoodsInStockBo bo, PageQuery pageQuery) {
+        bo.setStorageIds(getLoginUser().getStoragePermission());
         return iKxGoodsInStockService.queryPageList(bo, pageQuery);
     }
 
