@@ -3,6 +3,7 @@ package com.kxmall.storage.domain.bo;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 告警查询对象
@@ -25,7 +26,7 @@ public class WarningStockBo {
     private Long num;
 
     private Boolean showType = false;
-    private List<Long> storageIds;
+    private Set<Long> storageIds;
 
     private List<Long> childrenIds;
 

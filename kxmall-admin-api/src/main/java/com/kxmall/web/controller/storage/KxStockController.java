@@ -1,33 +1,34 @@
 package com.kxmall.web.controller.storage;
 
-import java.util.List;
-import java.util.Arrays;
-
-import com.kxmall.storage.domain.bo.WarningStockBo;
-import lombok.RequiredArgsConstructor;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.*;
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.annotation.Validated;
-import com.kxmall.common.annotation.RepeatSubmit;
 import com.kxmall.common.annotation.Log;
+import com.kxmall.common.annotation.RepeatSubmit;
 import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.domain.R;
+import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.core.validate.AddGroup;
 import com.kxmall.common.core.validate.EditGroup;
 import com.kxmall.common.enums.BusinessType;
 import com.kxmall.common.utils.poi.ExcelUtil;
-import com.kxmall.storage.domain.vo.KxStockVo;
 import com.kxmall.storage.domain.bo.KxStockBo;
+import com.kxmall.storage.domain.bo.WarningStockBo;
+import com.kxmall.storage.domain.vo.KxStockVo;
 import com.kxmall.web.controller.storage.service.IKxStockService;
-import com.kxmall.common.core.page.TableDataInfo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 前置仓商品
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-08-27
  */
 @Validated
@@ -44,6 +45,7 @@ public class KxStockController extends BaseController {
     @SaCheckPermission("storage:stock:list")
     @GetMapping("/list")
     public TableDataInfo<KxStockVo> list(KxStockBo bo, PageQuery pageQuery) {
+        bo.setStorageIds(getLoginUser().getStoragePermission());
         return iKxStockService.queryPageList(bo, pageQuery);
     }
 
@@ -138,6 +140,7 @@ public class KxStockController extends BaseController {
      */
     @GetMapping("/warningList")
     public TableDataInfo<KxStockVo> warningList(WarningStockBo bo, PageQuery pageQuery) {
+        bo.setStorageIds(getLoginUser().getStoragePermission());
         return iKxStockService.queryPageWarningList(bo, pageQuery);
     }
 
@@ -151,4 +154,12 @@ public class KxStockController extends BaseController {
     }
 
 
+
+    /**
+     * 仓库二维码
+     */
+    @PostMapping("/warehouseCode")
+    public R<String> warehouseCode(@RequestBody WarningStockBo bo) {
+        return R.ok(iKxStockService.warehouseCode(bo));
+    }
 }

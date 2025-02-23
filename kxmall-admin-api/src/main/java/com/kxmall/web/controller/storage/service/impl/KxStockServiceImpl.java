@@ -57,9 +57,9 @@ public class KxStockServiceImpl implements IKxStockService {
         Integer offset = (pageQuery.getPageNum() - 1) * pageQuery.getPageSize();
         Integer size = pageQuery.getPageSize();
         List<KxStockVo> result = baseMapper.selectVoBySQL(offset,size,bo.getStorageId(),bo.getCategoryId()
-            ,bo.getKeyword(),bo.getStatus(),bo.getNotIds());
+            ,bo.getKeyword(),bo.getStatus(),bo.getNotIds(),bo.getStorageIds());
         Long count = baseMapper.selectVoBySQLCount(bo.getStorageId(),bo.getCategoryId()
-            ,bo.getKeyword(),bo.getStatus(),bo.getNotIds());
+            ,bo.getKeyword(),bo.getStatus(),bo.getNotIds(),bo.getStorageIds());
         return new TableDataInfo<KxStockVo>(result,count);
     }
 

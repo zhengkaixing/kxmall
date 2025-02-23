@@ -1,18 +1,18 @@
 package com.kxmall.storage.mapper;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.storage.domain.KxStock;
 import com.kxmall.storage.domain.bo.WarningStockBo;
 import com.kxmall.storage.domain.vo.KxStockVo;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 前置仓商品Mapper接口
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-08-27
  */
 public interface KxStockMapper extends BaseMapperPlus<KxStockMapper, KxStock, KxStockVo> {
@@ -59,9 +59,17 @@ public interface KxStockMapper extends BaseMapperPlus<KxStockMapper, KxStock, Kx
      * @param keyword
      * @param status
      * @param notIds
+     * @param storageIds
      * @return
      */
-    List<KxStockVo> selectVoBySQL(@Param("offset") Integer offset, @Param("size") Integer size, @Param("storageId") Long storageId, @Param("categoryId") Long categoryId, @Param("keyword") String keyword, @Param("status") Integer status, @Param("notIds") List<Long> notIds);
+    List<KxStockVo> selectVoBySQL(@Param("offset") Integer offset,
+                                  @Param("size") Integer size,
+                                  @Param("storageId") Long storageId,
+                                  @Param("categoryId") Long categoryId,
+                                  @Param("keyword") String keyword,
+                                  @Param("status") Integer status,
+                                  @Param("notIds") List<Long> notIds,
+                                  @Param("storageIds") Set<Long> storageIds);
 
     /**
      * 计算总数
@@ -70,9 +78,15 @@ public interface KxStockMapper extends BaseMapperPlus<KxStockMapper, KxStock, Kx
      * @param keyword
      * @param status
      * @param notIds
+     * @param storageIds
      * @return
      */
-    Long selectVoBySQLCount(@Param("storageId") Long storageId, @Param("categoryId") Long categoryId, @Param("keyword") String keyword, @Param("status") Integer status, @Param("notIds") List<Long> notIds);
+    Long selectVoBySQLCount(@Param("storageId") Long storageId,
+                            @Param("categoryId") Long categoryId,
+                            @Param("keyword") String keyword,
+                            @Param("status") Integer status,
+                            @Param("notIds") List<Long> notIds,
+                            @Param("storageIds") Set<Long> storageIds);
 
 
 }
