@@ -1,8 +1,8 @@
 package com.kxmall.storage.mapper;
 
+import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.storage.domain.KxGoodsOutStock;
 import com.kxmall.storage.domain.vo.KxGoodsOutStockVo;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 
 /**
  * 商品出库Mapper接口

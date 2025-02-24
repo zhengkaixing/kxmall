@@ -1,28 +1,29 @@
 package com.kxmall.web.controller.storage;
 
-import java.util.List;
-import java.util.Arrays;
-
-import com.kxmall.storage.domain.vo.KxStorageVo;
-import lombok.RequiredArgsConstructor;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.*;
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.annotation.Validated;
-import com.kxmall.common.annotation.RepeatSubmit;
 import com.kxmall.common.annotation.Log;
+import com.kxmall.common.annotation.RepeatSubmit;
 import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.domain.R;
+import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.core.validate.AddGroup;
 import com.kxmall.common.core.validate.EditGroup;
 import com.kxmall.common.enums.BusinessType;
 import com.kxmall.common.utils.poi.ExcelUtil;
-import com.kxmall.storage.domain.vo.KxGoodsOutStockVo;
 import com.kxmall.storage.domain.bo.KxGoodsOutStockBo;
+import com.kxmall.storage.domain.vo.KxGoodsOutStockVo;
+import com.kxmall.storage.domain.vo.KxStorageVo;
 import com.kxmall.web.controller.storage.service.IKxGoodsOutStockService;
-import com.kxmall.common.core.page.TableDataInfo;
+import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 商品出库
@@ -44,6 +45,7 @@ public class KxGoodsOutStockController extends BaseController {
     @SaCheckPermission("storage:goodsOutStock:list")
     @GetMapping("/list")
     public TableDataInfo<KxGoodsOutStockVo> list(KxGoodsOutStockBo bo, PageQuery pageQuery) {
+        bo.setStorageIds(getLoginUser().getStoragePermission());
         return iKxGoodsOutStockService.queryPageList(bo, pageQuery);
     }
 
