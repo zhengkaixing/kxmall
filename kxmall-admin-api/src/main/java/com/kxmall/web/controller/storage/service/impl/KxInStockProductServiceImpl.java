@@ -1,23 +1,23 @@
 package com.kxmall.web.controller.storage.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.kxmall.common.core.page.TableDataInfo;
-import com.kxmall.common.core.domain.PageQuery;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kxmall.common.core.domain.PageQuery;
+import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.utils.StringUtils;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.kxmall.storage.domain.KxInStockProduct;
 import com.kxmall.storage.domain.bo.KxInStockProductBo;
 import com.kxmall.storage.domain.vo.KxInStockProductVo;
-import com.kxmall.storage.domain.KxInStockProduct;
 import com.kxmall.storage.mapper.KxInStockProductMapper;
 import com.kxmall.web.controller.storage.service.IKxInStockProductService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Collection;
 
 /**
  * 入库商品Service业务层处理
