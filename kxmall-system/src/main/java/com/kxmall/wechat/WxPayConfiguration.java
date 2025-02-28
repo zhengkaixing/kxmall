@@ -71,7 +71,9 @@ public class WxPayConfiguration {
      * 移除WxPayService
      */
     public static void removeWxPayService() {
-        payServices.remove(KXMALL_WEIXIN_PAY_SERVICE);
+        payServices.remove(KXMALL_WEIXIN_PAY_SERVICE+PayMethodEnum.H5.getValue());
+        payServices.remove(KXMALL_WEIXIN_PAY_SERVICE+PayMethodEnum.APP.getValue());
+        payServices.remove(KXMALL_WEIXIN_PAY_SERVICE+PayMethodEnum.MINI.getValue());
     }
 
 }
