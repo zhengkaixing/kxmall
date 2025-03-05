@@ -23,7 +23,7 @@ public class MemberNotifyConfig {
         if ("mock".equalsIgnoreCase(enable)) {
             return new MockMemberNotifyBizServiceImpl();
         } else if ("uninotify".equalsIgnoreCase(enable)) {
-            return new UniNotifyMemberNotifyBizServiceImpl();
+            return new MockMemberNotifyBizServiceImpl();
         } else {
             return new MockMemberNotifyBizServiceImpl();
         }
