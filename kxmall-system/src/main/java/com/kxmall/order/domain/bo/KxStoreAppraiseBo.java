@@ -1,17 +1,16 @@
 package com.kxmall.order.domain.bo;
 
 import com.kxmall.common.core.domain.BaseEntity;
-import com.kxmall.common.core.validate.AddGroup;
-import com.kxmall.common.core.validate.EditGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import javax.validation.constraints.*;
+
+import java.util.Set;
 
 
 /**
  * 评论管理业务对象 kx_store_appraise
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-08-27
  */
 
@@ -59,5 +58,8 @@ public class KxStoreAppraiseBo extends BaseEntity {
      */
     private Long state;
 
-
+    /**
+     * 仓库权限参数
+     */
+    private Set<Long> storageIds;
 }
