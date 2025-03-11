@@ -7,11 +7,12 @@ import lombok.EqualsAndHashCode;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * 订单业务对象 kx_store_order
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-02-15
  */
 
@@ -304,4 +305,10 @@ public class KxStoreOrderBo extends BaseEntity {
 
 
     private Long storageId;
+
+
+    /**
+     * 仓库权限参数
+     */
+    private Set<Long> storageIds;
 }
