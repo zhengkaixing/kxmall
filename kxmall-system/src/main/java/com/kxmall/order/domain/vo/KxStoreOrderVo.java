@@ -4,7 +4,7 @@ import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.kxmall.common.annotation.ExcelDictFormat;
 import com.kxmall.common.convert.ExcelDictConvert;
-import com.kxmall.order.domain.KxStoreOrderProduct;
+import com.kxmall.group.domain.vo.KxGroupShopVo;
 import com.kxmall.user.domain.vo.KxUserVo;
 import lombok.Data;
 
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 订单视图对象 kx_store_order
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-02-15
  */
 @Data
@@ -329,6 +329,11 @@ public class KxStoreOrderVo {
     /**
      *
      */
+    private String PayChannel;
+
+    /**
+     *
+     */
     @ExcelProperty(value = "")
     private Integer isRemind;
 
@@ -376,7 +381,22 @@ public class KxStoreOrderVo {
 
     private KxUserVo kxUserVo;
 
+    private Long postId;
 
     private List<KxStoreOrderProductVo> productList;
+
+
+    private String riderName;
+
+    private KxGroupShopVo groupShopVo;
+
+    /**
+     * 经度
+     */
+    private BigDecimal longitude;
+    /**
+     * 维度
+     */
+    private BigDecimal latitude;
 
 }
