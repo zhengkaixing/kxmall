@@ -32,6 +32,9 @@ public class OrderPriceBo implements Serializable {
     /*** 团购*/
     private Long groupShopId;
 
+    /*** 团购*/
+    private Long seckillId;
+
     /*** 计算优惠后，实际需要支付的价格*/
     private BigDecimal actualPrice;
 
