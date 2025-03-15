@@ -20,6 +20,10 @@ public class OrderRequestProductBo {
 
     private String productAttrImg;
 
+    private Long integral;
+
+    private Long giveIntegral;
+
 
 
 
