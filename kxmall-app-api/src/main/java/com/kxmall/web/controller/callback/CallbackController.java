@@ -51,6 +51,7 @@ public class CallbackController {
     private static final Logger logger = LoggerFactory.getLogger(CallbackController.class);
 
     @RequestMapping("/wxpay")
+    @SaIgnore
     @Transactional(rollbackFor = Exception.class)
     public Object wxpay(@RequestBody String body) throws Exception {
 //        ============微信支付回调代码 prod 开始============
