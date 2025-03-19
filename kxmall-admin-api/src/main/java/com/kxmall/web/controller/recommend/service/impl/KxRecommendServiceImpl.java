@@ -137,7 +137,7 @@ public class KxRecommendServiceImpl implements IKxRecommendService {
         List<KxRecommend> recommends = baseMapper.selectList(new LambdaQueryWrapper<KxRecommend>().in(KxRecommend::getId, ids));
         for (KxRecommend recommend : recommends) {
             if (baseMapper.deleteById(recommend.getId()) > 0) {
-                RedisUtils.deleteObject(RECOMMEND_NAME + recommend.getRecommendType());
+                RedisUtils.deleteKeys(RECOMMEND_NAME + "*");
             }
         }
         return true;
