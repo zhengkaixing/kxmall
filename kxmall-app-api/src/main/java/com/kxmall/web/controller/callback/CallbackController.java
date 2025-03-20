@@ -10,7 +10,6 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import com.kxmall.common.enums.OrderStatusType;
 import com.kxmall.common.enums.PayMethodEnum;
 import com.kxmall.executor.GlobalExecutor;
-import com.kxmall.group.mapper.KxGroupShopMapper;
 import com.kxmall.notify.AdminNotifyBizService;
 import com.kxmall.order.domain.KxStoreOrder;
 import com.kxmall.order.domain.KxStoreOrderProduct;
@@ -51,8 +50,8 @@ public class CallbackController {
     @Autowired
     private KxStoreProductMapper storeProductMapper;
 
-    @Autowired
-    private KxGroupShopMapper groupShopMapper;
+//    @Autowired
+//    private KxGroupShopMapper groupShopMapper;
 
     @Autowired
     private AdminNotifyBizService adminNotifyBizService;
