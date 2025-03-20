@@ -9,6 +9,9 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.kxmall.common.enums.OrderStatusType;
 import com.kxmall.common.enums.PayMethodEnum;
+import com.kxmall.executor.GlobalExecutor;
+import com.kxmall.group.mapper.KxGroupShopMapper;
+import com.kxmall.notify.AdminNotifyBizService;
 import com.kxmall.order.domain.KxStoreOrder;
 import com.kxmall.order.domain.KxStoreOrderProduct;
 import com.kxmall.order.domain.vo.KxStoreOrderProductVo;
@@ -48,6 +51,14 @@ public class CallbackController {
     @Autowired
     private KxStoreProductMapper storeProductMapper;
 
+    @Autowired
+    private KxGroupShopMapper groupShopMapper;
+
+    @Autowired
+    private AdminNotifyBizService adminNotifyBizService;
+
+//    @Autowired
+//    private AdminPrintBizService adminPrintBizService;
 
     private static final Logger logger = LoggerFactory.getLogger(CallbackController.class);
 
@@ -99,7 +110,7 @@ public class CallbackController {
         Integer totalFee = result.getTotalFee();
 
         // 检查支付订单金额
-        if (!totalFee.equals(order.getPayPrice().intValue())) {
+        if (!totalFee.equals(order.getPayPrice().multiply(new BigDecimal(100)).intValue())) {
             return WxPayNotifyResponse.fail(order.getOrderId() + " : 支付金额不符合 totalFee=" + totalFee);
         }
 
@@ -123,6 +134,11 @@ public class CallbackController {
             storeProductMapper.incSales(item.getProductId(), item.getNum());
         });
 
+        //通知管理员发货
+        GlobalExecutor.execute(() -> {
+            adminNotifyBizService.newOrder(order);
+            //adminPrintBizService.newOrderPrint(order);
+        });
 
         return WxPayNotifyResponse.success("支付成功");
     }
