@@ -53,8 +53,8 @@ public class CallbackController {
 //    @Autowired
 //    private KxGroupShopMapper groupShopMapper;
 
-    @Autowired
-    private AdminNotifyBizService adminNotifyBizService;
+//    @Autowired
+//    private AdminNotifyBizService adminNotifyBizService;
 
 //    @Autowired
 //    private AdminPrintBizService adminPrintBizService;
@@ -135,7 +135,7 @@ public class CallbackController {
 
         //通知管理员发货
         GlobalExecutor.execute(() -> {
-            adminNotifyBizService.newOrder(order);
+            //adminNotifyBizService.newOrder(order);
             //adminPrintBizService.newOrderPrint(order);
         });
 
