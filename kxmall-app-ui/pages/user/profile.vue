@@ -50,14 +50,14 @@
 			<view class="flex align-center">
 				<view @click="changeGender(1)" class="flex align-center">
 					<image
-					:src="userInfo.gender == 1 ?'/static/cart/selected.png':'/static/cart/select.png'"
+					:src="gender == 1 ?'/static/cart/selected.png':'/static/cart/select.png'"
 					mode="aspectFill"
 					style="width: 40rpx;height: 40rpx;"></image>
 					<view style="font-size: 28rpx;line-height: 38rpx;color: #5E5E66;padding-left: 20rpx;">男</view>
 				</view>
 				<view @click="changeGender(2)" class="flex align-center" style="padding-left: 80rpx;">
 					<image
-					 :src="userInfo.gender == 2 ?'/static/cart/selected.png':'/static/cart/select.png'"
+					 :src="gender == 2 ?'/static/cart/selected.png':'/static/cart/select.png'"
 					 mode="aspectFit"
 					style="width: 40rpx;height: 40rpx;"></image>
 					<view style="font-size: 28rpx;line-height: 38rpx;color: #5E5E66;padding-left: 20rpx;">女</view>
@@ -95,6 +95,7 @@
 		data() {
 			return {
 				date:'选择您的出生日期',
+				gender: undefined,
 				phone:''
 			};
 		},
@@ -108,6 +109,7 @@
 				var day = date.getDate() >= 9 ? date.getDate() : '0'+parseInt(date.getDate())
 				this.date = date.getFullYear()+'-'+month+'-'+day
 			}
+      this.gender = this.userInfo.gender
 			this.phone = this.userInfo.phone[0]+this.userInfo.phone[1]+this.userInfo.phone[2]+'****'+this.userInfo.phone[7]+this.userInfo.phone[8]+this.userInfo.phone[9]+this.userInfo.phone[10]
 		},
 		methods: {
@@ -123,6 +125,7 @@
 				})
 			},
 			changeGender(index){
+        this.gender = index
 				this.userInfo.gender = index
 				this.syncUser()
 			},
