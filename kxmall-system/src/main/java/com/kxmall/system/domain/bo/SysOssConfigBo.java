@@ -38,22 +38,16 @@ public class SysOssConfigBo extends BaseEntity {
     /**
      * accessKey
      */
-    @NotBlank(message = "accessKey不能为空", groups = {AddGroup.class, EditGroup.class})
-    @Size(min = 2, max = 100, message = "accessKey长度必须介于2和100 之间")
     private String accessKey;
 
     /**
      * 秘钥
      */
-    @NotBlank(message = "secretKey不能为空", groups = {AddGroup.class, EditGroup.class})
-    @Size(min = 2, max = 100, message = "secretKey长度必须介于2和100 之间")
     private String secretKey;
 
     /**
      * 桶名称
      */
-    @NotBlank(message = "桶名称不能为空", groups = {AddGroup.class, EditGroup.class})
-    @Size(min = 2, max = 100, message = "bucketName长度必须介于2和100之间")
     private String bucketName;
 
     /**
@@ -101,7 +95,6 @@ public class SysOssConfigBo extends BaseEntity {
     /**
      * 桶权限类型(0private 1public 2custom)
      */
-    @NotBlank(message = "桶权限类型不能为空", groups = {AddGroup.class, EditGroup.class})
     private String accessPolicy;
 
 }
