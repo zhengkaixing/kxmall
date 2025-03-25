@@ -219,6 +219,8 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
      */
     @Override
     public Boolean insertAndupdateByBo(KxStoreProductBo bo) {
+        //将商品编码拷贝到商品列表
+        bo.setBarCode(bo.getAttrs().get(0).getBarCode());
         if (StringUtils.isNotEmpty(bo.getDescription())) {
             bo.setDescription(RegexUtil.converProductDescription(bo.getDescription()));
         }
