@@ -64,12 +64,6 @@
 					<image src="../../static/order/xuanzhong.png"></image>
 				</view>
 			</view>
-			<!-- <view class="distribution-list">
-				<view class="distribution-text">支付宝</view>
-				<view class="distribution-price">
-					<image src="../../static/order/xuanzhong-no.png"></image>
-				</view>
-			</view> -->
 		</view>
 		<!-- 底部 -->
 		<view class="footer">
@@ -236,11 +230,6 @@
 					that.submiting = false
 					that.$api.msg(failres.msg)
 				}).then(res => {
-					//提交订单成功后，无需再让用户提交订单
-					// that.submiting = false
-					// uni.redirectTo({
-					// 	url: '/pages/pay/pay?orderno=' + res.data + '&price=' + that.orderReqeust.totalPrice
-					// })
           that.confirm(res.msg,(that.orderReqeust.totalPrice))
 				})
 

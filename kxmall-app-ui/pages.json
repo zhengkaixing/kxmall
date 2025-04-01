@@ -179,11 +179,6 @@
 				"navigationBarTitleText": "查看物流"
 			}
         }, {
-			"path": "pages/pay/pay",
-			"style": {
-				"navigationBarTitleText": "支付"
-			}
-		}, {
 			"path": "pages/pay/success",
 			"style": {
 				"navigationBarTitleText": "支付成功"
