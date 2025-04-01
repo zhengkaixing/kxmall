@@ -287,22 +287,20 @@
     .appraise-uploader {
     	padding: 22upx 20upx;
     }
-    .appraise-star {
-    	font-family: uniicons;
-    	font-size: 40upx;
-    	margin-left: 6upx;
-    }
     .appraise-star-view {
     	margin-left: 20upx;
     }
-    .appraise-star:after {
-    	content: '\e408';
+    .appraise-star {
+      font-size: 40upx;
+      margin-left: 6upx;
+      color: #ccc;
     }
-    .appraise-star.active {
-    	color: #FFB400;
+    .appraise-star:after {
+      content: '☆'; /* 空心星 */
     }
     .appraise-star.active:after {
-    	content: '\e438';
+      content: '★'; /* 实心星 */
+      color: #FFB400;
     }
     .appraise-submit {
     	background: #007AFF;
