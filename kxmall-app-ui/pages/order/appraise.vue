@@ -295,6 +295,9 @@
       margin-left: 6upx;
       color: #ccc;
     }
+    .appraise-star.active {
+      color: #FFB400;
+    }
     .appraise-star:after {
       content: '☆'; /* 空心星 */
     }
