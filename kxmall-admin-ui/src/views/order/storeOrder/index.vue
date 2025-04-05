@@ -335,7 +335,7 @@
               width="150"
             >
               <template slot-scope="{row}">
-                <span>{{ row.price * row.num  }}</span>
+                <span>{{ Number(row.price * row.num).toFixed(2) }}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -344,7 +344,7 @@
           <span>{{ form.freightPrice }}</span>
         </el-form-item>
         <el-form-item label="优惠">
-          <span>{{ (form.originalTotalPrice-form.payPrice + form.freightPrice) }}</span>
+          <span>{{ Number(form.originalTotalPrice) - Number(form.payPrice) + Number(form.freightPrice) }}</span>
         </el-form-item>
         <el-form-item label="商品金额">
           <span>{{ form.originalTotalPrice }}</span>
