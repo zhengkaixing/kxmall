@@ -5,9 +5,11 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.CharUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.mail.*;
-import com.kxmall.common.utils.spring.SpringUtils;
+import cn.hutool.extra.mail.Mail;
+import cn.hutool.extra.mail.MailAccount;
+import cn.hutool.extra.mail.UserPassAuthenticator;
 import com.kxmall.common.utils.StringUtils;
+import com.kxmall.common.utils.spring.SpringUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

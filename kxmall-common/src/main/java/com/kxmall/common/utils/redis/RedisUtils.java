@@ -1,6 +1,5 @@
 package com.kxmall.common.utils.redis;
 
-import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.utils.spring.SpringUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
