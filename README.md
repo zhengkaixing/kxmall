@@ -85,7 +85,7 @@
 
 ---
 - h5骑手后台（可打包成小程序、APP）
-  - 演示地址: [https://rider.kxmall.vip](https://rider.kxmall.vip)
+  - 演示地址: [https://ridertwo.kxmall.vip](https://ridertwo.kxmall.vip)
   - 登录名:16666666666 验证码:123456 （访问请打开浏览器F12开发模式,使用手机模式进行操作）
 - 微信小程序-体验（可打包成小程序、APP）
   - 微信一键登录（注意：需要进入管理后台进行审核，方可正常使用。）
