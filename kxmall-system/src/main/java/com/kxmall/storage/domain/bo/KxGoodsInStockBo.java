@@ -27,7 +27,7 @@ public class KxGoodsInStockBo extends BaseEntity {
     /**
      * 出库id
      */
-    @NotNull(message = "出库id不能为空", groups = {EditGroup.class})
+    @NotNull(message = "出库id不能为空", groups = { EditGroup.class })
     private Long id;
 
     /**
@@ -55,7 +55,7 @@ public class KxGoodsInStockBo extends BaseEntity {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private LocalDate ingoingTime;
+    private LocalDate  ingoingTime;
 
     /**
      * 备注
