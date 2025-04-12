@@ -2,10 +2,6 @@ package com.kxmall.storage.domain.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.kxmall.common.annotation.ExcelDictFormat;
-import com.kxmall.common.convert.ExcelDictConvert;
-import com.kxmall.product.domain.KxStoreProduct;
-import com.kxmall.product.domain.KxStoreProductAttr;
 import com.kxmall.product.domain.vo.KxStoreCategoryVo;
 import com.kxmall.product.domain.vo.KxStoreProductAttrVo;
 import com.kxmall.product.domain.vo.KxStoreProductVo;

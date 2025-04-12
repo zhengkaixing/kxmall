@@ -1,14 +1,11 @@
 package com.kxmall.storage.domain.vo;
 
-import java.util.Date;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.kxmall.common.annotation.ExcelDictFormat;
-import com.kxmall.common.convert.ExcelDictConvert;
 import lombok.Data;
+
+import java.util.Date;
+import java.util.List;
 
 
 /**

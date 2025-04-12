@@ -1,21 +1,17 @@
 package com.kxmall.storage.domain.bo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kxmall.common.core.domain.BaseEntity;
-import com.kxmall.common.core.validate.AddGroup;
 import com.kxmall.common.core.validate.EditGroup;
-import com.kxmall.storage.domain.vo.KxInStockProductVo;
 import com.kxmall.storage.domain.vo.KxOutStockProductVo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import javax.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 商品出库业务对象 kx_goods_out_stock
@@ -59,7 +55,7 @@ public class KxGoodsOutStockBo extends BaseEntity {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private LocalDate outgoingTime;
+    private LocalDate  outgoingTime;
 
     /**
      * 备注
