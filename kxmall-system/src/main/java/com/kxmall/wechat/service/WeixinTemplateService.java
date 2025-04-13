@@ -123,10 +123,7 @@ public class WeixinTemplateService {
         if (kxStorage == null) {
             throw new RuntimeException("门店信息不存在！");
         }
-        if (StringUtils.isBlank(kxStorage.getOpenId())) {
-            throw new RuntimeException("用户未绑定微信公众号！");
-        }
-        return kxStorage.getOpenId();
+        return "";
 
     }
 
