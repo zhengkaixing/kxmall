@@ -5,6 +5,8 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import com.google.common.collect.Maps;
 import com.kxmall.common.enums.PayMethodEnum;
+import com.kxmall.system.domain.SysOss;
+import com.kxmall.system.mapper.SysOssMapper;
 import com.kxmall.system.service.ISysConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +26,17 @@ public class WxPayConfiguration {
 
     private static Map<String, WxPayService> payServices = Maps.newHashMap();
 
+    private static SysOssMapper sysOssMapper;
+
     private static ISysConfigService configService;
+
 
     private final static String KXMALL_WEIXIN_PAY_SERVICE = "kxmall_weixin_pay_service";
 
     @Autowired
-    public WxPayConfiguration(ISysConfigService configService) {
+    public WxPayConfiguration(ISysConfigService configService,SysOssMapper sysOssMapper) {
         WxPayConfiguration.configService = configService;
+        WxPayConfiguration.sysOssMapper = sysOssMapper;
     }
 
     /**
@@ -56,8 +62,9 @@ public class WxPayConfiguration {
             }
             payConfig.setMchId(configService.selectConfigByKey("wxpay_mchId"));
             payConfig.setMchKey(configService.selectConfigByKey("wxpay_mchKey"));
-            payConfig.setKeyPath(configService.selectConfigByKey("wxpay_keyPath"));
-            payConfig.setNotifyUrl(configService.selectConfigByKey("wxpay_notifyUrl"));
+            SysOss path = sysOssMapper.selectById(configService.selectConfigByKey("wxpay_keyPath"));
+            payConfig.setKeyPath(path.getUrl());
+            payConfig.setNotifyUrl(configService.selectConfigByKey("wxpay_notify_url"));
             // 可以指定是否使用沙箱环境
             payConfig.setUseSandboxEnv(false);
             wxPayService = new WxPayServiceImpl();
