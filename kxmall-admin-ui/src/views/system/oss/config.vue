@@ -130,7 +130,7 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <!-- 配置类型下拉框 -->
         <el-form-item label="存储类型" prop="storageType">
-          <el-select v-model="form.storageType" placeholder="请选择存储类型" :disabled="!isAdd">
+          <el-select v-model="form.storageType" placeholder="请选择存储类型" :disabled="!isAdd" @change="handleStorageTypeChange" >
             <el-option label="S3" value="s3" />
             <el-option label="数据库" value="database" />
             <el-option label="本地磁盘" value="disk" />
@@ -298,6 +298,17 @@ export default {
     this.getList();
   },
   methods: {
+    // 处理存储类型变更
+    handleStorageTypeChange(value) {
+      if (value === 'disk') {
+        this.form.configKey = 'disk';
+      } else if (value === 'database') {
+        this.form.configKey = 'database';
+      } else {
+        // 如果是 s3 类型，清空 configKey 让用户输入
+        this.form.configKey = '';
+      }
+    },
     /** 查询对象存储配置列表 */
     getList() {
       this.loading = true;
