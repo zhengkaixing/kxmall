@@ -4,19 +4,16 @@ import com.kxmall.address.domain.bo.KxAddressBo;
 import com.kxmall.address.domain.vo.KxAddressVo;
 import com.kxmall.common.annotation.RepeatSubmit;
 import com.kxmall.common.core.controller.BaseAppController;
-import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.domain.R;
 import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.core.validate.AddGroup;
 import com.kxmall.common.core.validate.EditGroup;
-import com.kxmall.common.utils.poi.ExcelUtil;
 import com.kxmall.web.controller.address.service.IKxAddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Arrays;
@@ -65,7 +62,6 @@ public class KxAddressController extends BaseAppController {
                                   @PathVariable Long id) {
         return R.ok(iKxAddressService.queryById(id));
     }
-
 
 
     /**
