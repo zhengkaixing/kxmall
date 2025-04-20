@@ -6,14 +6,13 @@ import com.kxmall.common.enums.DeviceType;
 import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.helper.LoginHelper;
 import com.kxmall.common.utils.StringUtils;
-import org.springframework.util.ObjectUtils;
 
 /**
  * web层App通用数据处理
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  */
-public class BaseAppController {
+public class BaseRiderController {
 
     /**
      * 响应返回结果
@@ -52,18 +51,8 @@ public class BaseAppController {
     /**
      * 获取app用户缓存信息
      */
-    public LoginUser getAppLoginUser() {
-        if (!DeviceType.APP.equals(LoginHelper.getDeviceType())) {
-            throw new ServiceException("用户类型不正确");
-        }
-        return LoginHelper.getLoginUser();
-    }
-
-    /**
-     * 获取app用户缓存信息
-     */
-    public LoginUser getAppLoginUserIgnore() {
-        if (!DeviceType.APP.equals(LoginHelper.getDeviceType()) && !ObjectUtils.isEmpty(LoginHelper.getDeviceType())) {
+    public LoginUser getRiderLoginUser() {
+        if (!DeviceType.RIDER.equals(LoginHelper.getDeviceType())) {
             throw new ServiceException("用户类型不正确");
         }
         return LoginHelper.getLoginUser();
