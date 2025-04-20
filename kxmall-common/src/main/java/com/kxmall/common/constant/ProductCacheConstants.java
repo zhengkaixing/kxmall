@@ -12,7 +12,6 @@ public interface ProductCacheConstants {
     */
    String ADVERTISEMENT_NAME = "ADVERTISEMENT_TYPE_";
 
-
    /**
     * 推荐
     */
@@ -24,9 +23,9 @@ public interface ProductCacheConstants {
     */
    String STORAGE_INFO_PREFIX = "STORAGE_INFO_";
 
-
    /**
     * 评价key
     */
    String CA_APPRAISE_KEY = "CA_APPRAISE_";
+
 }
