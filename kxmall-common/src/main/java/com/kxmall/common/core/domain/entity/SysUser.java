@@ -1,10 +1,10 @@
 package com.kxmall.common.core.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.kxmall.common.constant.UserConstants;
-import com.kxmall.common.enums.SensitiveStrategy;
 import com.kxmall.common.annotation.Sensitive;
+import com.kxmall.common.constant.UserConstants;
 import com.kxmall.common.core.domain.BaseEntity;
+import com.kxmall.common.enums.SensitiveStrategy;
 import com.kxmall.common.xss.Xss;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
