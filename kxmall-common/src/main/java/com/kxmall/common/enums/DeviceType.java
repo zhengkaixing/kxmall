@@ -22,7 +22,11 @@ public enum DeviceType {
     /**
      * app端
      */
-    APP("app");
+    APP("app"),
+    /**
+     * rider端
+     */
+    RIDER("rider");
 
     public static DeviceType getDeviceType(String str) {
         for (DeviceType value : values()) {

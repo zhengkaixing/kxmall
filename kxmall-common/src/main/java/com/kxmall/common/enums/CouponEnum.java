@@ -20,9 +20,6 @@ public enum CouponEnum {
 	USE_0(0L,"不可用"),
 	USE_1(1L,"可用"),
 
-	STATUS_0(0L,"未使用"),
-	STATUS_1(1L,"已使用"),
-	STATUS_2(2L,"已过期"),
 
 	TYPE_0(0L,"通用券"),
 	TYPE_1(1L,"商品券"),
