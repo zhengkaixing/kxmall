@@ -2,6 +2,8 @@ package com.kxmall.user.domain.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.kxmall.common.annotation.Sensitive;
+import com.kxmall.common.enums.SensitiveStrategy;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -87,6 +89,7 @@ public class KxUserVo {
      * 手机号码
      */
     @ExcelProperty(value = "手机号码")
+    @Sensitive(strategy = SensitiveStrategy.PHONE)
     private String phone;
 
     /**
@@ -212,6 +215,22 @@ public class KxUserVo {
      */
     @ExcelProperty(value = "")
     private Integer isDel;
+
+    /**
+     * 总的签到天数
+     */
+    private Long sumSignDay;
+
+
+    /**
+     * 当天是否签到
+     */
+    private Boolean isDaySign;
+
+    /**
+     * 昨天是否签到
+     */
+    private Boolean isYesterDaySign;
 
 
     /**

@@ -1,13 +1,11 @@
 package com.kxmall.user.domain.vo;
 
-import java.math.BigDecimal;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.fastjson.JSONArray;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 
 /**
@@ -87,15 +85,13 @@ public class KxUserLevelSettingVo {
      * 会员卡背景
      */
     @ExcelProperty(value = "会员卡背景")
-    @TableField(typeHandler = FastjsonTypeHandler.class)
-    private JSONArray image;
+    private String image;
 
     /**
      * 会员图标
      */
     @ExcelProperty(value = "会员图标")
-    @TableField(typeHandler = FastjsonTypeHandler.class)
-    private JSONArray icon;
+    private String icon;
 
     /**
      * 说明

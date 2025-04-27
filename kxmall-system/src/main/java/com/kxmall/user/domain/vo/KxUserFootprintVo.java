@@ -2,7 +2,10 @@ package com.kxmall.user.domain.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.kxmall.product.domain.vo.KxStoreProductVo;
 import lombok.Data;
+
+import java.util.Date;
 
 
 /**
@@ -36,4 +39,13 @@ public class KxUserFootprintVo {
     private Long productId;
 
 
+    private KxStoreProductVo productVo;
+
+
+    private String userName;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 }

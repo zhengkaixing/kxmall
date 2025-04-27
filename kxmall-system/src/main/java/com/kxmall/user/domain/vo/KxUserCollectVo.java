@@ -2,8 +2,6 @@ package com.kxmall.user.domain.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.kxmall.common.annotation.ExcelDictFormat;
-import com.kxmall.common.convert.ExcelDictConvert;
 import lombok.Data;
 
 import java.math.BigDecimal;
