@@ -3,7 +3,6 @@ package com.kxmall.user.domain.bo;
 import com.kxmall.common.core.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import javax.validation.constraints.*;
 
 
 /**
