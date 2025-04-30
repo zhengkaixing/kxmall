@@ -1,8 +1,8 @@
 package com.kxmall.user.domain;
 
-import com.alibaba.fastjson.JSONArray;
-import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.kxmall.common.core.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -66,13 +66,11 @@ public class KxUserLevelSetting extends BaseEntity {
     /**
      * 会员卡背景
      */
-    @TableField(typeHandler = FastjsonTypeHandler.class)
-    private JSONArray image;
+    private String image;
     /**
      * 会员图标
      */
-    @TableField(typeHandler = FastjsonTypeHandler.class)
-    private JSONArray icon;
+    private String icon;
     /**
      * 说明
      */
