@@ -1,8 +1,8 @@
 package com.kxmall.user.mapper;
 
+import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.user.domain.KxUserLevel;
 import com.kxmall.user.domain.vo.KxUserLevelVo;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 
 /**
  * 用户等级Mapper接口

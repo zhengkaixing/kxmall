@@ -1,8 +1,8 @@
 package com.kxmall.user.mapper;
 
+import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.user.domain.KxUserFootprint;
 import com.kxmall.user.domain.vo.KxUserFootprintVo;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 
 /**
  * 足迹Mapper接口

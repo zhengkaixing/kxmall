@@ -1,8 +1,8 @@
 package com.kxmall.user.mapper;
 
+import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.user.domain.KxUserCollect;
 import com.kxmall.user.domain.vo.KxUserCollectVo;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
