@@ -287,9 +287,6 @@ export default {
         ],
         endpoint: [
           { required: true, message: "endpoint不能为空", trigger: "blur" },
-        ],
-        domain: [
-          { required: true, message: "基础路径不能为空", trigger: "blur" },
         ]
       },
     };
