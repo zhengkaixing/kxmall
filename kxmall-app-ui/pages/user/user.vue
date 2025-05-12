@@ -92,6 +92,44 @@
                @buttonClick="chooseLocation"
                :imgUrl="'http://qiniuoss.nauzone.cn/%E7%BB%84%204%20%E6%8B%B7%E8%B4%9D@3x.png'" :desc="'当前地区不在配送范围哦'"></missing>
     </view>
+
+    <!-- 猜您喜欢 -->
+    <view style="padding: 20rpx 12rpx 20rpx 30rpx;background-color: #f1f1f1;">
+      <view class="flex justify-between align-center" style="padding: 20rpx 0;">
+        <view style="font-size: 32rpx;font-weight: bold;color: #333;">猜您喜欢</view>
+        <view @click="refreshRecommend" style="font-size: 24rpx;color: #999;margin-right: 10px;">换一批</view>
+      </view>
+
+      <view v-if="recommendList.length > 0 && storage" class="flex flex-wrap">
+        <view v-for="(item,index) in recommendList" :key="index"
+              class="margin-bottom-sm bg-white flex align-center justify-center flex-direction"
+              style="width: 335rpx;height: 520rpx;padding: 10rpx;margin-right: 18rpx;border-radius: 8rpx;"
+              @click="navToDetailPage(item.id)">
+          <image style="width: 280rpx;height: 280rpx;margin: 10rpx;" :src="JSON.parse(item.image)[0].url"
+                 mode="aspectFit"></image>
+          <view style="padding-top: 28rpx;">
+            <view class="text-cut"
+                  style="width: 294rpx;height: 40rpx;font-size: 28rpx;font-weight: Medium; color: #2D4454;">{{item.storeName}}
+            </view>
+            <view class="text-cut margin-tb-xs" style="width: 294rpx;height: 40rpx;font-size: 28rpx;color: #999999;">
+              {{item.storeInfo}}
+            </view>
+            <view style="padding-top: 6rpx;" class="flex align-center justify-between">
+              <view style="width: 114rpx;height: 42rpx;line-height: 42rpx;font-size: 24rpx;color:#F62929;">
+                ￥{{item.kxStockVo.price}}</view>
+              <view style="color: #B0B0B0;font-size: 24rpx;">{{item.unitName}}/份</view>
+              <image @click.stop="addCart(item)" style="width: 48rpx;height: 48rpx;"
+                     src="../../static/index/cart.png" mode="aspectFit" class="round"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view v-else class="flex align-center justify-center" style="height: 200rpx;color: #999;">
+        暂无推荐商品
+      </view>
+    </view>
+
   </view>
 </template>
 <script>
@@ -107,6 +145,12 @@ export default {
   },
   data(){
     return {
+      recommendList: [], // 推荐商品列表
+      currentPage: 1,    // 当前页码
+      pageSize: 4,       // 每页显示数量
+      nowMoney: 0,
+      integral: 0,
+      couponListSize: 0,
       coverTransform: 'translateY(0px)',
       coverTransition: '0s',
       moving: false,

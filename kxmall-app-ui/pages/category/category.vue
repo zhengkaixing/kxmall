@@ -1,27 +1,27 @@
 <template>
-	<view >
-		<view id="top"
-		style="background-image: url(https://kxmalls.oss-cn-hangzhou.aliyuncs.com/bg/top.png);background-repeat: no-repeat; background-size: cover; width: 750rpx;position: fixed;top: 0;z-index: 999;">
-			<view class="status-bar"></view>
-			<view class="flex align-center justify-center text-white"
-			style="font-size: 36rpx;font-weight: 500; position: absolute;width: 750rpx;"
-			:style="'top:'+navbarTop+'px;height:'+navHeight+'px;'"
-			 >
-				商品品类
-			</view>
-			<view :style="'margin-top:'+MT2+'px;'"
-			 class="padding-lr" style="padding-bottom: 22rpx;padding-top: 24rpx;" >
-				<view  @click="naviageToPage('/pages/product/search')" style="height: 64rpx;" class="bg-white round flex align-center">
-					<view class="flex align-center padding-left">
-						<text class="yticon icon-sousuo" style="margin-right: 10rpx;"></text><text class="lem-text-gray"
-						style="font-size: 26rpx;">新鲜，搜一下就涞了</text>
-					</view>
-				</view>
-			</view>
-		</view>
-		<view :style="'height: '+topHeight+'px;'"
-		style="width: 750rpx;display: flex; position: relative;"></view>
-		<view v-if="storage" class="bg-white">
+  <view>
+    <view id="top"
+          style="background-image: url(https://kxmalls.oss-cn-hangzhou.aliyuncs.com/bg/top.png);background-repeat: no-repeat; background-size: cover; width: 750rpx;position: fixed;top: 0;z-index: 999;">
+      <view class="status-bar"></view>
+      <!-- #ifndef H5 -->
+      <view class="flex align-center justify-center text-white"
+            style="font-size: 36rpx;font-weight: 500; position: absolute;width: 750rpx;"
+            :style="'top:'+navbarTop+'px;height:'+navHeight+'px;'">
+        商品品类
+      </view>
+      <!-- #endif -->
+      <view :style="'margin-top:'+MT2+'px;'" class="padding-lr" style="padding-bottom: 22rpx;padding-top: 24rpx;">
+        <view @click="naviageToPage('/pages/product/search')" style="height: 64rpx;"
+              class="bg-white round flex align-center">
+          <view class="flex align-center padding-left">
+            <text class="yticon icon-sousuo" style="margin-right: 10rpx;"></text><text class="lem-text-gray"
+                                                                                       style="font-size: 26rpx;">新鲜，搜一下就涞了</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view :style="'height: '+topHeight+'px;'" style="width: 750rpx;display: flex; position: relative;"></view>
+    <view v-if="storage" class="bg-white">
 			<view style="position: fixed;left:0;"
 			:style="'top:'+topHeight+'px;'">
 				<scroll-view scroll-y  class="left-aside" :style="'height:'+scollHeight+'px;'">
