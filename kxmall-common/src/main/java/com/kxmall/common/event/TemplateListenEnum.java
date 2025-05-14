@@ -13,8 +13,8 @@ import java.util.stream.Stream;
 @Getter
 @AllArgsConstructor
 public enum TemplateListenEnum {
-    TYPE_1("1","工资单微信通知"),
-    TYPE_2("2","工资单邮件通知");
+    TYPE_1("1","商家微信通知"),
+    TYPE_2("2","骑手微信通知");
     private String value;
     private String desc;
 
