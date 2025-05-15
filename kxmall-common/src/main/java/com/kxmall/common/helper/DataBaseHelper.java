@@ -2,8 +2,8 @@ package com.kxmall.common.helper;
 
 import cn.hutool.core.convert.Convert;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
-import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.enums.DataBaseType;
+import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.utils.spring.SpringUtils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
