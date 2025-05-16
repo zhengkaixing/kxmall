@@ -170,13 +170,13 @@ public class OrderUtil {
         String payTypeName = "";
         if (paid == 1) {
             switch (pay_type) {
-                case "weixin":
+                case "WX":
                     payTypeName = "微信支付";
                     break;
-                case "yue":
+                case "BALANCE":
                     payTypeName = "余额支付";
                     break;
-                case "integral":
+                case "INTEGRAL":
                     payTypeName = "积分兑换";
                     break;
                 case "offline":

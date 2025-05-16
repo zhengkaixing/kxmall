@@ -9,7 +9,6 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.DateUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -17,8 +16,10 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * @author kaixin
@@ -239,6 +240,8 @@ public class FeieyunPrint {
             content += title + "<BR>";
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 
         content += "--------------------------------<BR>";
         content += "合计：" + printBean.getTotalMoney().toString() + "元<BR>";
@@ -246,7 +249,7 @@ public class FeieyunPrint {
         content += "送货地点：" + printBean.getAddress() + "<BR>";
         content += "联系姓名：" + chineseName(printBean.getName()) + "<BR>";
         content += "联系电话：" + printBean.getPhone() + "<BR>";
-        content += "订单时间：" + DateUtils.formatDate(printBean.getOrderTime(), "yyyy-MM-dd HH:mm") + "<BR>";
+        content += "订单时间：" + sdf.format(printBean.getOrderTime()) + "<BR>";
         String contentTemp = "送达时间：" + printBean.getPredictTime() + "<BR>";
         if (printBean.getOrderType() == 2) {
             contentTemp = contentTemp.replaceAll("送达", "自提");
