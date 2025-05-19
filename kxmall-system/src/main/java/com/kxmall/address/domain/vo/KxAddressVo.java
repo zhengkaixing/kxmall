@@ -1,11 +1,10 @@
 package com.kxmall.address.domain.vo;
 
-import java.math.BigDecimal;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.kxmall.common.annotation.ExcelDictFormat;
-import com.kxmall.common.convert.ExcelDictConvert;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 
 /**
@@ -54,7 +53,7 @@ public class KxAddressVo {
      * 默认地址
      */
     @ExcelProperty(value = "默认地址")
-    private Long defaultAddress;
+    private Integer defaultAddress;
 
     /**
      * 用户id

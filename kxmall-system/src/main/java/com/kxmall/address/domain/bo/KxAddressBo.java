@@ -4,8 +4,8 @@ import com.kxmall.common.core.domain.BaseEntity;
 import com.kxmall.common.core.validate.EditGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import javax.validation.constraints.*;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
