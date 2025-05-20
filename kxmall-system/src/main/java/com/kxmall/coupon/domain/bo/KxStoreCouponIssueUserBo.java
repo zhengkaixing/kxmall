@@ -29,7 +29,7 @@ public class KxStoreCouponIssueUserBo extends BaseEntity {
     /**
      * 优惠券前台领取ID
      */
-    private Integer issueCouponId;
+    private Long issueCouponId;
 
     /**
      *
