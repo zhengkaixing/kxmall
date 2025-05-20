@@ -1,6 +1,7 @@
 package com.kxmall.carousel.domain;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.kxmall.common.core.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,5 +54,4 @@ public class KxCarousel extends BaseEntity {
      * 排序
      */
     private Integer sort;
-
 }

@@ -1,11 +1,11 @@
 package com.kxmall.carousel.domain.bo;
 
 import com.kxmall.common.core.domain.BaseEntity;
-import com.kxmall.common.core.validate.AddGroup;
 import com.kxmall.common.core.validate.EditGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import javax.validation.constraints.*;
+
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -22,7 +22,7 @@ public class KxCarouselBo extends BaseEntity {
     /**
      *
      */
-    @NotNull(message = "不能为空", groups = { EditGroup.class })
+    @NotNull(message = "不能为空", groups = {EditGroup.class})
     private Long id;
 
     /**
@@ -59,4 +59,6 @@ public class KxCarouselBo extends BaseEntity {
      * 排序
      */
     private Integer sort;
+
+
 }
