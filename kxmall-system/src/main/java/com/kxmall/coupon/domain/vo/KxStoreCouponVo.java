@@ -2,9 +2,9 @@ package com.kxmall.coupon.domain.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.kxmall.product.domain.KxStoreProduct;
 import com.kxmall.common.annotation.ExcelDictFormat;
 import com.kxmall.common.convert.ExcelDictConvert;
+import com.kxmall.product.domain.KxStoreProduct;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -74,10 +74,15 @@ public class KxStoreCouponVo {
     private Integer status;
 
     /**
-     * 商品ids
+     * 分类id
      */
-    @ExcelProperty(value = "商品ids")
-    private String productId;
+    @ExcelProperty(value = "分类id")
+    private Long categoryId;
+
+    /**
+     * 分类名称
+     */
+    private String categoryTitle;
 
     /**
      * 优惠券类型 0-通用 1-商品券

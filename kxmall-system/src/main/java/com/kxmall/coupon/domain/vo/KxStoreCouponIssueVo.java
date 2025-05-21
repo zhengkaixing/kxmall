@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @ExcelIgnoreUnannotated
-public class KxStoreCouponIssueVo {
+public class KxStoreCouponIssueVo extends KxStoreCouponVo{
 
     private static final long serialVersionUID = 1L;
 
@@ -23,7 +23,12 @@ public class KxStoreCouponIssueVo {
      *
      */
     @ExcelProperty(value = "")
-    private Integer id;
+    private Long id;
+
+    /**
+     * 优惠券id
+     */
+    private Long couponId;
 
     /**
      *
@@ -35,7 +40,7 @@ public class KxStoreCouponIssueVo {
      * 优惠券ID
      */
     @ExcelProperty(value = "优惠券ID")
-    private Integer cid;
+    private Long cid;
 
     /**
      * 优惠券类型 0-通用 1-商品券
@@ -85,5 +90,10 @@ public class KxStoreCouponIssueVo {
     @ExcelProperty(value = "")
     private Integer isDel;
 
+
+    /**
+     * 用户现有多少张
+     */
+    private Integer nowCount;
 
 }

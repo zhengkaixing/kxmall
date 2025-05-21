@@ -18,7 +18,7 @@ import java.util.Date;
  */
 @Data
 @ExcelIgnoreUnannotated
-public class KxStoreCouponUserVo {
+public class KxStoreCouponUserVo{
 
     private static final long serialVersionUID = 1L;
 
@@ -33,6 +33,12 @@ public class KxStoreCouponUserVo {
      */
     @ExcelProperty(value = "兑换的项目id")
     private Long cid;
+
+
+    /**
+     * 发放优惠券id
+     */
+    private Long ciid;
 
     /**
      * 优惠券所属用户
@@ -75,6 +81,15 @@ public class KxStoreCouponUserVo {
      */
     @ExcelProperty(value = "获取方式")
     private String type;
+
+    /**
+     * 分类
+     */
+    private Long categoryId;
+    /**
+     * 分类
+     */
+    private String categoryTitle;
 
     /**
      * 状态（0：未使用，1：已使用, 2:已过期）
