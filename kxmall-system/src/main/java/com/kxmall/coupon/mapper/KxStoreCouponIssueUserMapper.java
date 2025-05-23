@@ -1,8 +1,8 @@
 package com.kxmall.coupon.mapper;
 
-import com.kxmall.coupon.domain.vo.KxStoreCouponIssueUserVo;
-import com.kxmall.coupon.domain.KxStoreCouponIssueUser;
 import com.kxmall.common.core.mapper.BaseMapperPlus;
+import com.kxmall.coupon.domain.KxStoreCouponIssueUser;
+import com.kxmall.coupon.domain.vo.KxStoreCouponIssueUserVo;
 
 /**
  * 优惠券前台用户领取记录Mapper接口

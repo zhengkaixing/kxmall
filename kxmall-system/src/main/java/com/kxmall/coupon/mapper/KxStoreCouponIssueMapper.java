@@ -1,8 +1,8 @@
 package com.kxmall.coupon.mapper;
 
-import com.kxmall.coupon.domain.vo.KxStoreCouponIssueVo;
-import com.kxmall.coupon.domain.KxStoreCouponIssue;
 import com.kxmall.common.core.mapper.BaseMapperPlus;
+import com.kxmall.coupon.domain.KxStoreCouponIssue;
+import com.kxmall.coupon.domain.vo.KxStoreCouponIssueVo;
 
 /**
  * 优惠券前台领取Mapper接口
@@ -12,4 +12,6 @@ import com.kxmall.common.core.mapper.BaseMapperPlus;
  */
 public interface KxStoreCouponIssueMapper extends BaseMapperPlus<KxStoreCouponIssueMapper, KxStoreCouponIssue, KxStoreCouponIssueVo> {
 
+
+    void decCoupon(Long couponId);
 }
