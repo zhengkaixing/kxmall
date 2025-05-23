@@ -55,9 +55,9 @@ public class KxStoreCoupon extends BaseEntity {
      */
     private Integer status;
     /**
-     * 商品ids
+     * 分类ids
      */
-    private String productId;
+    private Long categoryId;
     /**
      * 优惠券类型 0-通用 1-商品券
      */

@@ -31,6 +31,12 @@ public class KxStoreCouponUser extends BaseEntity {
      * 兑换的项目id
      */
     private Long cid;
+
+    /**
+     * 发放优惠券id
+     */
+    private Long ciid;
+
     /**
      * 优惠券所属用户
      */

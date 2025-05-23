@@ -25,7 +25,7 @@ public class KxStoreCouponIssue extends BaseEntity {
      *
      */
     @TableId(value = "id")
-    private Integer id;
+    private Long id;
     /**
      *
      */
@@ -33,7 +33,7 @@ public class KxStoreCouponIssue extends BaseEntity {
     /**
      * 优惠券ID
      */
-    private Integer cid;
+    private Long cid;
     /**
      * 优惠券类型 0-通用 1-商品券
      */
