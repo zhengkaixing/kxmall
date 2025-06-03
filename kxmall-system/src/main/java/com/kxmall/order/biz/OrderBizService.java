@@ -12,6 +12,7 @@ import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.utils.redis.RedisUtils;
 import com.kxmall.order.domain.KxStoreOrder;
 import com.kxmall.order.domain.KxStoreOrderProduct;
+import com.kxmall.order.domain.vo.KxStoreOrderVo;
 import com.kxmall.order.mapper.KxStoreOrderMapper;
 import com.kxmall.order.mapper.KxStoreOrderProductMapper;
 import com.kxmall.product.mapper.KxStoreProductMapper;
@@ -124,6 +125,16 @@ public class OrderBizService {
     }
 
 
+    public KxStoreOrderVo selectOrder(String orderId) {
+        QueryWrapper<KxStoreOrder> wrapper = new QueryWrapper<KxStoreOrder>().eq("order_id", orderId);
+        List<KxStoreOrderVo> storeOrderList = orderMapper.selectVoList(wrapper);
+        if (CollectionUtils.isEmpty(storeOrderList)) {
+            throw new ServiceException("订单不存在");
+        }
+        return storeOrderList.get(0);
+    }
+
+
     public String groupShopStatusRefund(String orderNo) throws ServiceException {
         Lock lock = RedisUtils.lock(ORDER_REFUND_LOCK + orderNo);
         try {
@@ -175,6 +186,7 @@ public class OrderBizService {
         }
     }
 
+
     /**
      * 将冻结库存还回去
      * @param no
@@ -186,5 +198,4 @@ public class OrderBizService {
             storeProductMapper.restoreSkuStock(storeOrderProduct.getProductId(), storeOrderProduct.getNum(), storeOrder.getStoreId());
         }
     }
-
 }
