@@ -22,7 +22,7 @@ public class OrderRequestProductBo {
 
     private Long integral;
 
-    private Long giveIntegral;
+    private BigDecimal giveIntegral;
 
 
 
