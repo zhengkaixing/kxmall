@@ -14,14 +14,14 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
+import com.kxmall.common.utils.DateUtils;
+import com.kxmall.common.utils.StringUtils;
 import com.kxmall.oss.constant.OssConstant;
 import com.kxmall.oss.entity.UploadResult;
 import com.kxmall.oss.enumd.AccessPolicyType;
 import com.kxmall.oss.enumd.PolicyType;
 import com.kxmall.oss.exception.OssException;
 import com.kxmall.oss.properties.OssProperties;
-import com.kxmall.common.utils.DateUtils;
-import com.kxmall.common.utils.StringUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

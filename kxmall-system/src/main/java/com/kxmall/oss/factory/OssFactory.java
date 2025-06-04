@@ -1,14 +1,14 @@
 package com.kxmall.oss.factory;
 
-import com.kxmall.oss.constant.OssConstant;
-import com.kxmall.oss.exception.OssException;
-import com.kxmall.oss.properties.OssProperties;
 import com.kxmall.common.constant.CacheNames;
 import com.kxmall.common.utils.JsonUtils;
 import com.kxmall.common.utils.StringUtils;
 import com.kxmall.common.utils.redis.CacheUtils;
 import com.kxmall.common.utils.redis.RedisUtils;
+import com.kxmall.oss.constant.OssConstant;
 import com.kxmall.oss.core.OssClient;
+import com.kxmall.oss.exception.OssException;
+import com.kxmall.oss.properties.OssProperties;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
