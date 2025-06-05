@@ -236,4 +236,10 @@ public class KxStoreProductBo extends BaseEntity {
 
     //sku结果集
     private List<ProductFormatVo> attrs;
+
+
+    /**
+     * 多规格ID
+     */
+    private String commonId;
 }
