@@ -1,10 +1,10 @@
 package com.kxmall.product.domain.vo;
 
-import java.util.Date;
-
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
+
+import java.util.Date;
 
 
 /**

@@ -1,9 +1,10 @@
 package com.kxmall.product.domain.vo;
 
-import java.math.BigDecimal;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
+
+import java.math.BigDecimal;
 
 
 /**
