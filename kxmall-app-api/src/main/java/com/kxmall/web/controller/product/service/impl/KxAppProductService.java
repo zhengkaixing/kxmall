@@ -182,7 +182,7 @@ public class KxAppProductService implements IKxAppProductService {
         KxStoreProductVo storeProductVo = RedisUtils.getCacheObject(CA_PRODUCT_PREFIX + storageId + "_" + productId);
         if (storeProductVo != null) {
             //获取第一页评论
-            List<KxStoreAppraiseVo> storeAppraisePage = appraiseService.getProductAppraiseByPage(productId, 1, 10, 1).getRows();
+            TableDataInfo<KxStoreAppraiseVo> storeAppraisePage = appraiseService.getProductAppraiseByPage(productId, 1, 10, 1);
             storeProductVo.setAppraisePage(storeAppraisePage);
             //新增该用户查看印记
             if (userId != null) {
