@@ -1,18 +1,19 @@
 package com.kxmall.product.domain.vo;
 
+import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.kxmall.common.annotation.ExcelDictFormat;
+import com.kxmall.common.convert.ExcelDictConvert;
+import com.kxmall.common.core.page.TableDataInfo;
+import com.kxmall.group.domain.vo.KxGroupShopVo;
+import com.kxmall.order.domain.vo.KxStoreAppraiseVo;
+import com.kxmall.seckill.domain.vo.KxStoreSeckillVo;
+import com.kxmall.storage.domain.vo.KxStockVo;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-
-import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
-import com.alibaba.excel.annotation.ExcelProperty;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.kxmall.common.annotation.ExcelDictFormat;
-import com.kxmall.common.convert.ExcelDictConvert;
-import com.kxmall.order.domain.vo.KxStoreAppraiseVo;
-import com.kxmall.storage.domain.KxStock;
-import com.kxmall.storage.domain.vo.KxStockVo;
-import lombok.Data;
 
 
 /**
@@ -266,7 +267,7 @@ public class KxStoreProductVo {
     /**
      * 商品的第一页(前10条)评价
      */
-    private List<KxStoreAppraiseVo> appraisePage;
+    private TableDataInfo<KxStoreAppraiseVo> appraisePage;
 
 
     private KxStockVo kxStockVo;
@@ -276,4 +277,17 @@ public class KxStoreProductVo {
     private List<Long> cateIdList;
 
     private List<Map<String, Object>> categoryList;
+
+    private FreightTemplateDTO freightTemplate;
+
+    private Boolean collect;
+
+    private KxGroupShopVo groupShop;
+
+    private KxStoreSeckillVo storeSeckill;
+
+    private List<KxStoreProductVo> skuList;
+
+
+
 }

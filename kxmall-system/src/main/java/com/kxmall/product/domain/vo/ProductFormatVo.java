@@ -14,6 +14,11 @@ import java.util.Map;
 @Setter
 public class ProductFormatVo {
 
+    /**
+     * 商品ID
+     */
+    private Long productId;
+
     private String sku = "";
 
     private String barCode = "";
