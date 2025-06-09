@@ -227,7 +227,7 @@ public class KxAppProductService implements IKxAppProductService {
         //放入缓存
         RedisUtils.setCacheObject(CA_PRODUCT_PREFIX + storageId + "_" + productId, kxStoreProductVo);
         //获取第一页评论
-        List<KxStoreAppraiseVo> storeAppraisePage = appraiseService.getProductAppraiseByPage(productId, 1, 10, 1).getRows();
+        TableDataInfo<KxStoreAppraiseVo> storeAppraisePage = appraiseService.getProductAppraiseByPage(productId, 1, 10, 1);
         kxStoreProductVo.setAppraisePage(storeAppraisePage);
         if (userId != null) {
             userFootprintService.addOrUpdateFootprint(userId, productId);
