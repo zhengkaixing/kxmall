@@ -1,0 +1,1 @@
+package com.kxmall.newtimes.domain.bo;
