@@ -1,11 +1,10 @@
 package com.kxmall.order.domain;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.kxmall.common.core.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Date;
 
 
 /**
@@ -54,5 +53,10 @@ public class KxStoreAppraise extends BaseEntity {
      * 1表示已通过
      */
     private Long state;
+
+    /**
+     * 仓库id
+     */
+    private Long storageId;
 
 }

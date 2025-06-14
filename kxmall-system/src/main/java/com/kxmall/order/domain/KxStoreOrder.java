@@ -232,6 +232,10 @@ public class KxStoreOrder extends BaseEntity {
      * 预计时间
      */
     private Date predictDate;
+    /**
+     * 订单创建
+     */
+    private Date createTime;
 
 
     /**
@@ -250,5 +254,19 @@ public class KxStoreOrder extends BaseEntity {
     private String payId;
 
     private String payChannel;
+
+    private Long postId;
+
+    private String exceptionReason;
+
+
+    /**
+     * 经度
+     */
+    private BigDecimal longitude;
+    /**
+     * 维度
+     */
+    private BigDecimal latitude;
 
 }

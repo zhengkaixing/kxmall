@@ -1,9 +1,8 @@
 package com.kxmall.order.domain;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.kxmall.common.core.domain.BaseEntity;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
