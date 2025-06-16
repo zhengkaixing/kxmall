@@ -58,4 +58,16 @@ public class KxStoreCartVo {
     private Integer stock;
     private Long cateId;
     private List<Long> cateIdList;
+
+    /**
+     * 需要多少积分兑换 只在开启积分兑换时生效
+     */
+    private Long integral;
+
+
+    /**
+     * 赠送多少积分
+     */
+    private Long giveIntegral;
+
 }
