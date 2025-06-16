@@ -11,7 +11,9 @@
         order_id AS orderId,
         `status`,
         pay_price AS payPrice,
-        create_time AS createTime
+        create_time AS createTime,
+        pay_integral AS payIntegral,
+        shipping_type AS shippingType
         FROM
         kx_store_order
         WHERE
@@ -39,6 +41,15 @@
         </if>
     </select>
 
+    <select id="selectExpireOrderNos" resultType="java.lang.String">
+        SELECT
+            order_id
+        FROM
+            kx_store_order
+        WHERE
+            `status` = #{status}
+          AND update_time &lt; #{time}
+    </select>
 
     <select id="getSalesCategoryRank" resultType="com.kxmall.dashboard.domain.SalesStatementDTO">
         SELECT
@@ -85,70 +96,70 @@
         </if>
         ) tt
         GROUP BY
-        tt.pid,
-        tt.title,
-        tt.product_id
+            tt.pid,
+            tt.title,
+            tt.product_id
         ORDER BY
-        totalSalesVolume,
-        totalSales DESC
-        LIMIT 10
+            totalSalesVolume,
+            totalSales DESC
+            LIMIT 10
     </select>
 
     <select id="getSalesCategoryRanTopFive" resultType="com.kxmall.dashboard.domain.SalesTopDTO">
         SELECT
-        tt.cate_id AS categoryId,
-        tt.title AS categoryTitle,
-        ifnull( sum( price ), 0 ) AS totalSalesVolume,
-        count( 1 ) AS totalSales
+            tt.cate_id AS categoryId,
+            tt.title AS categoryTitle,
+            ifnull( sum( price ), 0 ) AS totalSalesVolume,
+            count( 1 ) AS totalSales
         FROM
-        (
-        SELECT
-        spu.cate_id,
-        t.pid,
-        t.title AS cate_name,
-        o.store_id,
-        os.product_attr_id,
-        os.product_id,
-        os.product_title AS title,
-        os.price
-        FROM
-        kx_store_order_product os
-        LEFT JOIN kx_store_order o ON o.order_id = os.order_no
-        LEFT JOIN kx_store_product spu ON os.product_id = spu.id
-        LEFT JOIN (
-        SELECT
-        c.id,
-        c.pid,
-        c.cate_name AS title
-        FROM
-        `kx_store_category` c
-        WHERE
-        c.pid = 0
-        ) t ON spu.cate_id = t.id
-        WHERE
-        o.STATUS IN ( 14, 16, 20, 30, 32, 34, 40, 50 )
-        AND TO_DAYS( o.update_time ) = TO_DAYS( NOW( ) )
-        <if test="storageId != null">
-            AND o.store_id = #{storageId}
-        </if>
-        <if test="storageIds != null and storageIds.size()!=0">
-            and o.store_id in
-            <foreach collection="storageIds" item="list" index="index" open="(" close=")" separator=",">
-                #{list}
-            </foreach>
-        </if>
-        ) tt
+            (
+                SELECT
+                    spu.cate_id,
+                    t.pid,
+                    t.title AS cate_name,
+                    o.store_id,
+                    os.product_attr_id,
+                    os.product_id,
+                    os.product_title AS title,
+                    os.price
+                FROM
+                    kx_store_order_product os
+                        LEFT JOIN kx_store_order o ON o.order_id = os.order_no
+                        LEFT JOIN kx_store_product spu ON os.product_id = spu.id
+                        LEFT JOIN (
+                        SELECT
+                            c.id,
+                            c.pid,
+                            c.cate_name AS title
+                        FROM
+                            `kx_store_category` c
+                        WHERE
+                            c.pid = 0
+                    ) t ON spu.cate_id = t.id
+                WHERE
+                    o.STATUS IN ( 14, 16, 20, 30, 32, 34, 40, 50 )
+                  AND TO_DAYS( o.update_time ) = TO_DAYS( NOW( ) )
+                <if test="storageId != null">
+                    AND o.store_id = #{storageId}
+                </if>
+                <if test="storageIds != null and storageIds.size()!=0">
+                    and o.store_id in
+                    <foreach collection="storageIds" item="list" index="index" open="(" close=")" separator=",">
+                        #{list}
+                    </foreach>
+                </if>
+            ) tt
         GROUP BY
-        tt.pid,
-        tt.title,
-        tt.product_id,
-        tt.product_attr_id,
-        tt.cate_name,
-        tt.price
+            tt.pid,
+            tt.title,
+            tt.product_id,
+            tt.product_attr_id,
+            tt.cate_name,
+            tt.price
         ORDER BY
-        totalSalesVolume,
-        totalSales DESC
-        LIMIT 10
+            totalSalesVolume,
+            totalSales DESC
+            LIMIT 10
     </select>
     <select id="getTodaySales" resultType="com.kxmall.dashboard.domain.SalesStatementDTO">
 
@@ -200,14 +211,57 @@
         and o.update_time BETWEEN #{start} and #{end}
     </select>
 
-
-    <select id="selectExpireOrderNos" resultType="java.lang.String">
+    <select id="statistical" resultType="com.kxmall.order.domain.vo.KxOrderStatisticalVo">
         SELECT
-            order_id
-        FROM
-            kx_store_order
-        WHERE
-            `status` = #{status}
-          AND update_time &lt; #{time}
+            SUM(CASE WHEN status = 14 THEN 1 ELSE 0 END) AS waitingCount,
+            SUM(CASE WHEN status = 16 THEN 1 ELSE 0 END) AS beingDistributed,
+            SUM(CASE WHEN status = 20 THEN 1 ELSE 0 END) AS waitingToBeDelivered,
+            SUM(CASE WHEN status = 30 THEN 1 ELSE 0 END) AS inDelivery,
+            SUM(CASE WHEN status = 40 THEN 1 ELSE 0 END) AS completedCount
+        FROM kx_store_order WHERE create_time >= DATE_SUB(NOW(), INTERVAL 1 MONTH);
+        <if test="storageId != null">
+           and store_id = #{storageId}
+        </if>
+    </select>
+
+
+
+    <select id="getWarehouseAnalysis" resultType="com.kxmall.finance.domain.vo.SalesReportDto">
+        SELECT
+            DATE(o.create_time) AS orderDate,
+            COUNT(*) AS totalSalesVolume,
+            SUM(o.total_price) AS totalSalesAmount,
+            SUM(o.coupon_price) AS totalCouponAmount,
+            SUM(o.pay_price) AS actualPaymentAmount
+        FROM kx_store_order o
+        WHERE o.create_time BETWEEN #{startDate} AND #{endDate} AND o.is_del = 0
+        and o.status in (40,50)
+       <if test="storageId != null">
+          and o.store_id = #{storageId}
+        </if>
+        GROUP BY DATE(o.create_time)  -- 使用 DATE() 进行分组
+        ORDER BY DATE(o.create_time); -- 确保排序也按日期
+    </select>
+
+
+    <select id="getWarehouseCompares" resultType="com.kxmall.finance.domain.vo.ComparativeStatementDto">
+        SELECT
+        DATE(a.create_time) AS date,
+<!--        <if test="content == 'electricQuantity'">-->
+<!--            SUM(xxx) AS content,-->
+<!--        </if>-->
+        SUM(a.pay_price) AS content,
+        b.name as storageName
+        FROM kx_store_order a
+        left join kx_storage b on b.id = a.store_id
+        WHERE a.create_time BETWEEN #{startDate} AND #{endDate}
+<!--        <if test="storageIds != null and storageIds.size > 0">-->
+<!--            AND station_id in-->
+<!--            <foreach collection="storageIds" item="storageId" index="index" open="(" close=")" separator=",">-->
+<!--                #{storageId}-->
+<!--            </foreach>-->
+<!--        </if>-->
+        GROUP BY DATE(a.create_time),a.store_id
+        ORDER BY DATE(a.create_time);
     </select>
 </mapper>

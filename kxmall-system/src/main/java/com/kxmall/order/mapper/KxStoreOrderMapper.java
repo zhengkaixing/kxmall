@@ -5,12 +5,15 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.dashboard.domain.SalesStatementDTO;
 import com.kxmall.dashboard.domain.SalesTopDTO;
+import com.kxmall.finance.domain.vo.ComparativeStatementDto;
+import com.kxmall.finance.domain.vo.SalesReportDto;
 import com.kxmall.order.domain.KxStoreOrder;
 import com.kxmall.order.domain.vo.KxOrderStatisticalVo;
 import com.kxmall.order.domain.vo.KxStoreOrderVo;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -93,4 +96,16 @@ public interface KxStoreOrderMapper extends BaseMapperPlus<KxStoreOrderMapper, K
             "</script>"
     })
     Double sumTotalPrice(@Param("storageId") Long storageId);
+
+
+    List<SalesReportDto> getWarehouseAnalysis(@Param("startDate") LocalDate startDate,
+                                              @Param("endDate") LocalDate endDate, @Param("storageId") Long storageId);
+
+    /**
+     * 对比
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    List<ComparativeStatementDto> getWarehouseCompares(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

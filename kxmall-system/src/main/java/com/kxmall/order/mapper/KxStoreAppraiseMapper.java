@@ -1,8 +1,8 @@
 package com.kxmall.order.mapper;
 
+import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.order.domain.KxStoreAppraise;
 import com.kxmall.order.domain.vo.KxStoreAppraiseVo;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -20,7 +20,8 @@ public interface KxStoreAppraiseMapper extends BaseMapperPlus<KxStoreAppraiseMap
      * @param productId
      * @param offset
      * @param pageSize
+     * @param state
      * @return
      */
-    List<KxStoreAppraiseVo> selectProductAppraiseByPage(@Param("productId") Long productId, @Param("offset") Integer offset, @Param("size") Integer pageSize);
+    List<KxStoreAppraiseVo> selectProductAppraiseByPage(@Param("productId") Long productId, @Param("offset") Integer offset, @Param("size") Integer pageSize, @Param("state") Integer state);
 }
