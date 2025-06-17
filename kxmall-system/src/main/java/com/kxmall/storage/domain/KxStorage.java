@@ -125,12 +125,13 @@ public class KxStorage extends BaseEntity {
     /**
      * 公众号openId
      */
+    @TableField(exist = false)
     private String openId;
 
     /**
      * 定位范围
      */
-    @TableField(typeHandler = JsonTypeHandler.class)
+    @TableField(typeHandler = JsonTypeHandler.class , exist = false)
     private List<List<PointBo>> paths;
 
 }
