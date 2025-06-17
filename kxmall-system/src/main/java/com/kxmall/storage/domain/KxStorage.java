@@ -1,11 +1,16 @@
 package com.kxmall.storage.domain;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.kxmall.common.core.domain.BaseEntity;
+import com.kxmall.common.core.type.JsonTypeHandler;
+import com.kxmall.storage.domain.bo.PointBo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 仓库管理对象 kx_storage
@@ -15,7 +20,7 @@ import java.math.BigDecimal;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("kx_storage")
+@TableName(value = "kx_storage",autoResultMap = true)
 public class KxStorage extends BaseEntity {
 
     private static final long serialVersionUID=1L;
@@ -117,5 +122,15 @@ public class KxStorage extends BaseEntity {
      * SN
      */
     private String printSn;
+    /**
+     * 公众号openId
+     */
+    private String openId;
+
+    /**
+     * 定位范围
+     */
+    @TableField(typeHandler = JsonTypeHandler.class)
+    private List<List<PointBo>> paths;
 
 }
