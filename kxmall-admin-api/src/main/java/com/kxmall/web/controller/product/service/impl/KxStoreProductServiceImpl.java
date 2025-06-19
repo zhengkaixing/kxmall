@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,8 +18,10 @@ import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.enums.ShopCommonEnum;
 import com.kxmall.common.enums.SpecTypeEnum;
 import com.kxmall.common.exception.ServiceException;
+import com.kxmall.common.utils.GeneratorUtil;
 import com.kxmall.common.utils.RegexUtil;
 import com.kxmall.common.utils.StringUtils;
+import com.kxmall.common.utils.redis.RedisUtils;
 import com.kxmall.product.domain.KxStoreCategory;
 import com.kxmall.product.domain.KxStoreProduct;
 import com.kxmall.product.domain.KxStoreProductAttrResult;
@@ -30,6 +33,7 @@ import com.kxmall.product.mapper.KxStoreProductAttrResultMapper;
 import com.kxmall.product.mapper.KxStoreProductAttrValueMapper;
 import com.kxmall.product.mapper.KxStoreProductMapper;
 import com.kxmall.storage.domain.KxStock;
+import com.kxmall.storage.domain.vo.KxStockVo;
 import com.kxmall.storage.mapper.KxStockMapper;
 import com.kxmall.web.controller.product.service.IKxStoreProductAttrService;
 import com.kxmall.web.controller.product.service.IKxStoreProductRuleService;
@@ -37,6 +41,7 @@ import com.kxmall.web.controller.product.service.IKxStoreProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
@@ -46,7 +51,7 @@ import java.util.stream.Collectors;
 /**
  * 商品Service业务层处理
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-02-13
  */
 @RequiredArgsConstructor
@@ -68,6 +73,8 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
     private final KxStockMapper kxStockMapper;
 
     private final KxStoreCategoryMapper categoryMapper;
+
+    private static final String RECOMMEND_NAME = "RECOMMEND_TYPE_";
 
     /**
      * 查询商品
@@ -92,8 +99,8 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
         productVo.setImage(JSONArray.parseArray(kxStoreProduct.getImage()));
         productVo.setSliderImage(JSONArray.parseArray(kxStoreProduct.getSliderImage()));
         KxStoreProductAttrResult storeProductAttrResult = kxStoreProductAttrResultMapper
-            .selectOne(new LambdaQueryWrapper<KxStoreProductAttrResult>()
-                .eq(KxStoreProductAttrResult::getProductId, id).last("limit 1"));
+                .selectOne(new LambdaQueryWrapper<KxStoreProductAttrResult>()
+                        .eq(KxStoreProductAttrResult::getProductId, id).last("limit 1"));
         JSONObject result = JSON.parseObject(storeProductAttrResult.getResult());
         List<KxStoreProductAttrValue> attrValues = kxStoreProductAttrValueMapper.selectList(new LambdaQueryWrapper<KxStoreProductAttrValue>().eq(KxStoreProductAttrValue::getProductId, kxStoreProduct.getId()));
         List<ProductFormatVo> productFormatDtos = attrValues.stream().map(i -> {
@@ -126,23 +133,23 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
     private void productFromat(ProductVo productDto, JSONObject result) {
         Map<String, Object> mapAttr = (Map<String, Object>) result.getObject("value", ArrayList.class).get(0);
         ProductFormatVo productFormatDto = ProductFormatVo.builder()
-            .pic(mapAttr.get("pic").toString())
-            .price(Double.valueOf(mapAttr.get("price").toString()))
-            .cost(Double.valueOf(mapAttr.get("cost").toString()))
-            .otPrice(Double.valueOf(mapAttr.get("otPrice").toString()))
-            .stock(Long.valueOf(mapAttr.get("stock").toString()))
-            .barCode(mapAttr.get("barCode").toString())
-            .weight(Double.valueOf(mapAttr.get("weight").toString()))
-            .volume(Double.valueOf(mapAttr.get("volume").toString()))
-            .value1(mapAttr.get("value1").toString())
-            .integral(mapAttr.get("integral") != null ? Long.parseLong(mapAttr.get("integral").toString()) : 0)
-            .brokerage(Double.valueOf(mapAttr.get("brokerage").toString()))
-            .brokerageTwo(Double.valueOf(mapAttr.get("brokerageTwo").toString()))
-            .pinkPrice(Double.valueOf(mapAttr.get("pinkPrice").toString()))
-            .pinkStock(Integer.valueOf(mapAttr.get("pinkStock").toString()))
-            .seckillPrice(Double.valueOf(mapAttr.get("seckillPrice").toString()))
-            .seckillStock(Integer.valueOf(mapAttr.get("seckillStock").toString()))
-            .build();
+                .pic(mapAttr.get("pic").toString())
+                .price(Double.valueOf(mapAttr.get("price").toString()))
+                .cost(Double.valueOf(mapAttr.get("cost").toString()))
+                .otPrice(Double.valueOf(mapAttr.get("otPrice").toString()))
+                .stock(Long.valueOf(mapAttr.get("stock").toString()))
+                .barCode(mapAttr.get("barCode").toString())
+                .weight(Double.valueOf(mapAttr.get("weight").toString()))
+                .volume(Double.valueOf(mapAttr.get("volume").toString()))
+                .value1(mapAttr.get("value1").toString())
+                .integral(mapAttr.get("integral") != null ? Long.parseLong(mapAttr.get("integral").toString()) : 0)
+                .brokerage(Double.valueOf(mapAttr.get("brokerage").toString()))
+                .brokerageTwo(Double.valueOf(mapAttr.get("brokerageTwo").toString()))
+                .pinkPrice(Double.valueOf(mapAttr.get("pinkPrice").toString()))
+                .pinkStock(Integer.valueOf(mapAttr.get("pinkStock").toString()))
+                .seckillPrice(Double.valueOf(mapAttr.get("seckillPrice").toString()))
+                .seckillStock(Integer.valueOf(mapAttr.get("seckillStock").toString()))
+                .build();
         productDto.setAttr(productFormatDto);
     }
 
@@ -176,7 +183,17 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
         lqw.eq(bo.getMerId() != null, KxStoreProduct::getMerId, bo.getMerId());
         lqw.eq(CollectionUtils.isNotEmpty(bo.getImage()), KxStoreProduct::getImage, bo.getImage());
         lqw.eq(CollectionUtils.isNotEmpty(bo.getSliderImage()), KxStoreProduct::getSliderImage, bo.getSliderImage());
-        lqw.like(StringUtils.isNotBlank(bo.getStoreName()), KxStoreProduct::getStoreName, bo.getStoreName());
+        // Add keyword search when storeName is provided
+        if (StringUtils.isNotBlank(bo.getStoreName())) {
+            String storeName = bo.getStoreName();
+            lqw.and(wrapper -> wrapper
+                    .like(KxStoreProduct::getStoreName, storeName)
+                    .or()
+                    .like(KxStoreProduct::getKeyword, storeName)
+                    .or()
+                    .apply("REPLACE(REPLACE(keyword, '，', ','), ' ', '') LIKE CONCAT('%', REPLACE(REPLACE({0}, '，', ','), ' ', ''), '%')", storeName)
+            );
+        }
         lqw.eq(StringUtils.isNotBlank(bo.getStoreInfo()), KxStoreProduct::getStoreInfo, bo.getStoreInfo());
         lqw.eq(StringUtils.isNotBlank(bo.getKeyword()), KxStoreProduct::getKeyword, bo.getKeyword());
         lqw.eq(StringUtils.isNotBlank(bo.getBarCode()), KxStoreProduct::getBarCode, bo.getBarCode());
@@ -218,57 +235,83 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
      * 新增商品
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean insertAndupdateByBo(KxStoreProductBo bo) {
         //将商品编码拷贝到商品列表
         bo.setBarCode(bo.getAttrs().get(0).getBarCode());
         if (StringUtils.isNotEmpty(bo.getDescription())) {
             bo.setDescription(RegexUtil.converProductDescription(bo.getDescription()));
         }
-        ProductResultVo resultDTO = this.computedProduct(bo.getAttrs());
-        //只能是二级分类
-        Long count = categoryMapper.selectCount(new LambdaQueryWrapper<KxStoreCategory>().ne(KxStoreCategory::getPid, 0L).eq(KxStoreCategory::getId, bo.getCateId()));
-        if (count == 0L) {
-            throw new ServiceException("请选择二级分类");
+        //如果是多规格，预先生成一个公共的ID，用于关联
+        String productCommonId = null;
+        if (SpecTypeEnum.TYPE_1.getValue().equals(bo.getSpecType())) {
+            if (StringUtils.isNotEmpty(bo.getCommonId())) {
+                productCommonId = bo.getCommonId();
+            }else {
+                productCommonId = GeneratorUtil.genOrderId();
+            }
         }
-        //添加商品
-        KxStoreProduct kxStoreProduct = new KxStoreProduct();
-        BeanUtil.copyProperties(bo, kxStoreProduct, "sliderImage");
-        if (bo.getSliderImage().isEmpty()) {
-            throw new ServiceException("请上传轮播图");
-        }
-        if (ObjectUtils.isEmpty(bo.getImage())) {
-            throw new ServiceException("请上传商品封面图");
-        }
+        for (int i = 0; i < bo.getAttrs().size(); i++) {
+            ProductResultVo resultDTO = this.computedProduct(bo.getAttrs().get(i));
+            //只能是二级分类
+            Long count = categoryMapper.selectCount(new LambdaQueryWrapper<KxStoreCategory>().ne(KxStoreCategory::getPid, 0L).eq(KxStoreCategory::getId, bo.getCateId()));
+            if (count == 0L) {
+                throw new ServiceException("请选择二级分类");
+            }
+            //添加商品
+            KxStoreProduct kxStoreProduct = new KxStoreProduct();
+            BeanUtil.copyProperties(bo, kxStoreProduct, "sliderImage");
+            if (bo.getSliderImage().isEmpty()) {
+                throw new ServiceException("请上传轮播图");
+            }
+            if (ObjectUtils.isEmpty(bo.getImage())) {
+                throw new ServiceException("请上传商品封面图");
+            }
+            if (bo.getAttrs().size() != 1) {
+                StringBuilder name = new StringBuilder();
+                // 先检查detail是否为空
+                if (bo.getAttrs().get(i).getDetail() != null) {
+                    // 遍历并打印所有value
+                    for (Map.Entry<String, String> stringEntry : bo.getAttrs().get(i).getDetail().entrySet()) {
+                        name.append(stringEntry.getValue());
+                    }
+                }
+                // 名称需要单独处理下
+                kxStoreProduct.setStoreName(kxStoreProduct.getStoreName() + name);
+            }
 
-        kxStoreProduct.setPrice(BigDecimal.valueOf(resultDTO.getMinPrice()));
-        kxStoreProduct.setOtPrice(BigDecimal.valueOf(resultDTO.getMinOtPrice()));
-        kxStoreProduct.setCost(BigDecimal.valueOf(resultDTO.getMinCost()));
-        kxStoreProduct.setIntegral(resultDTO.getMinIntegral());
-        kxStoreProduct.setStock(resultDTO.getStock());
-        kxStoreProduct.setSliderImage(JSONArray.toJSONString(bo.getSliderImage()));
+            kxStoreProduct.setPrice(BigDecimal.valueOf(resultDTO.getMinPrice()));
+            kxStoreProduct.setOtPrice(BigDecimal.valueOf(resultDTO.getMinOtPrice()));
+            kxStoreProduct.setCost(BigDecimal.valueOf(resultDTO.getMinCost()));
+            kxStoreProduct.setIntegral(resultDTO.getMinIntegral());
+            kxStoreProduct.setStock(resultDTO.getStock());
+            kxStoreProduct.setSliderImage(JSONArray.toJSONString(bo.getSliderImage()));
+            if (SpecTypeEnum.TYPE_1.getValue().equals(bo.getSpecType())) {
+                kxStoreProduct.setCommonId(productCommonId);
+            }
+            baseMapper.insertOrUpdate(kxStoreProduct);
 
-        baseMapper.insertOrUpdate(kxStoreProduct);
 
-        //属性处理
-        //处理单sKu
-        if (SpecTypeEnum.TYPE_0.getValue().equals(bo.getSpecType())) {
+            //处理单sKu
             FromatDetailVo fromatDetailDto = FromatDetailVo.builder()
-                .value("规格")
-                .detailValue("")
-                .attrHidden("")
-                .detail(ListUtil.toList("默认"))
-                .build();
+                    .value("规格")
+                    .detailValue("")
+                    .attrHidden("")
+                    .detail(ListUtil.toList("默认"))
+                    .build();
             List<ProductFormatVo> attrs = bo.getAttrs();
-            ProductFormatVo productFormatDto = attrs.get(0);
+            ProductFormatVo productFormatDto = attrs.get(i);
             productFormatDto.setValue1("规格");
             Map<String, String> map = new HashMap<>();
             map.put("规格", "默认");
             productFormatDto.setDetail(map);
-            kxStoreProductAttrService.insertYxStoreProductAttr(ListUtil.toList(fromatDetailDto),
-                ListUtil.toList(productFormatDto), kxStoreProduct.getId());
-        } else {
-            kxStoreProductAttrService.insertYxStoreProductAttr(bo.getItems(),
-                bo.getAttrs(), kxStoreProduct.getId());
+            if (ObjectUtils.isEmpty(productFormatDto.getProductId())) {
+                productFormatDto.setProductId(kxStoreProduct.getId());
+            }
+            kxStoreProductAttrService.insertKxStoreProductAttr(ListUtil.toList(fromatDetailDto),
+                    ListUtil.toList(productFormatDto), productFormatDto.getProductId());
+
+            RedisUtils.deleteKeys(RECOMMEND_NAME + "*");
         }
         return true;
     }
@@ -279,50 +322,33 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
      * @param attrs attrs
      * @return ProductResultVo
      */
-    private ProductResultVo computedProduct(List<ProductFormatVo> attrs) {
-        //取最小价格
-        Double minPrice = attrs
-            .stream()
-            .map(ProductFormatVo::getPrice)
-            .min(Comparator.naturalOrder())
-            .orElse(0d);
+    private ProductResultVo computedProduct(ProductFormatVo attrs) {
+        // 获取价格，若属性为 null 则返回 0
+        Double minPrice = (attrs.getPrice() != null) ? attrs.getPrice() : 0d;
 
-        //取最小积分
-        Long minIntegral = attrs
-            .stream()
-            .map(ProductFormatVo::getIntegral)
-            .min(Comparator.naturalOrder())
-            .orElse(0L);
+        // 获取积分，若属性为 null 则返回 0
+        long minIntegral = (attrs.getIntegral() != null) ? attrs.getIntegral() : 0L;
 
-        Double minOtPrice = attrs
-            .stream()
-            .map(ProductFormatVo::getOtPrice)
-            .min(Comparator.naturalOrder())
-            .orElse(0d);
+        // 获取其他价格，若属性为 null 则返回 0
+        Double minOtPrice = (attrs.getOtPrice() != null) ? attrs.getOtPrice() : 0d;
 
-        Double minCost = attrs
-            .stream()
-            .map(ProductFormatVo::getCost)
-            .min(Comparator.naturalOrder())
-            .orElse(0d);
-        //计算库存
-        Long stock = attrs
-            .stream()
-            .map(ProductFormatVo::getStock)
-            .reduce(Long::sum)
-            .orElse(0L);
+        // 获取成本，若属性为 null 则返回 0
+        Double minCost = (attrs.getCost() != null) ? attrs.getCost() : 0d;
 
-        if (stock <= 0) {
+        // 获取库存，若属性为 null 则返回 0
+        long stock = (attrs.getStock() != null) ? attrs.getStock() : 0L;
+
+        if (stock <= 0L) {
             throw new ServiceException("库存不能低于0");
         }
 
         return ProductResultVo.builder()
-            .minPrice(minPrice)
-            .minOtPrice(minOtPrice)
-            .minCost(minCost)
-            .stock(stock)
-            .minIntegral(minIntegral)
-            .build();
+                .minPrice(minPrice)
+                .minOtPrice(minOtPrice)
+                .minCost(minCost)
+                .stock(stock)
+                .minIntegral(minIntegral)
+                .build();
     }
 
 
@@ -349,6 +375,10 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
     @Override
     public Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid) {
         if (isValid) {
+            Long count = kxStockMapper.selectCount(new LambdaQueryWrapper<KxStock>().in(KxStock::getProductId, ids));
+            if (count > 0L) {
+                throw new ServiceException("该商品存在授权仓库，无法删除！请先下架和删除对应的前置仓商品。");
+            }
             //TODO 做一些业务上的校验,判断是否需要校验
         }
         return baseMapper.deleteBatchIds(ids) > 0;
@@ -357,7 +387,7 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
     @Override
     public Long selectCountByCateId(Long cateId) {
         return baseMapper.selectCount(new LambdaQueryWrapper<KxStoreProduct>()
-            .eq(KxStoreProduct::getCateId, cateId));
+                .eq(KxStoreProduct::getCateId, cateId));
     }
 
     @Override
@@ -394,7 +424,7 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
         }
 
         List<FromatDetailVo> fromatDetailDTOList = JSON.parseArray(jsonObject.get("attrs").toString(),
-            FromatDetailVo.class);
+                FromatDetailVo.class);
 
         //fromatDetailDTOList
         DetailVo detailVo = this.attrFormat(fromatDetailDTOList);
@@ -403,6 +433,16 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
         List<Map<String, Object>> valueMapList = new ArrayList<>();
         String align = "center";
         Map<String, Object> headerMap = new LinkedHashMap<>();
+
+        // 1. 如果id>0，先查询当前商品的commonId
+        String commonId = null;
+        if (id > 0) {
+            KxStoreProduct product = baseMapper.selectById(id);
+            if (product != null && StringUtils.isNotEmpty(product.getCommonId())) {
+                commonId = product.getCommonId();
+            }
+        }
+
         for (Map<String, Map<String, String>> map : detailVo.getRes()) {
             Map<String, String> detail = map.get("detail");
             String[] detailArr = detail.values().toArray(new String[]{});
@@ -413,10 +453,10 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
             Map<String, Object> valueMap = new LinkedHashMap<>();
 
             List<String> detailKeys =
-                detail.entrySet()
-                    .stream()
-                    .map(Map.Entry::getKey)
-                    .collect(Collectors.toList());
+                    detail.entrySet()
+                            .stream()
+                            .map(Map.Entry::getKey)
+                            .collect(Collectors.toList());
 
             int i = 0;
             headerMapList = new ArrayList<>();
@@ -453,37 +493,59 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
             valueMap.put("pinkStock", 0);
             valueMap.put("seckillStock", 0);
             valueMap.put("integral", 0);
+
+            // 2. 查询当前商品和所有相关商品的属性值
             if (id > 0) {
-                KxStoreProductAttrValue storeProductAttrValue = kxStoreProductAttrValueMapper
-                    .selectOne(new LambdaQueryWrapper<KxStoreProductAttrValue>()
-                        .eq(KxStoreProductAttrValue::getProductId, id)
-                        .eq(KxStoreProductAttrValue::getSku, sku));
-                if (storeProductAttrValue != null) {
-                    valueMap.put("sku", storeProductAttrValue.getSku());
-                    valueMap.put("pic", storeProductAttrValue.getImage());
-                    valueMap.put("price", storeProductAttrValue.getPrice());
-                    valueMap.put("cost", storeProductAttrValue.getCost());
-                    valueMap.put("otPrice", storeProductAttrValue.getOtPrice());
-                    valueMap.put("stock", storeProductAttrValue.getStock());
-                    valueMap.put("barCode", storeProductAttrValue.getBarCode());
-                    valueMap.put("weight", storeProductAttrValue.getWeight());
-                    valueMap.put("volume", storeProductAttrValue.getVolume());
-                    valueMap.put("brokerage", storeProductAttrValue.getBrokerage());
-                    valueMap.put("brokerageTwo", storeProductAttrValue.getBrokerageTwo());
-                    valueMap.put("pinkPrice", storeProductAttrValue.getPinkPrice());
-                    valueMap.put("seckillPrice", storeProductAttrValue.getSeckillPrice());
-                    valueMap.put("pinkStock", storeProductAttrValue.getPinkStock());
-                    valueMap.put("seckillStock", storeProductAttrValue.getSeckillStock());
-                    valueMap.put("integral", storeProductAttrValue.getIntegral());
+                List<Long> productIds = new ArrayList<>();
+                productIds.add(id);
+
+                // 如果有commonId，查询所有相关商品
+                if (commonId != null) {
+                    List<KxStoreProduct> relatedProducts = baseMapper.selectList(
+                            new LambdaQueryWrapper<KxStoreProduct>()
+                                    .eq(KxStoreProduct::getCommonId, commonId)
+                                    .ne(KxStoreProduct::getId, id)); // 排除当前商品
+
+                    if (!relatedProducts.isEmpty()) {
+                        productIds.addAll(relatedProducts.stream()
+                                .map(KxStoreProduct::getId)
+                                .collect(Collectors.toList()));
+                    }
                 }
+
+                // 查询所有相关商品的属性值
+                List<KxStoreProductAttrValue> storeProductAttrValueList = kxStoreProductAttrValueMapper
+                        .selectList(new LambdaQueryWrapper<KxStoreProductAttrValue>()
+                                .in(KxStoreProductAttrValue::getProductId, productIds)
+                                .eq(KxStoreProductAttrValue::getSku, sku)
+                                .orderByDesc(KxStoreProductAttrValue::getProductId));
+                for (KxStoreProductAttrValue storeProductAttrValue : storeProductAttrValueList) {
+                    Map<String, Object> Temp = new LinkedHashMap<>();
+                    Temp.put("sku", storeProductAttrValue.getSku());
+                    Temp.put("pic", storeProductAttrValue.getImage());
+                    Temp.put("price", storeProductAttrValue.getPrice());
+                    Temp.put("cost", storeProductAttrValue.getCost());
+                    Temp.put("otPrice", storeProductAttrValue.getOtPrice());
+                    Temp.put("stock", storeProductAttrValue.getStock());
+                    Temp.put("barCode", storeProductAttrValue.getBarCode());
+                    Temp.put("weight", storeProductAttrValue.getWeight());
+                    Temp.put("volume", storeProductAttrValue.getVolume());
+                    Temp.put("brokerage", storeProductAttrValue.getBrokerage());
+                    Temp.put("brokerageTwo", storeProductAttrValue.getBrokerageTwo());
+                    Temp.put("pinkPrice", storeProductAttrValue.getPinkPrice());
+                    Temp.put("seckillPrice", storeProductAttrValue.getSeckillPrice());
+                    Temp.put("pinkStock", storeProductAttrValue.getPinkStock());
+                    Temp.put("seckillStock", storeProductAttrValue.getSeckillStock());
+                    Temp.put("integral", storeProductAttrValue.getIntegral());
+                    Temp.put("productId", storeProductAttrValue.getProductId());
+                    valueMapList.add(ObjectUtil.clone(Temp));
+                }
+            }else {
+                valueMapList.add(ObjectUtil.clone(valueMap));
             }
-
-            valueMapList.add(ObjectUtil.clone(valueMap));
-
         }
 
         this.addMap(headerMap, headerMapList, align, isActivity);
-
 
         resultMap.put("attr", fromatDetailDTOList);
         resultMap.put("value", valueMapList);
@@ -511,7 +573,7 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
             kxStock.setProductId(id);
             kxStock.setProductAttrId(id);
             kxStock.setStorageId(bo.getStorageId());
-            kxStock.setStock(0L);
+            kxStock.setStock(storeProducts.getStock());
             kxStock.setStatus(1);
             list.add(kxStock);
         });
@@ -521,8 +583,8 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
             Long storageId = kxStock.getStorageId();
             //判断此仓库中是否有该商品
             List<KxStock> stockList = kxStockMapper.selectList(new LambdaQueryWrapper<KxStock>()
-                .eq(KxStock::getProductId, productId)
-                .eq(KxStock::getStorageId, storageId));
+                    .eq(KxStock::getProductId, productId)
+                    .eq(KxStock::getStorageId, storageId));
             if (CollectionUtils.isEmpty(stockList)) {
                 KxStock stockdo = new KxStock();
                 stockdo.setProductId(productId);
@@ -534,7 +596,7 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
                 if (status != null && price != null && stock != null) {
                     stockdo.setStatus(status);
                     stockdo.setPrice(price);
-                    stockdo.setStock(0L);
+                    stockdo.setStock(kxStock.getStock());
                     stockdo.setFrezzStock(0L);
                     stockdo.setSales(0L);
                     Date now = new Date();
@@ -601,6 +663,84 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
         return null;
     }
 
+    @Override
+    public List<ProductTreeNodeVo> getProductTreeByStorageId(Long storageId) {
+        List<KxStoreCategory> storeCategoryList = storeCategoryMapper.selectList(new LambdaQueryWrapper<KxStoreCategory>().orderByAsc(KxStoreCategory::getPid));
+        if (storeCategoryList != null && storeCategoryList.size() > 0) {
+            Integer recordLevelOne = 0;
+            List<KxStoreProduct> storeProductList = baseMapper.getProductTitleAllByStorageId(storageId);
+            List<ProductTreeNodeVo> list = new ArrayList<>();
+            for (KxStoreCategory categoryDO : storeCategoryList) {
+                if (categoryDO.getPid() == 0L) {
+                    recordLevelOne++;
+                }
+            }
+            Integer recordLevelTwo = storeCategoryList.size();
+            for (int i = 0; i < recordLevelOne; i++) {
+                KxStoreCategory categoryOnI = storeCategoryList.get(i);    //一级类目
+                ProductTreeNodeVo dtoOnI = new ProductTreeNodeVo();
+                dtoOnI.setLabel(categoryOnI.getCateName());
+                dtoOnI.setValue("C_" + categoryOnI.getId());
+                dtoOnI.setId(categoryOnI.getId());
+                dtoOnI.setChildren(new LinkedList<>());
+                for (int j = recordLevelOne; j < recordLevelTwo; j++) {
+                    KxStoreCategory categoryOnJ = storeCategoryList.get(j);    //二级类目
+                    if (!categoryOnJ.getPid().equals(dtoOnI.getId())) {
+                        continue;
+                    }
+                    ProductTreeNodeVo dtoOnJ = new ProductTreeNodeVo();
+                    dtoOnJ.setLabel(categoryOnJ.getCateName());
+                    dtoOnJ.setValue("C_" + categoryOnJ.getId());
+                    dtoOnJ.setId(categoryOnJ.getId());
+                    dtoOnJ.setChildren(new LinkedList<>());
+                    for (int k = 0; k < storeProductList.size(); k++) {
+                        if (k != 0 && storeProductList.get(k - 1).getCateId().equals(dtoOnJ.getId()) && !storeProductList.get(k).getCateId().equals(dtoOnJ.getId())) {
+                            break;
+                        }
+                        KxStoreProduct storeProduct = storeProductList.get(k);        //商品
+                        if (storeProduct.getCateId().equals(dtoOnJ.getId())) {
+                            ProductTreeNodeVo dtoOnK = new ProductTreeNodeVo();
+                            dtoOnK.setLabel(storeProduct.getStoreName());
+                            dtoOnK.setValue("G_" + storeProduct.getId());
+                            dtoOnK.setId(storeProduct.getId());
+                            dtoOnJ.getChildren().add(dtoOnK);
+                        }
+                    }
+                    dtoOnI.getChildren().add(dtoOnJ);
+                }
+                list.add(dtoOnI);
+            }
+            return list;
+        }
+        return null;
+    }
+
+    @Override
+    public KxStoreProductVo detailGoodsByStorageId(Long storageId, Long productId) {
+
+        //是否为活动商品
+        KxStoreProductVo product = baseMapper.getProductByIdAndStorageId(productId, storageId);
+        if (ObjectUtils.isEmpty(product)) {
+            throw new ServiceException("商品对象不存在");
+        }
+        //查询库存信息
+        KxStock kxStock = new KxStock();
+        kxStock.setProductId(productId);
+        kxStock.setStorageId(storageId);
+        kxStock = kxStockMapper.selectOne(new QueryWrapper<>(kxStock));
+
+        KxStockVo stockVo = new KxStockVo();
+        if (!ObjectUtils.isEmpty(kxStock)) {
+            BeanUtils.copyProperties(kxStock, stockVo);
+        }
+        product.setKxStockVo(stockVo);
+        return product;
+    }
+
+    @Override
+    public KxStoreProductVo queryByIdVo(Long productId) {
+        return baseMapper.selectVoById(productId);
+    }
     /**
      * 组合规则属性算法
      *
@@ -613,16 +753,16 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
         List<Map<String, Map<String, String>>> res = new ArrayList<>();
 
         fromatDetailDTOList.stream()
-            .map(FromatDetailVo::getDetail)
-            .forEach(i -> {
-                if (i == null || i.isEmpty()) {
-                    throw new ServiceException("请至少添加一个规格值哦");
-                }
-                String str = ArrayUtil.join(i.toArray(), ",");
-                if (str.contains("-")) {
-                    throw new ServiceException("规格值里包含'-',请重新添加");
-                }
-            });
+                .map(FromatDetailVo::getDetail)
+                .forEach(i -> {
+                    if (i == null || i.isEmpty()) {
+                        throw new ServiceException("请至少添加一个规格值哦");
+                    }
+                    String str = ArrayUtil.join(i.toArray(), ",");
+                    if (str.contains("-")) {
+                        throw new ServiceException("规格值里包含'-',请重新添加");
+                    }
+                });
 
         if (fromatDetailDTOList.size() > 1) {
             for (int i = 0; i < fromatDetailDTOList.size() - 1; i++) {
@@ -635,10 +775,10 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
                         String rep2 = "";
                         if (i == 0) {
                             rep2 = fromatDetailDTOList.get(i).getValue() + "_" + v + "-"
-                                + fromatDetailDTOList.get(i + 1).getValue() + "_" + g;
+                                    + fromatDetailDTOList.get(i + 1).getValue() + "_" + g;
                         } else {
                             rep2 = v + "-"
-                                + fromatDetailDTOList.get(i + 1).getValue() + "_" + g;
+                                    + fromatDetailDTOList.get(i + 1).getValue() + "_" + g;
                         }
 
                         tmp.add(rep2);

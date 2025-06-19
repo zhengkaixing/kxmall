@@ -1,9 +1,9 @@
 package com.kxmall.web.controller.product.service;
 
+import com.kxmall.common.core.domain.PageQuery;
+import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.product.domain.bo.KxStoreProductBo;
 import com.kxmall.product.domain.vo.KxStoreProductVo;
-import com.kxmall.common.core.page.TableDataInfo;
-import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.product.domain.vo.ProductTreeNodeVo;
 
 import java.util.Collection;
@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * 商品Service接口
  *
- * @author 郅兴开源团队-小黑
+ * @author kxmall
  * @date 2023-02-13
  */
 public interface IKxStoreProductService {
@@ -78,5 +78,28 @@ public interface IKxStoreProductService {
      * @return
      */
     List<ProductTreeNodeVo> getProductBigTree();
+
+
+    /**
+     * 获取产品树通过仓库id
+     * @param storageId
+     * @return
+     */
+    List<ProductTreeNodeVo> getProductTreeByStorageId(Long storageId);
+
+    /**
+     * 详情通过仓库id
+     * @param storageId
+     * @param productId
+     * @return
+     */
+    KxStoreProductVo detailGoodsByStorageId(Long storageId, Long productId);
+
+    /**
+     * 获取商品详情
+     * @param productId
+     * @return
+     */
+    KxStoreProductVo queryByIdVo(Long productId);
 
 }
