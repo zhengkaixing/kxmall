@@ -1,7 +1,9 @@
 package com.kxmall.product.domain;
 
 import com.alibaba.fastjson.JSONArray;
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.FastjsonTypeHandler;
 import com.kxmall.common.core.domain.BaseEntity;
 import lombok.Data;

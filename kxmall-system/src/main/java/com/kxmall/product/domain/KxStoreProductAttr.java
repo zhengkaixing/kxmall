@@ -1,6 +1,7 @@
 package com.kxmall.product.domain;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.kxmall.common.core.domain.BaseEntity;
 import lombok.Builder;
 import lombok.Data;
@@ -38,9 +39,5 @@ public class KxStoreProductAttr extends BaseEntity {
      * 属性值
      */
     private String attrValues;
-    /**
-     * 删除状态
-     */
-    private Integer isDel;
 
 }

@@ -1,6 +1,7 @@
 package com.kxmall.product.domain;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.kxmall.common.core.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -41,6 +42,10 @@ public class KxStoreProduct extends BaseEntity {
      * 商品名称
      */
     private String storeName;
+    /**
+     * 公共id
+     */
+    private String commonId;
     /**
      * 商品简介
      */
