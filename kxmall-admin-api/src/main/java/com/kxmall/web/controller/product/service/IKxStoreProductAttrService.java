@@ -1,12 +1,12 @@
 package com.kxmall.web.controller.product.service;
 
+import com.kxmall.common.core.domain.PageQuery;
+import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.product.domain.KxStoreProductAttr;
 import com.kxmall.product.domain.bo.KxStoreProductAttrBo;
 import com.kxmall.product.domain.vo.FromatDetailVo;
-import com.kxmall.product.domain.vo.ProductFormatVo;
 import com.kxmall.product.domain.vo.KxStoreProductAttrVo;
-import com.kxmall.common.core.page.TableDataInfo;
-import com.kxmall.common.core.domain.PageQuery;
+import com.kxmall.product.domain.vo.ProductFormatVo;
 
 import java.util.Collection;
 import java.util.List;
@@ -49,7 +49,7 @@ public interface IKxStoreProductAttrService {
      */
     Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid);
 
-    void insertYxStoreProductAttr(List<FromatDetailVo> toList, List<ProductFormatVo> toList1, Long id);
+    void insertKxStoreProductAttr(List<FromatDetailVo> toList, List<ProductFormatVo> toList1, Long id);
 
     List<KxStoreProductAttr> queryListAll();
 }

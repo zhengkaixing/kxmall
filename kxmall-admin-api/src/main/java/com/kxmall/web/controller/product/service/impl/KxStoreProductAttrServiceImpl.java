@@ -5,26 +5,26 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kxmall.common.core.domain.PageQuery;
+import com.kxmall.common.core.page.TableDataInfo;
+import com.kxmall.common.exception.ServiceException;
+import com.kxmall.common.utils.StringUtils;
 import com.kxmall.product.domain.KxStoreProductAttr;
 import com.kxmall.product.domain.KxStoreProductAttrResult;
 import com.kxmall.product.domain.KxStoreProductAttrValue;
 import com.kxmall.product.domain.bo.KxStoreProductAttrBo;
-import com.kxmall.common.core.page.TableDataInfo;
-import com.kxmall.common.core.domain.PageQuery;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.kxmall.common.exception.ServiceException;
-import com.kxmall.common.utils.StringUtils;
 import com.kxmall.product.domain.vo.FromatDetailVo;
+import com.kxmall.product.domain.vo.KxStoreProductAttrVo;
 import com.kxmall.product.domain.vo.ProductFormatVo;
+import com.kxmall.product.mapper.KxStoreProductAttrMapper;
 import com.kxmall.product.mapper.KxStoreProductAttrResultMapper;
 import com.kxmall.product.mapper.KxStoreProductAttrValueMapper;
+import com.kxmall.web.controller.product.service.IKxStoreProductAttrService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.kxmall.product.domain.vo.KxStoreProductAttrVo;
-import com.kxmall.product.mapper.KxStoreProductAttrMapper;
-import com.kxmall.web.controller.product.service.IKxStoreProductAttrService;
 import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
@@ -82,7 +82,6 @@ public class KxStoreProductAttrServiceImpl implements IKxStoreProductAttrService
         lqw.eq(bo.getProductId() != null, KxStoreProductAttr::getProductId, bo.getProductId());
         lqw.like(StringUtils.isNotBlank(bo.getAttrName()), KxStoreProductAttr::getAttrName, bo.getAttrName());
         lqw.eq(StringUtils.isNotBlank(bo.getAttrValues()), KxStoreProductAttr::getAttrValues, bo.getAttrValues());
-        lqw.eq(bo.getIsDel() != null, KxStoreProductAttr::getIsDel, bo.getIsDel());
         return lqw;
     }
 
@@ -129,7 +128,7 @@ public class KxStoreProductAttrServiceImpl implements IKxStoreProductAttrService
     }
 
     @Override
-    public void insertYxStoreProductAttr(List<FromatDetailVo> items, List<ProductFormatVo> attrs, Long productId) {
+    public void insertKxStoreProductAttr(List<FromatDetailVo> items, List<ProductFormatVo> attrs, Long productId) {
         List<KxStoreProductAttr> attrGroup = new ArrayList<>();
         for (FromatDetailVo fromatDetailDto : items) {
             KxStoreProductAttr kxStoreProductAttr = KxStoreProductAttr.builder()
@@ -160,7 +159,7 @@ public class KxStoreProductAttrServiceImpl implements IKxStoreProductAttrService
                 unique = oldAttrValue.getUnique();
             }
 
-            KxStoreProductAttrValue yxStoreProductAttrValue = KxStoreProductAttrValue.builder()
+            KxStoreProductAttrValue kxStoreProductAttrValue = KxStoreProductAttrValue.builder()
                 .id(Objects.isNull(oldAttrValue) ? null : oldAttrValue.getId())
                 .productId(productId)
                 .sku(StrUtil.join(",",stringList))
@@ -182,7 +181,7 @@ public class KxStoreProductAttrServiceImpl implements IKxStoreProductAttrService
                 .seckillStock(productFormatDto.getSeckillStock()==null?0:productFormatDto.getSeckillStock())
                 .build();
 
-            valueGroup.add(yxStoreProductAttrValue);
+            valueGroup.add(kxStoreProductAttrValue);
         }
 
         if(attrGroup.isEmpty() || valueGroup.isEmpty()){
@@ -222,7 +221,7 @@ public class KxStoreProductAttrServiceImpl implements IKxStoreProductAttrService
     }
 
     /**
-     * 删除YxStoreProductAttrValue表的属性
+     * 删除StoreProductAttrValue表的属性
      * @param productId 商品id
      */
     private void clearProductAttr(Long productId) {
