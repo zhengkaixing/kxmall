@@ -167,6 +167,12 @@ public class ProductVo {
      */
     private Long tempId;
 
+
+    /**
+     * 多规格公共ID
+     */
+    private String commonId;
+
     /**
      * 规格 0单 1多
      */
