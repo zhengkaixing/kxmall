@@ -1,8 +1,8 @@
 package com.kxmall.product.mapper;
 
+import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.product.domain.KxStoreProductRule;
 import com.kxmall.product.domain.vo.KxStoreProductRuleVo;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 
 /**
  * 商品规格Mapper接口

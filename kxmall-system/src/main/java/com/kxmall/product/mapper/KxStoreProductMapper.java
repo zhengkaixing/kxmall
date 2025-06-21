@@ -1,8 +1,8 @@
 package com.kxmall.product.mapper;
 
-import com.kxmall.product.domain.vo.KxStoreProductVo;
-import com.kxmall.product.domain.KxStoreProduct;
 import com.kxmall.common.core.mapper.BaseMapperPlus;
+import com.kxmall.product.domain.KxStoreProduct;
+import com.kxmall.product.domain.vo.KxStoreProductVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.LinkedList;

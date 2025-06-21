@@ -1,8 +1,8 @@
 package com.kxmall.product.mapper;
 
+import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.product.domain.KxStoreProductAttrResult;
 import com.kxmall.product.domain.vo.KxStoreProductAttrResultVo;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 
 /**
  * 商品属性详情Mapper接口
