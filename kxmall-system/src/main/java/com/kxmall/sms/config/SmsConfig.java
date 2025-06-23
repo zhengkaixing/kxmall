@@ -3,7 +3,6 @@ package com.kxmall.sms.config;
 import com.kxmall.sms.config.properties.SmsProperties;
 import com.kxmall.sms.core.AliyunSmsTemplate;
 import com.kxmall.sms.core.SmsTemplate;
-import com.kxmall.sms.core.TencentSmsTemplate;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
