@@ -1,8 +1,8 @@
 package com.kxmall.region.mapper;
 
+import com.kxmall.common.core.mapper.BaseMapperPlus;
 import com.kxmall.region.domain.KxRegion;
 import com.kxmall.region.domain.vo.KxRegionVo;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 
 /**
  * 中国地区信息Mapper接口

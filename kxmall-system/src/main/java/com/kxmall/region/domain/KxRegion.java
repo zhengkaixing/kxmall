@@ -1,9 +1,10 @@
 package com.kxmall.region.domain;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.kxmall.common.core.domain.BaseEntity;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
