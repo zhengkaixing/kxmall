@@ -1,10 +1,10 @@
 package com.kxmall.user.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.kxmall.common.core.mapper.BaseMapperPlus;
+import com.kxmall.user.domain.KxUser;
 import com.kxmall.user.domain.vo.KxPromUserVo;
 import com.kxmall.user.domain.vo.KxUserVo;
-import com.kxmall.user.domain.KxUser;
-import com.kxmall.common.core.mapper.BaseMapperPlus;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -35,9 +35,6 @@ public interface KxUserMapper extends BaseMapperPlus<KxUserMapper, KxUser, KxUse
                                               @Param("uids") List uids,
                                               @Param("keyword") String keyword,
                                               @Param("orderByStr") String orderBy);
-
-
-
     /**
      * 总用户数
      * @param date
