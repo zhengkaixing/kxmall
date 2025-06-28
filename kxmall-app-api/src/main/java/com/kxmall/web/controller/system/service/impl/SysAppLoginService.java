@@ -244,9 +244,19 @@ public class SysAppLoginService implements ISysAppLoginService {
 
         WxMaService wxMaService = WxMaConfiguration.getWxMaService();
         WxMaPhoneNumberInfo phoneNoInfo = wxMaService.getUserService()
-            .getPhoneNoInfo(session_key, encryptedData, iv);
+                .getPhoneNoInfo(session_key, encryptedData, iv);
 
-        KxUser kxUser = kxUserMapper.selectOne(new LambdaQueryWrapper<KxUser>().eq(KxUser::getOpenId, openId));
+        // 验证openId格式
+        if (!isValidOpenId(openId)) {
+            throw new ServiceException("非法的OpenID格式");
+        }
+
+        KxUser kxUser = kxUserMapper.selectOne(
+                new LambdaQueryWrapper<KxUser>()
+                        .eq(KxUser::getPhone, phoneNoInfo.getPhoneNumber())
+                        .orderByDesc(KxUser::getCreateTime)  // 按创建时间降序
+                        .last("LIMIT 1")  // 只取一条
+        );
 
         if (ObjectUtils.isEmpty(kxUser)) {
             Date now = new Date();
@@ -259,6 +269,9 @@ public class SysAppLoginService implements ISysAppLoginService {
             newUserDO.setUpdateTime(now);
             newUserDO.setCreateTime(now);
             newUserDO.setUserType(UserType.APP_USER.getUserType());
+            newUserDO.setNowMoney(BigDecimal.ZERO);
+            newUserDO.setBrokeragePrice(BigDecimal.ZERO);
+            newUserDO.setIntegral(BigDecimal.ZERO);
             kxUserMapper.insert(newUserDO);
             //这一步是为了封装上数据库上配置的默认值
             kxUser = kxUserMapper.selectById(newUserDO.getUid());
@@ -272,6 +285,15 @@ public class SysAppLoginService implements ISysAppLoginService {
         LoginHelper.loginByDevice(loginUser, DeviceType.APP);
         kxUserVo.setAccessToken(StpUtil.getTokenValue());
         return kxUserVo;
+    }
+
+    public boolean isValidOpenId(String openId) {
+        if (openId == null || openId.length() != 28) {
+            return false;
+        }
+
+        // 验证前缀和字符组成
+        return openId.matches("^opzI95[a-zA-Z0-9\\-_]{22}$");
     }
 
     private void checkVerifyCode(String phone, String verifyCode) {
