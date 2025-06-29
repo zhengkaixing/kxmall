@@ -53,8 +53,8 @@ public class CallbackController {
 //    @Autowired
 //    private KxGroupShopMapper groupShopMapper;
 
-//    @Autowired
-//    private AdminNotifyBizService adminNotifyBizService;
+    @Autowired
+    private AdminNotifyBizService adminNotifyBizService;
 
 //    @Autowired
 //    private AdminPrintBizService adminPrintBizService;
