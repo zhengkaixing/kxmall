@@ -2,16 +2,15 @@ package com.kxmall.web.controller.recommend;
 
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.util.ObjectUtil;
+import com.kxmall.carousel.domain.KxCarousel;
 import com.kxmall.common.core.controller.BaseAppController;
-import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.R;
-import com.kxmall.common.core.domain.entity.SysDictData;
-import com.kxmall.common.core.page.TableDataInfo;
-import com.kxmall.recommend.domain.vo.KxRecommendVo;
 import com.kxmall.web.controller.recommend.service.IKxAppRecommendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +35,8 @@ public class KxAppRecommendController extends BaseAppController {
      */
     @SaIgnore
     @GetMapping("/getRecommendTypeEnums")
-    public R<List<SysDictData>> dictType() {
-        List<SysDictData> data = recommendService.getRecommendTypeEnums();
+    public R<List<KxCarousel>> dictType() {
+        List<KxCarousel> data = recommendService.getRecommendTypeEnums();
         if (ObjectUtil.isNull(data)) {
             data = new ArrayList<>();
         }

@@ -1,6 +1,6 @@
 package com.kxmall.web.controller.recommend.service;
 
-import com.kxmall.common.core.domain.entity.SysDictData;
+import com.kxmall.carousel.domain.KxCarousel;
 import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.recommend.domain.vo.KxRecommendVo;
 
@@ -20,6 +20,6 @@ public interface IKxAppRecommendService {
      *
      * @return
      */
-    List<SysDictData> getRecommendTypeEnums();
+    List<KxCarousel> getRecommendTypeEnums();
 
 }
