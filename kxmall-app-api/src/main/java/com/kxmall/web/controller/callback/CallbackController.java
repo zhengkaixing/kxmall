@@ -56,8 +56,8 @@ public class CallbackController {
     @Autowired
     private AdminNotifyBizService adminNotifyBizService;
 
-//    @Autowired
-//    private AdminPrintBizService adminPrintBizService;
+    @Autowired
+    private AdminPrintBizService adminPrintBizService;
 
     private static final Logger logger = LoggerFactory.getLogger(CallbackController.class);
 
