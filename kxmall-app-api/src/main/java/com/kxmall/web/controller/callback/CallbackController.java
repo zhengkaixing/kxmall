@@ -118,7 +118,6 @@ public class CallbackController {
         KxStoreOrder updateOrderDO = KxStoreOrder.builder().build();
         updateOrderDO.setPayId(payId);
         updateOrderDO.setPayChannel("WX");
-        updateOrderDO.setPayPrice(BigDecimal.valueOf(totalFee));
         updateOrderDO.setPayTime(new Date());
         updateOrderDO.setUpdateTime(order.getPayTime());
         updateOrderDO.setStatus(OrderStatusType.WAIT_PREPARE_GOODS.getCode());
@@ -135,8 +134,8 @@ public class CallbackController {
 
         //通知管理员发货
         GlobalExecutor.execute(() -> {
-            //adminNotifyBizService.newOrder(order);
-            //adminPrintBizService.newOrderPrint(order);
+            adminNotifyBizService.newOrder(order);
+            adminPrintBizService.newOrderPrint(order);
         });
 
         return WxPayNotifyResponse.success("支付成功");
