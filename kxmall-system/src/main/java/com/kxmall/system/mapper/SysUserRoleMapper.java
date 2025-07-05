@@ -1,7 +1,7 @@
 package com.kxmall.system.mapper;
 
-import com.kxmall.system.domain.SysUserRole;
 import com.kxmall.common.core.mapper.BaseMapperPlus;
+import com.kxmall.system.domain.SysUserRole;
 
 import java.util.List;
 

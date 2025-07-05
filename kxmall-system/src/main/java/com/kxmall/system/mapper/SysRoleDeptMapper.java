@@ -1,7 +1,7 @@
 package com.kxmall.system.mapper;
 
-import com.kxmall.system.domain.SysRoleDept;
 import com.kxmall.common.core.mapper.BaseMapperPlus;
+import com.kxmall.system.domain.SysRoleDept;
 
 /**
  * 角色与部门关联表 数据层
