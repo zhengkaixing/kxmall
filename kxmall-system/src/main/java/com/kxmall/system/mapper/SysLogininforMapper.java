@@ -1,7 +1,7 @@
 package com.kxmall.system.mapper;
 
-import com.kxmall.system.domain.SysLogininfor;
 import com.kxmall.common.core.mapper.BaseMapperPlus;
+import com.kxmall.system.domain.SysLogininfor;
 
 /**
  * 系统访问日志情况信息 数据层
