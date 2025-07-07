@@ -2,7 +2,7 @@ package com.kxmall.web.controller.system;
 
 
 import cn.hutool.core.util.ObjectUtil;
-import com.kxmall.common.core.controller.BaseController;
+import com.kxmall.common.core.controller.BaseAppController;
 import com.kxmall.common.core.domain.R;
 import com.kxmall.common.exception.ServiceException;
 import com.kxmall.system.domain.vo.SysOssVo;
@@ -28,7 +28,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/oss/app")
-public class SysAppOssController extends BaseController {
+public class SysAppOssController extends BaseAppController {
 
     private final ISysAppOssService iSysOssService;
 

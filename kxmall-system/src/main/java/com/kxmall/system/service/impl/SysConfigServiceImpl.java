@@ -20,6 +20,8 @@ import com.kxmall.common.utils.spring.SpringUtils;
 import com.kxmall.system.domain.SysConfig;
 import com.kxmall.system.mapper.SysConfigMapper;
 import com.kxmall.system.service.ISysConfigService;
+import com.kxmall.wechat.WxMaConfiguration;
+import com.kxmall.wechat.WxPayConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -266,9 +268,21 @@ public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
                 }
         );
         this.resetConfigCache();
+        //如何是微信配置，需要更新项目缓存
+        clearItemCache(category);
         LambdaQueryWrapper<SysConfig> lqw = new LambdaQueryWrapper<SysConfig>()
                 .eq(StringUtils.isNotBlank(category), SysConfig::getCategory, category);
         return baseMapper.selectList(lqw);
+    }
+
+    private static void clearItemCache(String category) {
+        if (category.equals("wxMini")) {
+            WxMaConfiguration.removeWxMaService();
+            WxPayConfiguration.removeWxPayService();
+        }
+        if (category.equals("wxH5")) {
+            WxMaConfiguration.removeWxMaService();
+        }
     }
 
     @Override
