@@ -91,6 +91,12 @@ public class KxRecommendVo {
     private String unitName;
 
 
+    /**
+     * 商品简介
+     */
+    private String storeInfo;
+
+
 
 
 
