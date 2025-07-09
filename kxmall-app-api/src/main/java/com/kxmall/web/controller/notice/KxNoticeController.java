@@ -27,7 +27,7 @@ public class KxNoticeController extends BaseAppController {
     private final IKxNoticetService noticetService;
 
     /**
-     * 查询客户收藏列表
+     * 查询公告列表
      */
     @GetMapping("/list")
     public R<List<SysNotice>> list(SysNotice bo) {

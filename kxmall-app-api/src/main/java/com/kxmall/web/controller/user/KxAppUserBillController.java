@@ -1,7 +1,6 @@
 package com.kxmall.web.controller.user;
 
 import com.kxmall.common.core.controller.BaseAppController;
-import com.kxmall.common.core.controller.BaseController;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.user.domain.bo.KxUserBillBo;
@@ -35,6 +34,16 @@ public class KxAppUserBillController extends BaseAppController {
         Long userId = getAppLoginUser().getUserId();
         bo.setUid(userId);
         bo.setCategory("integral");
+        return kxAppUserBillService.queryPageList(bo, pageQuery);
+    }
+    /**
+     * 查询用户账单列表
+     */
+    @GetMapping("/listMoney")
+    public TableDataInfo<KxUserBillVo> listMoney(KxUserBillBo bo, PageQuery pageQuery) {
+        Long userId = getAppLoginUser().getUserId();
+        bo.setUid(userId);
+        bo.setCategory("now_money");
         return kxAppUserBillService.queryPageList(bo, pageQuery);
     }
 }

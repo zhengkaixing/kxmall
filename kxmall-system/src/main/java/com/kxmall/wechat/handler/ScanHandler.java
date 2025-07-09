@@ -43,6 +43,7 @@ public class ScanHandler extends AbstractHandler {
         if (!ObjectUtils.isEmpty(storageId)) {
             KxStorage update = new KxStorage();
             update.setId(storageId);
+            update.setOpenId(openId);
             // 扫码事件处理
             if (storageMapper.updateById(update)<=0) {
                 return new TextBuilder().build("商家订阅失败！", wxMpXmlMessage, wxMpService);
