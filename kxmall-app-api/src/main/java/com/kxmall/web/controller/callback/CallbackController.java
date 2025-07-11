@@ -11,6 +11,7 @@ import com.kxmall.common.enums.OrderStatusType;
 import com.kxmall.common.enums.PayMethodEnum;
 import com.kxmall.executor.GlobalExecutor;
 import com.kxmall.notify.AdminNotifyBizService;
+import com.kxmall.order.biz.OrderBizService;
 import com.kxmall.order.domain.KxStoreOrder;
 import com.kxmall.order.domain.KxStoreOrderProduct;
 import com.kxmall.order.domain.vo.KxStoreOrderProductVo;
@@ -44,6 +45,9 @@ public class CallbackController {
 
     @Autowired
     private IKxAppOrderService appOrderService;
+
+    @Autowired
+    private OrderBizService orderBizService;
 
     @Autowired
     private KxStoreOrderProductMapper orderProductMapper;
@@ -121,8 +125,64 @@ public class CallbackController {
         updateOrderDO.setPayChannel("WX");
         updateOrderDO.setPayTime(new Date());
         updateOrderDO.setUpdateTime(order.getPayTime());
-        updateOrderDO.setStatus(OrderStatusType.WAIT_PREPARE_GOODS.getCode());
-        appOrderService.changeOrderStatus(orderNo, OrderStatusType.UNPAY.getCode(), updateOrderDO);
+        if (order.getCombinationId() != null && order.getCombinationId()!=0L) {
+            updateOrderDO.setStatus(OrderStatusType.GROUP_SHOP_WAIT.getCode());
+        } else {
+            updateOrderDO.setStatus(OrderStatusType.WAIT_PREPARE_GOODS.getCode());
+        }
+        orderBizService.changeOrderStatus(orderNo, OrderStatusType.UNPAY.getCode(), updateOrderDO);
+
+        List<KxStoreOrderProductVo> orderProducts = orderProductMapper.selectVoList(new QueryWrapper<KxStoreOrderProduct>().eq("order_id", order.getId()));
+        order.setProductList(orderProducts);
+        orderProducts.forEach(item -> {
+            //增加销量
+            storeProductMapper.incSales(item.getProductId(), item.getNum());
+        });
+
+        //通知管理员发货
+        GlobalExecutor.execute(() -> {
+            adminNotifyBizService.newOrder(order);
+            adminPrintBizService.newOrderPrint(order);
+        });
+
+
+        return WxPayNotifyResponse.success("支付成功");
+    }
+
+
+    @RequestMapping("/balancePay")
+    @Transactional(rollbackFor = Exception.class)
+    public Object balancePay(String orderNo) throws Exception {
+
+
+        List<KxStoreOrderVo> KxStoreOrderList = appOrderService.selectListVoByWrapper(
+            new QueryWrapper<KxStoreOrder>()
+                .eq("order_id", orderNo));
+
+        if (CollectionUtils.isEmpty(KxStoreOrderList)) {
+            return WxPayNotifyResponse.fail("订单不存在 orderNo=" + orderNo);
+        }
+
+        KxStoreOrderVo order = KxStoreOrderList.get(0);
+
+        // 检查这个订单是否已经处理过
+        if (order.getStatus() != OrderStatusType.UNPAY.getCode()) {
+            return WxPayNotifyResponse.success("订单已经处理成功!");
+        }
+
+        //**************** 在此之前都没有 数据库修改 操作 所以前面是直接返回错误的 **********************//
+
+        KxStoreOrder updateOrderDO = KxStoreOrder.builder().build();
+        updateOrderDO.setPayId("0");
+        updateOrderDO.setPayChannel("WX");
+        updateOrderDO.setPayTime(new Date());
+        updateOrderDO.setUpdateTime(order.getPayTime());
+        if (order.getCombinationId() != null && order.getCombinationId()!=0L) {
+            updateOrderDO.setStatus(OrderStatusType.GROUP_SHOP_WAIT.getCode());
+        } else {
+            updateOrderDO.setStatus(OrderStatusType.WAIT_PREPARE_GOODS.getCode());
+        }
+        orderBizService.changeOrderStatus(orderNo, OrderStatusType.UNPAY.getCode(), updateOrderDO);
 
         //扣款
 
