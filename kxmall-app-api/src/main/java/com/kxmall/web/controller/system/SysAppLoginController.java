@@ -11,7 +11,6 @@ import com.kxmall.web.controller.system.service.ISysAppLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
@@ -35,14 +34,15 @@ public class SysAppLoginController extends BaseAppController {
 
     /**
      * 账号密码登录
+     *
      * @return 结果
      */
     @SaIgnore
     @GetMapping("/accountLogin")
-    public R<Map<String, Object>> accountLogin(String username,String password) {
+    public R<Map<String, Object>> accountLogin(String username, String password) {
         Map<String, Object> ajax = new HashMap<>();
         // 生成令牌
-        String token = appLoginService.accountLogin(username,password);
+        String token = appLoginService.accountLogin(username, password);
         ajax.put(Constants.TOKEN, token);
         return R.ok(ajax);
 
@@ -51,13 +51,14 @@ public class SysAppLoginController extends BaseAppController {
 
     /**
      * 短信验证码登录
+     *
      * @return 结果
      */
     @SaIgnore
     @GetMapping("/phoneLogin")
     public R<KxUserVo> phoneLogin(String phone, String verifyCode) {
         // 生成令牌
-        KxUserVo userVo = appLoginService.phoneLogin(phone,verifyCode);
+        KxUserVo userVo = appLoginService.phoneLogin(phone, verifyCode);
         return R.ok(userVo);
 
     }
@@ -65,14 +66,15 @@ public class SysAppLoginController extends BaseAppController {
 
     /**
      * 账号密码注册
+     *
      * @return 结果
      */
     @SaIgnore
     @GetMapping("/accountRegister")
-    public R<Map<String, Object>> accountRegister(String username,String password) {
+    public R<Map<String, Object>> accountRegister(String username, String password) {
         Map<String, Object> ajax = new HashMap<>();
         // 生成令牌
-        String token = appLoginService.accountRegister(username,password);
+        String token = appLoginService.accountRegister(username, password);
         ajax.put(Constants.TOKEN, token);
         return R.ok(ajax);
 
@@ -81,12 +83,13 @@ public class SysAppLoginController extends BaseAppController {
 
     /**
      * 账号密码修改
+     *
      * @return 结果
      */
     @GetMapping("/accountUpdate")
-    public R<Boolean> accountUpdate(String oldPassword,String newPassword) {
+    public R<Boolean> accountUpdate(String oldPassword, String newPassword) {
         LoginUser loginUser = getAppLoginUser();
-        return R.ok(appLoginService.accountUpdate(loginUser.getUsername(),oldPassword,newPassword));
+        return R.ok(appLoginService.accountUpdate(loginUser.getUsername(), oldPassword, newPassword));
     }
 
     /**
@@ -97,12 +100,9 @@ public class SysAppLoginController extends BaseAppController {
      */
     @SaIgnore
     @GetMapping("/h5Login")
-    public R<Map<String, Object>> h5Login(@NotBlank(message = "{h5.code.not.blank}") String code) {
-        Map<String, Object> ajax = new HashMap<>();
-        // 生成令牌
-        String token = appLoginService.h5Login(code);
-        ajax.put(Constants.TOKEN, token);
-        return R.ok(ajax);
+    public R<KxUserVo> h5Login(@NotBlank(message = "{h5.code.not.blank}") String code) {
+
+        return R.ok(appLoginService.h5Login(code));
     }
 
 
@@ -114,11 +114,11 @@ public class SysAppLoginController extends BaseAppController {
      */
     @SaIgnore
     @GetMapping("/miniLogin")
-    public R<KxUserVo> miniLogin(Integer loginType,String code) {
+    public R<KxUserVo> miniLogin(Integer loginType, String code) {
         if (loginType.equals(UserLoginType.MP_WEIXIN.getCode())) {
             return R.ok(appLoginService.miniLogin(code));
         }
-       return null;
+        return null;
     }
 
     /**
@@ -128,14 +128,8 @@ public class SysAppLoginController extends BaseAppController {
      */
     @SaIgnore
     @GetMapping("/authPhone")
-    public R<KxUserVo> authPhone(String encryptedData,
-                                 String iv,
-                                 Integer loginType,
-                                 String session_key,
-                                 String openId,
-                                 String avatar,
-                                 String nickName) {
-        return R.ok(appLoginService.authPhone(encryptedData,iv,loginType,session_key,openId,avatar,nickName));
+    public R<KxUserVo> authPhone(String encryptedData, String iv, Integer loginType, String session_key, String openId, String avatar, String nickName) {
+        return R.ok(appLoginService.authPhone(encryptedData, iv, loginType, session_key, openId, avatar, nickName));
     }
 
 }

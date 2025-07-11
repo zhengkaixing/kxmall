@@ -21,7 +21,7 @@ public interface ISysAppLoginService {
      * @param openid
      * @return
      */
-    String h5Login(String openid);
+    KxUserVo h5Login(String openid);
 
     /**
      * 账号密码登录

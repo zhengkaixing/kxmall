@@ -15,6 +15,7 @@ import com.kxmall.common.enums.UserLoginType;
 import com.kxmall.common.enums.UserType;
 import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.helper.LoginHelper;
+import com.kxmall.common.utils.BeanCopyUtils;
 import com.kxmall.common.utils.redis.RedisUtils;
 import com.kxmall.user.domain.KxUser;
 import com.kxmall.user.domain.vo.KxUserVo;
@@ -115,14 +116,14 @@ public class SysAppLoginService implements ISysAppLoginService {
     }
 
     @Override
-    public String h5Login(String code) {
+    public KxUserVo h5Login(String code) {
         try {
             WxMpService wxService = WxMpConfiguration.getWxMpService();
             WxOAuth2AccessToken wxMpOAuth2AccessToken = wxService.getOAuth2Service().getAccessToken(code);
             WxOAuth2UserInfo wxMpUser = wxService.getOAuth2Service().getUserInfo(wxMpOAuth2AccessToken, null);
             String openid = wxMpUser.getOpenid();
             KxUser user = kxUserMapper.selectOne(new LambdaQueryWrapper<KxUser>()
-                .eq(KxUser::getGzhOpenId, openid));
+                    .eq(KxUser::getGzhOpenId, openid));
 
             if (user == null) {
                 user = new KxUser();
@@ -131,23 +132,31 @@ public class SysAppLoginService implements ISysAppLoginService {
                 user.setAvatar(wxMpUser.getHeadImgUrl());
                 user.setUserType(UserType.APP_USER.getUserType());
                 user.setGzhOpenId(openid);
+                user.setLoginType(UserLoginType.H5_WEIXIN.getCode());
+                user.setNowMoney(BigDecimal.ZERO);
+                user.setBrokeragePrice(BigDecimal.ZERO);
+                user.setIntegral(BigDecimal.ZERO);
                 kxUserMapper.insert(user);
             }
             // 此处可根据登录用户的数据不同 自行创建 loginUser
             LoginUser loginUser = buildLoginUser(user);
             // 生成token
             LoginHelper.loginByDevice(loginUser, DeviceType.APP);
-            return StpUtil.getTokenValue();
+
+            KxUserVo vo = new KxUserVo();
+            BeanCopyUtils.copy(user, vo);
+            vo.setAccessToken(StpUtil.getTokenValue());
+            return vo;
         } catch (WxErrorException e) {
-            throw new ServiceException("微信授权失败！");
+            throw new ServiceException(e.getMessage());
         }
     }
 
     @Override
     public String accountLogin(String username, String password) {
         KxUser user = kxUserMapper.selectOne(new LambdaQueryWrapper<KxUser>()
-            .eq(KxUser::getUsername, username)
-            .eq(KxUser::getPassword, SecureUtil.md5(password)));
+                .eq(KxUser::getUsername, username)
+                .eq(KxUser::getPassword, SecureUtil.md5(password)));
         if (ObjectUtils.isEmpty(user)) {
             throw new ServiceException("账号或者密码不正确");
         }
@@ -161,7 +170,7 @@ public class SysAppLoginService implements ISysAppLoginService {
     @Override
     public String accountRegister(String username, String password) {
         KxUser user = kxUserMapper.selectOne(new LambdaQueryWrapper<KxUser>()
-            .eq(KxUser::getUsername, username));
+                .eq(KxUser::getUsername, username));
         if (ObjectUtils.isNotEmpty(user)) {
             throw new ServiceException("用户账号已存在！");
         }
@@ -169,6 +178,9 @@ public class SysAppLoginService implements ISysAppLoginService {
         user.setNickname(username);
         user.setUserType("account");
         user.setPassword(SecureUtil.md5(password));
+        user.setNowMoney(BigDecimal.ZERO);
+        user.setBrokeragePrice(BigDecimal.ZERO);
+        user.setIntegral(BigDecimal.ZERO);
         kxUserMapper.insert(user);
         // 此处可根据登录用户的数据不同 自行创建 loginUser
         LoginUser loginUser = buildLoginUser(user);
@@ -180,8 +192,8 @@ public class SysAppLoginService implements ISysAppLoginService {
     @Override
     public Boolean accountUpdate(String username, String oldPassword, String newPassword) {
         KxUser user = kxUserMapper.selectOne(new LambdaQueryWrapper<KxUser>()
-            .eq(KxUser::getUsername, username)
-            .eq(KxUser::getPassword, SecureUtil.md5(oldPassword)));
+                .eq(KxUser::getUsername, username)
+                .eq(KxUser::getPassword, SecureUtil.md5(oldPassword)));
         if (ObjectUtils.isNotEmpty(user)) {
             throw new ServiceException("旧密码不正确！");
         }
@@ -209,6 +221,9 @@ public class SysAppLoginService implements ISysAppLoginService {
             newKxUser.setUpdateTime(now);
             newKxUser.setUserType(UserType.APP_USER.getUserType());
             newKxUser.setCreateTime(now);
+            newKxUser.setNowMoney(BigDecimal.ZERO);
+            newKxUser.setBrokeragePrice(BigDecimal.ZERO);
+            newKxUser.setIntegral(BigDecimal.ZERO);
             kxUserMapper.insert(newKxUser);
             //这一步是为了封装上数据库上配置的默认值
             userdo = kxUserMapper.selectById(newKxUser.getUid());
