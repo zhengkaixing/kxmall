@@ -7,7 +7,6 @@ import com.kxmall.storage.domain.vo.KxStorageVo;
 import com.kxmall.storage.domain.vo.RecentlyStorageVo;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * @author 郅兴开源团队-小黑

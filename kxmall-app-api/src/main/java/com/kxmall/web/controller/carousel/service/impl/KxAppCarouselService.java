@@ -25,15 +25,13 @@ public class KxAppCarouselService implements IKxAppCarouselService {
 
     private final KxCarouselMapper baseMapper;
 
-
-
     @Override
     public List<KxCarousel> listAll(Integer adType) {
         List<KxCarousel> cacheList
-            = RedisUtils.getCacheList(ADVERTISEMENT_NAME + adType);
+                = RedisUtils.getCacheList(ADVERTISEMENT_NAME + adType);
         if (CollectionUtils.isEmpty(cacheList)) {
             LambdaQueryWrapper<KxCarousel> wrapper = new LambdaQueryWrapper<KxCarousel>()
-                .eq(KxCarousel::getStatus, StatusType.ACTIVE.getCode());
+                    .eq(KxCarousel::getStatus, StatusType.ACTIVE.getCode());
             if (adType != 99) {
                 wrapper.eq(KxCarousel::getAdType, adType);
             }

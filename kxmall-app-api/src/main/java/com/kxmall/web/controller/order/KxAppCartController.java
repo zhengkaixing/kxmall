@@ -33,7 +33,7 @@ public class KxAppCartController extends BaseAppController {
 
 
     /**
-     * 获取购物车数量
+     * 获取购物车数量-可匿名访问，登录情况下访问也可以
      */
     @GetMapping("/countCart")
     @SaIgnore
