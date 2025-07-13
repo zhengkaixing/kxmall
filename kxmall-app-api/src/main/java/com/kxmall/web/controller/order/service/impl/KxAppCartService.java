@@ -6,14 +6,12 @@ import com.kxmall.common.utils.BeanCopyUtils;
 import com.kxmall.order.domain.KxStoreCart;
 import com.kxmall.order.domain.vo.KxStoreCartVo;
 import com.kxmall.order.mapper.KxStoreCartMapper;
-import com.kxmall.system.domain.vo.SysOssVo;
 import com.kxmall.web.controller.order.service.IKxAppCartService;
 import com.kxmall.web.controller.product.service.IKxAppCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
 import java.util.List;

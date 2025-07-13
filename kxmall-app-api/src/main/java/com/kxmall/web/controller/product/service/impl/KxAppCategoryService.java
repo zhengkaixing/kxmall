@@ -84,7 +84,7 @@ public class KxAppCategoryService implements IKxAppCategoryService {
             return categoryDTOListFormCache;
         }
         //从数据库查询
-        List<KxStoreCategory> categoryDOList = baseMapper.selectList(new LambdaQueryWrapper<>());
+        List<KxStoreCategory> categoryDOList = baseMapper.selectList(new LambdaQueryWrapper<KxStoreCategory>().orderByDesc(KxStoreCategory::getSort));
         //组装DTO
         List<KxStoreCategoryVo> storeCategoryVoLinkedList = new LinkedList<>();
         categoryDOList.forEach(categoryDO -> {
