@@ -24,7 +24,7 @@ public class KxAppUserService implements IKxAppUserService {
     private static final String VERIFY_CODE_PREFIX = "VERIFY_CODE_";
 
     /**
-     * 查询足迹
+     * 查询用户
      */
     @Override
     public KxUserVo queryById(Long id) {
@@ -32,11 +32,15 @@ public class KxAppUserService implements IKxAppUserService {
     }
 
     /**
-     * 修改足迹
+     * 修改用户
      */
     @Override
     public Boolean updateByBo(KxUserBo bo) {
         KxUser update = BeanUtil.toBean(bo, KxUser.class);
+        update.setUid(bo.getUid());
+        update.setNickname(bo.getNickname());
+        update.setBirthday(bo.getBirthday());
+        update.setAvatar(bo.getAvatar());
         return baseMapper.updateById(update) > 0;
     }
 
