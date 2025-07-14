@@ -6,36 +6,46 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.enums.ProductStatusType;
+import com.kxmall.common.enums.SpecTypeEnum;
 import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.utils.redis.RedisUtils;
-import com.kxmall.order.domain.KxStoreAppraise;
 import com.kxmall.order.domain.vo.KxStoreAppraiseVo;
-import com.kxmall.order.mapper.KxStoreAppraiseMapper;
 import com.kxmall.product.domain.KxStoreCategory;
 import com.kxmall.product.domain.KxStoreProduct;
+import com.kxmall.product.domain.vo.FreightTemplateDO;
+import com.kxmall.product.domain.vo.FreightTemplateDTO;
 import com.kxmall.product.domain.vo.KxStoreProductVo;
-import com.kxmall.product.mapper.KxStoreCategoryMapper;
 import com.kxmall.product.mapper.KxStoreProductMapper;
+import com.kxmall.seckill.domain.KxStoreSeckill;
+import com.kxmall.seckill.domain.vo.KxStoreSeckillVo;
+import com.kxmall.seckill.mapper.KxStoreSeckillMapper;
 import com.kxmall.storage.domain.KxStock;
 import com.kxmall.storage.domain.vo.KxStockVo;
 import com.kxmall.storage.mapper.KxStockMapper;
+import com.kxmall.system.domain.SysConfig;
+import com.kxmall.system.service.ISysConfigService;
+import com.kxmall.user.domain.KxUserCollect;
+import com.kxmall.user.mapper.KxUserCollectMapper;
 import com.kxmall.web.controller.order.service.IKxAppAppraiseService;
 import com.kxmall.web.controller.product.service.IKxAppCategoryService;
 import com.kxmall.web.controller.product.service.IKxAppProductService;
-import com.kxmall.web.controller.user.service.IKxUserFootprintService;
+import com.kxmall.web.controller.user.service.IKxAppUserFootprintService;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.session.RowBounds;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author 郅兴开源团队-小黑
+ * @author kaixin
  * @version 1.0
  * @date 2023/9/3
  */
@@ -49,10 +59,11 @@ public class KxAppProductService implements IKxAppProductService {
 
     private final IKxAppAppraiseService appraiseService;
 
-    private final IKxUserFootprintService userFootprintService;
+    private final IKxAppUserFootprintService userFootprintService;
 
     private final KxStockMapper stockMapper;
 
+    private final KxUserCollectMapper collectMapper;
 
     /**
      * PRODUCT 分页缓存
@@ -136,7 +147,7 @@ public class KxAppProductService implements IKxAppProductService {
     @Override
     public TableDataInfo<KxStoreProductVo> getGoodsPageByStorage(Long storageId, Integer pageNo, Integer pageSize, Long categoryId, String orderBy, Boolean isAsc, String title,Integer type) {
         //缓存key
-        String keyCache = CA_PRODUCT_PAGE_PREFIX + storageId + "_" + categoryId + "_" + pageNo + "_" + pageSize + "_" + orderBy + "_" + isAsc;
+        String keyCache = CA_PRODUCT_PAGE_PREFIX + storageId + "_" + categoryId + "_" + pageNo + "_" + pageSize + "_" + orderBy + "_" + isAsc + "_" + type;
         //开始组装条件search
         if (StringUtils.isEmpty(title)) {
             //若关键字为空，尝试从缓存取列表
@@ -171,7 +182,7 @@ public class KxAppProductService implements IKxAppProductService {
 
         if (StringUtils.isEmpty(title)) {
             //若关键字为空，制作缓存
-            RedisUtils.setCacheObject(CA_PRODUCT_PAGE_PREFIX + categoryId + "_" + pageNo + "_" + pageSize + "_" + orderBy + "_" + isAsc, tableDataInfo);
+            RedisUtils.setCacheObject(CA_PRODUCT_PAGE_PREFIX + categoryId + "_" + pageNo + "_" + pageSize + "_" + orderBy + "_" + isAsc, tableDataInfo, Duration.ofDays(1));
         }
         return tableDataInfo;
     }
@@ -179,8 +190,11 @@ public class KxAppProductService implements IKxAppProductService {
     @Override
     public KxStoreProductVo getGoodsByStorage(Long storageId,Long productId, Long userId) {
         //获取缓存
-        KxStoreProductVo storeProductVo = RedisUtils.getCacheObject(CA_PRODUCT_PREFIX + storageId + "_" + productId);
+        //KxStoreProductVo storeProductVo = RedisUtils.getCacheObject(CA_PRODUCT_PREFIX + storageId + "_" + productId);
+        KxStoreProductVo storeProductVo =null;
         if (storeProductVo != null) {
+            //查找收藏
+            packSpuCollectInfo(storeProductVo, userId);
             //获取第一页评论
             TableDataInfo<KxStoreAppraiseVo> storeAppraisePage = appraiseService.getProductAppraiseByPage(productId, 1, 10, 1);
             storeProductVo.setAppraisePage(storeAppraisePage);
@@ -208,7 +222,17 @@ public class KxAppProductService implements IKxAppProductService {
         }
         KxStoreProductVo kxStoreProductVo = new KxStoreProductVo();
         BeanUtils.copyProperties(product, kxStoreProductVo);
+        List<KxStoreProductVo> kxStoreProductVos = new ArrayList<>();
 
+        if (SpecTypeEnum.TYPE_1.getValue().equals(kxStoreProductVo.getSpecType())) {
+            List<KxStoreProduct> skuList  =baseMapper.selectListByStorage(storageId, product.getCommonId());
+            for (KxStoreProduct kxStoreProduct : skuList) {
+                KxStoreProductVo temp = new KxStoreProductVo();
+                BeanUtils.copyProperties(kxStoreProduct, temp);
+                kxStoreProductVos.add(temp);
+            }
+            kxStoreProductVo.setSkuList(kxStoreProductVos);
+        }
 
         //查询库存信息
         KxStock kxStock = new KxStock();
@@ -226,6 +250,10 @@ public class KxAppProductService implements IKxAppProductService {
 
         //放入缓存
         RedisUtils.setCacheObject(CA_PRODUCT_PREFIX + storageId + "_" + productId, kxStoreProductVo);
+
+        //查找收藏
+        packSpuCollectInfo(kxStoreProductVo, userId);
+
         //获取第一页评论
         TableDataInfo<KxStoreAppraiseVo> storeAppraisePage = appraiseService.getProductAppraiseByPage(productId, 1, 10, 1);
         kxStoreProductVo.setAppraisePage(storeAppraisePage);
@@ -233,5 +261,25 @@ public class KxAppProductService implements IKxAppProductService {
             userFootprintService.addOrUpdateFootprint(userId, productId);
         }
         return kxStoreProductVo;
+    }
+
+    private void packSpuCollectInfo(KxStoreProductVo kxStoreProductVo, Long userId) {
+        if (userId != null) {
+            Long collectStatus = collectMapper.selectCount(new LambdaQueryWrapper<KxUserCollect>()
+                    .eq(KxUserCollect::getUserId, userId)
+                    .eq(KxUserCollect::getProductId, kxStoreProductVo.getId()));
+            kxStoreProductVo.setCollect(collectStatus==1L);
+        }
+
+    }
+
+    //通过key获取对象
+    private SysConfig selectConfig(List<SysConfig> list, String key) {
+        for (SysConfig configDO : list) {
+            if (key.equals(configDO.getConfigKey())) {
+                return configDO;
+            }
+        }
+        return new SysConfig();
     }
 }

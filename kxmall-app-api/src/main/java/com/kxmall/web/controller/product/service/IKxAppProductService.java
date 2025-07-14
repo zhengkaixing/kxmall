@@ -1,10 +1,7 @@
 package com.kxmall.web.controller.product.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.product.domain.vo.KxStoreProductVo;
-
-import java.awt.*;
 
 /**
  * @author 郅兴开源团队-小黑
@@ -34,9 +31,17 @@ public interface IKxAppProductService {
      * @param orderBy
      * @param isAsc
      * @param title
+     * @param type 0 不限 1 积分
      * @return
      */
-    TableDataInfo<KxStoreProductVo> getGoodsPageByStorage(Long storageId, Integer pageNo, Integer pageSize, Long categoryId, String orderBy, Boolean isAsc, String title,Integer type);
+    TableDataInfo<KxStoreProductVo> getGoodsPageByStorage(Long storageId,
+                                                          Integer pageNo,
+                                                          Integer pageSize,
+                                                          Long categoryId,
+                                                          String orderBy,
+                                                          Boolean isAsc,
+                                                          String title,
+                                                          Integer type);
 
     /**
      * 指定仓库下获取商品详情
