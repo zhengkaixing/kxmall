@@ -4,11 +4,14 @@ import com.kxmall.common.annotation.RateLimiter;
 import com.kxmall.common.core.controller.BaseAppController;
 import com.kxmall.common.core.domain.R;
 import com.kxmall.common.core.page.TableDataInfo;
+import com.kxmall.common.enums.OrderStatusType;
 import com.kxmall.common.exception.ServiceException;
+import com.kxmall.common.utils.StringUtils;
 import com.kxmall.common.utils.redis.RedisUtils;
 import com.kxmall.order.domain.KxStoreOrder;
 import com.kxmall.order.domain.bo.OrderRequestBo;
 import com.kxmall.order.domain.vo.KxStoreOrderVo;
+import com.kxmall.storage.domain.vo.KxStorageVo;
 import com.kxmall.web.controller.order.builder.OrderBuilder;
 import com.kxmall.web.controller.order.builder.OrderDirector;
 import com.kxmall.web.controller.order.service.IKxAppOrderService;
@@ -19,6 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
@@ -138,33 +145,6 @@ public class KxAppOrderController extends BaseAppController {
     public R<String> refund(String orderId){
         Long userId = getAppLoginUser().getUserId();
         return R.ok("操作成功！",appOrderService.refund(orderId,userId));
-    }
-
-
-    /**
-     * 获取骑手实时位置
-     */
-    @GetMapping("/riderLocation")
-    public R<Object> getRiderLocation(@RequestParam(required = false) String riderId,@RequestParam(required = false) Long orderId) {
-
-        Map<String,BigDecimal> localtion = new HashMap<>();
-
-        //查询一个订单的状态，如何是备货中和等待接单，都是返回商家经纬度
-        KxStoreOrderVo orderDetail = appOrderService.getOrderDetail(orderId, null);
-        if (orderDetail.getStatus().equals(OrderStatusType.WAIT_PREPARE_GOODS.getCode())
-                || orderDetail.getStatus().equals(OrderStatusType.PREPARING_GOODS.getCode())
-                || orderDetail.getStatus().equals(OrderStatusType.WAIT_STOCK.getCode())
-                || StringUtils.isEmpty(riderId)) {
-            //返回门店地址
-            KxStorageVo storage = appStorageService.getStorage(orderDetail.getStoreId());
-            localtion.put("latitude", storage.getLatitude());
-            localtion.put("longitude", storage.getLongitude());
-        }else {
-            localtion = RedisUtils.getCacheObject(riderId);
-        }
-
-        // 返回成功结果
-        return R.ok(localtion);
     }
 
     /**
