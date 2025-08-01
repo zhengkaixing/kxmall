@@ -33,12 +33,11 @@ public interface IKxAppOrderService {
     List<KxStoreOrder> selectListByWrapper(QueryWrapper<KxStoreOrder> wrapper);
 
     /**
-     * 更新状态
-     * @param orderId
-     * @param nowStatus
-     * @param updateOrderDO
+     * 查询订单
+     * @param wrapper
+     * @return
      */
-    Boolean changeOrderStatus(String orderId, Integer nowStatus, KxStoreOrder updateOrderDO);
+    List<KxStoreOrderVo> selectListVoByWrapper(QueryWrapper<KxStoreOrder> wrapper);
 
     /**
      *
@@ -75,5 +74,11 @@ public interface IKxAppOrderService {
     KxStoreOrderVo getOrderDetail(Long orderId, Long userId);
 
 
-    List<KxStoreOrderVo> selectListVoByWrapper(QueryWrapper<KxStoreOrder> orderId);
+    /**
+     * 用户申请退款
+     * @param orderId
+     * @param userId
+     * @return
+     */
+    String refund(String orderId, Long userId);
 }

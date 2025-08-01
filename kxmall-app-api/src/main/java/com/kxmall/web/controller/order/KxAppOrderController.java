@@ -129,4 +129,58 @@ public class KxAppOrderController extends BaseAppController {
         return R.ok(appOrderService.getOrderDetail(orderId,userId));
     }
 
+    /**
+     * 用户申请退款
+     * @param orderId
+     * @return
+     */
+    @GetMapping("/refund")
+    public R<String> refund(String orderId){
+        Long userId = getAppLoginUser().getUserId();
+        return R.ok("操作成功！",appOrderService.refund(orderId,userId));
+    }
+
+
+    /**
+     * 获取骑手实时位置
+     */
+    @GetMapping("/riderLocation")
+    public R<Object> getRiderLocation(@RequestParam(required = false) String riderId,@RequestParam(required = false) Long orderId) {
+
+        Map<String,BigDecimal> localtion = new HashMap<>();
+
+        //查询一个订单的状态，如何是备货中和等待接单，都是返回商家经纬度
+        KxStoreOrderVo orderDetail = appOrderService.getOrderDetail(orderId, null);
+        if (orderDetail.getStatus().equals(OrderStatusType.WAIT_PREPARE_GOODS.getCode())
+                || orderDetail.getStatus().equals(OrderStatusType.PREPARING_GOODS.getCode())
+                || orderDetail.getStatus().equals(OrderStatusType.WAIT_STOCK.getCode())
+                || StringUtils.isEmpty(riderId)) {
+            //返回门店地址
+            KxStorageVo storage = appStorageService.getStorage(orderDetail.getStoreId());
+            localtion.put("latitude", storage.getLatitude());
+            localtion.put("longitude", storage.getLongitude());
+        }else {
+            localtion = RedisUtils.getCacheObject(riderId);
+        }
+
+        // 返回成功结果
+        return R.ok(localtion);
+    }
+
+    /**
+     * 生成随机的经度
+     * 经度范围：-180 到 180
+     */
+    private Double generateRandomLongitude() {
+        return ThreadLocalRandom.current().nextDouble(-180, 180);
+    }
+
+    /**
+     * 生成随机的纬度
+     * 纬度范围：-90 到 90
+     */
+    private Double generateRandomLatitude() {
+        return ThreadLocalRandom.current().nextDouble(-90, 90);
+    }
+
 }
