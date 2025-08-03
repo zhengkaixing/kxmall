@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RequiredArgsConstructor
 @RestController
-public class KxUserFootprintController extends BaseAppController {
+public class KxAppUserFootprintController extends BaseAppController {
 
 
 }
