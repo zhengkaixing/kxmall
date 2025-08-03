@@ -5,6 +5,7 @@ import com.kxmall.common.core.controller.BaseAppController;
 import com.kxmall.common.core.domain.R;
 import com.kxmall.common.enums.DeviceType;
 import com.kxmall.common.helper.LoginHelper;
+import com.kxmall.group.biz.GroupShopBizService;
 import com.kxmall.product.domain.vo.KxStoreCategoryVo;
 import com.kxmall.product.domain.vo.KxStoreProductVo;
 import com.kxmall.web.controller.product.service.IKxAppCategoryService;
@@ -33,21 +34,29 @@ public class KxAppProductController extends BaseAppController {
 
     private final IKxAppProductService appProductService;
     private final IKxAppCategoryService appCategoryService;
-
+    private final GroupShopBizService groupShopBizService;
 
     /**
      * 指定仓库下获取商品详情
      */
     @SaIgnore
     @GetMapping("/getGoodsByStorage")
-    public R<KxStoreProductVo> getGoodsByStorage(Long storageId, Long productId) {
+    public R<KxStoreProductVo> getGoodsByStorage(Long storageId, Long productId, Long groupShopId) {
         Long userId = 0L;
         DeviceType deviceType = LoginHelper.getDeviceType();
         if (!ObjectUtils.isEmpty(deviceType)) {
             userId = getAppLoginUser().getUserId();
         }
-        return R.ok(appProductService.getGoodsByStorage(storageId, productId, userId));
+        KxStoreProductVo storage = appProductService.getGoodsByStorage(storageId, productId, userId);
+        if (storage != null) {
+            storage.setGroupShop(groupShopBizService.getGroupShopById(groupShopId, storageId));
+            storage.setStoreSeckill(null);
+        }
+        return R.ok(storage);
     }
+
+
+
 
 
     /**
