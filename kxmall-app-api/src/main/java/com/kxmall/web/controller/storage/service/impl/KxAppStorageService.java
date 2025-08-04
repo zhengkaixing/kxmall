@@ -1,6 +1,8 @@
 package com.kxmall.web.controller.storage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kxmall.carousel.domain.KxCarousel;
 import com.kxmall.carousel.domain.vo.KxCarouselVo;
 import com.kxmall.common.core.page.TableDataInfo;
@@ -8,9 +10,12 @@ import com.kxmall.common.enums.RecommendType;
 import com.kxmall.common.enums.StorageBusinessStatusType;
 import com.kxmall.common.enums.StorageStatusType;
 import com.kxmall.common.utils.redis.RedisUtils;
+import com.kxmall.newtimes.domain.KxNewTimes;
+import com.kxmall.newtimes.mapper.KxNewTimesMapper;
 import com.kxmall.product.domain.vo.KxStoreProductVo;
 import com.kxmall.recommend.domain.vo.KxRecommendVo;
 import com.kxmall.storage.domain.KxStorage;
+import com.kxmall.storage.domain.bo.PointBo;
 import com.kxmall.storage.domain.vo.IntegralIndexDataVo;
 import com.kxmall.storage.domain.vo.KxStorageVo;
 import com.kxmall.storage.domain.vo.RecentlyStorageVo;
@@ -22,8 +27,10 @@ import com.kxmall.web.controller.storage.service.IKxAppStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,6 +47,7 @@ public class KxAppStorageService implements IKxAppStorageService {
 
 
     private final KxStorageMapper storageMapper;
+    private final KxNewTimesMapper newTimesMapper;
 
     private final IKxAppRecommendService recommendService;
     private final IKxAppProductService productService;
@@ -48,23 +56,50 @@ public class KxAppStorageService implements IKxAppStorageService {
     @Override
     public RecentlyStorageVo getRecentlyStorage(BigDecimal longitude, BigDecimal latitude) {
         RecentlyStorageVo recentlyStorageVo = new RecentlyStorageVo();
+        // 获取当前时间
+        LocalTime now = LocalTime.now();
         // 获取当前区域范围的仓库
         List<KxStorageVo> storageList = RedisUtils.getCacheList(STORAGE_INFO_PREFIX);
-        if (storageList == null) {
+        if (storageList == null || storageList.isEmpty()) {
             LambdaQueryWrapper<KxStorage> wrapper = new LambdaQueryWrapper<>();
             wrapper.eq(KxStorage::getState, StorageStatusType.NOMRAL.getCode());
             storageList = storageMapper.selectVoList(wrapper);
-            if (storageList != null && storageList.size() > 0) {
+            if (storageList != null && !storageList.isEmpty()) {
+                for (KxStorageVo kxStorageVo : storageList) {
+                    List<List<PointBo>> paths = kxStorageVo.getPaths();
+                    if (paths!=null && !paths.isEmpty()) {
+                        List<List<PointBo>> polygonList = new LinkedList<>();
+                        for (List<PointBo> pathList : paths) {
+                            ObjectMapper mapper = new ObjectMapper();
+                            List<PointBo> pathListTwo= mapper.convertValue(pathList, new TypeReference<List<PointBo>>() {});
+                            polygonList.add(pathListTwo);
+                        }
+                        kxStorageVo.setPaths(polygonList);
+                    }
+                }
                 RedisUtils.setCacheList(STORAGE_INFO_PREFIX, storageList);
             }
         }
-        if (storageList != null && storageList.size() > 0) {
+        if (storageList != null && !storageList.isEmpty()) {
             // 获取有效配送范围内的仓库
             double userStorgaeDistance;
             double[] userGps = {latitude.doubleValue(), longitude.doubleValue()};
             Map<Double, KxStorageVo> distanceKxStorageMap = new HashMap<>(storageList.size());
             for (KxStorageVo storageDO : storageList) {
+
+                //判断是否在营业时间范围内
+                // 转换营业时间为 LocalTime
+                LocalTime businessStart = LocalTime.parse(storageDO.getBusinessStartTime());
+                LocalTime businessStop = LocalTime.parse(storageDO.getBusinessStopTime());
+                // 判断当前时间是否在营业时间范围内
+                if (now.isBefore(businessStart) || now.isAfter(businessStop)) {
+                    // 当前时间不在营业时间范围内
+                    continue;
+                }
+
+
                 userStorgaeDistance = calculationDistance(new double[]{storageDO.getLatitude().doubleValue(), storageDO.getLongitude().doubleValue()}, userGps);
+                // 公里范围校验
                 if (userStorgaeDistance <= storageDO.getDeliveryRadius() * 1000) {
                     distanceKxStorageMap.put(userStorgaeDistance, storageDO);
                 }
@@ -120,7 +155,14 @@ public class KxAppStorageService implements IKxAppStorageService {
         }
         // TODO 测试数据写死仓库
         // ==============================
+        KxStorageVo kxStorageVo = storageMapper.selectVoById(11L);
         recentlyStorageVo.setId(11L);
+        recentlyStorageVo.setBusinessStartTime(kxStorageVo.getBusinessStartTime());
+        recentlyStorageVo.setBusinessStopTime(kxStorageVo.getBusinessStopTime());
+        recentlyStorageVo.setDeliveryStartTime(kxStorageVo.getDeliveryStartTime());
+        recentlyStorageVo.setDeliveryStopTime(kxStorageVo.getDeliveryStopTime());
+        double[] userGps = {latitude.doubleValue(), longitude.doubleValue()};
+        recentlyStorageVo.setDistance(BigDecimal.valueOf(calculationDistance(new double[]{kxStorageVo.getLatitude().doubleValue(), kxStorageVo.getLongitude().doubleValue()}, userGps)));
         recentlyStorageVo.setHaveStorage(true);
         recentlyStorageVo.setBusinessState(true);
         //===============================
@@ -163,8 +205,24 @@ public class KxAppStorageService implements IKxAppStorageService {
         integralIndexDataVo.setNewTop(newTop);
 
         // 新鲜时报
-        integralIndexDataVo.setNewTimesContent("新鲜时报！");
+        integralIndexDataVo.setNewTimesContent(getTimes(storageId));
         return integralIndexDataVo;
+    }
+
+
+    /**
+     * 获取新鲜时报
+     * @param storageId
+     * @return
+     */
+    private String getTimes(Long storageId) {
+        KxNewTimes newTimes = newTimesMapper.selectOne(new LambdaQueryWrapper<KxNewTimes>()
+                .eq(KxNewTimes::getStorageId, storageId)
+                .eq(KxNewTimes::getIsStop, 1));
+        if (ObjectUtils.isEmpty(newTimes)) {
+            return "您想不到的新鲜时蔬马上就来.";
+        }
+        return newTimes.getContent();
     }
 
     @Override
