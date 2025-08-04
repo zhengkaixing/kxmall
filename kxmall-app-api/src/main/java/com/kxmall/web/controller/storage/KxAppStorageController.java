@@ -83,6 +83,22 @@ public class KxAppStorageController extends BaseAppController {
         return R.ok(storage);
     }
 
+    /**
+     * 获取最近的仓库分页积分商品
+     */
+    @SaIgnore
+    @GetMapping("/getGoodsPageByStoragePoints")
+    public R<TableDataInfo<KxStoreProductVo>> getGoodsPageByStoragePoints(Long storageId,
+                                                                    @RequestParam(defaultValue = "1") Integer pageNo,
+                                                                    @RequestParam(defaultValue = "10") Integer pageSize,
+                                                                    Long categoryId,
+                                                                    String orderBy,
+                                                                    Boolean isAsc,
+                                                                    String title) {
+        TableDataInfo<KxStoreProductVo> storage = appProductService.getGoodsPageByStorage(storageId, pageNo, pageSize, categoryId, orderBy, isAsc, title,1);
+        return R.ok(storage);
+    }
+
 
     /**
      * 获取指定仓库数据内容
