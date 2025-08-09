@@ -1,5 +1,6 @@
 package com.kxmall.web.controller.order.builder;
 
+import com.kxmall.common.enums.PayChannelType;
 import com.kxmall.order.domain.KxStoreOrder;
 import com.kxmall.order.domain.bo.OrderPriceBo;
 import com.kxmall.order.domain.bo.OrderRequestBo;
@@ -26,6 +27,14 @@ public class OrderDirector {
         builder.buildOrderSkuHandlePart(orderDO, orderPriceBo, orderRequest);
         builder.buildCartHandlePart(orderRequest, userId);
         builder.buildNotifyHandlePart(orderDO);
+        //余额回调
+        if (PayChannelType.BALANCE.getCode().equals(orderRequest.getPayType())) {
+            builder.buildCallBackHandlePart(orderDO);
+        }
+        //积分回调
+        if (PayChannelType.INTEGRAL.getCode().equals(orderRequest.getPayType())) {
+            builder.buildCallBackHandlePointsPart(orderDO);
+        }
     }
 
 }

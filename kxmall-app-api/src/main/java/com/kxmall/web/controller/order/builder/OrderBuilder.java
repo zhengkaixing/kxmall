@@ -46,4 +46,15 @@ public abstract class OrderBuilder {
      * 7.触发订单创建完成后通知事件部分
      */
     public abstract void buildNotifyHandlePart(KxStoreOrder orderDO);
+
+    /**
+     * 余额回调
+     * @param orderDO
+     */
+    public abstract void buildCallBackHandlePart(KxStoreOrder orderDO);
+    /**
+     * 积分回调
+     * @param orderDO
+     */
+    public abstract void buildCallBackHandlePointsPart(KxStoreOrder orderDO);
 }
