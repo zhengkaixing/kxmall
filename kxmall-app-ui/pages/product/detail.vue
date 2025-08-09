@@ -292,7 +292,8 @@
 				that.goods = res.data
         that.goods.sliderImage = JSON.parse(res.data.sliderImage)
 				that.zhekou = ((res.data.kxStockVo.price/res.data.otPrice)*10).toFixed(1)
-        that.detail = res.data.description.replace(/<img/gi,'<img style="max-width:100%;height:auto;margin:0 auto;display:block"')
+        that.detail = res.data.description ? res.data.description.replace(/<img/gi,
+            '<img style="max-width:100%;height:auto;margin:0 auto;display:block"') : res.data.description
 				// that.zhekou = ((30/90)*10).toFixed(1)
 				if (that.goods.groupShop) {
 					//若存在团购信息，将价格更新到团购价格
