@@ -186,7 +186,7 @@ mybatis-plus:
 # Swagger配置
 swagger:
   # 是否开启swagger
-  enabled: true
+  enabled: false
   info:
     # 标题
     title: '标题：${kxmall.name}后台管理系统_接口文档'
@@ -202,11 +202,9 @@ springdoc:
     enabled: true
   #这里定义了两个分组，可定义多个，也可以不定义
   group-configs:
-    - group: 1.演示模块
-      packages-to-scan: com.kxmall.demo
-    - group: 2.系统模块
+    - group: 1.系统模块
       packages-to-scan: com.kxmall.web
-    - group: 3.代码生成模块
+    - group: 2.代码生成模块
       packages-to-scan: com.kxmall.generator
 
 # 防止XSS攻击
