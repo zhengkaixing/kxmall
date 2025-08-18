@@ -186,7 +186,7 @@ mybatis-plus:
 # Swagger配置
 swagger:
   # 是否开启swagger
-  enabled: false
+  enabled: true
   info:
     # 标题
     title: '标题：${kxmall.name}后台管理系统_接口文档'
@@ -199,7 +199,7 @@ springdoc:
   swagger-ui:
     # 持久化认证数据
     persistAuthorization: true
-    enabled: false
+    enabled: true
   #这里定义了两个分组，可定义多个，也可以不定义
   group-configs:
     - group: 1.系统模块
