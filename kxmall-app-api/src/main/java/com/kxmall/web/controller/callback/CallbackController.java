@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * 支付回调
  * @author admin
  * @date 2023/3/10
  */
@@ -66,6 +67,12 @@ public class CallbackController {
 
     private static final Logger logger = LoggerFactory.getLogger(CallbackController.class);
 
+    /**
+     * 微信支付回调
+     * @param body
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/wxpay")
     @SaIgnore
     @Transactional(rollbackFor = Exception.class)
@@ -150,6 +157,12 @@ public class CallbackController {
     }
 
 
+    /**
+     * 余额支付
+     * @param orderNo
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/balancePay")
     @Transactional(rollbackFor = Exception.class)
     public Object balancePay(String orderNo) throws Exception {
