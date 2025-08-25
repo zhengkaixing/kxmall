@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 小程序获取首页装修模板
+ */
 @Validated
 @RequiredArgsConstructor
 @RestController
