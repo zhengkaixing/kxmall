@@ -202,9 +202,16 @@ springdoc:
     enabled: true
   #这里定义了两个分组，可定义多个，也可以不定义
   group-configs:
-    - group: 1.系统模块
-      packages-to-scan: com.kxmall.web
-    - group: 2.代码生成模块
+    # 分组1：匹配特定的PC端路径
+    - group: 1.系统模块-移动端
+      packages-to-scan: com.kxmall.web # 扫描整个web包
+      paths-to-match: /**/app/** # 但只匹配以/**/app/**开头的接口
+
+    # 分组2：匹配同一包下“剩余”的接口（即PC端）
+    - group: 2.系统模块-PC端
+      packages-to-scan: com.kxmall.web # 同样扫描整个web包
+      paths-to-exclude: /**/app/** # 关键配置：排除所有移动端的路径，剩下的就归这个分组
+    - group: 3.代码生成模块
       packages-to-scan: com.kxmall.generator
 
 # 防止XSS攻击
