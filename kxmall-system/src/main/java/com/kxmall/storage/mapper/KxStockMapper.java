@@ -89,4 +89,13 @@ public interface KxStockMapper extends BaseMapperPlus<KxStockMapper, KxStock, Kx
                             @Param("storageIds") Set<Long> storageIds);
 
 
+    /**
+     * 出库
+     * @param storageId
+     * @param productAttrId
+     * @param num
+     * @return
+     */
+    Integer releaseFrozenInventory(@Param("storageId") Long storageId, @Param("productAttrId") Long productAttrId, @Param("num") Integer num);
+
 }

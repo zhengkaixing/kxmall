@@ -17,9 +17,11 @@ import com.kxmall.common.utils.StringUtils;
 import com.kxmall.order.domain.KxStoreOrder;
 import com.kxmall.order.domain.KxStoreOrderProduct;
 import com.kxmall.order.domain.bo.KxStoreOrderBo;
+import com.kxmall.order.domain.vo.KxStoreOrderProductVo;
 import com.kxmall.order.domain.vo.KxStoreOrderVo;
 import com.kxmall.order.mapper.KxStoreOrderMapper;
 import com.kxmall.order.mapper.KxStoreOrderProductMapper;
+import com.kxmall.storage.mapper.KxStockMapper;
 import com.kxmall.user.domain.vo.KxUserVo;
 import com.kxmall.web.controller.order.service.IKxStoreOrderService;
 import com.kxmall.web.controller.user.service.IKxUserService;
@@ -51,6 +53,8 @@ public class KxStoreOrderServiceImpl implements IKxStoreOrderService {
     private final KxStoreOrderProductMapper orderProductMapper;
 
     private final IKxUserService kxUserService;
+
+    private final KxStockMapper stockMapper;
 
     /**
      * 查询订单
@@ -249,7 +253,18 @@ public class KxStoreOrderServiceImpl implements IKxStoreOrderService {
         try {
             KxStoreOrder storeOrder = KxStoreOrder.builder().build();
             storeOrder.setStatus(newStatus);
-            return baseMapper.update(storeOrder, new QueryWrapper<KxStoreOrder>().eq("id" , id).eq("status" , oldStatus)) > 0;
+            //释放冻结库存
+            if (OrderStatusType.WAIT_APPRAISE.getCode() == newStatus) {
+                KxStoreOrder kxStoreOrder = baseMapper.selectById(id);
+                List<KxStoreOrderProductVo> orderProductVos = orderProductMapper.selectVoList(new LambdaQueryWrapper<KxStoreOrderProduct>().eq(KxStoreOrderProduct::getOrderId, id));
+                for (KxStoreOrderProductVo productVo : orderProductVos) {
+                    stockMapper.releaseFrozenInventory(kxStoreOrder.getStoreId(), productVo.getProductAttrId(), productVo.getNum());
+                }
+            }
+            if (baseMapper.update(storeOrder, new QueryWrapper<KxStoreOrder>().eq("id", id).eq("status", oldStatus)) > 0) {
+                return true;
+            }
+            throw new ServiceException("订单状态更新异常！");
         } catch (Exception e) {
             logger.error("[订单状态扭转] 异常" , e);
             throw new ServiceException("订单系统未知异常");

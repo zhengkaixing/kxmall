@@ -231,6 +231,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
     </select>
 
+    <select id="releaseFrozenInventory" resultType="java.lang.Integer">
+        update kx_stock set frezz_stock = frezz_stock - #{num} where product_attr_id = #{productAttrId} and storage_id= #{storageId}
+    </select>
 
 
 </mapper>
