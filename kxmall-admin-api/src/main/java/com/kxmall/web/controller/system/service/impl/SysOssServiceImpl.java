@@ -33,6 +33,7 @@ import com.kxmall.system.mapper.SysOssMapper;
 import com.kxmall.web.controller.system.service.ISysOssConfigService;
 import com.kxmall.web.controller.system.service.ISysOssService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
@@ -141,6 +142,9 @@ public class SysOssServiceImpl implements ISysOssService {
 
         //获取当前启动的配置
         SysOssConfigVo configVo = configService.selectDefault();
+        if (ObjectUtils.isEmpty(configVo)) {
+            throw new ServiceException("请至少选择一个文件上传配置！");
+        }
         if (FileConstants.DISK.equals(configVo.getConfigKey())) {
             return disk(file);
         }else if(FileConstants.DATABASE.equals(configVo.getConfigKey())){

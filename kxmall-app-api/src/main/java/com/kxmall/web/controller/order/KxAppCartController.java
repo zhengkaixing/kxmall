@@ -5,6 +5,7 @@ import com.kxmall.common.core.controller.BaseAppController;
 import com.kxmall.common.core.domain.R;
 import com.kxmall.common.enums.DeviceType;
 import com.kxmall.common.helper.LoginHelper;
+import com.kxmall.common.utils.StringUtils;
 import com.kxmall.order.domain.vo.KxStoreCartVo;
 import com.kxmall.web.controller.order.service.IKxAppCartService;
 import lombok.RequiredArgsConstructor;
@@ -47,27 +48,40 @@ public class KxAppCartController extends BaseAppController {
     }
 
     /**
-     * 获取购物车商品列表
+     * 获取购物车数量-可匿名访问，登录情况下访问也可以
      */
-    @GetMapping("/getCartList")
+    @GetMapping("/countCart")
     @SaIgnore
-    public R<List<KxStoreCartVo>> getCartList(Long storageId) {
+    public R<Long> countCart(String storageId) {
+        if (StringUtils.isEmpty(storageId) || storageId.equals("null")) {
+            return R.ok(0L);
+        }
+        Long storageIdLong = Long.valueOf(storageId);
         Long userId = 0L;
         DeviceType deviceType = LoginHelper.getDeviceType();
         if (!ObjectUtils.isEmpty(deviceType)) {
             userId = getAppLoginUser().getUserId();
         }
-        return R.ok(kxAppCartService.getCartList(storageId, userId));
+        return R.ok(kxAppCartService.countCart(storageIdLong, userId));
     }
 
 
     /**
      * 获取购物车商品列表
      */
-    @GetMapping("/addCartItem")
-    public R<KxStoreCartVo> addCartItem(Long productId, Long num) {
-        Long userId = getAppLoginUser().getUserId();
-        return R.ok(kxAppCartService.addCartItem(productId, num, userId));
+    @GetMapping("/getCartList")
+    @SaIgnore
+    public R<List<KxStoreCartVo>> getCartList(String storageId) {
+        if (StringUtils.isEmpty(storageId) || storageId.equals("null")) {
+            return R.ok(null);
+        }
+        Long storageIdLong = Long.valueOf(storageId);
+        Long userId = 0L;
+        DeviceType deviceType = LoginHelper.getDeviceType();
+        if (!ObjectUtils.isEmpty(deviceType)) {
+            userId = getAppLoginUser().getUserId();
+        }
+        return R.ok(kxAppCartService.getCartList(storageIdLong, userId));
     }
 
 
