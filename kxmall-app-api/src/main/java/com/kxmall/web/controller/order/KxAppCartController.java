@@ -38,20 +38,6 @@ public class KxAppCartController extends BaseAppController {
      */
     @GetMapping("/countCart")
     @SaIgnore
-    public R<Long> countCart(Long storageId) {
-        Long userId = 0L;
-        DeviceType deviceType = LoginHelper.getDeviceType();
-        if (!ObjectUtils.isEmpty(deviceType)) {
-            userId = getAppLoginUser().getUserId();
-        }
-        return R.ok(kxAppCartService.countCart(storageId, userId));
-    }
-
-    /**
-     * 获取购物车数量-可匿名访问，登录情况下访问也可以
-     */
-    @GetMapping("/countCart")
-    @SaIgnore
     public R<Long> countCart(String storageId) {
         if (StringUtils.isEmpty(storageId) || storageId.equals("null")) {
             return R.ok(0L);
