@@ -263,9 +263,9 @@ public class SysAppLoginService implements ISysAppLoginService {
                 .getPhoneNoInfo(session_key, encryptedData, iv);
 
         // 验证openId格式
-        if (!isValidOpenId(openId)) {
-            throw new ServiceException("非法的OpenID格式");
-        }
+//        if (!isValidOpenId(openId)) {
+//            throw new ServiceException("非法的OpenID格式");
+//        }
 
         KxUser kxUser = kxUserMapper.selectOne(
                 new LambdaQueryWrapper<KxUser>()
