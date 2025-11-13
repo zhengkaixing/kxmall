@@ -70,6 +70,15 @@ public class KxAppCartController extends BaseAppController {
         return R.ok(kxAppCartService.getCartList(storageIdLong, userId));
     }
 
+    /**
+     * 添加
+     */
+    @GetMapping("/addCartItem")
+    public R<KxStoreCartVo> addCartItem(Long productId, Long num) {
+        Long userId = getAppLoginUser().getUserId();
+        return R.ok(kxAppCartService.addCartItem(productId, num, userId));
+    }
+
 
     /**
      * 更新购物车数量
