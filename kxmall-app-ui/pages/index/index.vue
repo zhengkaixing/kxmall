@@ -299,6 +299,19 @@
 					console.log(res)
 					res.data.id = res.data.id
 					this.loaded = true
+					let addresses = uni.getStorageSync('addresses');
+					if (!addresses) {
+						let addressesInfo = {};
+						addressesInfo.lng = res1.longitude;
+						addressesInfo.lat = res1.latitude;
+						addressesInfo.distance = res.data.distance;
+						addressesInfo.storeId = res.data.id;
+						uni.setStorageSync('addresses', addressesInfo);
+					} else {
+						addresses.distance = res.data.distance;
+            addresses.storeId = res.data.id;
+						uni.setStorageSync('addresses', addresses);
+					}
 					this.$store.commit('setStorage', res.data.id)
 					this.loadData(res.data.id)
 					if (!res.data.id) {
