@@ -57,9 +57,9 @@
 | ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-app-7.jpeg) | ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-app-8.jpeg) | ![河禾生鲜](https://nontax.oss-cn-beijing.aliyuncs.com/kxmall/kxmall-app-9.jpeg) |
 
 
-|                                 商家订单打印                                 | 商家订单推送 | 骑手订单推送 |
-|:----------------------------------------------------------------------:|:------:| :----: |
-| ![订单打印](https://kxmalls.oss-cn-hangzhou.aliyuncs.com/kxmall-print.jpg) | ![订单推送](https://kxmalls.oss-cn-hangzhou.aliyuncs.com/kxmalls10.jpg) |  ![订单推送](https://kxmalls.oss-cn-hangzhou.aliyuncs.com/kxmalls9.jpg)
+| 商家订单推送 | 骑手订单推送 |
+| :----: | :----: |
+| ![订单推送](https://kxmalls.oss-cn-hangzhou.aliyuncs.com/kxmalls10.jpg) |  ![订单推送](https://kxmalls.oss-cn-hangzhou.aliyuncs.com/kxmalls9.jpg)
 
 #### 后台端系统演示
 
