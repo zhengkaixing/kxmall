@@ -1,6 +1,14 @@
 package com.kxmall.web.controller.carousel.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
+import static com.kxmall.common.constant.ProductCacheConstants.ADVERTISEMENT_NAME;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,21 +16,15 @@ import com.kxmall.carousel.domain.KxCarousel;
 import com.kxmall.carousel.domain.bo.KxCarouselBo;
 import com.kxmall.carousel.domain.vo.KxCarouselVo;
 import com.kxmall.carousel.mapper.KxCarouselMapper;
-import com.kxmall.web.controller.carousel.service.IKxCarouselService;
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.page.TableDataInfo;
 import com.kxmall.common.exception.ServiceException;
 import com.kxmall.common.utils.StringUtils;
 import com.kxmall.common.utils.redis.RedisUtils;
+import com.kxmall.web.controller.carousel.service.IKxCarouselService;
+
+import cn.hutool.core.bean.BeanUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import static com.kxmall.common.constant.ProductCacheConstants.ADVERTISEMENT_NAME;
 
 /**
  * 商铺广告Service业务层处理
@@ -72,6 +74,7 @@ public class KxCarouselServiceImpl implements IKxCarouselService {
         lqw.eq(StringUtils.isNotBlank(bo.getImgUrl()), KxCarousel::getImgUrl, bo.getImgUrl());
         lqw.eq(bo.getStatus() != null, KxCarousel::getStatus, bo.getStatus());
         lqw.eq(StringUtils.isNotBlank(bo.getOutUrl()), KxCarousel::getOutUrl, bo.getOutUrl());
+        lqw.orderByAsc(KxCarousel::getSort);
         return lqw;
     }
 
