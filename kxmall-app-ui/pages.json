@@ -85,6 +85,12 @@
 				"navigationBarTitleText": "全部评价"
 			}
         }, {
+            "path" : "pages/product/banner-list",
+            "style" : {
+				"enablePullDownRefresh": true,
+				"navigationBarTitleText": "商品列表"
+			}
+        }, {
 			"path": "pages/user/profile",
 			"style": {
 				"navigationBarTitleText": "修改资料"
