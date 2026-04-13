@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.user.mapper.KxUserSignMapper">
+
+    <resultMap type="com.kxmall.user.domain.KxUserSign" id="KxUserSignResult">
+        <result property="id" column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="title" column="title"/>
+        <result property="number" column="number"/>
+        <result property="balance" column="balance"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isDel" column="is_del"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+    <!--
+      用于 KxUserSignMapper#selectVoPageList：
+      - page 参数名为 page
+      - wrapper 参数名为 ew（MyBatis-Plus Constants.WRAPPER）
+    -->
+    <select id="selectVoPageList" resultType="com.kxmall.user.domain.vo.KxUserSignVo">
+        select b.* ,u.phone as nickname
+        from kx_user_sign b
+        left join kx_user u on b.uid = u.uid
+        ${ew.customSqlSegment}
+    </select>
+
+</mapper>
