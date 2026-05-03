@@ -23,10 +23,10 @@ public class KxUserTaskVo {
     private String createBy;
     private String updateBy;
 
+    // 额外字段
     private String levalName;
     private Integer newNumber;
     private Integer speed;
     private Integer finish;
     private String taskTypeTitle;
 }
-

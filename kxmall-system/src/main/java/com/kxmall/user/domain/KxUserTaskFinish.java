@@ -18,4 +18,3 @@ public class KxUserTaskFinish {
     private Integer status;
     private Date createTime;
 }
-
