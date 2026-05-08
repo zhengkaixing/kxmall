@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.user.mapper.KxUserMemberLevelMapper">
+
+    <resultMap type="com.kxmall.user.domain.KxUserMemberLevel" id="KxUserMemberLevelResult">
+        <id property="id" column="id"/>
+        <result property="uid" column="uid"/>
+        <result property="levelId" column="level_id"/>
+        <result property="grade" column="grade"/>
+        <result property="validTime" column="valid_time"/>
+        <result property="isForever" column="is_forever"/>
+        <result property="merId" column="mer_id"/>
+        <result property="status" column="status"/>
+        <result property="mark" column="mark"/>
+        <result property="remind" column="remind"/>
+        <result property="isDel" column="is_del"/>
+        <result property="discount" column="discount"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
+
+</mapper>

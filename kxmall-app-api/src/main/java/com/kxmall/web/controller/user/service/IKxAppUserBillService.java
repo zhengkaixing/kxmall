@@ -20,5 +20,9 @@ public interface IKxAppUserBillService {
      */
     TableDataInfo<KxUserBillVo> queryPageList(KxUserBillBo bo, PageQuery pageQuery);
 
+    /**
+     * 累计签到次数（账单中 sign + integral）
+     */
+    double cumulativeAttendance(Long uid);
 
 }

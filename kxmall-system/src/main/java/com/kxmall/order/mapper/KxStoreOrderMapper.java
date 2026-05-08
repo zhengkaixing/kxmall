@@ -108,4 +108,11 @@ public interface KxStoreOrderMapper extends BaseMapperPlus<KxStoreOrderMapper, K
      * @return
      */
     List<ComparativeStatementDto> getWarehouseCompares(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    /**
+     * 用户已完成订单实付金额合计（用于等级任务等）
+     */
+    @Select("select IFNULL(sum(pay_price),0) from kx_store_order " +
+            "where is_del=0 and refund_status=0 and uid=#{uid}")
+    double sumPrice(@Param("uid") Long uid);
 }

@@ -105,5 +105,9 @@ public class KxUserLevelSettingVo {
     @ExcelProperty(value = "是否删除.1=删除,0=未删除")
     private Integer isDel;
 
+    /**
+     * App 端：是否未解锁更高等级（true=未解锁）
+     */
+    private Boolean isClear;
 
 }

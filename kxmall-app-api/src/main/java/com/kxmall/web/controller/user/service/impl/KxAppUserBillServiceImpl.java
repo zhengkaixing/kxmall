@@ -1,5 +1,6 @@
 package com.kxmall.web.controller.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -38,6 +39,16 @@ public class KxAppUserBillServiceImpl implements IKxAppUserBillService {
 
         Page<KxUserBillVo> result = baseMapper.selectVoPageList(pageQuery.build(), lqw);
         return TableDataInfo.build(result);
+    }
+
+    @Override
+    public double cumulativeAttendance(Long uid) {
+        LambdaQueryWrapper<KxUserBill> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(KxUserBill::getUid, uid)
+                .eq(KxUserBill::getCategory, "integral")
+                .eq(KxUserBill::getType, "sign")
+                .eq(KxUserBill::getPm, 1);
+        return baseMapper.selectCount(wrapper).doubleValue();
     }
 
 

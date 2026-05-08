@@ -7,8 +7,6 @@ import com.kxmall.common.core.domain.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
-
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("kx_user_task")
@@ -26,9 +24,5 @@ public class KxUserTask extends BaseEntity {
     private Integer isShow;
     private Integer isMust;
     private String illustrate;
-    private Date createTime;
-    private Date updateTime;
     private Integer isDel;
-    private String createBy;
-    private String updateBy;
 }
