@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kxmall.seckill.mapper.KxStoreSeckillMapper">
+
+    <resultMap type="com.kxmall.seckill.domain.KxStoreSeckill" id="KxStoreSeckillResult">
+        <id property="id" column="id"/>
+        <result property="storageId" column="storage_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="image" column="image"/>
+        <result property="images" column="images"/>
+        <result property="title" column="title"/>
+        <result property="info" column="info"/>
+        <result property="price" column="price"/>
+        <result property="cost" column="cost"/>
+        <result property="otPrice" column="ot_price"/>
+        <result property="giveIntegral" column="give_integral"/>
+        <result property="sort" column="sort"/>
+        <result property="stock" column="stock"/>
+        <result property="sales" column="sales"/>
+        <result property="unitName" column="unit_name"/>
+        <result property="postage" column="postage"/>
+        <result property="description" column="description"/>
+        <result property="startTime" column="start_time"/>
+        <result property="stopTime" column="stop_time"/>
+        <result property="status" column="status"/>
+        <result property="isPostage" column="is_postage"/>
+        <result property="isHot" column="is_hot"/>
+        <result property="num" column="num"/>
+        <result property="isShow" column="is_show"/>
+        <result property="timeId" column="time_id"/>
+        <result property="specType" column="spec_type"/>
+        <result property="tempId" column="temp_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="isDel" column="is_del"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="seckillStartTime" column="seckill_start_time"/>
+        <result property="seckillStopTime" column="seckill_stop_time"/>
+    </resultMap>
+
+</mapper>
