@@ -75,3 +75,17 @@ export function getProductBigTree() {
     method: 'post'
   })
 }
+
+export function productTreeByStorageId(storageId) {
+  return request({
+    url: '/product/storeProduct/getProductTreeByStorageId?storageId=' + storageId,
+    method: 'get'
+  })
+}
+
+export function detailGoodsByStorageId(productId, storageId) {
+  return request({
+    url: '/product/storeProduct/detailGoodsByStorageId?storageId=' + storageId + '&productId=' + productId,
+    method: 'get'
+  })
+}

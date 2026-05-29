@@ -193,4 +193,20 @@ public class KxStoreProductController extends BaseController {
         return R.ok(iWmStoreProductService.getProductBigTree());
     }
 
+    /**
+     * 按仓库获取树形商品
+     */
+    @GetMapping(value = "/getProductTreeByStorageId")
+    public R<List<ProductTreeNodeVo>> getProductTreeByStorageId(Long storageId) {
+        return R.ok(iWmStoreProductService.getProductTreeByStorageId(storageId));
+    }
+
+    /**
+     * 按仓库与商品ID获取详情
+     */
+    @GetMapping(value = "/detailGoodsByStorageId")
+    public R<KxStoreProductVo> detailGoodsByStorageId(Long storageId, Long productId) {
+        return R.ok(iWmStoreProductService.detailGoodsByStorageId(storageId, productId));
+    }
+
 }
