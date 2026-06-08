@@ -119,4 +119,10 @@ public class KxUserLevelSettingServiceImpl implements IKxUserLevelSettingService
         }
         return baseMapper.deleteBatchIds(ids) > 0;
     }
+
+    @Override
+    public KxUserLevelSetting queryByLevel(Integer levelId) {
+        return baseMapper.selectOne(new LambdaQueryWrapper<KxUserLevelSetting>()
+                .eq(KxUserLevelSetting::getGrade, levelId));
+    }
 }

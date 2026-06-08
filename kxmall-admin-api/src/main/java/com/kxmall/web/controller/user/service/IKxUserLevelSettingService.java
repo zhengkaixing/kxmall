@@ -2,6 +2,7 @@ package com.kxmall.web.controller.user.service;
 
 import com.kxmall.common.core.domain.PageQuery;
 import com.kxmall.common.core.page.TableDataInfo;
+import com.kxmall.user.domain.KxUserLevelSetting;
 import com.kxmall.user.domain.bo.KxUserLevelSettingBo;
 import com.kxmall.user.domain.vo.KxUserLevelSettingVo;
 
@@ -45,4 +46,9 @@ public interface IKxUserLevelSettingService {
      * 校验并批量删除设置用户等级信息
      */
     Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid);
+
+    /**
+     * 按等级查询会员配置
+     */
+    KxUserLevelSetting queryByLevel(Integer levelId);
 }
