@@ -253,10 +253,10 @@ public class KxStoreProductServiceImpl implements IKxStoreProductService {
         }
         for (int i = 0; i < bo.getAttrs().size(); i++) {
             ProductResultVo resultDTO = this.computedProduct(bo.getAttrs().get(i));
-            //只能是二级分类
-            Long count = categoryMapper.selectCount(new LambdaQueryWrapper<KxStoreCategory>().ne(KxStoreCategory::getPid, 0L).eq(KxStoreCategory::getId, bo.getCateId()));
+            // 一级和二级分类均可
+            Long count = categoryMapper.selectCount(new LambdaQueryWrapper<KxStoreCategory>().eq(KxStoreCategory::getId, bo.getCateId()));
             if (count == 0L) {
-                throw new ServiceException("请选择二级分类");
+                throw new ServiceException("请选择商品分类");
             }
             //添加商品
             KxStoreProduct kxStoreProduct = new KxStoreProduct();

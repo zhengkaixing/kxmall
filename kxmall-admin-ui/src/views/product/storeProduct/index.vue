@@ -8,6 +8,7 @@
         <TreeSelect
           v-model="queryParams.cateId"
           :options="options"
+          :disable-branch-nodes="false"
           placeholder="选择商品分类"
           no-options-text="没有数据"
           clearable
@@ -120,7 +121,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="商品分类" prop="cateId">
-              <TreeSelect v-model="form.cateId" :options="options" placeholder="选择商品分类" no-options-text="没有数据" clearable />
+              <TreeSelect v-model="form.cateId" :options="options" :disable-branch-nodes="false" placeholder="选择商品分类" no-options-text="没有数据" clearable />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -144,14 +145,14 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="商品封面图" prop="image">
-              <imageUpload v-model="form.image" :limit="1" value-type="json" />
+              <imageUpload v-model="form.image" :limit="1" value-type="json" :oss-config-tip="true" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <el-form-item label="商品轮播图" prop="sliderImage">
-              <imageUpload v-model="form.sliderImage" :limit="4" value-type="json" />
+              <imageUpload v-model="form.sliderImage" :limit="4" value-type="json" :oss-config-tip="true" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -257,6 +258,7 @@
                         :limit="1"
                         value-type="json"
                         :is-show-tip="false"
+                        :oss-config-tip="true"
                         class="table-image-upload"
                       />
                     </div>
@@ -287,6 +289,7 @@
                       :limit="1"
                       value-type="json"
                       :is-show-tip="false"
+                      :oss-config-tip="true"
                       class="table-image-upload"
                     />
                   </template>

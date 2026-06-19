@@ -72,6 +72,11 @@ export default {
     valueType:{
       type:String,
       default:null
+    },
+    // 上传失败时提示前往文件管理配置
+    ossConfigTip: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -169,7 +174,7 @@ export default {
       } else {
         this.number--;
         this.$modal.closeLoading();
-        this.$modal.msgError(res.msg);
+        this.$modal.msgError(this.getUploadErrorMsg(res.msg));
         this.$refs.imageUpload.handleRemove(file);
         this.uploadedSuccessfully();
       }
@@ -185,9 +190,15 @@ export default {
       }
     },
     // 上传失败
-    handleUploadError(res) {
-      this.$modal.msgError("上传图片失败，请重试");
+    handleUploadError() {
+      this.$modal.msgError(this.getUploadErrorMsg('上传图片失败，请重试'));
       this.$modal.closeLoading();
+    },
+    getUploadErrorMsg(msg) {
+      if (!this.ossConfigTip) {
+        return msg;
+      }
+      return `${msg}，请前往【系统管理 > 文件管理 > 配置管理】进行正确配置后重试`;
     },
     // 上传结束处理
     uploadedSuccessfully() {
