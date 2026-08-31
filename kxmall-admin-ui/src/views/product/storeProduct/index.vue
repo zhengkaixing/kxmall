@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    <el-form ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item label="" prop="storeName">
+    <el-form class="query-form" ref="queryForm" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="商品名称" prop="storeName">
         <el-input v-model="queryParams.storeName" placeholder="请输入商品名称" clearable />
       </el-form-item>
-      <el-form-item label="" prop="cateId">
+      <el-form-item label="商品分类" prop="cateId">
         <TreeSelect
           v-model="queryParams.cateId"
           :options="options"
@@ -15,25 +15,23 @@
           style="display: inline-block; width: 215px;"
         />
       </el-form-item>
-      <el-form-item label="" prop="isShow">
+      <el-form-item label="商品状态" prop="isShow">
         <el-select v-model="queryParams.isShow" placeholder="请选择商品状态" clearable>
           <el-option label="已上架" :value="1" />
           <el-option label="已下架" :value="0" />
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
         <el-button
           v-hasPermi="['product:storeProduct:add']"
           type="danger"
           icon="Plus"
-          size="small"
           @click="handleAdd"
         >新增</el-button>
         <el-button
           v-hasPermi="['product:storeProductRule:edit']"
-          size="small"
           type="primary"
           :disabled="multiple"
           @click="onAuthorize"

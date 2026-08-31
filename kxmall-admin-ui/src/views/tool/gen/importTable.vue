@@ -1,7 +1,7 @@
 <template>
   <!-- 导入表 -->
   <el-dialog title="导入表" v-model="visible" width="800px" top="5vh" append-to-body>
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true">
+    <el-form class="query-form" :model="queryParams" ref="queryForm" :inline="true" label-width="80px">
       <el-form-item label="表名称" prop="tableName">
         <el-input
           v-model="queryParams.tableName"
@@ -18,9 +18,9 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
     <el-row>

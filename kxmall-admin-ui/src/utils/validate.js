@@ -7,6 +7,15 @@ export function isExternal(path) {
 }
 
 /**
+ * 路径中是否包含 http(s)，含子路由外链
+ * @param {string} url
+ * @returns {Boolean}
+ */
+export function isHttp(url) {
+  return typeof url === 'string' && (url.indexOf('http://') !== -1 || url.indexOf('https://') !== -1)
+}
+
+/**
  * @param {string} str
  * @returns {Boolean}
  */

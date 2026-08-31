@@ -5,6 +5,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { getToken } from '@/utils/auth'
 import { isRelogin } from '@/utils/request'
+import { isExternal } from '@/utils/validate'
 
 NProgress.configure({ showSpinner: false })
 
@@ -29,7 +30,9 @@ router.beforeEach((to, from, next) => {
           isRelogin.show = false
           store.dispatch('GenerateRoutes').then(accessRoutes => {
             accessRoutes.forEach(route => {
-              router.addRoute(route)
+              if (!isExternal(route.path)) {
+                router.addRoute(route)
+              }
             })
             next({ ...to, replace: true })
           })

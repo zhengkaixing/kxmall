@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form class="query-form" :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="80px">
       <el-form-item label="key键" prop="testKey">
         <el-input
           v-model="queryParams.testKey"
@@ -31,10 +31,10 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="Search" size="small" @click="handlePage">搜索(自定义分页接口)</el-button>
-        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="Search" @click="handlePage">搜索(自定义分页接口)</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 

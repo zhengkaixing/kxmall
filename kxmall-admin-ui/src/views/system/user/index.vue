@@ -29,7 +29,7 @@
       </el-col>
       <!--用户数据-->
       <el-col :span="20" :xs="24">
-        <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+        <el-form class="query-form" :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="80px">
           <el-form-item label="用户名称" prop="userName">
             <el-input
               v-model="queryParams.userName"
@@ -74,9 +74,9 @@
               end-placeholder="结束日期"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item>
-            <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-            <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
+          <el-form-item class="query-form__actions" label-width="0">
+            <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+            <el-button icon="Refresh" @click="resetQuery">重置</el-button>
           </el-form-item>
         </el-form>
 

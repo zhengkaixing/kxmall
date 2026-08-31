@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item prop="storageId">
+    <el-form class="query-form" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="前置仓" prop="storageId">
         <el-select v-model="queryParams.storageId" placeholder="请选择前置仓" clearable>
           <el-option v-for="item in storages" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
-      <el-form-item prop="categoryId">
+      <el-form-item label="类目" prop="categoryId">
         <el-cascader
           :options="categories"
           :props="{ checkStrictly: true ,value:'id'}"
@@ -16,14 +16,14 @@
           @change="onSelectCategory"
         />
       </el-form-item>
-      <el-form-item prop="keyword">
+      <el-form-item label="商品信息" prop="keyword" class="query-form__wide">
         <el-input
           v-model="queryParams.keyword"
           clearable
           placeholder="请输入商品条码/商品ID/商品名称"
         />
       </el-form-item>
-      <el-form-item prop="status">
+      <el-form-item label="销售状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择销售状态" clearable>
           <el-option
             v-for="dict in dict.type.sale_status"
@@ -33,9 +33,9 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <!-- <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button> -->
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <!-- <el-button icon="Refresh" @click="resetQuery">重置</el-button> -->
       </el-form-item>
     </el-form>
 

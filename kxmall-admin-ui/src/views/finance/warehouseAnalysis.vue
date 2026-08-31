@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true"label-width="68px">
+    <el-form class="query-form" :model="queryParams" ref="queryForm" :inline="true" label-width="80px">
 
-      <el-form-item>
+      <el-form-item label="统计月份">
         <el-date-picker
           v-model="queryParams.selectedMonth"
           type="month"
@@ -11,14 +11,14 @@
         ></el-date-picker>
       </el-form-item>
 
-      <el-form-item prop="storageId">
+      <el-form-item label="前置仓" prop="storageId">
         <el-select v-model="queryParams.storageId" placeholder="请选择前置仓" clearable>
           <el-option v-for="item in storages" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
 
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="fetchReport">搜索</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="fetchReport">搜索</el-button>
       </el-form-item>
     </el-form>
 

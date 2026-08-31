@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
-    <el-form ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item label="" prop="nickname">
-        <el-input v-model="queryParams.nickname" clearable placeholder="输入用户昵称" @keyup.enter="handleQuery" />
+    <el-form class="query-form" ref="queryForm" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="用户昵称" prop="nickname">
+        <el-input v-model="queryParams.nickname" clearable placeholder="请输入用户昵称" @keyup.enter="handleQuery" />
       </el-form-item>
-      <el-form-item label="" prop="dateRange">
+      <el-form-item label="日期范围" prop="dateRange">
         <el-date-picker
           v-model="queryParams.dateRange"
           type="daterange"
@@ -15,9 +15,9 @@
           unlink-panels
         />
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 

@@ -1,34 +1,42 @@
 <template>
-  <div class="app-container">
-    <el-tabs v-model="queryParams.orderStatus" @tab-click="onOrderStatusChange">
-      <el-tab-pane v-for="item in status" :key="item.name" :label="item.label" :name="item.name" />
-    </el-tabs>
-    <el-form ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item prop="storageId">
-        <el-select v-model="queryParams.storageId" placeholder="请选择前置仓" clearable>
+  <div class="app-container order-page">
+    <div class="page-panel">
+      <el-tabs v-model="queryParams.orderStatus" class="page-tabs" @tab-change="onOrderStatusChange">
+        <el-tab-pane v-for="item in status" :key="item.name" :label="item.label" :name="item.name" />
+      </el-tabs>
+      <el-form ref="queryForm" class="query-form" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="前置仓" prop="storageId">
+        <el-select v-model="queryParams.storageId" placeholder="请选择前置仓" clearable filterable>
           <el-option v-for="item in storages" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
-      <el-form-item prop="orderId">
-        <el-input v-model="queryParams.orderId" clearable placeholder="输入订单号" @keyup.enter="toQuery" />
+      <el-form-item label="订单号" prop="orderId">
+        <el-input v-model="queryParams.orderId" clearable placeholder="请输入订单号" @keyup.enter="handleQuery" />
       </el-form-item>
-      <el-form-item prop="createTime">
+      <el-form-item label="创建时间" prop="createTime">
         <el-date-picker
           v-model="queryParams.createTime"
           type="datetimerange"
           value-format="YYYY-MM-DD HH:mm:ss"
-          start-placeholder="创建开始时间"
-          end-placeholder="创建结束时间"
+          start-placeholder="开始时间"
+          end-placeholder="结束时间"
           range-separator="至"
           unlink-panels
         />
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
-    </el-form>
+      </el-form>
 
-    <el-table v-loading="loading" :data="storeOrderList">
+      <el-table
+      v-loading="loading"
+      :data="storeOrderList"
+      stripe
+      class="list-table"
+      header-cell-class-name="list-table-header"
+    >
       <!-- <el-table-column type="selection" width="55" align="center" /> -->
       <el-table-column type="index" label="序号" align="center">
         <template #default="{$index}">
@@ -63,12 +71,14 @@
         </template>
       </el-table-column>
       <el-table-column
+        header-align="center"
         align="left"
         width="100"
         prop="realName"
         label="姓名"
       />
       <el-table-column
+        header-align="center"
         align="left"
         width="110"
         prop="userPhone"
@@ -76,8 +86,9 @@
       />
       <el-table-column
         :show-overflow-tooltip="true"
-        align="left"
-        width="80"
+        header-align="center"
+        align="center"
+        width="90"
         prop="address"
         label="订单类型"
       >
@@ -87,8 +98,9 @@
       </el-table-column>
       <el-table-column
         :show-overflow-tooltip="true"
+        header-align="center"
         align="left"
-        width="200"
+        min-width="200"
         prop="userAddress"
         label="地址"
       />
@@ -217,15 +229,16 @@
           >完成配送</el-button>
         </template>
       </el-table-column>
-    </el-table>
+      </el-table>
 
-    <pagination
-      v-show="total > 0"
-      :total="total"
-      v-model:page="queryParams.pageNum"
-      v-model:limit="queryParams.pageSize"
-      @pagination="getList"
-    />
+      <pagination
+        v-show="total > 0"
+        :total="total"
+        v-model:page="queryParams.pageNum"
+        v-model:limit="queryParams.pageSize"
+        @pagination="getList"
+      />
+    </div>
 
     <!-- 添加或修改订单对话框 -->
     <el-dialog title="订单详情" v-model="open" width="800px" append-to-body>
@@ -463,6 +476,12 @@ export default {
       this.queryParams.pageNum = 1
       this.getList()
     },
+    resetQuery() {
+      this.queryParams.storageId = ''
+      this.queryParams.orderId = ''
+      this.queryParams.createTime = []
+      this.handleQuery()
+    },
     onOrderStatusChange() {
       this.handleQuery()
     },
@@ -502,6 +521,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.order-page {
+  min-height: calc(100vh - 84px);
+  background: #f5f7fa;
+  padding: 16px 20px 24px;
+}
+
 .order-overview {
   float: right;
   text-align: right;

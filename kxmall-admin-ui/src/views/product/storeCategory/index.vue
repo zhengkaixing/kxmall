@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item prop="cateName">
+    <el-form class="query-form" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="分类名称" prop="cateName">
         <el-input v-model="queryParams.cateName" placeholder="输入分类名称搜索" clearable @keyup.enter="handleQuery" />
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form class="query-form" :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="80px">
       <el-form-item label="商品id" prop="spuId">
         <el-input
           v-model="queryParams.spuId"
@@ -27,17 +27,17 @@
         />
       </el-form-item>
 
-      <el-form-item label="1表示已通过" prop="state">
+      <el-form-item label="审核状态" prop="state">
         <el-input
           v-model="queryParams.state"
-          placeholder="请输入1表示已通过"
+          placeholder="请输入审核状态"
           clearable
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 

@@ -1,22 +1,22 @@
 <template>
   <div class="app-container">
-    <el-form ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item label="" prop="value">
-        <el-input v-model="queryParams.value" placeholder="输入搜索内容" clearable />
+    <el-form class="query-form" ref="queryForm" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="搜索内容" prop="value">
+        <el-input v-model="queryParams.value" placeholder="请输入搜索内容" clearable />
       </el-form-item>
-      <el-form-item label="" prop="type">
-        <el-select v-model="queryParams.type" clearable placeholder="类型">
+      <el-form-item label="类型" prop="type">
+        <el-select v-model="queryParams.type" clearable placeholder="请选择类型">
           <el-option v-for="item in userTypes" :key="item.value" :value="item.value" :label="item.label" />
         </el-select>
       </el-form-item>
-      <el-form-item label="" prop="userType">
-        <el-select v-model="queryParams.userType" clearable placeholder="会员来源">
+      <el-form-item label="会员来源" prop="userType">
+        <el-select v-model="queryParams.userType" clearable placeholder="请选择会员来源">
           <el-option v-for="item in userSources" :key="item.value" :value="item.value" :label="item.label" />
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 

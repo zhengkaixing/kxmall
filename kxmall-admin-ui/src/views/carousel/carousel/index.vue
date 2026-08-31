@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item prop="adType">
+    <el-form class="query-form" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="广告类型" prop="adType">
         <el-select v-model="queryParams.adType" clearable placeholder="请选择广告类型">
           <el-option
             v-for="dict in dict.type.carousel_type"
@@ -11,7 +11,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item prop="status">
+      <el-form-item label="广告状态" prop="status">
         <el-select v-model="queryParams.status" clearable placeholder="请选择广告状态">
           <el-option
             v-for="dict in dict.type.carousel_status"
@@ -21,14 +21,13 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <!-- <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button> -->
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <!-- <el-button icon="Refresh" @click="resetQuery">重置</el-button> -->
         <el-button
           v-hasPermi="['carousel:carousel:add']"
           type="primary"
           icon="Plus"
-          size="small"
           @click="handleAdd"
         >添加</el-button>
       </el-form-item>

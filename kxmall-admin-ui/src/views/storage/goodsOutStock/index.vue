@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <el-form ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item prop="storageId">
+    <el-form class="query-form" ref="queryForm" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="出库仓库" prop="storageId">
         <el-select v-model="queryParams.storageId" placeholder="请选择出库仓库" clearable>
           <el-option v-for="item in storages" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
-      <el-form-item prop="outStockNumbers">
+      <el-form-item label="出库单号" prop="outStockNumbers">
         <el-input
           v-model="queryParams.outStockNumbers"
           placeholder="请输入出库单号"
@@ -14,7 +14,7 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="states">
+      <el-form-item label="出库状态" prop="states">
         <el-select v-model="queryParams.states" placeholder="请选择出库状态" clearable>
           <el-option
             v-for="dict in dict.type.out_stock_status"
@@ -32,7 +32,7 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item> -->
-      <el-form-item prop="outgoingTime">
+      <el-form-item label="出库时间" prop="outgoingTime">
         <el-date-picker
           v-model="queryParams.outgoingTime"
           clearable
@@ -57,14 +57,13 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item> -->
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
         <el-button
           v-hasPermi="['storage:goodsOutStock:add']"
           type="primary"
           icon="Plus"
-          size="small"
           @click="handleAdd"
         >创建</el-button>
       </el-form-item>

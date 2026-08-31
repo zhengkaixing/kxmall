@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item prop="recommendType">
+    <el-form class="query-form" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="推荐类型" prop="recommendType">
         <el-select v-model="queryParams.recommendType" clearable placeholder="请选择推荐类型">
           <el-option
             v-for="dict in recommendTypeList"
@@ -11,14 +11,13 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <!-- <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button> -->
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <!-- <el-button icon="Refresh" @click="resetQuery">重置</el-button> -->
         <el-button
           v-hasPermi="['recommend:recommend:add']"
           type="primary"
           icon="Plus"
-          size="small"
           @click="handleAdd"
         >添加</el-button>
       </el-form-item>

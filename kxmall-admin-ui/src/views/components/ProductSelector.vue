@@ -19,12 +19,12 @@
     </div>
 
     <el-dialog title="商品列表" v-model="open" append-to-body>
-      <el-form ref="queryForm" :model="form" size="small" :inline="true" label-width="68px">
-        <el-form-item label="" prop="storeName">
+      <el-form ref="queryForm" class="query-form" :model="form" :inline="true" label-width="80px">
+        <el-form-item label="商品名称" prop="storeName">
           <el-input v-model="form.storeName" placeholder="请输入商品名称" clearable />
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-form-item class="query-form__actions" label-width="0">
+          <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         </el-form-item>
       </el-form>
       <el-table ref="table" v-loading="loading" :data="productList" row-key="id" @selection-change="handleSelectionChange">

@@ -1,7 +1,8 @@
 <template>
-  <div class="app-container">
-    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item prop="name">
+  <div class="app-container storage-page">
+    <div class="page-panel">
+    <el-form v-show="showSearch" ref="queryForm" class="query-form" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="仓库名称" prop="name">
         <el-input
           v-model="queryParams.name"
           placeholder="请输入仓库名称"
@@ -9,7 +10,7 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item prop="state">
+      <el-form-item label="仓库状态" prop="state">
         <el-select v-model="queryParams.state" placeholder="请选择仓库状态" clearable>
           <el-option
             v-for="dict in dict.type.storage_status"
@@ -19,7 +20,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item prop="operatingState">
+      <el-form-item label="营业状态" prop="operatingState">
         <el-select v-model="queryParams.operatingState" placeholder="请选择营业状态" clearable>
           <el-option
             v-for="dict in dict.type.operating_state"
@@ -29,17 +30,16 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item prop="region">
+      <el-form-item label="所在地区" prop="region" class="query-form__region">
         <region-selector v-model="queryParams.region" />
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <!-- <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button> -->
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
         <el-button
           v-hasPermi="['storage:storage:add']"
           type="primary"
           icon="Plus"
-          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-form-item>
@@ -91,7 +91,13 @@
       <right-toolbar v-model:show-search="showSearch" @queryTable="getList" />
     </el-row> -->
 
-    <el-table v-loading="loading" :data="storageList">
+    <el-table
+      v-loading="loading"
+      :data="storageList"
+      stripe
+      class="list-table"
+      header-cell-class-name="list-table-header"
+    >
       <!-- <el-table-column type="selection" width="55" align="center" />
       <el-table-column v-if="true" label="主键" align="center" prop="id" /> -->
       <el-table-column label="序号" width="80" align="center">
@@ -177,6 +183,7 @@
       v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
+    </div>
 
     <!-- 添加或修改仓库管理对话框 -->
     <el-dialog :title="title" v-model="open" :width="dialogMode==='view'?'500px':'1200px'" append-to-body>
@@ -457,11 +464,13 @@ export default {
       this.queryParams.pageNum = 1
       this.getList()
     },
-    /** 重置按钮操作 */
-    // resetQuery() {
-    //   this.resetForm('queryForm')
-    //   this.handleQuery()
-    // },
+    resetQuery() {
+      this.queryParams.name = undefined
+      this.queryParams.state = undefined
+      this.queryParams.operatingState = undefined
+      this.queryParams.region = undefined
+      this.handleQuery()
+    },
     // 多选框选中数据
     // handleSelectionChange(selection) {
     //   this.ids = selection.map(item => item.id)
@@ -648,14 +657,17 @@ export default {
   }
 }
 </script>
-<style>
-.main {
-  padding: 40px;
+<style lang="scss" scoped>
+.storage-page {
+  min-height: calc(100vh - 84px);
+  background: #f5f7fa;
+  padding: 16px 20px 24px;
 }
-.formInfo{
-  padding-left:30px;
+
+.formInfo {
+  padding-left: 30px;
   margin-left: 30px;
-  padding-right:10px;
+  padding-right: 10px;
   font-size: 14px;
   color: #606266;
 }

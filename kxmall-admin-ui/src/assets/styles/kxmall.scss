@@ -89,13 +89,17 @@
 }
 
 .el-table {
+  --el-table-header-bg-color: #fafbfc;
+  --el-table-header-text-color: #606266;
+
   .el-table__header-wrapper, .el-table__fixed-header-wrapper {
     th {
       word-break: break-word;
-      background-color: #f8f8f9;
-      color: #515a6e;
-      height: 40px;
+      background-color: #fafbfc !important;
+      color: #606266;
+      height: 44px;
       font-size: 13px;
+      font-weight: 600;
     }
   }
 
@@ -103,6 +107,132 @@
     .el-button [class*="el-icon-"] + span {
       margin-left: 1px;
     }
+  }
+}
+
+/** 列表页统一卡片、查询区、表头 */
+.page-panel {
+  padding: 4px 20px 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.page-tabs {
+  .el-tabs__header {
+    margin-bottom: 0;
+  }
+
+  .el-tabs__nav-wrap::after {
+    height: 1px;
+    background-color: #f0f2f5;
+  }
+
+  .el-tabs__item {
+    height: 44px;
+    line-height: 44px;
+    font-size: 14px;
+    color: #606266;
+
+    &.is-active {
+      font-weight: 600;
+      color: var(--el-color-primary, #1890ff);
+    }
+  }
+
+  .el-tabs__active-bar {
+    height: 3px;
+    border-radius: 2px;
+  }
+}
+
+.query-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 16px 16px 4px;
+  margin-bottom: 16px;
+  background: #fafbfc;
+  border: 1px solid #f0f2f5;
+  border-radius: 12px;
+
+  .el-form-item {
+    margin-right: 16px;
+    margin-bottom: 12px;
+  }
+
+  .el-form-item__label {
+    font-weight: 500;
+    color: #606266;
+  }
+
+  .el-input,
+  .el-select,
+  .el-select .el-select__wrapper,
+  .el-cascader {
+    width: 200px;
+  }
+
+  .el-date-editor.el-input__wrapper,
+  .el-date-editor--datetimerange,
+  .el-date-editor--daterange {
+    width: 360px;
+  }
+
+  .el-date-editor--date,
+  .el-date-editor--month {
+    width: 200px;
+  }
+
+  .query-form__actions {
+    margin-right: 0;
+  }
+
+  .query-form__region {
+    .el-select,
+    .el-select .el-select__wrapper {
+      width: 150px;
+    }
+  }
+
+  .query-form__wide .el-input,
+  .query-form__wide .el-input .el-input__wrapper {
+    width: 280px;
+  }
+
+  .query-form__narrow .el-input,
+  .query-form__narrow .el-select,
+  .query-form__narrow .el-select .el-select__wrapper {
+    width: 120px;
+  }
+
+  .query-form__dash {
+    margin-right: 8px;
+    color: #c0c4cc;
+    line-height: 32px;
+  }
+}
+
+.page-panel .query-form {
+  padding: 16px 0 4px;
+  margin-bottom: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.list-table {
+  width: 100%;
+
+  .list-table-header {
+    background: #fafbfc !important;
+    color: #606266;
+    font-weight: 600;
+  }
+
+  .el-table__cell {
+    padding: 10px 0;
   }
 }
 

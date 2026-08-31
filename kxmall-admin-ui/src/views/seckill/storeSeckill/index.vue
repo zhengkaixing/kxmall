@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
-    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item prop="storageId">
+    <el-form class="query-form" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="前置仓" prop="storageId">
         <el-select v-model="queryParams.storageId" placeholder="请选择前置仓" clearable>
           <el-option v-for="item in storages" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
@@ -14,9 +14,9 @@
           @keyup.enter="handleQuery"
         />
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 

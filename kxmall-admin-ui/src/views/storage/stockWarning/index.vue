@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
-      <el-form-item prop="storageId">
+    <el-form class="query-form" v-show="showSearch" ref="queryForm" :model="queryParams" :inline="true" label-width="80px">
+      <el-form-item label="前置仓" prop="storageId">
         <el-select v-model="queryParams.storageId" placeholder="请选择前置仓" clearable>
           <el-option v-for="item in storages" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
-      <el-form-item prop="categoryId">
+      <el-form-item label="类目" prop="categoryId">
         <el-cascader
           :options="categories"
           :props="{ checkStrictly: true ,value:'id'}"
@@ -16,15 +16,15 @@
           @change="onSelectCategory"
         />
       </el-form-item>
-      <el-form-item prop="name">
+      <el-form-item label="商品信息" prop="name" class="query-form__wide">
         <el-input
           v-model="queryParams.name"
           clearable
           placeholder="请输入商品条码/商品ID/商品名称"
         />
       </el-form-item>
-      <el-form-item prop="type" style="width:100px">
-        <el-select v-model="queryParams.type" clearable placeholder="请选择销售状态">
+      <el-form-item label="预警类型" prop="type" class="query-form__narrow">
+        <el-select v-model="queryParams.type" clearable placeholder="预警类型">
           <el-option
             v-for="dict in dict.type.warning_num"
             :key="dict.value"
@@ -33,28 +33,28 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item prop="minNum" style="width:110px">
+      <el-form-item label="库存范围" prop="minNum" class="query-form__narrow">
         <el-input
           v-model="queryParams.minNum"
           clearable
-          placeholder="请输入最小值"
+          placeholder="最小值"
         />
       </el-form-item>
-      <el-form-item style="color:#d2d3d7">
+      <el-form-item class="query-form__dash" label-width="0">
         —
       </el-form-item>
-      <el-form-item prop="maxNum" style="width:110px">
+      <el-form-item prop="maxNum" class="query-form__narrow" label-width="0">
         <el-input
           v-model="queryParams.maxNum"
           clearable
-          placeholder="请输入最大值"
+          placeholder="最大值"
         />
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
-        <!-- <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button> -->
+      <el-form-item class="query-form__actions" label-width="0">
+        <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
+        <!-- <el-button icon="Refresh" @click="resetQuery">重置</el-button> -->
       </el-form-item>
-      <el-form-item prop="showType">
+      <el-form-item prop="showType" label-width="0">
         <el-checkbox v-model="queryParams.showType" :true-label="1" :false-label="0" @change="handleQuery">只显示库存预警</el-checkbox>
       </el-form-item>
     </el-form>

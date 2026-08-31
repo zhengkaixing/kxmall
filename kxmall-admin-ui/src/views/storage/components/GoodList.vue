@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="添加商品" v-model="open" append-to-body>
-    <el-form ref="form" :model="form" inline>
-      <el-form-item prop="categoryId">
+    <el-form ref="form" class="query-form" :model="form" inline label-width="80px">
+      <el-form-item label="类目" prop="categoryId">
         <el-cascader
           v-model="form.categoryId"
           :options="categories"
@@ -11,14 +11,14 @@
           filterable
         />
       </el-form-item>
-      <el-form-item prop="keyword">
+      <el-form-item label="商品信息" prop="keyword" class="query-form__wide">
         <el-input
           v-model="form.keyword"
           clearable
           placeholder="请输入商品条码/商品ID/商品名称"
         />
       </el-form-item>
-      <el-form-item>
+      <el-form-item class="query-form__actions" label-width="0">
         <el-button type="primary" icon="Search" @click="onQuery">查询</el-button>
       </el-form-item>
     </el-form>
