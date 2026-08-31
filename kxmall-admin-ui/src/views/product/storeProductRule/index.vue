@@ -82,7 +82,7 @@
           </template>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="120">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="150">
         <template #default="scope">
           <el-button
             v-hasPermi="['product:storeProductRule:edit']"

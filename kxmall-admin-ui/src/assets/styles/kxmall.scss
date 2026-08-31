@@ -185,7 +185,15 @@
   }
 
   .query-form__actions {
-    margin-right: 0;
+    margin-right: 16px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .query-form__check {
+    margin-left: 8px;
   }
 
   .query-form__region {

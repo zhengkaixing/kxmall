@@ -240,131 +240,132 @@
       />
     </div>
 
-    <!-- 添加或修改订单对话框 -->
-    <el-dialog title="订单详情" v-model="open" width="800px" append-to-body>
-      <el-form
-        :data="form"
-        label-position="left"
-      >
-        <el-form-item label="订单编号">
-          <span>{{ form.orderId }}</span>
-        </el-form-item>
-        <el-form-item label="订单状态">
-          <el-tag>{{ getStatus(form.status) }}</el-tag>
-        </el-form-item>
-        <el-form-item label="下单时间">
-          <span>{{ form.createTime }}</span>
-        </el-form-item>
-        <el-form-item label="要求送达时间">
-          <span>{{ form.predictTime }}</span>
-        </el-form-item>
-        <el-form-item label="备注">
-          <span>{{ form.remark }}</span>
-        </el-form-item>
-        <el-form-item label="客户姓名">
-          <span>{{ form.realName }}</span>
-        </el-form-item>
-        <el-form-item label="客户电话">
-          <span>{{ form.userPhone }}</span>
-        </el-form-item>
-        <el-form-item label="客户地址">
-          <span>{{ form.userAddress }}</span>
-        </el-form-item>
-        <el-form-item label="支付状态">
-          <span>{{ getStatus(form.status) }}</span>
-        </el-form-item>
-        <el-form-item label="支付方式">
-          <span>{{ form.payTypeName }}</span>
-        </el-form-item>
-        <el-form-item label="支付金额">
-          <span>{{ form.payPrice }}</span>
-        </el-form-item>
-        <el-form-item label="交易号">
-          <span>{{ form.payId }}</span>
-        </el-form-item>
-        <el-form-item label="支付时间">
-          <span>{{ form.payTime }}</span>
-        </el-form-item>
-        <el-form-item label="商品信息">
+    <!-- 订单详情 -->
+    <el-dialog title="订单详情" v-model="open" width="920px" append-to-body class="order-detail-dialog">
+      <div class="order-detail">
+        <section class="detail-section">
+          <div class="detail-section__title">订单信息</div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="detail-item__label">订单编号</span>
+              <span class="detail-item__value">{{ form.orderId }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">订单状态</span>
+              <span class="detail-item__value">
+                <el-tag :type="getStatusType(form.status)" size="small">{{ getStatus(form.status) }}</el-tag>
+              </span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">下单时间</span>
+              <span class="detail-item__value">{{ form.createTime }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">要求送达</span>
+              <span class="detail-item__value">{{ form.predictTime }}</span>
+            </div>
+            <div class="detail-item detail-item--block">
+              <span class="detail-item__label">备注</span>
+              <span class="detail-item__value">{{ form.remark || '—' }}</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <div class="detail-section__title">客户信息</div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="detail-item__label">客户姓名</span>
+              <span class="detail-item__value">{{ form.realName }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">客户电话</span>
+              <span class="detail-item__value">{{ form.userPhone }}</span>
+            </div>
+            <div class="detail-item detail-item--block">
+              <span class="detail-item__label">客户地址</span>
+              <span class="detail-item__value">{{ form.userAddress }}</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <div class="detail-section__title">支付信息</div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="detail-item__label">支付状态</span>
+              <span class="detail-item__value">{{ getStatus(form.status) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">支付方式</span>
+              <span class="detail-item__value">{{ form.payTypeName }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">支付金额</span>
+              <span class="detail-item__value detail-item__value--money">¥{{ form.payPrice }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">支付时间</span>
+              <span class="detail-item__value">{{ form.payTime }}</span>
+            </div>
+            <div class="detail-item detail-item--block">
+              <span class="detail-item__label">交易号</span>
+              <span class="detail-item__value">{{ form.payId || '—' }}</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <div class="detail-section__title">商品信息</div>
           <el-table
             :data="form.productList"
-            size="small"
-            border
-            fit
-            highlight-current-row
+            stripe
+            class="list-table"
+            header-cell-class-name="list-table-header"
           >
-            <el-table-column
-              align="center"
-              label="序号"
-              type="index"
-            />
-            <el-table-column
-              align="center"
-              label="条码"
-              prop="barCode"
-            />
-            <!-- <span>一级类>二级类</span> -->
-            <el-table-column
-              align="center"
-              label="商品编码"
-              prop="productId"
-              :show-overflow-tooltip="true"
-            />
-            <el-table-column
-              align="center"
-              label="商品名称"
-              prop="productTitle"
-            />
-            <el-table-column
-              align="center"
-              label="数量"
-              prop="num"
-            />
-            <el-table-column
-              align="center"
-              label="单位"
-              prop="unitName"
-            />
-            <el-table-column
-              align="center"
-              label="原价"
-            >
+            <el-table-column align="center" label="序号" type="index" width="56" />
+            <el-table-column align="center" label="条码" prop="barCode" min-width="110" />
+            <el-table-column align="center" label="商品编码" prop="productId" min-width="100" :show-overflow-tooltip="true" />
+            <el-table-column header-align="center" align="left" label="商品名称" prop="productTitle" min-width="140" :show-overflow-tooltip="true" />
+            <el-table-column align="center" label="数量" prop="num" width="70" />
+            <el-table-column align="center" label="单位" prop="unitName" width="70" />
+            <el-table-column header-align="center" align="right" label="原价" width="90">
               <template #default="{row}">
-                <span>{{ row.otPrice  }}</span>
+                <span>{{ row.otPrice }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              align="center"
-              label="售价"
-            >
+            <el-table-column header-align="center" align="right" label="售价" width="90">
               <template #default="{row}">
-                <span>{{ row.price  }}</span>
+                <span>{{ row.price }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              align="center"
-              label="总价（单价*数量）"
-              width="150"
-            >
+            <el-table-column header-align="center" align="right" label="小计" width="110">
               <template #default="{row}">
                 <span>{{ Number(row.price * row.num).toFixed(2) }}</span>
               </template>
             </el-table-column>
           </el-table>
-        </el-form-item>
-        <el-form-item label="运费">
-          <span>{{ form.freightPrice }}</span>
-        </el-form-item>
-        <el-form-item label="优惠">
-          <span>{{ Number(form.originalTotalPrice) - Number(form.payPrice) + Number(form.freightPrice) }}</span>
-        </el-form-item>
-        <el-form-item label="商品金额">
-          <span>{{ form.originalTotalPrice }}</span>
-        </el-form-item>
-        <el-form-item label="总金额">
-          <span>{{ form.payPrice }}</span>
-        </el-form-item>
-      </el-form>
+        </section>
+
+        <div class="detail-summary">
+          <div class="summary-row">
+            <span>运费</span>
+            <span>{{ form.freightPrice == 0 ? '免配送' : '¥' + form.freightPrice }}</span>
+          </div>
+          <div class="summary-row">
+            <span>优惠</span>
+            <span>¥{{ (Number(form.originalTotalPrice || 0) - Number(form.payPrice || 0) + Number(form.freightPrice || 0)).toFixed(2) }}</span>
+          </div>
+          <div class="summary-row">
+            <span>商品金额</span>
+            <span>¥{{ form.originalTotalPrice }}</span>
+          </div>
+          <div class="summary-row summary-row--total">
+            <span>总金额</span>
+            <span>¥{{ form.payPrice }}</span>
+          </div>
+        </div>
+      </div>
     </el-dialog>
 
   </div>
@@ -507,6 +508,22 @@ export default {
       }
       return status[s]
     },
+    getStatusType(s) {
+      const types = {
+        14: 'warning',
+        16: 'warning',
+        20: '',
+        30: '',
+        40: 'success',
+        50: 'success',
+        32: 'danger',
+        34: 'danger',
+        10: 'info',
+        80: 'info',
+        90: 'info'
+      }
+      return types[s] || 'info'
+    },
     handleOperation(id, operation) {
       const operations = { startStocking, completeAllocation, merchantDistribution, completeDelivery }
       operations[operation]({ id }).then(() => {
@@ -530,5 +547,107 @@ export default {
 .order-overview {
   float: right;
   text-align: right;
+}
+
+.order-detail {
+  max-height: 70vh;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.detail-section {
+  margin-bottom: 16px;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #303133;
+
+    &::before {
+      content: '';
+      width: 3px;
+      height: 14px;
+      border-radius: 2px;
+      background: var(--el-color-primary, #1890ff);
+    }
+  }
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 24px;
+  padding: 12px 16px;
+  background: #fafbfc;
+  border: 1px solid #f0f2f5;
+  border-radius: 8px;
+}
+
+.detail-item {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.6;
+
+  &--block {
+    grid-column: 1 / -1;
+  }
+
+  &__label {
+    flex-shrink: 0;
+    width: 64px;
+    color: #909399;
+  }
+
+  &__value {
+    min-width: 0;
+    color: #303133;
+    word-break: break-all;
+
+    &--money {
+      font-weight: 600;
+      color: #f56c6c;
+    }
+  }
+}
+
+.detail-summary {
+  margin-top: 4px;
+  padding: 12px 16px;
+  background: #fafbfc;
+  border: 1px solid #f0f2f5;
+  border-radius: 8px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 24px;
+  font-size: 13px;
+  color: #606266;
+  line-height: 2;
+
+  span:first-child {
+    color: #909399;
+  }
+
+  &--total {
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px dashed #ebeef5;
+    font-size: 15px;
+    font-weight: 600;
+    color: #303133;
+
+    span:last-child {
+      color: #f56c6c;
+    }
+  }
 }
 </style>

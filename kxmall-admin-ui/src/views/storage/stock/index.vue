@@ -129,7 +129,7 @@
       </el-table-column>
       <el-table-column label="导入时间" align="center" prop="createTime" width="150" />
       <el-table-column label="修改时间" align="center" prop="updateTime" width="150" />
-      <el-table-column label="操作" align="center" class-name="small-padding" width="120">
+      <el-table-column label="操作" align="center" class-name="small-padding" width="150">
         <template #default="scope">
           <el-button
             v-if="scope.row.status === 0"

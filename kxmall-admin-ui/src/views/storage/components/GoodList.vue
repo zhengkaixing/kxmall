@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="添加商品" v-model="open" append-to-body>
+  <el-dialog title="添加商品" v-model="dialogVisible" append-to-body>
     <el-form ref="form" class="query-form" :model="form" inline label-width="80px">
       <el-form-item label="类目" prop="categoryId">
         <el-cascader
@@ -58,7 +58,12 @@ import { listStoreCategoryTree } from '@/api/product/storeCategory'
 
 export default {
   name: 'GoodList',
+  inheritAttrs: false,
   props: {
+    modelValue: {
+      type: Boolean,
+      default: false
+    },
     visible: {
       type: Boolean,
       default: false
@@ -91,12 +96,13 @@ export default {
     }
   },
   computed: {
-    open: {
+    dialogVisible: {
       get() {
-        return this.visible
+        return this.modelValue || this.visible
       },
-      set() {
-        this.close()
+      set(val) {
+        this.$emit('update:modelValue', val)
+        this.$emit('update:visible', val)
       }
     },
     selectedIds() {
@@ -104,7 +110,7 @@ export default {
     }
   },
   watch: {
-    visible: {
+    dialogVisible: {
       handler(val) {
         if (val) {
           this.reset()
@@ -163,7 +169,7 @@ export default {
       })
     },
     close() {
-      this.$emit('update:visible', false)
+      this.dialogVisible = false
     },
     onOk() {
       this.$emit('add', this.selection)

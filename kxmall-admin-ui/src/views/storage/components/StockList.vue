@@ -1,27 +1,28 @@
 <template>
-  <el-dialog :title="title" v-model="show" append-to-body>
+  <el-dialog :title="title" v-model="dialogVisible" append-to-body width="900px">
 
-    <el-form ref="form" :model="form" inline :disabled="isViewMode" :rules="rules">
+    <el-form ref="form" class="query-form stock-form" :model="form" inline :disabled="isViewMode" :rules="rules" label-width="80px">
       <el-form-item :label="text+'仓库'" prop="storageId">
-        <el-select v-model="form.storageId" :placeholder="`请选择${text}仓库`" clearable :disabled="isUpdateMode" @change="onStorageChange">
+        <el-select v-model="form.storageId" :placeholder="`请选择${text}仓库`" clearable filterable :disabled="isUpdateMode" @change="onStorageChange">
           <el-option v-for="item in storages" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
-      <el-form-item label="备注" prop="remarks">
-        <el-input v-model="form.remarks" placeholder="请输入内容" />
-      </el-form-item>
-      <br>
-      <el-form-item>
-        <el-button type="primary" @click="onAdd">添加</el-button>
-        <el-button :disabled="multiple" @click="onDelete">删除</el-button>
+      <el-form-item label="备注" prop="remarks" class="query-form__wide">
+        <el-input v-model="form.remarks" placeholder="请输入备注" clearable />
       </el-form-item>
     </el-form>
 
+    <div class="stock-toolbar">
+      <el-button type="primary" icon="Plus" :disabled="isViewMode" @click="onAdd">添加</el-button>
+      <el-button icon="Delete" :disabled="isViewMode || multiple" @click="onDelete">删除</el-button>
+    </div>
+
     <el-table
       :data="list"
-      border
+      stripe
+      class="list-table"
+      header-cell-class-name="list-table-header"
       height="500"
-      style="margin-top:15px"
       @selection-change="handleSelectionChange"
     >
       <el-table-column
@@ -61,13 +62,15 @@
         :prop="type+'StockNum'"
         :label="text+'数量'"
       >
-        <template #default="{row}">
-          <div v-if="isViewMode">
-            <span>{{ row[type+'StockNum' ] }}</span>
-          </div>
-          <div v-else>
-            <el-input v-model="row[type+'StockNum']" clearable placeholder="请输入内容" />
-          </div>
+        <template #default="scope">
+          <template v-if="scope && scope.row">
+            <div v-if="isViewMode">
+              <span>{{ scope.row[type + 'StockNum'] }}</span>
+            </div>
+            <div v-else>
+              <el-input v-model="scope.row[type + 'StockNum']" clearable placeholder="请输入内容" />
+            </div>
+          </template>
         </template>
       </el-table-column>
       <el-table-column
@@ -77,8 +80,8 @@
         label="操作"
         width="80"
       >
-        <template #default="{row}">
-          <el-button type="primary" size="small" @click="onDelete(row)">删除</el-button>
+        <template #default="scope">
+          <el-button v-if="scope && scope.row" type="primary" size="small" @click="onDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -98,17 +101,22 @@ import { addGoodsOutStock, getGoodsOutStock, updateGoodsOutStock } from '@/api/s
 import GoodList from './GoodList.vue'
 export default {
   name: 'StockList',
+  inheritAttrs: false,
   components: {
     GoodList
   },
   props: {
-    id: {
-      type: [String, Number],
-      default: ''
+    modelValue: {
+      type: Boolean,
+      default: false
     },
     visible: {
       type: Boolean,
       default: false
+    },
+    id: {
+      type: [String, Number],
+      default: ''
     },
     title: {
       type: String,
@@ -125,7 +133,7 @@ export default {
       type: String,
       default: 'add',
       validator(value) {
-        return ['add', 'view', 'update'].indexOf(value) > -1
+        return !value || ['add', 'view', 'update'].indexOf(value) > -1
       }
     }
   },
@@ -149,6 +157,15 @@ export default {
     }
   },
   computed: {
+    dialogVisible: {
+      get() {
+        return this.modelValue || this.visible
+      },
+      set(val) {
+        this.$emit('update:modelValue', val)
+        this.$emit('update:visible', val)
+      }
+    },
     text() {
       return this.type === 'in' ? '入库' : '出库'
     },
@@ -163,18 +180,10 @@ export default {
     },
     isUpdateMode() {
       return this.mode === 'update'
-    },
-    show: {
-      get() {
-        return this.visible
-      },
-      set() {
-        this.cancel()
-      }
     }
   },
   watch: {
-    visible: {
+    dialogVisible: {
       handler(val) {
         if (val) {
           this.reset()
@@ -186,6 +195,9 @@ export default {
       }
     }
   },
+  created() {
+    this.listAllStorage()
+  },
   methods: {
     reset() {
       this.list = []
@@ -195,8 +207,8 @@ export default {
       }
     },
     listAllStorage() {
-      listAllStorage().then(({ data }) => {
-        this.storages = data
+      listAllStorage().then(res => {
+        this.storages = res.data || []
       })
     },
     async getGoods() {
@@ -234,7 +246,7 @@ export default {
       this.list = this.list.concat(good)
     },
     close() {
-      this.$emit('update:visible', false)
+      this.dialogVisible = false
     },
     cancel() {
       this.close()
@@ -279,3 +291,15 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.stock-form {
+  margin-bottom: 4px;
+}
+
+.stock-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 16px;
+}
+</style>

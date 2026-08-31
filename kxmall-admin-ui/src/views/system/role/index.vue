@@ -106,6 +106,7 @@
       <el-table-column label="状态" align="center" width="100">
         <template #default="scope">
           <el-switch
+            v-if="scope && scope.row"
             v-model="scope.row.status"
             active-value="0"
             inactive-value="1"
@@ -115,11 +116,12 @@
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.createTime) }}</span>
+          <span v-if="scope && scope.row">{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template #default="scope" v-if="scope.row.roleId !== 1">
+        <template #default="scope">
+          <template v-if="scope && scope.row && scope.row.roleId !== 1">
           <el-button
             size="small"
             type="text"
@@ -143,6 +145,7 @@
                 v-hasPermi="['system:role:edit']">分配用户</el-dropdown-item>
             </el-dropdown-menu></template>
           </el-dropdown>
+          </template>
         </template>
       </el-table-column>
     </el-table>

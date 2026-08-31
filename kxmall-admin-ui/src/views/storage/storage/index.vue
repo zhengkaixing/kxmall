@@ -186,136 +186,191 @@
     </div>
 
     <!-- 添加或修改仓库管理对话框 -->
-    <el-dialog :title="title" v-model="open" :width="dialogMode==='view'?'500px':'1200px'" append-to-body>
-      <div v-if="dialogMode==='view'">
-        <el-form :model="form" label-width="120px">
-          <el-form-item label="前置仓名称">
-            <span>{{ form.name }}</span>
-          </el-form-item>
-          <el-form-item label="前置仓状态">
-            <span>{{ form.state===1?'正常':'禁用' }}</span>
-          </el-form-item>
-          <el-form-item label="营业状态">
-            <span>{{ form.operatingState===1? '营业中':'休息中' }}</span>
-          </el-form-item>
-          <el-form-item label="营业时间">
-            <span>{{ form.businessStartTime+'~'+form.businessStopTime }}</span>
-          </el-form-item>
-          <el-form-item label="配送时间">
-            <span>{{ form.deliveryStartTime+'~'+form.deliveryStopTime }}</span>
-          </el-form-item>
-          <el-form-item label="负责人">
-            <span>{{ form.leaderName }}</span>
-          </el-form-item>
-          <el-form-item label="联系电话">
-            <span>{{ form.phone }}</span>
-          </el-form-item>
-          <el-form-item label="配送范围">
-            <span>{{ form.deliveryRadius+'公里' }}</span>
-          </el-form-item>
-          <el-form-item label="地址">
-            <span>{{ form.address }}</span>
-          </el-form-item>
-          <el-form-item label="经纬度">
-            <span>{{ form.longitude+','+form.latitude }}</span>
-          </el-form-item>
-        </el-form>
+    <el-dialog :title="title" v-model="open" width="880px" append-to-body class="storage-dialog">
+      <div v-if="dialogMode==='view'" class="storage-form">
+        <section class="form-section">
+          <div class="form-section__title">基本信息</div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="detail-item__label">前置仓名称</span>
+              <span class="detail-item__value">{{ form.name }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">前置仓状态</span>
+              <span class="detail-item__value">{{ form.state===1?'正常':'禁用' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">营业状态</span>
+              <span class="detail-item__value">{{ form.operatingState===1? '营业中':'休息中' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">营业时间</span>
+              <span class="detail-item__value">{{ form.businessStartTime || '—' }} ~ {{ form.businessStopTime || '—' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">配送时间</span>
+              <span class="detail-item__value">{{ form.deliveryStartTime || '—' }} ~ {{ form.deliveryStopTime || '—' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">配送范围</span>
+              <span class="detail-item__value">{{ form.deliveryRadius != null ? form.deliveryRadius + '公里' : '—' }}</span>
+            </div>
+          </div>
+        </section>
+        <section class="form-section">
+          <div class="form-section__title">联系与地址</div>
+          <div class="detail-grid">
+            <div class="detail-item">
+              <span class="detail-item__label">负责人</span>
+              <span class="detail-item__value">{{ form.leaderName }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-item__label">联系电话</span>
+              <span class="detail-item__value">{{ form.phone }}</span>
+            </div>
+            <div class="detail-item detail-item--block">
+              <span class="detail-item__label">地址</span>
+              <span class="detail-item__value">{{ form.address }}</span>
+            </div>
+            <div class="detail-item detail-item--block">
+              <span class="detail-item__label">经纬度</span>
+              <span class="detail-item__value">{{ form.longitude }},{{ form.latitude }}</span>
+            </div>
+          </div>
+        </section>
       </div>
-      <div v-else>
-        <el-form ref="form" :model="form" :rules="rules" label-width="120px">
-          <el-form-item label="前置仓名称">
-            <el-input v-model="form.name" placeholder="请输入仓库名称" clearable style="width:500px" />
-          </el-form-item>
-          <el-form-item label="前置仓状态">
-            <el-radio-group v-model="form.state">
-              <el-radio-button label="1">
-                正常
-              </el-radio-button>
-              <el-radio-button label="0">
-                禁用
-              </el-radio-button>
-            </el-radio-group>
-            <b class="formInfo">订单自动分配配送员</b>
-            <el-radio-group v-model="form.automatic">
-              <el-radio-button label="1">
-                是
-              </el-radio-button>
-              <el-radio-button label="0">
-                否
-              </el-radio-button>
-            </el-radio-group>
+      <div v-else class="storage-form">
+        <el-form ref="form" :model="form" :rules="rules" label-width="110px">
+          <section class="form-section">
+            <div class="form-section__title">基本信息</div>
+            <el-row :gutter="16">
+              <el-col :span="12">
+                <el-form-item label="前置仓名称" prop="name">
+                  <el-input v-model="form.name" placeholder="请输入仓库名称" clearable />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="营业状态" prop="operatingState">
+                  <el-radio-group v-model="form.operatingState">
+                    <el-radio-button label="1">营业中</el-radio-button>
+                    <el-radio-button label="0">休息中</el-radio-button>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="仓库状态" prop="state">
+                  <el-radio-group v-model="form.state">
+                    <el-radio-button label="1">正常</el-radio-button>
+                    <el-radio-button label="0">禁用</el-radio-button>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="自动分配" prop="automatic">
+                  <el-radio-group v-model="form.automatic">
+                    <el-radio-button label="1">是</el-radio-button>
+                    <el-radio-button label="0">否</el-radio-button>
+                  </el-radio-group>
+                  <span class="form-tip">订单自动分配配送员</span>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </section>
 
-          </el-form-item>
-          <el-form-item label="营业状态">
-            <el-radio-group v-model="form.operatingState">
-              <el-radio-button label="1">
-                营业中
-              </el-radio-button>
-              <el-radio-button label="0">
-                休息中
-              </el-radio-button>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="营业时间">
-            <el-time-select
-              v-model="form.businessStartTime"
-              start="00:00"
-              step="01:00"
-              end="23:00"
-              placeholder="起始时间"
-            />
-            <el-time-select
-              v-model="form.businessStopTime"
-              start="00:00"
-              step="01:00"
-              end="23:00"
-              :min-time="form.businessStartTime"
-              placeholder="结束时间"
-            />
-          </el-form-item>
-          <el-form-item label="配送时间">
-            <el-time-select
-              v-model="form.deliveryStartTime"
-              start="00:00"
-              step="01:00"
-              end="23:00"
-              placeholder="起始时间"
-            />
-            <el-time-select
-              v-model="form.deliveryStopTime"
-              start="00:00"
-              step="01:00"
-              end="23:00"
-              :min-time="form.deliveryStartTime"
-              placeholder="结束时间"
-            />
-          </el-form-item>
-          <el-form-item label="负责人">
-            <el-input v-model="form.leaderName" placeholder="请输入负责人姓名" clearable style="width:500px" />
-          </el-form-item>
-          <el-form-item label="联系电话">
-            <el-input v-model="form.phone" placeholder="请输入负责人手机号" clearable style="width:500px" />
-          </el-form-item>
-          <el-form-item label="仓库地址信息：" />
-          <el-form-item label="配送范围">
-            <el-input v-model="form.deliveryRadius" clearable style="width:500px">
-              <template #append>公里</template>
-            </el-input>
-          </el-form-item>
-          <el-form-item label="地址">
-            <region-selector ref="regionSelector" v-model="form.region" style="display: inline-block;" />
-            <el-input v-model="form.address" placeholder="详细地址" clearable style="width:450px" />
-          </el-form-item>
-          <el-form-item label="经纬度">
-            <el-input v-model="form.litude" style="width:500px" clearable />
-            <el-button type="primary" style="width:120px" @click="parse">解析</el-button>
-          </el-form-item>
+          <section class="form-section">
+            <div class="form-section__title">营业与配送</div>
+            <el-row :gutter="16">
+              <el-col :span="12">
+                <el-form-item label="营业时间">
+                  <div class="time-range">
+                    <el-time-select
+                      v-model="form.businessStartTime"
+                      start="00:00"
+                      step="01:00"
+                      end="23:00"
+                      placeholder="起始时间"
+                    />
+                    <span class="time-range__sep">至</span>
+                    <el-time-select
+                      v-model="form.businessStopTime"
+                      start="00:00"
+                      step="01:00"
+                      end="23:00"
+                      :min-time="form.businessStartTime"
+                      placeholder="结束时间"
+                    />
+                  </div>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="配送时间">
+                  <div class="time-range">
+                    <el-time-select
+                      v-model="form.deliveryStartTime"
+                      start="00:00"
+                      step="01:00"
+                      end="23:00"
+                      placeholder="起始时间"
+                    />
+                    <span class="time-range__sep">至</span>
+                    <el-time-select
+                      v-model="form.deliveryStopTime"
+                      start="00:00"
+                      step="01:00"
+                      end="23:00"
+                      :min-time="form.deliveryStartTime"
+                      placeholder="结束时间"
+                    />
+                  </div>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="配送范围">
+                  <el-input v-model="form.deliveryRadius" placeholder="请输入配送范围" clearable>
+                    <template #append>公里</template>
+                  </el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </section>
+
+          <section class="form-section">
+            <div class="form-section__title">联系与地址</div>
+            <el-row :gutter="16">
+              <el-col :span="12">
+                <el-form-item label="负责人">
+                  <el-input v-model="form.leaderName" placeholder="请输入负责人姓名" clearable />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="联系电话">
+                  <el-input v-model="form.phone" placeholder="请输入负责人手机号" clearable />
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="地址">
+                  <div class="address-row">
+                    <region-selector ref="regionSelector" v-model="form.region" class="address-row__region" />
+                    <el-input v-model="form.address" placeholder="详细地址" clearable class="address-row__detail" />
+                  </div>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="经纬度">
+                  <div class="litude-row">
+                    <el-input v-model="form.litude" placeholder="经度,纬度" clearable />
+                    <el-button type="primary" @click="parse">解析</el-button>
+                  </div>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </section>
         </el-form>
       </div>
       <template v-if="dialogMode!=='view'" #footer>
         <div class="dialog-footer">
-          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
           <el-button @click="cancel">取 消</el-button>
+          <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -664,11 +719,131 @@ export default {
   padding: 16px 20px 24px;
 }
 
-.formInfo {
-  padding-left: 30px;
-  margin-left: 30px;
-  padding-right: 10px;
-  font-size: 14px;
-  color: #606266;
+.storage-form {
+  max-height: 70vh;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.form-section {
+  margin-bottom: 16px;
+  padding: 16px 16px 4px;
+  background: #fafbfc;
+  border: 1px solid #f0f2f5;
+  border-radius: 8px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #303133;
+
+    &::before {
+      content: '';
+      width: 3px;
+      height: 14px;
+      border-radius: 2px;
+      background: var(--el-color-primary, #1890ff);
+    }
+  }
+}
+
+.form-tip {
+  margin-left: 10px;
+  font-size: 12px;
+  color: #909399;
+  font-weight: 400;
+}
+
+.time-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  .el-date-editor,
+  :deep(.el-select) {
+    flex: 1;
+    width: auto;
+  }
+
+  &__sep {
+    flex-shrink: 0;
+    color: #909399;
+    font-size: 13px;
+  }
+}
+
+.address-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  &__region {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__detail {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+.litude-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  .el-input {
+    flex: 1;
+  }
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 24px;
+  padding-bottom: 12px;
+}
+
+.detail-item {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.6;
+
+  &--block {
+    grid-column: 1 / -1;
+  }
+
+  &__label {
+    flex-shrink: 0;
+    width: 72px;
+    color: #909399;
+  }
+
+  &__value {
+    min-width: 0;
+    color: #303133;
+    word-break: break-all;
+  }
+}
+
+:deep(.address-row__region .el-select) {
+  width: 140px;
+  margin-right: 0;
 }
 </style>

@@ -117,56 +117,58 @@
 
     <el-table v-loading="loading" :data="goodsInStockList">
       <el-table-column label="序号" width="80" align="center">
-        <template #default="{$index}">
-          {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
+        <template #default="scope">
+          {{ scope ? (queryParams.pageNum - 1) * queryParams.pageSize + scope.$index + 1 : '' }}
         </template>
       </el-table-column>
       <el-table-column label="仓库" align="left" header-align="center" prop="storageName" />
       <el-table-column label="入库单号" align="center" prop="inStockNumbers" />
       <el-table-column label="入库状态" align="center" prop="states">
         <template #default="scope">
-          <dict-tag :options="dict.type.in_stock_status" :value="scope.row.states" />
+          <dict-tag v-if="scope && scope.row" :options="dict.type.in_stock_status" :value="scope.row.states" />
         </template>
       </el-table-column>
       <el-table-column label="入库人" align="center" prop="ingoingPerson" />
       <el-table-column label="入库时间" align="center" prop="ingoingTime" width="180">
         <template #default="scope">
-          <span>{{ parseTime(scope.row.ingoingTime, '{y}-{m}-{d}') }}</span>
+          <span v-if="scope && scope.row">{{ parseTime(scope.row.ingoingTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建人" align="center" prop="createBy" />
       <el-table-column label="修改时间" align="center" prop="updateTime" width="180" />
       <el-table-column label="操作" align="center" class-name="small-padding" width="300">
         <template #default="scope">
-          <el-button
-            v-hasPermi="['storage:goodsInStock:edit']"
-            size="small"
-            type="text"
-            style="color: #409EFF;"
-            @click="handleView(scope.row)"
-          >详情</el-button>
-          <template v-if="scope.row.states === 0">
+          <template v-if="scope && scope.row">
             <el-button
               v-hasPermi="['storage:goodsInStock:edit']"
               size="small"
               type="text"
               style="color: #409EFF;"
-              @click="handleUpdate(scope.row)"
-            >修改</el-button>
-            <el-button
-              v-hasPermi="['storage:goodsInStock:edit']"
-              size="small"
-              type="text"
-              style="color: #67C23A;"
-              @click="handleStockIn(scope.row)"
-            >入库</el-button>
-            <el-button
-              v-hasPermi="['storage:goodsInStock:remove']"
-              size="small"
-              type="text"
-              style="color: #F56C6C;"
-              @click="handleDelete(scope.row)"
-            >删除</el-button>
+              @click="handleView(scope.row)"
+            >详情</el-button>
+            <template v-if="scope.row.states === 0">
+              <el-button
+                v-hasPermi="['storage:goodsInStock:edit']"
+                size="small"
+                type="text"
+                style="color: #409EFF;"
+                @click="handleUpdate(scope.row)"
+              >修改</el-button>
+              <el-button
+                v-hasPermi="['storage:goodsInStock:edit']"
+                size="small"
+                type="text"
+                style="color: #67C23A;"
+                @click="handleStockIn(scope.row)"
+              >入库</el-button>
+              <el-button
+                v-hasPermi="['storage:goodsInStock:remove']"
+                size="small"
+                type="text"
+                style="color: #F56C6C;"
+                @click="handleDelete(scope.row)"
+              >删除</el-button>
+            </template>
           </template>
         </template>
 
@@ -252,8 +254,8 @@ export default {
     getList() {
       this.loading = true
       listGoodsInStock(this.queryParams).then(response => {
-        this.goodsInStockList = response.rows
-        this.total = response.total
+        this.goodsInStockList = response.rows || []
+        this.total = response.total || 0
         this.loading = false
       })
     },

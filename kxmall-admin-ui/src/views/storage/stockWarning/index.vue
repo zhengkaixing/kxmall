@@ -54,7 +54,7 @@
         <el-button type="primary" icon="Search" @click="handleQuery">搜索</el-button>
         <!-- <el-button icon="Refresh" @click="resetQuery">重置</el-button> -->
       </el-form-item>
-      <el-form-item prop="showType" label-width="0">
+      <el-form-item prop="showType" class="query-form__check" label-width="0">
         <el-checkbox v-model="queryParams.showType" :true-label="1" :false-label="0" @change="handleQuery">只显示库存预警</el-checkbox>
       </el-form-item>
     </el-form>
