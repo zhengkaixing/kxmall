@@ -1,10 +1,8 @@
-const req = require.context('../../../assets/icons/svg', false, /\.svg$/)
-const requireAll = requireContext => requireContext.keys()
+const modules = import.meta.glob('../../../assets/icons/svg/*.svg', { eager: true })
 
-const re = /\.\/(.*)\.svg/
-
-const svgIcons = requireAll(req).map(i => {
-  return i.match(re)[1]
+const svgIcons = Object.keys(modules).map((path) => {
+  const match = path.match(/\/([^/]+)\.svg$/)
+  return match ? match[1] : path
 })
 
 export default svgIcons

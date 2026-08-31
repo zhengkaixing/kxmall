@@ -1,13 +1,13 @@
 <template>
   <!-- 授权用户 -->
-  <el-dialog title="选择用户" :visible.sync="visible" width="800px" top="5vh" append-to-body>
+  <el-dialog title="选择用户" v-model="visible" width="800px" top="5vh" append-to-body>
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true">
       <el-form-item label="用户名称" prop="userName">
         <el-input
           v-model="queryParams.userName"
           placeholder="请输入用户名称"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="手机号码" prop="phonenumber">
@@ -15,12 +15,12 @@
           v-model="queryParams.phonenumber"
           placeholder="请输入手机号码"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
     <el-row>
@@ -31,12 +31,12 @@
         <el-table-column label="邮箱" prop="email" :show-overflow-tooltip="true" />
         <el-table-column label="手机" prop="phonenumber" :show-overflow-tooltip="true" />
         <el-table-column label="状态" align="center" prop="status">
-          <template slot-scope="scope">
+          <template #default="scope">
             <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
           </template>
         </el-table-column>
         <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-          <template slot-scope="scope">
+          <template #default="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
@@ -44,15 +44,15 @@
       <pagination
         v-show="total>0"
         :total="total"
-        :page.sync="queryParams.pageNum"
-        :limit.sync="queryParams.pageSize"
+        v-model:page="queryParams.pageNum"
+        v-model:limit="queryParams.pageSize"
         @pagination="getList"
       />
     </el-row>
-    <div slot="footer" class="dialog-footer">
+    <template #footer><div class="dialog-footer">
       <el-button type="primary" @click="handleSelectUser">确 定</el-button>
       <el-button @click="visible = false">取 消</el-button>
-    </div>
+    </div></template>
   </el-dialog>
 </template>
 

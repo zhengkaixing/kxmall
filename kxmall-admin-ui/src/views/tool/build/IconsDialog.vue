@@ -3,22 +3,21 @@
     <el-dialog
       v-bind="$attrs"
       width="980px"
-      :modal-append-to-body="false"
-      v-on="$listeners"
+      :append-to-body="false"
       @open="onOpen"
       @close="onClose"
     >
-      <div slot="title">
+      <template #title><div>
         选择图标
         <el-input
           v-model="key"
-          size="mini"
+          size="small"
           :style="{width: '260px'}"
           placeholder="请输入图标名称"
-          prefix-icon="el-icon-search"
+          prefix-icon="Search"
           clearable
         />
-      </div>
+      </div></template>
       <ul class="icon-ul">
         <li
           v-for="icon in iconList"
@@ -101,7 +100,7 @@ export default {
   }
 }
 .icon-dialog {
-  ::v-deep .el-dialog {
+  :deep() .el-dialog {
     border-radius: 8px;
     margin-bottom: 0;
     margin-top: 4vh !important;

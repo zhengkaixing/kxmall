@@ -7,7 +7,7 @@
           placeholder="配置key"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="桶名称" prop="bucketName">
@@ -16,7 +16,7 @@
           placeholder="请输入桶名称"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="状态" prop="status">
@@ -30,8 +30,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -40,8 +40,8 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
           v-hasPermi="['system:oss:add']"
         >新增</el-button>
@@ -50,8 +50,8 @@
         <el-button
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['system:oss:edit']"
@@ -61,14 +61,14 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:oss:remove']"
         >删除</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="ossConfigList" @selection-change="handleSelectionChange">
@@ -81,14 +81,14 @@
       <el-table-column label="前缀" align="center" prop="prefix" />
       <el-table-column label="域" align="center" prop="region" />
       <el-table-column label="桶权限类型" align="center" prop="accessPolicy">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag type="warning" v-if="scope.row.accessPolicy === '0'">private</el-tag>
           <el-tag type="success" v-if="scope.row.accessPolicy === '1'">public</el-tag>
           <el-tag type="info" v-if="scope.row.accessPolicy === '2'">custom</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-switch
             v-model="scope.row.status"
             active-value="0"
@@ -98,18 +98,18 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:oss:edit']"
           >修改</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:oss:remove']"
           >删除</el-button>
@@ -120,13 +120,13 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改对象存储配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <!-- 配置类型下拉框 -->
         <el-form-item label="存储类型" prop="storageType">
@@ -201,10 +201,10 @@
           </el-form-item>
         </template>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

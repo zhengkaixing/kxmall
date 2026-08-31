@@ -1,36 +1,36 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
-      <router-link
+      <span
         v-for="tag in visitedViews"
-        ref="tag"
         :key="tag.path"
+        ref="tag"
         :class="isActive(tag)?'active':''"
-        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        tag="span"
         class="tags-view-item"
         :style="activeStyle(tag)"
-        @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
-        @contextmenu.prevent.native="openMenu(tag,$event)"
+        :data-path="tag.path"
+        @click="pushTag(tag)"
+        @click.middle="!isAffix(tag)?closeSelectedTag(tag):''"
+        @contextmenu.prevent="openMenu(tag,$event)"
       >
         {{ tag.title }}
-        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
-      </router-link>
+        <el-icon v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)"><Close /></el-icon>
+      </span>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)"><i class="el-icon-refresh-right"></i> 刷新页面</li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"><i class="el-icon-close"></i> 关闭当前</li>
-      <li @click="closeOthersTags"><i class="el-icon-circle-close"></i> 关闭其他</li>
-      <li v-if="!isFirstView()" @click="closeLeftTags"><i class="el-icon-back"></i> 关闭左侧</li>
-      <li v-if="!isLastView()" @click="closeRightTags"><i class="el-icon-right"></i> 关闭右侧</li>
-      <li @click="closeAllTags(selectedTag)"><i class="el-icon-circle-close"></i> 全部关闭</li>
+      <li @click="refreshSelectedTag(selectedTag)"><el-icon ><RefreshRight /></el-icon> 刷新页面</li>
+      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"><el-icon ><Close /></el-icon> 关闭当前</li>
+      <li @click="closeOthersTags"><el-icon ><CircleClose /></el-icon> 关闭其他</li>
+      <li v-if="!isFirstView()" @click="closeLeftTags"><el-icon ><Back /></el-icon> 关闭左侧</li>
+      <li v-if="!isLastView()" @click="closeRightTags"><el-icon ><Right /></el-icon> 关闭右侧</li>
+      <li @click="closeAllTags(selectedTag)"><el-icon ><CircleClose /></el-icon> 全部关闭</li>
     </ul>
   </div>
 </template>
 
 <script>
 import ScrollPane from './ScrollPane'
-import path from 'path'
+import path from '@/utils/path'
 
 export default {
   components: { ScrollPane },
@@ -139,16 +139,16 @@ export default {
       }
       return false
     },
+    pushTag(tag) {
+      this.$router.push({ path: tag.path, query: tag.query })
+    },
     moveToCurrentTag() {
       const tags = this.$refs.tag
       this.$nextTick(() => {
+        if (!tags) return
         for (const tag of tags) {
-          if (tag.to.path === this.$route.path) {
+          if (tag.dataset.path === this.$route.path) {
             this.$refs.scrollPane.moveToTarget(tag)
-            // when query is different then update
-            if (tag.to.fullPath !== this.$route.fullPath) {
-              this.$store.dispatch('tagsView/updateVisitedView', this.$route)
-            }
             break
           }
         }

@@ -17,11 +17,11 @@
       :on-preview="handlePictureCardPreview"
       :class="{hide: this.fileList.length >= this.limit}"
     >
-      <i class="el-icon-plus"></i>
+      <el-icon ><Plus /></el-icon>
     </el-upload>
 
     <!-- 上传提示 -->
-    <div class="el-upload__tip" slot="tip" v-if="showTip">
+    <div class="el-upload__tip" v-if="showTip">
       请上传
       <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
       <template v-if="fileType"> 格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
@@ -29,7 +29,7 @@
     </div>
 
     <el-dialog
-      :visible.sync="dialogVisible"
+      v-model="dialogVisible"
       title="预览"
       width="800"
       append-to-body
@@ -48,7 +48,7 @@ import { listByIds, delOss } from "@/api/system/oss";
 
 export default {
   props: {
-    value: [String, Object, Array],
+    modelValue: [String, Object, Array],
     // 图片数量限制
     limit: {
       type: Number,
@@ -86,8 +86,8 @@ export default {
       dialogImageUrl: "",
       dialogVisible: false,
       hideUpload: false,
-      baseUrl: process.env.VUE_APP_BASE_API,
-      uploadImgUrl: process.env.VUE_APP_BASE_API + "/system/oss/upload", // 上传的图片服务器地址
+      baseUrl: import.meta.env.VITE_APP_BASE_API,
+      uploadImgUrl: import.meta.env.VITE_APP_BASE_API + "/system/oss/upload", // 上传的图片服务器地址
       headers: {
         Authorization: "Bearer " + getToken(),
       },
@@ -95,7 +95,7 @@ export default {
     };
   },
   watch: {
-    value: {
+    modelValue: {
       async handler(val) {
         if (val) {
           // 首先将值转为数组
@@ -186,7 +186,7 @@ export default {
         let ossId = this.fileList[findex].ossId;
         delOss(ossId);
         this.fileList.splice(findex, 1);
-        this.$emit("input", this.listToString(this.fileList));
+        this.$emit("update:modelValue", this.listToString(this.fileList));
       }
     },
     // 上传失败
@@ -207,14 +207,14 @@ export default {
         this.uploadList = [];
         this.number = 0;
         if(this.valueType==='json'){
-          this.$emit("input", JSON.stringify(this.fileList.map(el=>{
+          this.$emit("update:modelValue", JSON.stringify(this.fileList.map(el=>{
             return {
               ossId:el.ossId,
               url:el.url
             }
           })));
         }else{
-          this.$emit("input", this.listToString(this.fileList));
+          this.$emit("update:modelValue", this.listToString(this.fileList));
         }
         this.$modal.closeLoading();
       }
@@ -240,16 +240,16 @@ export default {
 </script>
 <style scoped lang="scss">
 // .el-upload--picture-card 控制加号部分
-::v-deep.hide .el-upload--picture-card {
+:deep() .hide .el-upload--picture-card {
     display: none;
 }
 // 去掉动画效果
-::v-deep .el-list-enter-active,
-::v-deep .el-list-leave-active {
+:deep() .el-list-enter-active,
+:deep() .el-list-leave-active {
     transition: all 0s;
 }
 
-::v-deep .el-list-enter, .el-list-leave-active {
+:deep() .el-list-enter, .el-list-leave-active {
   opacity: 0;
   transform: translateY(0);
 }

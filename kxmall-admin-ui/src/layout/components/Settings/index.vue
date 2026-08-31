@@ -1,5 +1,5 @@
 <template>
-  <el-drawer size="280px" :visible="visible" :with-header="false" :append-to-body="true" :show-close="false">
+  <el-drawer size="280px" :model-value="visible" :with-header="false" :append-to-body="true" :show-close="false">
     <div class="drawer-container">
       <div>
         <div class="setting-drawer-content">
@@ -66,8 +66,8 @@
 
         <el-divider/>
 
-        <el-button size="small" type="primary" plain icon="el-icon-document-add" @click="saveSetting">保存配置</el-button>
-        <el-button size="small" plain icon="el-icon-refresh" @click="resetSetting">重置配置</el-button>
+        <el-button size="small" type="primary" plain icon="DocumentAdd" @click="saveSetting">保存配置</el-button>
+        <el-button size="small" plain icon="Refresh" @click="resetSetting">重置配置</el-button>
       </div>
     </div>
   </el-drawer>

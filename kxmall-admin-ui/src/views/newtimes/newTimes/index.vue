@@ -7,8 +7,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -17,18 +17,18 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
           v-hasPermi="['newtimes:newTimes:add']"
         >新增</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="newTimesList" @selection-change="handleSelectionChange">
       <el-table-column label="仓库名称" align="center" prop="storageName">
-        <template slot-scope="scope">
+        <template #default="scope">
           {{ storageMap[scope.row.storageId] }}
         </template>
       </el-table-column>
@@ -36,7 +36,7 @@
       <el-table-column label="编辑人" align="center" prop="createBy" />
       <el-table-column label="更新人" align="center" prop="updateBy" />
       <el-table-column label="时报状态" align="center" prop="isStop">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <div>
             <el-tag v-if="row.isStop === 1">开启</el-tag>
             <el-tag v-else type="info">关闭</el-tag>
@@ -44,26 +44,26 @@
         </template>
       </el-table-column>
       <el-table-column label="编辑时间" align="center" prop="updateTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
             style="color: #409EFF;"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['newtimes:newTimes:edit']"
           >修改</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
             style="color: #F56C6C;"
             @click="handleDelete(scope.row)"
@@ -76,13 +76,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改新鲜时报对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="仓库" prop="storageId">
           <el-select v-model="form.storageId" placeholder="请选择前置仓" clearable>
@@ -97,10 +97,10 @@
           <el-radio v-model="form.isStop" :label="0">关闭</el-radio>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

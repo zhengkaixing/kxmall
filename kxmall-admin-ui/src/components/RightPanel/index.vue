@@ -41,7 +41,7 @@ export default {
   mounted() {
     this.addEventClick()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     const elx = this.$refs.rightPanel
     elx.remove()
   },

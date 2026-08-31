@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="24" class="card-box">
         <el-card>
-          <div slot="header"><span>基本信息</span></div>
+          <template #header><div><span>基本信息</span></div></template>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <table cellspacing="0" style="width: 100%">
               <tbody>
@@ -45,7 +45,7 @@
 
       <el-col :span="12" class="card-box">
         <el-card>
-          <div slot="header"><span>命令统计</span></div>
+          <template #header><div><span>命令统计</span></div></template>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <div ref="commandstats" style="height: 420px" />
           </div>
@@ -54,9 +54,9 @@
 
       <el-col :span="12" class="card-box">
         <el-card>
-          <div slot="header">
+          <template #header><div>
             <span>内存信息</span>
-          </div>
+          </div></template>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <div ref="usedmemory" style="height: 420px" />
           </div>
@@ -69,6 +69,7 @@
 <script>
 import { getCache } from "@/api/monitor/cache";
 import * as echarts from "echarts";
+import "@/utils/echarts-theme-macarons";
 
 export default {
   name: "Cache",

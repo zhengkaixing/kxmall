@@ -28,7 +28,7 @@ export default {
   name: "Editor",
   props: {
     /* 编辑器的内容 */
-    value: {
+    modelValue: {
       type: String,
       default: "",
     },
@@ -60,7 +60,7 @@ export default {
   },
   data() {
     return {
-      uploadUrl: process.env.VUE_APP_BASE_API + "/system/oss/upload", // 上传的图片服务器地址
+      uploadUrl: import.meta.env.VITE_APP_BASE_API + "/system/oss/upload", // 上传的图片服务器地址
       headers: {
         Authorization: "Bearer " + getToken()
       },
@@ -103,7 +103,7 @@ export default {
     },
   },
   watch: {
-    value: {
+    modelValue: {
       handler(val) {
         if (val !== this.currentValue) {
           this.currentValue = val === null ? "" : val;
@@ -118,7 +118,7 @@ export default {
   mounted() {
     this.init();
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.Quill = null;
   },
   methods: {
@@ -131,7 +131,7 @@ export default {
         toolbar.addHandler("image", (value) => {
           this.uploadType = "image";
           if (value) {
-            this.$refs.upload.$children[0].$refs.input.click();
+            this.$refs.upload.$el.querySelector('input').click()
           } else {
             this.quill.format("image", false);
           }
@@ -143,7 +143,7 @@ export default {
         const text = this.Quill.getText();
         const quill = this.Quill;
         this.currentValue = html;
-        this.$emit("input", html);
+        this.$emit("update:modelValue", html);
         this.$emit("on-change", { html, text, quill });
       });
       this.Quill.on("text-change", (delta, oldDelta, source) => {

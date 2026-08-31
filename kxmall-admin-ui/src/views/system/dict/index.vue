@@ -7,7 +7,7 @@
           placeholder="请输入字典名称"
           clearable
           style="width: 240px"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="字典类型" prop="dictType">
@@ -16,7 +16,7 @@
           placeholder="请输入字典类型"
           clearable
           style="width: 240px"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="状态" prop="status">
@@ -38,7 +38,7 @@
         <el-date-picker
           v-model="dateRange"
           style="width: 240px"
-          value-format="yyyy-MM-dd"
+          value-format="YYYY-MM-DD"
           type="daterange"
           range-separator="-"
           start-placeholder="开始日期"
@@ -46,8 +46,8 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -56,8 +56,8 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
           v-hasPermi="['system:dict:add']"
         >新增</el-button>
@@ -66,8 +66,8 @@
         <el-button
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['system:dict:edit']"
@@ -77,8 +77,8 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:dict:remove']"
@@ -88,8 +88,8 @@
         <el-button
           type="warning"
           plain
-          icon="el-icon-download"
-          size="mini"
+          icon="Download"
+          size="small"
           @click="handleExport"
           v-hasPermi="['system:dict:export']"
         >导出</el-button>
@@ -98,13 +98,13 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-refresh"
-          size="mini"
+          icon="Refresh"
+          size="small"
           @click="handleRefreshCache"
           v-hasPermi="['system:dict:remove']"
         >刷新缓存</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
@@ -112,36 +112,36 @@
       <el-table-column label="字典编号" align="center" prop="dictId" />
       <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true" />
       <el-table-column label="字典类型" align="center" :show-overflow-tooltip="true">
-        <template slot-scope="scope">
+        <template #default="scope">
           <router-link :to="'/system/dict-data/index/' + scope.row.dictId" class="link-type">
             <span>{{ scope.row.dictType }}</span>
           </router-link>
         </template>
       </el-table-column>
       <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
+        <template #default="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
         </template>
       </el-table-column>
       <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:dict:edit']"
           >修改</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:dict:remove']"
           >删除</el-button>
@@ -152,13 +152,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改参数配置对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="字典名称" prop="dictName">
           <el-input v-model="form.dictName" placeholder="请输入字典名称" />
@@ -179,10 +179,10 @@
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
-  <el-dialog :visible.sync="open" width="770px" append-to-body :before-close="onClose">
-    <template slot="title">
-      <el-button v-print="'#content'" type="primary" size="mini" icon="el-icon-printer">打印</el-button>
+  <el-dialog v-model="open" width="770px" append-to-body :before-close="onClose">
+    <template #title>
+      <el-button v-print="'#content'" type="primary" size="small" icon="Printer">打印</el-button>
     </template>
     <div id="content">
       <div v-for="item in list" :key="item.orderId">
@@ -33,7 +33,7 @@
           <el-table-column prop="cartInfoMap.cartNum" label="数量" align="center" />
 
           <el-table-column label="小计(元)" header-align="center" align="right" prop="sum">
-            <template slot-scope="{row}">
+            <template #default="{row}">
               <span>{{ multiply(row.cartInfoMap.productInfo.price, row.cartInfoMap.cartNum) }}</span>
             </template>
           </el-table-column>
@@ -47,13 +47,9 @@
 </template>
 <script>
 import { add, multiply } from '@/utils/math'
-import print from 'vue-print-nb'
 
 export default {
   name: 'OrderPrintDialog',
-  directives: {
-    print
-  },
   props: {
     visible: {
       type: Boolean,
@@ -128,7 +124,7 @@ export default {
   margin-bottom: 12px;
 }
 
-::v-deep .el-dialog__body {
+:deep() .el-dialog__body {
   height: 700px;
   overflow: auto;
 }

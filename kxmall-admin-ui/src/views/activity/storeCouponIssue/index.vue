@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
       </el-form-item>
     </el-form>
 
@@ -12,7 +12,7 @@
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="优惠券名称" align="center" prop="cname" />
       <el-table-column label="优惠券类型" align="center" prop="ctype">
-        <template slot-scope="scope">
+        <template #default="scope">
           <div>
             <el-tag v-if="scope.row.ctype === 1" style="cursor: pointer" :type="''">指定分类</el-tag>
             <el-tag v-else :type=" 'info' ">全场通用</el-tag>
@@ -20,19 +20,19 @@
         </template>
       </el-table-column>
       <el-table-column label="优惠券领取开启时间" align="center" prop="startTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.startTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="优惠券领取结束时间" align="center" prop="endTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.endTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="总数量" align="center" prop="totalCount" />
       <el-table-column label="剩余数量" align="center" prop="remainCount" />
       <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
+        <template #default="scope">
           <div>
             <el-tag v-if="scope.row.status === 1" style="cursor: pointer" :type="''">开启</el-tag>
             <el-tag v-else :type=" 'info' ">关闭</el-tag>
@@ -40,16 +40,16 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
             type="primary"
-            size="mini"
+            size="small"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['coupon:storeCouponIssue:edit']"
           >修改</el-button>
           <el-button
             type="danger"
-            size="mini"
+            size="small"
             @click="handleDelete(scope.row)"
             v-hasPermi="['coupon:storeCouponIssue:remove']"
           >删除</el-button>
@@ -60,23 +60,23 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改发布优惠券对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
           <el-form-item label="状态">
             <el-radio v-model="form.status" :label="1">开启</el-radio>
             <el-radio v-model="form.status" :label="0">关闭</el-radio>
           </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

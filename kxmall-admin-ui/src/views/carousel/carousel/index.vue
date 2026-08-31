@@ -22,13 +22,13 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <!-- <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button> -->
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <!-- <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button> -->
         <el-button
           v-hasPermi="['carousel:carousel:add']"
           type="primary"
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >添加</el-button>
       </el-form-item>
@@ -40,8 +40,8 @@
           v-hasPermi="['carousel:carousel:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
@@ -50,8 +50,8 @@
           v-hasPermi="['carousel:carousel:edit']"
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
         >修改</el-button>
@@ -61,8 +61,8 @@
           v-hasPermi="['carousel:carousel:remove']"
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
         >删除</el-button>
@@ -72,52 +72,52 @@
           v-hasPermi="['carousel:carousel:export']"
           type="warning"
           plain
-          icon="el-icon-download"
-          size="mini"
+          icon="Download"
+          size="small"
           @click="handleExport"
         >导出</el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+      <right-toolbar v-model:show-search="showSearch" @queryTable="getList" />
     </el-row> -->
 
     <el-table v-loading="loading" :data="carouselList">
       <!-- <el-table-column type="selection" width="55" align="center" /> -->
       <el-table-column label="序号" width="80" align="center">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
       <el-table-column v-if="true" label="广告ID" align="center" prop="id" />
       <el-table-column label="广告标题" align="left" header-align="center" prop="title" />
       <el-table-column label="广告类型" align="center" prop="adType">
-        <template slot-scope="scope">
+        <template #default="scope">
           <dict-tag :options="dict.type.carousel_type" :value="scope.row.adType" />
         </template>
       </el-table-column>
       <el-table-column label="广告状态" align="center" prop="status">
-        <template slot-scope="scope">
+        <template #default="scope">
           <dict-tag :options="dict.type.carousel_status" :value="scope.row.status" />
         </template>
       </el-table-column>
       <!-- <el-table-column label="广告请求路径" align="center" prop="url" /> -->
       <el-table-column label="广告图片" align="center" prop="imgUrl">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-image :src="JSON.parse(row.imgUrl)[0].url" />
         </template>
       </el-table-column>
       <el-table-column label="活动链接" align="left" header-align="center" prop="url" />
       <el-table-column label="操作" align="center" class-name="small-padding" width="150">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
             v-hasPermi="['carousel:carousel:edit']"
-            size="mini"
+            size="small"
             type="text"
             style="color: #409EFF;"
             @click="handleUpdate(scope.row)"
           >编辑</el-button>
           <el-button
             v-hasPermi="['carousel:carousel:remove']"
-            size="mini"
+            size="small"
             type="text"
             style="color: #F56C6C;"
             @click="handleDelete(scope.row)"
@@ -129,13 +129,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改商铺广告对话框 -->
-    <el-dialog :title="title" :visible.sync="open" append-to-body>
+    <el-dialog :title="title" v-model="open" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="广告标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入广告标题" clearable />
@@ -170,10 +170,10 @@
           <el-input v-model="form.outUrl" clearable />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

@@ -4,40 +4,40 @@
       <ul v-for="(item,index) in list" :key="item.id" class="el-upload-list el-upload-list--picture-card">
         <li tabindex="0" class="el-upload-list__item is-ready">
           <div>
-            <img :src="item.image|getStringOSSURL" class="el-upload-list__item-thumbnail">
+            <img :src="getStringOSSURL(item.image)" class="el-upload-list__item-thumbnail">
             <span class="el-upload-list__item-actions">
               <span class="el-upload-list__item-delete" @click="onDelete(index)">
-                <i class="el-icon-delete" />
+                <el-icon  ><Delete /></el-icon>
               </span>
             </span>
           </div>
         </li>
       </ul>
       <div tabindex="0" class="el-upload el-upload--picture-card" @click="onChoose">
-        <i class="el-icon-plus" />
+        <el-icon  ><Plus /></el-icon>
       </div>
     </div>
 
-    <el-dialog title="商品列表" :visible.sync="open" append-to-body>
+    <el-dialog title="商品列表" v-model="open" append-to-body>
       <el-form ref="queryForm" :model="form" size="small" :inline="true" label-width="68px">
         <el-form-item label="" prop="storeName">
           <el-input v-model="form.storeName" placeholder="请输入商品名称" clearable />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+          <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
         </el-form-item>
       </el-form>
       <el-table ref="table" v-loading="loading" :data="productList" row-key="id" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="50" align="center" />
         <el-table-column type="index" label="序号" align="center">
-          <template slot-scope="{$index}">
+          <template #default="{$index}">
             {{ (form.pageNum - 1) * form.pageSize + $index + 1 }}
           </template>
         </el-table-column>
         <el-table-column label="商品图片" align="center">
-          <template slot-scope="{row}">
-            <el-link :href="row.image|getStringOSSURL" target="_blank" :underline="false">
-              <el-image :src="row.image|getStringOSSURL" title="点击打开" class="el-avatar" />
+          <template #default="{row}">
+            <el-link :href="getStringOSSURL(row.image)" target="_blank" :underline="false">
+              <el-image :src="getStringOSSURL(row.image)" title="点击打开" class="el-avatar" />
             </el-link>
           </template>
         </el-table-column>
@@ -49,14 +49,14 @@
       <pagination
         v-show="total > 0"
         :total="total"
-        :page.sync="form.pageNum"
-        :limit.sync="form.pageSize"
+        v-model:page="form.pageNum"
+        v-model:limit="form.pageSize"
         @pagination="getList"
       />
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>
@@ -68,7 +68,7 @@ export default {
   name: 'ProductSelector',
   mixins: [getStringOSSURL],
   props: {
-    value: {
+    modelValue: {
       type: Array,
       default() {
         return []
@@ -91,7 +91,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       handler(val) {
         this.list = val ? val.slice(0) : []
       },
@@ -154,7 +154,7 @@ export default {
           list.push(selectedList[i])
         }
       }
-      this.$emit('input', list)
+      this.$emit('update:modelValue', list)
       this.open = false
     },
     cancel() {

@@ -22,18 +22,18 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
         <el-button
           v-hasPermi="['product:storeProduct:add']"
           type="danger"
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
         <el-button
           v-hasPermi="['product:storeProductRule:edit']"
-          size="mini"
+          size="small"
           type="primary"
           :disabled="multiple"
           @click="onAuthorize"
@@ -44,14 +44,14 @@
     <el-table v-loading="loading" :data="storeProductList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" align="center" />
       <el-table-column type="index" label="序号" align="center">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
       <el-table-column label="商品图片" align="center">
-        <template slot-scope="{row}">
-          <el-link :href="row.image|getStringOSSURL" target="_blank" :underline="false">
-            <el-image :src="row.image|getStringOSSURL" title="点击打开" class="el-avatar" />
+        <template #default="{row}">
+          <el-link :href="getStringOSSURL(row.image)" target="_blank" :underline="false">
+            <el-image :src="getStringOSSURL(row.image)" title="点击打开" class="el-avatar" />
           </el-link>
         </template>
       </el-table-column>
@@ -61,13 +61,13 @@
       <el-table-column prop="sales" label="销量" align="center" />
       <el-table-column prop="stock" label="库存" align="center" />
       <el-table-column label="商品类型" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-tag v-if="row.isIntegral === 1" :type="'warning'">积分商品</el-tag>
           <el-tag v-else :type="'info'">普通商品</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="状态" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <div @click="switchShow($index)">
             <el-tag v-if="row.isShow === 1" style="cursor: pointer">已上架</el-tag>
             <el-tag v-else style="cursor: pointer" :type="'info'">已下架</el-tag>
@@ -75,19 +75,19 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="120">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button
             v-hasPermi="['product:storeProductRule:edit']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(row)"
           >修改</el-button>
           <el-button
             v-hasPermi="['product:storeProductRule:remove']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(row)"
           >删除</el-button>
         </template>
@@ -97,8 +97,8 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
@@ -106,10 +106,10 @@
     <el-dialog
       ref="dialog"
       :title="title"
-      :visible.sync="open"
+      v-model="open"
       width="1400px"
       append-to-body
-      custom-class="store-product-dialog"
+      class="store-product-dialog"
     >
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row :gutter="24">
@@ -184,7 +184,7 @@
                   {{ item.ruleName }}
                 </el-option>
               </el-select>
-              <el-button type="primary" style="margin-left: 5px;" size="mini" @click="onRuleSelect">确定</el-button>
+              <el-button type="primary" style="margin-left: 5px;" size="small" @click="onRuleSelect">确定</el-button>
             </el-form-item>
           </el-col>
         </el-row>
@@ -194,7 +194,7 @@
               <el-row style="margin-bottom: 15px;">
                 <el-col :span="2" style="height: 1px;" />
                 <el-col :span="22">
-                  <el-tag closable type="info" size="medium" @close="onDelRuleValue(index)">
+                  <el-tag closable type="info" size="default" @close="onDelRuleValue(index)">
                     {{ item.value }}
                   </el-tag>
                 </el-col>
@@ -207,13 +207,13 @@
                     :key="i"
                     closable
                     style="margin-right: 8px;margin-bottom: 8px;"
-                    size="medium"
+                    size="default"
                     @close="onDelRuleValueDetail(index, i)"
                   >
                     {{ detail }}
                   </el-tag>
                   <el-input v-model="ruleValueDetails[index]" placeholder="请输入属性名" style="width: 18%;">
-                    <el-button slot="append" @click="onAddRuleValueDetail(index)">添加</el-button>
+                    <template #append><el-button @click="onAddRuleValueDetail(index)">添加</el-button></template>
                   </el-input>
                 </el-col>
               </el-row>
@@ -231,8 +231,8 @@
                   <el-input v-model="ruleValueDetailAdd.value" placeholder="请输入规格值" />
                 </el-form-item>
                 <el-form-item label-width="10px">
-                  <el-button type="primary" size="mini" @click="onAddRuleValue">添加新规格</el-button>
-                  <el-button type="success" size="mini" @click="generateAddRuleValue">立即生成</el-button>
+                  <el-button type="primary" size="small" @click="onAddRuleValue">添加新规格</el-button>
+                  <el-button type="success" size="small" @click="generateAddRuleValue">立即生成</el-button>
                 </el-form-item>
               </el-form>
             </el-col>
@@ -251,7 +251,7 @@
                   :property="item.slot"
                   align="center"
                 >
-                  <template slot-scope="{row,$index,column}">
+                  <template #default="{row,$index,column}">
                     <div v-if="column.property == 'pic'">
                       <imageUpload
                         v-model="row.pic"
@@ -266,7 +266,7 @@
                       {{ row[column.property] }}
                     </div>
                     <div v-else-if="column.property == 'action'">
-                      <el-button type="danger" size="mini" @click="delAttr($index)">删除</el-button>
+                      <el-button type="danger" size="small" @click="delAttr($index)">删除</el-button>
                     </div>
                     <div v-else>
                       <el-input v-model="row[column.property]" />
@@ -283,7 +283,7 @@
             <el-form-item>
               <el-table :data="attr" size="small">
                 <el-table-column label="图片" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <imageUpload
                       v-model="row.pic"
                       :limit="1"
@@ -295,42 +295,42 @@
                   </template>
                 </el-table-column>
                 <el-table-column label="售价" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.price" type="text" />
                   </template>
                 </el-table-column>
                 <el-table-column label="成本价" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.cost" type="text" />
                   </template>
                 </el-table-column>
                 <el-table-column label="原价" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.otPrice" type="text" />
                   </template>
                 </el-table-column>
                 <el-table-column label="库存" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.stock" type="text" maxlength="7" />
                   </template>
                 </el-table-column>
                 <el-table-column label="商品编号" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.barCode" type="text" />
                   </template>
                 </el-table-column>
                 <el-table-column label="重量（KG）" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.weight" type="text" />
                   </template>
                 </el-table-column>
                 <el-table-column label="体积（m³）" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.volume" type="text" />
                   </template>
                 </el-table-column>
                 <el-table-column label="所需兑换积分" align="center" width="120">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.integral" type="text" />
                   </template>
                 </el-table-column>
@@ -378,11 +378,11 @@
             <el-form-item v-if="form.specType === 0" label="商品属性">
               <el-table :data="attr" size="small">
                 <el-table-column label="图片" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-image :src="row.pic">
-                      <div slot="error">
-                        <i class="el-icon-picture-outline" />
-                      </div>
+                      <template #error><div>
+                        <el-icon  ><Picture /></el-icon>
+                      </div></template>
                     </el-image>
                   </template>
                 </el-table-column>
@@ -394,12 +394,12 @@
                 <el-table-column prop="weight" label="重量（KG）" align="center" width="100" />
                 <el-table-column prop="volume" label="体积（m³）" align="center" width="100" />
                 <el-table-column label="一级返佣" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.brokerage" type="text" />
                   </template>
                 </el-table-column>
                 <el-table-column label="二级返佣" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.brokerageTwo" type="text" />
                   </template>
                 </el-table-column>
@@ -408,11 +408,11 @@
             <el-form-item v-if="form.specType === 1" label="商品属性">
               <el-table :data="attrs" size="small">
                 <el-table-column label="图片" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-image :src="row.pic" :width="60" :height="60">
-                      <div slot="error">
-                        <i class="el-icon-picture-outline" />
-                      </div>
+                      <template #error><div>
+                        <el-icon  ><Picture /></el-icon>
+                      </div></template>
                     </el-image>
                   </template>
                 </el-table-column>
@@ -426,12 +426,12 @@
                 <el-table-column prop="volume" label="体积（m³）" align="center" width="100" />
                 <el-table-column prop="integral" label="所需兑换积分" align="center" width="120" />
                 <el-table-column label="一级返佣" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.brokerage" type="text" />
                   </template>
                 </el-table-column>
                 <el-table-column label="二级返佣" align="center">
-                  <template slot-scope="{row}">
+                  <template #default="{row}">
                     <el-input v-model="row.brokerageTwo" type="text" />
                   </template>
                 </el-table-column>
@@ -484,22 +484,22 @@
           </el-col>
         </el-row>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
 
-    <el-dialog title="选择仓库" :visible.sync="storage.show" width="300px">
+    <el-dialog title="选择仓库" v-model="storage.show" width="300px">
       <div style="text-align: center;">
         <el-select v-model="storage.id" :placeholder="`请选择仓库`" clearable>
           <el-option v-for="item in storage.list" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </div>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="confirmAuthorize">确 定</el-button>
         <el-button @click="storage.show=false">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>
@@ -892,18 +892,18 @@ export default {
 }
 </script>
 <style  lang="scss" scoped>
-::v-deep .vue-treeselect__control {
+:deep() .vue-treeselect__control {
   height: 31px;
   line-height: 31px;
 }
 
 .table-image-upload {
-  ::v-deep .el-upload-list--picture-card .el-upload-list__item {
+  :deep() .el-upload-list--picture-card .el-upload-list__item {
     width: 60px;
     height: 60px;
   }
 
-  ::v-deep .el-upload--picture-card {
+  :deep() .el-upload--picture-card {
     width: 60px;
     height: 60px;
     line-height: 69px;

@@ -12,8 +12,8 @@
     </template>
 
     <!-- 顶部菜单超出数量折叠 -->
-    <el-submenu :style="{'--theme': theme}" index="more" v-if="topMenus.length > visibleNumber">
-      <template slot="title">更多菜单</template>
+    <el-sub-menu :style="{'--theme': theme}" index="more" v-if="topMenus.length > visibleNumber">
+      <template #title>更多菜单</template>
       <template v-for="(item, index) in topMenus">
         <el-menu-item
           :index="item.path"
@@ -23,7 +23,7 @@
           {{ item.meta.title }}</el-menu-item
         >
       </template>
-    </el-submenu>
+    </el-sub-menu>
   </el-menu>
 </template>
 
@@ -106,7 +106,7 @@ export default {
   beforeMount() {
     window.addEventListener('resize', this.setVisibleNumber)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener('resize', this.setVisibleNumber)
   },
   mounted() {
@@ -168,13 +168,13 @@ export default {
   margin: 0 10px !important;
 }
 
-.topmenu-container.el-menu--horizontal > .el-menu-item.is-active, .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
+.topmenu-container.el-menu--horizontal > .el-menu-item.is-active, .el-menu--horizontal > .el-sub-menu.is-active .el-sub-menu__title {
   border-bottom: 2px solid #{'var(--theme)'} !important;
   color: #303133;
 }
 
 /* submenu item */
-.topmenu-container.el-menu--horizontal > .el-submenu .el-submenu__title {
+.topmenu-container.el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
   float: left;
   height: 50px !important;
   line-height: 50px !important;

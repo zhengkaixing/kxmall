@@ -12,13 +12,13 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <!-- <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button> -->
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <!-- <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button> -->
         <el-button
           v-hasPermi="['recommend:recommend:add']"
           type="primary"
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >添加</el-button>
       </el-form-item>
@@ -30,8 +30,8 @@
           v-hasPermi="['recommend:recommend:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
@@ -40,8 +40,8 @@
           v-hasPermi="['recommend:recommend:edit']"
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
         >修改</el-button>
@@ -51,8 +51,8 @@
           v-hasPermi="['recommend:recommend:remove']"
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
         >删除</el-button>
@@ -62,33 +62,33 @@
           v-hasPermi="['recommend:recommend:export']"
           type="warning"
           plain
-          icon="el-icon-download"
-          size="mini"
+          icon="Download"
+          size="small"
           @click="handleExport"
         >导出</el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+      <right-toolbar v-model:show-search="showSearch" @queryTable="getList" />
     </el-row> -->
 
     <el-table v-loading="loading" :data="recommendList">
       <!-- <el-table-column type="selection" width="55" align="center" /> -->
       <el-table-column label="序号" width="80" align="center">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
       <el-table-column v-if="true" label="推荐ID" align="center" prop="id" />
       <el-table-column label="推荐商品" align="center" prop="productName" />
       <el-table-column label="推荐类型" align="center" prop="recommendType">
-        <template slot-scope="scope">
+        <template #default="scope">
           {{ recommendTypeMap[scope.row.recommendType] }}
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding" width="120">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
             v-hasPermi="['recommend:recommend:remove']"
-            size="mini"
+            size="small"
             type="text"
             style="color: #F56C6C;"
             @click="handleDelete(scope.row)"
@@ -100,13 +100,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改推荐管理对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules">
         <el-form-item prop="recommendType" label="推荐类型">
           <el-select v-model="form.recommendType" clearable placeholder="请选择推荐类型">
@@ -130,10 +130,10 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

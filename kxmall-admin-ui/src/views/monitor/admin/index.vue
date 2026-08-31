@@ -8,7 +8,7 @@ export default {
   components: { iFrame },
   data() {
     return {
-      url: process.env.VUE_APP_MONITRO_ADMIN
+      url: import.meta.env.VITE_APP_MONITRO_ADMIN
     };
   },
 };

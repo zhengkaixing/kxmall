@@ -7,8 +7,8 @@
           v-hasPermi="['system:express:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
@@ -16,7 +16,7 @@
 
     <el-table v-loading="loading" :data="expressList">
       <el-table-column type="index" label="序号" align="center" width="80">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
@@ -24,19 +24,19 @@
       <el-table-column label="快递公司名称" header-align="center" prop="name" />
       <el-table-column label="排序" align="center" prop="sort" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="120">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
             v-hasPermi="['system:express:edit']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
           >修改</el-button>
           <el-button
             v-hasPermi="['system:express:remove']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
           >删除</el-button>
         </template>
@@ -46,13 +46,13 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改快递公司对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="110px">
         <el-form-item label="快递公司编号" prop="code">
           <el-input v-model="form.code" placeholder="请输入快递公司编号" />
@@ -64,10 +64,10 @@
           <el-input v-model="form.sort" placeholder="请输入排序" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

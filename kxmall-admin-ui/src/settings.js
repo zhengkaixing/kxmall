@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   /**
    * 侧边栏主题 深色主题theme-dark，浅色主题theme-light
    */

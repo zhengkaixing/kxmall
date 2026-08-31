@@ -1,9 +1,9 @@
 import Dict from './Dict'
 import { mergeOptions } from './DictOptions'
 
-export default function(Vue, options) {
+export default function(app, options) {
   mergeOptions(options)
-  Vue.mixin({
+  app.mixin({
     data() {
       if (this.$options === undefined || this.$options.dicts === undefined || this.$options.dicts === null) {
         return {}
@@ -28,6 +28,6 @@ export default function(Vue, options) {
           }
         })
       })
-    },
+    }
   })
 }

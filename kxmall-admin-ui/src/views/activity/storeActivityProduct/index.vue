@@ -17,7 +17,7 @@
 <!--          v-model="queryParams.productId"-->
 <!--          placeholder="请输入商品id"-->
 <!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
+<!--          @keyup.enter="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
 <!--      <el-form-item label="活动id" prop="activityId">-->
@@ -25,12 +25,12 @@
 <!--          v-model="queryParams.activityId"-->
 <!--          placeholder="请输入活动id"-->
 <!--          clearable-->
-<!--          @keyup.enter.native="handleQuery"-->
+<!--          @keyup.enter="handleQuery"-->
 <!--        />-->
 <!--      </el-form-item>-->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -39,8 +39,8 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
           v-hasPermi="['activity:storeActivityProduct:add']"
         >新增</el-button>
@@ -49,8 +49,8 @@
         <el-button
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['activity:storeActivityProduct:edit']"
@@ -60,8 +60,8 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['activity:storeActivityProduct:remove']"
@@ -71,13 +71,13 @@
         <el-button
           type="warning"
           plain
-          icon="el-icon-download"
-          size="mini"
+          icon="Download"
+          size="small"
           @click="handleExport"
           v-hasPermi="['activity:storeActivityProduct:export']"
         >导出</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="storeActivityProductList" @selection-change="handleSelectionChange">
@@ -91,7 +91,7 @@
       <el-table-column label="售价" align="center" prop="price" />
 <!--      <el-table-column label="活动价" align="center" prop="activityPrice" />-->
       <el-table-column label="活动价" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-input v-if="editMode[row.id]" v-model="row.activityPrice" clearable @blur="updatePrice(row)" />
           <el-button v-else type="text" @click="editMode[row.id]=true">
             {{ row.activityPrice }}
@@ -99,23 +99,23 @@
         </template>
       </el-table-column>
       <!--      <el-table-column label="所属活动" align="center" prop="activityTitle">-->
-<!--        <template slot-scope="scope">-->
+<!--        <template #default="scope">-->
 <!--          {{ activityTypeMap[scope.row.id] }}-->
 <!--        </template>-->
 <!--      </el-table-column>-->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['activity:storeActivityProduct:edit']"
           >修改</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['activity:storeActivityProduct:remove']"
           >删除</el-button>
@@ -126,13 +126,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改活动商品对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
 <!--        <el-form-item label="商品id" prop="productId">-->
 <!--          <el-input v-model="form.productId" placeholder="请输入商品id" />-->
@@ -162,10 +162,10 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>
@@ -294,7 +294,7 @@ export default {
         this.loading = false;
 
         response.rows.forEach(({ id }) => {
-          this.$set(this.editMode, id, false)
+          this.editMode[id] = false
         })
       });
     },

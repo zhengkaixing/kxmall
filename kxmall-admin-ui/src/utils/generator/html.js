@@ -5,7 +5,7 @@ let confGlobal
 let someSpanIsNot24
 
 export function dialogWrapper(str) {
-  return `<el-dialog v-bind="$attrs" v-on="$listeners" @open="onOpen" @close="onClose" title="Dialog Title">
+  return `<el-dialog v-bind="$attrs" v-bind="$attrs" @open="onOpen" @close="onClose" title="Dialog Title">
     ${str}
     <div slot="footer">
       <el-button @click="close">取消</el-button>

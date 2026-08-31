@@ -11,7 +11,7 @@
           v-model="queryParams.outStockNumbers"
           placeholder="请输入出库单号"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="states">
@@ -29,7 +29,7 @@
           v-model="queryParams.ingoingPerson"
           placeholder="请输入出库人"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item> -->
       <el-form-item prop="outgoingTime">
@@ -37,7 +37,7 @@
           v-model="queryParams.outgoingTime"
           clearable
           type="date"
-          value-format="yyyy-MM-dd"
+          value-format="YYYY-MM-DD"
           placeholder="请选择出库时间"
         />
       </el-form-item>
@@ -46,7 +46,7 @@
           v-model="queryParams.remarks"
           placeholder="请输入备注"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="" prop="outgoingDay">
@@ -54,17 +54,17 @@
           v-model="queryParams.outgoingDay"
           placeholder="请输入"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item> -->
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
         <el-button
           v-hasPermi="['storage:goodsOutStock:add']"
           type="primary"
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >创建</el-button>
       </el-form-item>
@@ -76,8 +76,8 @@
           v-hasPermi="['storage:goodsInStock:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
@@ -86,8 +86,8 @@
           v-hasPermi="['storage:goodsInStock:edit']"
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
         >修改</el-button>
@@ -97,8 +97,8 @@
           v-hasPermi="['storage:goodsInStock:remove']"
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
         >删除</el-button>
@@ -108,40 +108,40 @@
           v-hasPermi="['storage:goodsInStock:export']"
           type="warning"
           plain
-          icon="el-icon-download"
-          size="mini"
+          icon="Download"
+          size="small"
           @click="handleExport"
         >导出</el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+      <right-toolbar v-model:show-search="showSearch" @queryTable="getList" />
     </el-row> -->
 
     <el-table v-loading="loading" :data="goodsOutStockList">
       <el-table-column label="序号" width="80" align="center">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
       <el-table-column label="仓库" align="left" header-align="center" prop="storageName" />
       <el-table-column label="出库单号" align="center" prop="outStockNumbers" />
       <el-table-column label="出库状态" align="center" prop="states">
-        <template slot-scope="scope">
+        <template #default="scope">
           <dict-tag :options="dict.type.out_stock_status" :value="scope.row.states" />
         </template>
       </el-table-column>
       <el-table-column label="出库人" align="center" prop="outgoingPerson" />
       <el-table-column label="出库时间" align="center" prop="outgoingTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.outgoingTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建人" align="center" prop="createBy" />
       <el-table-column label="修改时间" align="center" prop="updateTime" width="180" />
       <el-table-column label="操作" align="center" class-name="small-padding" width="300">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
             v-hasPermi="['storage:goodsOutStock:edit']"
-            size="mini"
+            size="small"
             type="text"
             style="color: #409EFF;"
             @click="handleView(scope.row)"
@@ -149,21 +149,21 @@
           <template v-if="scope.row.states === 0">
             <el-button
               v-hasPermi="['storage:goodsOutStock:edit']"
-              size="mini"
+              size="small"
               type="text"
               style="color: #409EFF;"
               @click="handleUpdate(scope.row)"
             >修改</el-button>
             <el-button
               v-hasPermi="['storage:goodsOutStock:edit']"
-              size="mini"
+              size="small"
               type="text"
               style="color: #67C23A;"
               @click="handleStockIn(scope.row)"
             >出库</el-button>
             <el-button
               v-hasPermi="['storage:goodsOutStock:remove']"
-              size="mini"
+              size="small"
               type="text"
               style="color: #F56C6C;"
               @click="handleDelete(scope.row)"
@@ -177,14 +177,14 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改商品出库对话框 -->
 
-    <stock-list :id="id" :title="title" :visible.sync="open" type="out" :mode="mode" @ok="onOk" />
+    <stock-list :id="id" :title="title" v-model="open" type="out" :mode="mode" @ok="onOk" />
   </div>
 </template>
 

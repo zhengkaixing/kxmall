@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" :visible.sync="show" append-to-body>
+  <el-dialog :title="title" v-model="show" append-to-body>
 
     <el-form ref="form" :model="form" inline :disabled="isViewMode" :rules="rules">
       <el-form-item :label="text+'仓库'" prop="storageId">
@@ -61,7 +61,7 @@
         :prop="type+'StockNum'"
         :label="text+'数量'"
       >
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <div v-if="isViewMode">
             <span>{{ row[type+'StockNum' ] }}</span>
           </div>
@@ -77,17 +77,17 @@
         label="操作"
         width="80"
       >
-        <template slot-scope="{row}">
-          <el-button type="primary" size="mini" @click="onDelete(row)">删除</el-button>
+        <template #default="{row}">
+          <el-button type="primary" size="small" @click="onDelete(row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <good-list ref="goodList" :storage-id="form.storageId" :visible.sync="open" :selected-data="list" @add="onAddGood" />
-    <div slot="footer" class="dialog-footer">
+    <good-list ref="goodList" :storage-id="form.storageId" v-model="open" :selected-data="list" @add="onAddGood" />
+    <template #footer><div class="dialog-footer">
       <el-button type="primary" @click="onOk">确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
-    </div>
+    </div></template>
   </el-dialog>
 
 </template>

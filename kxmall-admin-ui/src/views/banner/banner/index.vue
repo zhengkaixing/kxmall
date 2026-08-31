@@ -6,7 +6,7 @@
           v-model="queryParams.flag"
           placeholder="请输入标识"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="图片地址" prop="url">
@@ -14,7 +14,7 @@
           v-model="queryParams.url"
           placeholder="请输入图片地址"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="图片点击连接" prop="link">
@@ -22,12 +22,12 @@
           v-model="queryParams.link"
           placeholder="请输入图片点击连接"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -36,8 +36,8 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
           v-hasPermi="['banner:banner:add']"
         >新增</el-button>
@@ -46,8 +46,8 @@
         <el-button
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['banner:banner:edit']"
@@ -57,8 +57,8 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['banner:banner:remove']"
@@ -68,13 +68,13 @@
         <el-button
           type="warning"
           plain
-          icon="el-icon-download"
-          size="mini"
+          icon="Download"
+          size="small"
           @click="handleExport"
           v-hasPermi="['banner:banner:export']"
         >导出</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="bannerList" @selection-change="handleSelectionChange">
@@ -84,18 +84,18 @@
       <el-table-column label="图片地址" align="center" prop="url" />
       <el-table-column label="图片点击连接" align="center" prop="link" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['banner:banner:edit']"
           >修改</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['banner:banner:remove']"
           >删除</el-button>
@@ -106,13 +106,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改广告图对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="标识" prop="flag">
           <el-input v-model="form.flag" placeholder="请输入标识" />
@@ -124,10 +124,10 @@
           <el-input v-model="form.link" placeholder="请输入图片点击连接" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

@@ -28,26 +28,26 @@
               autoComplete="on"
               placeholder="请输入用户名"
             >
-              <span slot="prefix">
+              <template #prefix><span>
                 <svg-icon icon-class="user" class="color-main"></svg-icon>
-              </span>
+              </span></template>
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input
               name="password"
               :type="pwdType"
-              @keyup.enter.native="handleLogin"
+              @keyup.enter="handleLogin"
               v-model="loginForm.password"
               autoComplete="on"
               placeholder="请输入密码"
             >
-              <span slot="prefix">
+              <template #prefix><span>
                 <svg-icon icon-class="password" class="color-main"></svg-icon>
-              </span>
-              <span slot="suffix" @click="showPwd">
+              </span></template>
+              <template #suffix><span @click="showPwd">
                 <svg-icon icon-class="eye" class="color-main"></svg-icon>
-              </span>
+              </span></template>
             </el-input>
           </el-form-item>
           <el-form-item prop="code">
@@ -57,16 +57,14 @@
                 placeholder="输入验证码"
                 auto-complete="off"
                 clearable
-                @keyup.enter.native="handleLogin"
+                @keyup.enter="handleLogin"
               >
-                <span slot="prefix">
+                <template #prefix><span>
                   <svg-icon
-                    slot="prefix"
                     icon-class="email"
                     style="margin-top: 6px"
                   />
-                </span>
-              </el-input>
+                </span></template>           </el-input>
             </el-col>
             <el-col :span="6" style="margin-left: 10px; margin-top: 2px">
               <img :src="codeUrl" @click="getCode" width="130" height="35"/>
@@ -77,14 +75,14 @@
               style="width: 100%"
               type="primary"
               :loading="loading"
-              @click.native.prevent="handleLogin"
+              @click.prevent="handleLogin"
             >
               登录
             </el-button>
           </el-form-item>
 
 <!--          <el-form-item style="margin-bottom: 10px">-->
-<!--            <el-button style="width: 100%" type="primary"  @click.native.prevent="handleStore">-->
+<!--            <el-button style="width: 100%" type="primary"  @click.prevent="handleStore">-->
 <!--              商家入驻-->
 <!--            </el-button>-->
 <!--          </el-form-item>-->

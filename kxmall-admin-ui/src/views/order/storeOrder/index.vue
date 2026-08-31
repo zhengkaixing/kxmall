@@ -10,13 +10,13 @@
         </el-select>
       </el-form-item>
       <el-form-item prop="orderId">
-        <el-input v-model="queryParams.orderId" clearable placeholder="输入订单号" @keyup.enter.native="toQuery" />
+        <el-input v-model="queryParams.orderId" clearable placeholder="输入订单号" @keyup.enter="toQuery" />
       </el-form-item>
       <el-form-item prop="createTime">
         <el-date-picker
           v-model="queryParams.createTime"
           type="datetimerange"
-          value-format="yyyy-MM-dd HH:mm:ss"
+          value-format="YYYY-MM-DD HH:mm:ss"
           start-placeholder="创建开始时间"
           end-placeholder="创建结束时间"
           range-separator="至"
@@ -24,14 +24,14 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
       </el-form-item>
     </el-form>
 
     <el-table v-loading="loading" :data="storeOrderList">
       <!-- <el-table-column type="selection" width="55" align="center" /> -->
       <el-table-column type="index" label="序号" align="center">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
@@ -58,7 +58,7 @@
         align="center"
         label="配送员"
       >
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.riderName? row.riderName : '商家自配' }}</span>
         </template>
       </el-table-column>
@@ -81,7 +81,7 @@
         prop="address"
         label="订单类型"
       >
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-tag :type="row.shippingType==0 ? 'error' : 'success'">{{ row.shippingType==1?'配送':'自提' }}</el-tag>
         </template>
       </el-table-column>
@@ -96,7 +96,7 @@
         align="center"
         label="配送费"
       >
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.freightPrice == 0?'免配送':scope.row.freightPrice }}</span>
         </template>
       </el-table-column>
@@ -104,7 +104,7 @@
         align="center"
         label="订单金额"
       >
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.originalTotalPrice }}</span>
         </template>
       </el-table-column>
@@ -112,7 +112,7 @@
         align="center"
         label="实付金额"
       >
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.payPrice?scope.row.payPrice:'' }}</span>
         </template>
       </el-table-column>
@@ -121,7 +121,7 @@
         align="center"
         label="要求送达时间"
       >
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.predictTime }}</span>
         </template>
       </el-table-column>
@@ -131,7 +131,7 @@
         align="center"
         label="下单时间"
       >
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
@@ -141,7 +141,7 @@
         label="支付时间"
         prop="payTime"
       >
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.payTime }}</span>
         </template>
       </el-table-column>
@@ -150,7 +150,7 @@
         align="center"
         label="付款交易号"
       >
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.payId }}</span>
         </template>
       </el-table-column>
@@ -160,7 +160,7 @@
         width="160"
         label="创建时间"
       >
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
@@ -169,7 +169,7 @@
         width="160"
         label="修改时间"
       >
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.updateTime }}</span>
         </template>
       </el-table-column>
@@ -179,40 +179,40 @@
         label="操作"
         width="300"
       >
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button
             type="primary"
-            size="mini"
+            size="small"
             @click="viewDetail(row.id)"
           >详情</el-button>
           <el-button
             v-if="row.status===14"
             type="primary"
-            size="mini"
+            size="small"
             @click="handleOperation(row.id,'startStocking')"
           >开始配货</el-button>
           <el-button
             v-if="row.status===16"
             type="primary"
-            size="mini"
+            size="small"
             @click="handleOperation(row.id,'completeAllocation')"
           >完成配货</el-button>
           <!--<el-button
             v-if="(row.status===20||row.status===32||row.status===30) && row.orderType===0"
             type="primary"
-            size="mini"
+            size="small"
             @click="allot(row.storeId,row.orderNo,row.postId)"
           >{{ row.postId ? '重新配送' : '配送' }}</el-button>-->
           <el-button
             v-if="row.status===20 && row.shippingType===1"
             type="primary"
-            size="mini"
+            size="small"
             @click="handleOperation(row.id,'merchantDistribution')"
           >商家自配</el-button>
           <el-button
             v-if="row.status===30"
             type="primary"
-            size="mini"
+            size="small"
             @click="handleOperation(row.id,'completeDelivery')"
           >完成配送</el-button>
         </template>
@@ -222,13 +222,13 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改订单对话框 -->
-    <el-dialog title="订单详情" :visible.sync="open" width="800px" append-to-body>
+    <el-dialog title="订单详情" v-model="open" width="800px" append-to-body>
       <el-form
         :data="form"
         label-position="left"
@@ -290,8 +290,7 @@
               label="条码"
               prop="barCode"
             />
-              <!-- <span>一级类>二级类</span> -->
-            </el-table-column>
+            <!-- <span>一级类>二级类</span> -->
             <el-table-column
               align="center"
               label="商品编码"
@@ -317,7 +316,7 @@
               align="center"
               label="原价"
             >
-              <template slot-scope="{row}">
+              <template #default="{row}">
                 <span>{{ row.otPrice  }}</span>
               </template>
             </el-table-column>
@@ -325,7 +324,7 @@
               align="center"
               label="售价"
             >
-              <template slot-scope="{row}">
+              <template #default="{row}">
                 <span>{{ row.price  }}</span>
               </template>
             </el-table-column>
@@ -334,7 +333,7 @@
               label="总价（单价*数量）"
               width="150"
             >
-              <template slot-scope="{row}">
+              <template #default="{row}">
                 <span>{{ Number(row.price * row.num).toFixed(2) }}</span>
               </template>
             </el-table-column>

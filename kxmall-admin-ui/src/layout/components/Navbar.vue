@@ -28,19 +28,19 @@
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+          <el-icon  ><CaretBottom /></el-icon>
         </div>
-        <el-dropdown-menu slot="dropdown">
+        <template #dropdown><el-dropdown-menu>
           <router-link to="/user/profile">
             <el-dropdown-item>个人中心</el-dropdown-item>
           </router-link>
-          <el-dropdown-item @click.native="setting = true">
+          <el-dropdown-item @click="setting = true">
             <span>布局设置</span>
           </el-dropdown-item>
-          <el-dropdown-item divided @click.native="logout">
+          <el-dropdown-item divided @click="logout">
             <span>退出登录</span>
           </el-dropdown-item>
-        </el-dropdown-menu>
+        </el-dropdown-menu></template>
       </el-dropdown>
     </div>
   </div>
@@ -102,7 +102,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('LogOut').then(() => {
-          location.href = process.env.VUE_APP_CONTEXT_PATH + "index";
+          location.href = import.meta.env.VITE_APP_CONTEXT_PATH + "index";
         })
       }).catch(() => {});
     }

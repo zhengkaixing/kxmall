@@ -51,8 +51,8 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <!-- <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button> -->
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <!-- <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button> -->
       </el-form-item>
       <el-form-item prop="showType">
         <el-checkbox v-model="queryParams.showType" :true-label="1" :false-label="0" @change="handleQuery">只显示库存预警</el-checkbox>
@@ -65,8 +65,8 @@
           v-hasPermi="['storage:stock:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
@@ -75,8 +75,8 @@
           v-hasPermi="['storage:stock:edit']"
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
         >修改</el-button>
@@ -86,8 +86,8 @@
           v-hasPermi="['storage:stock:remove']"
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
         >删除</el-button>
@@ -97,18 +97,18 @@
           v-hasPermi="['storage:stock:export']"
           type="warning"
           plain
-          icon="el-icon-download"
-          size="mini"
+          icon="Download"
+          size="small"
           @click="handleExport"
         >导出</el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+      <right-toolbar v-model:show-search="showSearch" @queryTable="getList" />
     </el-row> -->
 
     <el-table v-loading="loading" :data="stockList">
       <!-- <el-table-column type="selection" width="55" align="center" /> -->
       <el-table-column label="序号" width="80" align="center">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
@@ -120,18 +120,18 @@
       <!-- <el-table-column v-if="true" label="主键" align="center" prop="id" /> -->
       <el-table-column label="商品规格" align="left" header-align="center" prop="productAttrName" />
       <el-table-column label="现货量" align="center" header-align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           {{ (Number(row.frezzStock)+Number(row.stock)).toFixed(0) }}
         </template>
       </el-table-column>
       <el-table-column label="可售量" align="center" header-align="center" prop="stock">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <div :class="{'stock--warning': row.stock < row.warningNum}">{{ row.stock }}</div>
         </template>
       </el-table-column>
       <el-table-column label="锁定量" align="center" header-align="center" prop="frezzStock" />
       <el-table-column label="预警量" align="center" header-align="center" prop="warningNum">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button type="text" @click="updateWarningNum(row)">{{ row.warningNum }}</el-button>
         </template>
       </el-table-column>
@@ -140,13 +140,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <el-dialog
-      :visible.sync="open"
+      v-model="open"
       title="预警量设置"
       width="25%"
     >
@@ -160,14 +160,14 @@
           <el-input v-model="form.warningNum" clearable />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button @click="open = false">取 消</el-button>
         <el-button type="primary" @click="onSubmit">确 定</el-button>
-      </div>
+      </div></template>
     </el-dialog>
 
     <!-- 添加或修改前置仓商品对话框 -->
-    <!-- <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <!-- <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="商品id" prop="spuId">
           <el-input v-model="form.spuId" placeholder="请输入商品id" />
@@ -194,10 +194,10 @@
           <el-input v-model="form.warningNum" placeholder="请输入预警数量" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog> -->
   </div>
 </template>
@@ -282,7 +282,7 @@ export default {
         this.stockList = response.rows
         this.total = response.total
         // response.rows.forEach(({ id }) => {
-        //   this.$set(this.editMode, id, false)
+        //   this.editMode[id] = false
         // })
       }).finally(() => {
         this.loading = false

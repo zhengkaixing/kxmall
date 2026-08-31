@@ -2,11 +2,11 @@
   <div class="app-container">
     <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
       <el-form-item prop="cateName">
-        <el-input v-model="queryParams.cateName" placeholder="输入分类名称搜索" clearable @keyup.enter.native="handleQuery" />
+        <el-input v-model="queryParams.cateName" placeholder="输入分类名称搜索" clearable @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -16,8 +16,8 @@
           v-hasPermi="['product:storeCategory:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
@@ -26,8 +26,8 @@
           v-hasPermi="['product:storeCategory:edit']"
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
         >修改</el-button>
@@ -37,8 +37,8 @@
           v-hasPermi="['product:storeCategory:remove']"
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
         >删除</el-button>
@@ -47,14 +47,14 @@
               <el-button
                 type="warning"
                 plain
-                icon="el-icon-download"
-                size="mini"
+                icon="Download"
+                size="small"
                 @click="handleExport"
                 v-hasPermi="['product:storeCategory:export']"
               >导出</el-button>
             </el-col> -->
       <right-toolbar
-        :show-search.sync="showSearch"
+        v-model:show-search="showSearch"
         :columns="columns"
         @queryTable="getList"
         @columns-change="onColumnChange"
@@ -71,7 +71,7 @@
         :align="col.align || 'center'"
         :prop="col.prop"
       >
-        <template slot-scope="{row,column,$index}">
+        <template #default="{row,column,$index}">
           <!-- <div v-html="col.render(row, column, $index)"  v-if="col.render"></div> -->
           <CellRender
             v-if="col.render"
@@ -87,19 +87,19 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="120">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
             v-hasPermi="['product:storeCategory:edit']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
           >修改</el-button>
           <el-button
             v-hasPermi="['product:storeCategory:remove']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
           >删除</el-button>
         </template>
@@ -109,13 +109,13 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改商品分类对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="分类名称" prop="cateName">
           <el-input v-model="form.cateName" placeholder="请输入分类名称" />
@@ -136,15 +136,15 @@
           <TreeSelect v-model="form.pid" :options="options" placeholder="选择上级分类" no-options-text="没有数据" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>
 
-<script>
+<script lang="jsx">
 import { getStoreCategory, delStoreCategory, addStoreCategory, updateStoreCategory, listStoreCategoryTree } from '@/api/product/storeCategory'
 import tableColumnSelect from '@/mixin/tableColumnSelect'
 
@@ -235,7 +235,7 @@ export default {
       return new Promise((resolve, reject) => {
         listStoreCategoryTree().then(({ data }) => {
           const { content } = data
-          this.$set(this.options[0], 'children', content || [])
+          this.options[0]['children'] = content || []
           resolve()
         }, err => reject(err))
       })

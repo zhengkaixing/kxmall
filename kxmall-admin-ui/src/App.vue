@@ -1,25 +1,42 @@
 <template>
-  <div id="app">
+  <el-config-provider :size="size" :z-index="3000">
     <router-view />
     <theme-picker />
-  </div>
+  </el-config-provider>
 </template>
 
 <script>
-import ThemePicker from "@/components/ThemePicker";
+import ThemePicker from '@/components/ThemePicker'
+import { mapGetters } from 'vuex'
 
 export default {
-  name: "App",
+  name: 'App',
   components: { ThemePicker },
-    metaInfo() {
-        return {
-            title: this.$store.state.settings.dynamicTitle && this.$store.state.settings.title,
-            titleTemplate: title => {
-                return title ? `${title} - ${process.env.VUE_APP_TITLE}` : process.env.VUE_APP_TITLE
-            }
-        }
+  computed: {
+    ...mapGetters(['size'])
+  },
+  watch: {
+    '$store.state.settings.title': {
+      handler() {
+        this.setTitle()
+      }
+    },
+    '$store.state.settings.dynamicTitle': {
+      handler() {
+        this.setTitle()
+      }
     }
-};
+  },
+  mounted() {
+    this.setTitle()
+  },
+  methods: {
+    setTitle() {
+      const pageTitle = this.$store.state.settings.dynamicTitle && this.$store.state.settings.title
+      document.title = pageTitle ? `${pageTitle} - ${import.meta.env.VITE_APP_TITLE}` : import.meta.env.VITE_APP_TITLE
+    }
+  }
+}
 </script>
 <style scoped>
 #app .theme-picker {

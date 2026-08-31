@@ -36,7 +36,7 @@ const formModel = {
 export default {
   name: 'RegionSelector',
   props: {
-    value: {
+    modelValue: {
       type: Object,
       default() {
         return formModel
@@ -52,7 +52,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       handler(val) {
         this.resetForm()
         if (val) {
@@ -75,7 +75,7 @@ export default {
       this.form = formModel
     },
     emitValue() {
-      this.$emit('input', this.form)
+      this.$emit('update:modelValue', this.form)
     },
     getProvinceAll() {
       getProvinceAll().then(res => {
@@ -119,7 +119,7 @@ export default {
 }
 </script>
 <style  lang="scss" scoped>
-::v-deep .el-select {
+:deep() .el-select {
   margin-right: 10px;
 }
 </style>

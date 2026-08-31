@@ -6,7 +6,7 @@
           v-model="queryParams.name"
           placeholder="请输入仓库名称"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item prop="state">
@@ -33,13 +33,13 @@
         <region-selector v-model="queryParams.region" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <!-- <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button> -->
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <!-- <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button> -->
         <el-button
           v-hasPermi="['storage:storage:add']"
           type="primary"
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-form-item>
@@ -51,8 +51,8 @@
           v-hasPermi="['storage:storage:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
@@ -61,8 +61,8 @@
           v-hasPermi="['storage:storage:edit']"
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
         >修改</el-button>
@@ -72,8 +72,8 @@
           v-hasPermi="['storage:storage:remove']"
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
         >删除</el-button>
@@ -83,30 +83,30 @@
           v-hasPermi="['storage:storage:export']"
           type="warning"
           plain
-          icon="el-icon-download"
-          size="mini"
+          icon="Download"
+          size="small"
           @click="handleExport"
         >导出</el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+      <right-toolbar v-model:show-search="showSearch" @queryTable="getList" />
     </el-row> -->
 
     <el-table v-loading="loading" :data="storageList">
       <!-- <el-table-column type="selection" width="55" align="center" />
       <el-table-column v-if="true" label="主键" align="center" prop="id" /> -->
       <el-table-column label="序号" width="80" align="center">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
       <el-table-column label="仓库名称" header-align="center" align="left" prop="name" />
       <el-table-column label="仓库状态" header-align="center" align="center" prop="state">
-        <template slot-scope="scope">
+        <template #default="scope">
           <dict-tag :options="dict.type.storage_status" :value="scope.row.state" />
         </template>
       </el-table-column>
       <el-table-column label="营业状态" header-align="center" align="center" prop="operatingState">
-        <template slot-scope="scope">
+        <template #default="scope">
           <dict-tag :options="dict.type.operating_state" :value="scope.row.operatingState" />
         </template>
       </el-table-column>
@@ -114,12 +114,12 @@
       <el-table-column label="联系电话" header-align="center" align="center" prop="phone" />
       <el-table-column label="地址" header-align="center" align="left" prop="address" />
       <el-table-column label="营业时间" header-align="center" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           {{ row.businessStartTime+'~'+row.businessStopTime }}
         </template>
       </el-table-column>
       <el-table-column label="配送时间" header-align="center" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           {{ row.deliveryStartTime+'~'+row.deliveryStopTime }}
         </template>
       </el-table-column>
@@ -144,7 +144,7 @@
       <el-table-column label="Ukey" align="center" prop="printUkey" />
       <el-table-column label="SN" align="center" prop="printSn" /> -->
       <el-table-column label="操作" align="center" class-name="small-padding" width="300"><!-- fixed-width -->
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button
             v-show="row.state===1"
             v-hasPermi="['storage:storage:edit']"
@@ -161,7 +161,7 @@
           <el-button
             v-show="row.state===1"
             v-hasPermi="['storage:storage:edit']"
-            size="mini"
+            size="small"
             type="text"
             :style="{ color: row.operatingState === 1 ? '#E6A23C' : '#67C23A' }"
             @click="updateBusinessState(row)"
@@ -173,14 +173,14 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改仓库管理对话框 -->
-    <el-dialog :title="title" :visible.sync="open" :width="dialogMode==='view'?'500px':'1200px'" append-to-body>
-      <template v-if="dialogMode==='view'">
+    <el-dialog :title="title" v-model="open" :width="dialogMode==='view'?'500px':'1200px'" append-to-body>
+      <div v-if="dialogMode==='view'">
         <el-form :model="form" label-width="120px">
           <el-form-item label="前置仓名称">
             <span>{{ form.name }}</span>
@@ -213,8 +213,8 @@
             <span>{{ form.longitude+','+form.latitude }}</span>
           </el-form-item>
         </el-form>
-      </template>
-      <template v-else>
+      </div>
+      <div v-else>
         <el-form ref="form" :model="form" :rules="rules" label-width="120px">
           <el-form-item label="前置仓名称">
             <el-input v-model="form.name" placeholder="请输入仓库名称" clearable style="width:500px" />
@@ -252,42 +252,34 @@
           <el-form-item label="营业时间">
             <el-time-select
               v-model="form.businessStartTime"
-              :picker-options="{
-                start: '00:00',
-                step: '1:00',
-                end: '23:00',
-              }"
+              start="00:00"
+              step="01:00"
+              end="23:00"
               placeholder="起始时间"
             />
             <el-time-select
               v-model="form.businessStopTime"
-              :picker-options="{
-                start: '00:00',
-                step: '1:00',
-                end: '23:00',
-                minTime: form.businessStartTime
-              }"
+              start="00:00"
+              step="01:00"
+              end="23:00"
+              :min-time="form.businessStartTime"
               placeholder="结束时间"
             />
           </el-form-item>
           <el-form-item label="配送时间">
             <el-time-select
               v-model="form.deliveryStartTime"
-              :picker-options="{
-                start: '00:00',
-                step: '01:00',
-                end: '23:00',
-              }"
+              start="00:00"
+              step="01:00"
+              end="23:00"
               placeholder="起始时间"
             />
             <el-time-select
               v-model="form.deliveryStopTime"
-              :picker-options="{
-                start: '00:00',
-                step: '01:00',
-                end: '23:00',
-                minTime: form.deliveryStartTime
-              }"
+              start="00:00"
+              step="01:00"
+              end="23:00"
+              :min-time="form.deliveryStartTime"
               placeholder="结束时间"
             />
           </el-form-item>
@@ -300,7 +292,7 @@
           <el-form-item label="仓库地址信息：" />
           <el-form-item label="配送范围">
             <el-input v-model="form.deliveryRadius" clearable style="width:500px">
-              <template slot="append">公里</template>
+              <template #append>公里</template>
             </el-input>
           </el-form-item>
           <el-form-item label="地址">
@@ -312,20 +304,22 @@
             <el-button type="primary" style="width:120px" @click="parse">解析</el-button>
           </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
+      </div>
+      <template v-if="dialogMode!=='view'" #footer>
+        <div class="dialog-footer">
           <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
           <el-button @click="cancel">取 消</el-button>
         </div>
-        <el-dialog v-model="modalMap" :visible.sync="modalMap" title="上传经纬度" append-to-body width="60%">
-          <iframe
-            id="mapPage"
-            :src="keyUrl"
-            width="100%"
-            height="600px"
-            frameborder="0"
-          />
-        </el-dialog>
       </template>
+    </el-dialog>
+    <el-dialog v-model="modalMap" title="上传经纬度" append-to-body width="60%">
+      <iframe
+        id="mapPage"
+        :src="keyUrl"
+        width="100%"
+        height="600px"
+        frameborder="0"
+      />
     </el-dialog>
   </div>
 </template>
@@ -335,6 +329,7 @@ import { listStorage, getStorage, addStorage, updateStorage, updateStateToNomral
 import { getProvinceAll } from '@/api/region/region'
 import { querBasic } from '@/api/basic'
 import RegionSelector from '@/components/RegionSelector'
+import { jsonp } from '@/utils/jsonp'
 
 export default {
   name: 'Storage',
@@ -584,7 +579,7 @@ export default {
         return
       }
 
-      this.$jsonp('https://apis.map.qq.com/ws/geocoder/v1', {
+      jsonp('https://apis.map.qq.com/ws/geocoder/v1', {
         key: this.mapKey,
         address: address,
         output: 'jsonp'

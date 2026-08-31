@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar ref="scrollContainer" :vertical="false" class="scroll-container" @wheel.native.prevent="handleScroll">
+  <el-scrollbar ref="scrollContainer" :vertical="false" class="scroll-container" @wheel.prevent="handleScroll">
     <slot />
   </el-scrollbar>
 </template>
@@ -16,13 +16,13 @@ export default {
   },
   computed: {
     scrollWrapper() {
-      return this.$refs.scrollContainer.$refs.wrap
+      return this.$refs.scrollContainer.wrapRef
     }
   },
   mounted() {
     this.scrollWrapper.addEventListener('scroll', this.emitScroll, true)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.scrollWrapper.removeEventListener('scroll', this.emitScroll)
   },
   methods: {
@@ -60,10 +60,10 @@ export default {
         const nextTag = tagList[currentIndex + 1]
 
         // the tag's offsetLeft after of nextTag
-        const afterNextTagOffsetLeft = nextTag.$el.offsetLeft + nextTag.$el.offsetWidth + tagAndTagSpacing
+        const afterNextTagOffsetLeft = (nextTag.$el || nextTag).offsetLeft + (nextTag.$el || nextTag).offsetWidth + tagAndTagSpacing
 
         // the tag's offsetLeft before of prevTag
-        const beforePrevTagOffsetLeft = prevTag.$el.offsetLeft - tagAndTagSpacing
+        const beforePrevTagOffsetLeft = (prevTag.$el || prevTag).offsetLeft - tagAndTagSpacing
 
         if (afterNextTagOffsetLeft > $scrollWrapper.scrollLeft + $containerWidth) {
           $scrollWrapper.scrollLeft = afterNextTagOffsetLeft - $containerWidth
@@ -82,7 +82,7 @@ export default {
   position: relative;
   overflow: hidden;
   width: 100%;
-  ::v-deep {
+  :deep() {
     .el-scrollbar__bar {
       bottom: 0px;
     }

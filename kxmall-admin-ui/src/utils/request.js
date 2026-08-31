@@ -5,7 +5,7 @@
  * @date 2024
  */
 import axios from 'axios'
-import { Notification, MessageBox, Message, Loading } from 'element-ui'
+import { ElNotification, ElMessageBox, ElMessage, ElLoading } from 'element-plus'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import errorCode from '@/utils/errorCode'
@@ -40,7 +40,7 @@ axios.defaults.headers['Content-Language'] = 'zh_CN'
  */
 const service = axios.create({
   // axios中请求配置有baseURL选项，表示请求URL公共部分
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: import.meta.env.VITE_APP_BASE_API,
   // 请求超时时间，单位：毫秒
   timeout: 10000
 })
@@ -126,7 +126,7 @@ service.interceptors.response.use(res => {
       // 防止重复弹出登录提示框
       if (!isRelogin.show) {
         isRelogin.show = true;
-        MessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', { 
+        ElMessageBox.confirm('登录状态已过期，您可以继续留在该页面，或者重新登录', '系统提示', { 
           confirmButtonText: '重新登录', 
           cancelButtonText: '取消', 
           type: 'warning' 
@@ -134,7 +134,7 @@ service.interceptors.response.use(res => {
           // 用户确认重新登录
           isRelogin.show = false;
           store.dispatch('LogOut').then(() => {
-            location.href = process.env.VUE_APP_CONTEXT_PATH + "index";
+            location.href = import.meta.env.VITE_APP_CONTEXT_PATH + 'index'
           })
         }).catch(() => {
           // 用户取消登录
@@ -145,17 +145,17 @@ service.interceptors.response.use(res => {
     } 
     // 500: 服务器内部错误
     else if (code === 500) {
-      Message({ message: msg, type: 'error' })
+      ElMessage({ message: msg, type: 'error' })
       return Promise.reject(new Error(msg))
     } 
     // 601: 业务警告
     else if (code === 601) {
-      Message({ message: msg, type: 'warning' })
+      ElMessage({ message: msg, type: 'warning' })
       return Promise.reject('error')
     } 
     // 其他非200状态码
     else if (code !== 200) {
-      Notification.error({ title: msg })
+      ElNotification.error({ title: msg })
       return Promise.reject('error')
     } 
     // 200: 成功，返回响应数据
@@ -179,7 +179,7 @@ service.interceptors.response.use(res => {
     }
     
     // 显示错误提示，持续5秒
-    Message({ message: message, type: 'error', duration: 5 * 1000 })
+    ElMessage({ message: message, type: 'error', duration: 5 * 1000 })
     return Promise.reject(error)
   }
 )
@@ -194,10 +194,9 @@ service.interceptors.response.use(res => {
  */
 export function download(url, params, filename, config) {
   // 显示下载加载提示
-  downloadLoadingInstance = Loading.service({ 
-    text: "正在下载数据，请稍候", 
-    spinner: "el-icon-loading", 
-    background: "rgba(0, 0, 0, 0.7)" 
+  downloadLoadingInstance = ElLoading.service({
+    text: '正在下载数据，请稍候',
+    background: 'rgba(0, 0, 0, 0.7)'
   })
   
   return service.post(url, params, {
@@ -221,14 +220,14 @@ export function download(url, params, filename, config) {
       const resText = await data.text();
       const rspObj = JSON.parse(resText);
       const errMsg = errorCode[rspObj.code] || rspObj.msg || errorCode['default']
-      Message.error(errMsg);
+      ElMessage.error(errMsg)
     }
     // 关闭加载提示
     downloadLoadingInstance.close();
   }).catch((r) => {
     // 下载失败处理
     console.error('文件下载失败:', r)
-    Message.error('下载文件出现错误，请联系管理员！')
+    ElMessage.error('下载文件出现错误，请联系管理员！')
     downloadLoadingInstance.close();
   })
 }

@@ -6,7 +6,7 @@
         <el-date-picker
           v-model="queryParams.selectedMonth"
           type="month"
-          value-format="yyyy-MM"
+          value-format="YYYY-MM"
           placeholder="选择月份"
         ></el-date-picker>
       </el-form-item>
@@ -18,7 +18,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="fetchReport">搜索</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="fetchReport">搜索</el-button>
       </el-form-item>
     </el-form>
 

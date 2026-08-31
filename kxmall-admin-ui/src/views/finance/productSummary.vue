@@ -8,8 +8,8 @@
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          value-format="yyyy-MM-dd"
-          :picker-options="pickerOptions"
+          value-format="YYYY-MM-DD"
+          :shortcuts="dateShortcuts"
         ></el-date-picker>
       </el-form-item>
 
@@ -20,7 +20,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="fetchReport">搜索</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="fetchReport">搜索</el-button>
       </el-form-item>
     </el-form>
 
@@ -90,40 +90,43 @@ export default {
       },
       productSummaryList: [],
       storages: [],
-      pickerOptions: {
-        shortcuts: [{
+      dateShortcuts: [
+        {
           text: '昨天',
-          onClick(picker) {
-            const yesterday = new Date();
-            yesterday.setTime(yesterday.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', [yesterday, yesterday]);
+          value() {
+            const yesterday = new Date()
+            yesterday.setTime(yesterday.getTime() - 3600 * 1000 * 24)
+            return [yesterday, yesterday]
           }
-        }, {
+        },
+        {
           text: '过去7天',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 6);
-            picker.$emit('pick', [start, end]);
+          value() {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 6)
+            return [start, end]
           }
-        }, {
+        },
+        {
           text: '过去30天',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 29);
-            picker.$emit('pick', [start, end]);
+          value() {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 29)
+            return [start, end]
           }
-        }, {
+        },
+        {
           text: '本月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setDate(1);
-            picker.$emit('pick', [start, end]);
+          value() {
+            const end = new Date()
+            const start = new Date()
+            start.setDate(1)
+            return [start, end]
           }
-        }]
-      }
+        }
+      ]
     };
   },
   created() {

@@ -29,18 +29,16 @@ const permission = {
     }
   },
   actions: {
-    // 生成路由
     GenerateRoutes({ commit }) {
       return new Promise(resolve => {
-        // 向后端请求路由数据
         getRouters().then(res => {
           const sdata = JSON.parse(JSON.stringify(res.data))
           const rdata = JSON.parse(JSON.stringify(res.data))
           const sidebarRoutes = filterAsyncRouter(sdata)
           const rewriteRoutes = filterAsyncRouter(rdata, false, true)
           const asyncRoutes = filterDynamicRoutes(dynamicRoutes)
-          rewriteRoutes.push({ path: '*', redirect: '/404', hidden: true })
-          router.addRoutes(asyncRoutes)
+          asyncRoutes.forEach(route => { router.addRoute(route) })
+          rewriteRoutes.push({ path: '/:pathMatch(.*)*', redirect: '/404', hidden: true })
           commit('SET_ROUTES', rewriteRoutes)
           commit('SET_SIDEBAR_ROUTERS', constantRoutes.concat(sidebarRoutes))
           commit('SET_DEFAULT_ROUTES', sidebarRoutes)
@@ -52,14 +50,12 @@ const permission = {
   }
 }
 
-// 遍历后台传来的路由字符串，转换为组件对象
 function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
   return asyncRouterMap.filter(route => {
     if (type && route.children) {
       route.children = filterChildren(route.children)
     }
     if (route.component) {
-      // Layout ParentView 组件特殊处理
       if (route.component === 'Layout') {
         route.component = Layout
       } else if (route.component === 'ParentView') {
@@ -82,7 +78,7 @@ function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
 
 function filterChildren(childrenMap, lastRouter = false) {
   var children = []
-  childrenMap.forEach((el, index) => {
+  childrenMap.forEach((el) => {
     if (el.children && el.children.length) {
       if (el.component === 'ParentView' && !lastRouter) {
         el.children.forEach(c => {
@@ -104,7 +100,6 @@ function filterChildren(childrenMap, lastRouter = false) {
   return children
 }
 
-// 动态路由遍历，验证是否具备权限
 export function filterDynamicRoutes(routes) {
   const res = []
   routes.forEach(route => {
@@ -121,14 +116,17 @@ export function filterDynamicRoutes(routes) {
   return res
 }
 
+const modules = import.meta.glob('./../../views/**/*.vue')
+
 export const loadView = (view) => {
-  // if (process.env.NODE_ENV === 'development') {
-  //   return (resolve) => require([`@/views/${view}`], resolve)
-  // } else {
-  //   // 使用 import 实现生产环境的路由懒加载
-  //   return () => import(`@/views/${view}`)
-  // }
-  return (resolve) => require([`@/views/${view}`], resolve)
+  let res
+  for (const path in modules) {
+    const dir = path.split('views/')[1].split('.vue')[0]
+    if (dir === view) {
+      res = () => modules[path]()
+    }
+  }
+  return res
 }
 
 export default permission

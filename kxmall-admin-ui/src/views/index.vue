@@ -1,11 +1,11 @@
 <template>
   <div class="dashboard-wrap">
     <el-card>
-      <div slot="header">
+      <template #header><div>
         <b>今日用户数</b>
         <el-button style="float: right; padding: 3px 0" type="text" @click="todyUserMore">{{ todyUserShowMoreText }}</el-button>
         <el-button style="float: right; padding: 3px 10px" type="text" @click="todyUserFilter">刷新</el-button>
-      </div>
+      </div></template>
       <el-table
         :data="countUserData"
         style="width: 100%">
@@ -43,7 +43,7 @@
       </el-table>
     </el-card>
     <el-card style="margin-top:16px;">
-      <div slot="header">
+      <template #header><div>
         <b>今日销售排行</b>
         <el-select v-model="saleStorageId" placeholder="请选择" style="margin-left:16px;" clearable filterable @change="todySalesFilter">
           <el-option
@@ -55,7 +55,7 @@
         </el-select>
         <el-button style="float: right; padding: 3px 0" type="text" @click="salesStatementMore">{{ todySortShowMoreText }}</el-button>
         <el-button style="float: right; padding: 3px 10px" type="text" @click="todySalesFilter('')">刷新</el-button>
-      </div>
+      </div></template>
       <el-table
         :data="salesStatementData"
         style="width: 100%">
@@ -68,7 +68,7 @@
         <el-table-column
           align="center"
           label="总销售额/销量">
-          <template slot-scope="scope">
+          <template #default="scope">
             <div class="name-wrapper-number">
               <span class="moneySymbol">¥</span>
               <span>{{ scope.row.totalSalesVolume }}</span>
@@ -80,112 +80,112 @@
         <el-table-column
           align="center"
           label="TOP1">
-          <template slot-scope="scope">
+          <template #default="scope">
             <el-popover trigger="hover" placemename-wrappernt="top">
               {{ scope.row.salesTopDTOs[0].title }}
-              <div slot="reference" class="name-wrapper salesStatementName">
+              <template #reference><div class="name-wrapper salesStatementName">
                 {{ scope.row.salesTopDTOs[0].title }}
-              </div>
+              </div></template>
             </el-popover>
             <el-popover trigger="hover" placement="top">
               销售额:{{ scope.row.salesTopDTOs[0].totalSalesVolume }}  销售单数:{{ scope.row.salesTopDTOs[0].totalSales }}
-              <div slot="reference" class="name-wrapper name-wrapper-number">
+              <template #reference><div class="name-wrapper name-wrapper-number">
                 <span class="moneySymbol">¥</span>
                 <span>{{ scope.row.salesTopDTOs[0].totalSalesVolume }}</span>
                 <span> / </span>
                 <span>{{ scope.row.salesTopDTOs[0].totalSales }}</span>
-              </div>
+              </div></template>
             </el-popover>
           </template>
         </el-table-column>
         <el-table-column
           align="center"
           label="TOP2">
-          <template slot-scope="scope">
+          <template #default="scope">
             <el-popover trigger="hover" placemename-wrappernt="top">
               {{ scope.row.salesTopDTOs[1].title }}
-              <div slot="reference" class="name-wrapper salesStatementName">
+              <template #reference><div class="name-wrapper salesStatementName">
                 {{ scope.row.salesTopDTOs[1].title }}
-              </div>
+              </div></template>
             </el-popover>
             <el-popover trigger="hover" placement="top">
               销售额:{{ scope.row.salesTopDTOs[1].totalSalesVolume }}  销售单数:{{ scope.row.salesTopDTOs[1].totalSales }}
-              <div slot="reference" class="name-wrapper name-wrapper-number">
+              <template #reference><div class="name-wrapper name-wrapper-number">
                 <span class="moneySymbol">¥</span>
                 <span>{{ scope.row.salesTopDTOs[1].totalSalesVolume }}</span>
                 <span> / </span>
                 <span>{{ scope.row.salesTopDTOs[1].totalSales }}</span>
-              </div>
+              </div></template>
             </el-popover>
           </template>
         </el-table-column>
         <el-table-column
           align="center"
           label="TOP3">
-          <template slot-scope="scope">
+          <template #default="scope">
             <el-popover trigger="hover" placemename-wrappernt="top">
               {{ scope.row.salesTopDTOs[2].title }}
-              <div slot="reference" class="name-wrapper salesStatementName">
+              <template #reference><div class="name-wrapper salesStatementName">
                 {{ scope.row.salesTopDTOs[2].title }}
-              </div>
+              </div></template>
             </el-popover>
             <el-popover trigger="hover" placement="top">
               销售额:{{ scope.row.salesTopDTOs[2].totalSalesVolume }}  销售单数:{{ scope.row.salesTopDTOs[2].totalSales }}
-              <div slot="reference" class="name-wrapper name-wrapper-number">
+              <template #reference><div class="name-wrapper name-wrapper-number">
                 <span class="moneySymbol">¥</span>
                 <span>{{ scope.row.salesTopDTOs[2].totalSalesVolume }}</span>
                 <span> / </span>
                 <span>{{ scope.row.salesTopDTOs[2].totalSales }}</span>
-              </div>
+              </div></template>
             </el-popover>
           </template>
         </el-table-column>
         <el-table-column
           align="center"
           label="TOP4">
-          <template slot-scope="scope">
+          <template #default="scope">
             <el-popover trigger="hover" placemename-wrappernt="top">
               {{ scope.row.salesTopDTOs[3].title }}
-              <div slot="reference" class="name-wrapper salesStatementName">
+              <template #reference><div class="name-wrapper salesStatementName">
                 {{ scope.row.salesTopDTOs[3].title }}
-              </div>
+              </div></template>
             </el-popover>
             <el-popover trigger="hover" placement="top">
               销售额:{{ scope.row.salesTopDTOs[3].totalSalesVolume }}  销售单数:{{ scope.row.salesTopDTOs[3].totalSales }}
-              <div slot="reference" class="name-wrapper name-wrapper-number">
+              <template #reference><div class="name-wrapper name-wrapper-number">
                 <span class="moneySymbol">¥</span>
                 <span>{{ scope.row.salesTopDTOs[3].totalSalesVolume }}</span>
                 <span> / </span>
                 <span>{{ scope.row.salesTopDTOs[3].totalSales }}</span>
-              </div>
+              </div></template>
             </el-popover>
           </template>
         </el-table-column>
         <el-table-column
           align="center"
           label="TOP5">
-          <template slot-scope="scope">
+          <template #default="scope">
             <el-popover trigger="hover" placemename-wrappernt="top">
               {{ scope.row.salesTopDTOs[4].title }}
-              <div slot="reference" class="name-wrapper salesStatementName">
+              <template #reference><div class="name-wrapper salesStatementName">
                 {{ scope.row.salesTopDTOs[4].title }}
-              </div>
+              </div></template>
             </el-popover>
             <el-popover trigger="hover" placement="top">
               销售额:{{ scope.row.salesTopDTOs[4].totalSalesVolume }}  销售单数:{{ scope.row.salesTopDTOs[4].totalSales }}
-              <div slot="reference" class="name-wrapper name-wrapper-number">
+              <template #reference><div class="name-wrapper name-wrapper-number">
                 <span class="moneySymbol">¥</span>
                 <span>{{ scope.row.salesTopDTOs[4].totalSalesVolume }}</span>
                 <span> / </span>
                 <span>{{ scope.row.salesTopDTOs[4].totalSales }}</span>
-              </div>
+              </div></template>
             </el-popover>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
     <el-card style="margin-top:16px;">
-      <div slot="header">
+      <template #header><div>
         <b>今日销售情况</b>
         <el-select v-model="saleInfoStorageId" placeholder="请选择" style="margin-left:16px;" clearable filterable @change="todySalesInfoFilter">
           <el-option
@@ -196,7 +196,7 @@
           </el-option>
         </el-select>
         <el-button style="float: right; padding: 3px 10px" type="text" @click="todySalesInfoFilter('')">刷新</el-button>
-      </div>
+      </div></template>
       <el-row>
         <el-col :span="6"><div style="height:350px;">
           <div class="item">
@@ -218,7 +218,7 @@
 
 <script>
 import { countUser, getSalesStatement, getTodayAndYesterdaySales, getSalesByHour, storageList } from '@/api/dashboard/dashboard'
-var echarts = require('echarts')
+import * as echarts from 'echarts'
 import store from '@/store'
 export default {
   data() {

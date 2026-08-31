@@ -1,10 +1,9 @@
-import Vue from 'vue'
 import store from '@/store'
-import DataDict from '@/utils/dict'
+import DataDict from '@/utils/dict/index'
 import { getDicts as getDicts } from '@/api/system/dict/data'
 
 function searchDictByKey(dict, key) {
-  if (key == null && key == "") {
+  if (key == null && key == '') {
     return null
   }
   try {
@@ -18,8 +17,8 @@ function searchDictByKey(dict, key) {
   }
 }
 
-function install() {
-  Vue.use(DataDict, {
+function install(app) {
+  app.use(DataDict, {
     metas: {
       '*': {
         labelField: 'dictLabel',
@@ -38,12 +37,12 @@ function install() {
               })
             })
           }
-        },
-      },
-    },
+        }
+      }
+    }
   })
 }
 
 export default {
-  install,
+  install
 }

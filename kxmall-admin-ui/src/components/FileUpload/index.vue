@@ -15,14 +15,14 @@
       ref="fileUpload"
     >
       <!-- 上传按钮 -->
-      <el-button size="mini" type="primary">选取文件</el-button>
+      <el-button size="small" type="primary">选取文件</el-button>
       <!-- 上传提示 -->
-      <div class="el-upload__tip" slot="tip" v-if="showTip">
+      <template #tip><div class="el-upload__tip" v-if="showTip">
         请上传
         <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
         <template v-if="fileType"> 格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
         的文件
-      </div>
+      </div></template>
     </el-upload>
 
     <!-- 文件列表 -->
@@ -47,7 +47,7 @@ export default {
   name: "FileUpload",
   props: {
     // 值
-    value: [String, Object, Array],
+    modelValue: [String, Object, Array],
     // 数量限制
     limit: {
       type: Number,
@@ -73,8 +73,8 @@ export default {
     return {
       number: 0,
       uploadList: [],
-      baseUrl: process.env.VUE_APP_BASE_API,
-      uploadFileUrl: process.env.VUE_APP_BASE_API + "/system/oss/upload", // 上传文件服务器地址
+      baseUrl: import.meta.env.VITE_APP_BASE_API,
+      uploadFileUrl: import.meta.env.VITE_APP_BASE_API + "/system/oss/upload", // 上传文件服务器地址
       headers: {
         Authorization: "Bearer " + getToken(),
       },
@@ -82,7 +82,7 @@ export default {
     };
   },
   watch: {
-    value: {
+    modelValue: {
       async handler(val) {
         if (val) {
           let temp = 1;
@@ -171,7 +171,7 @@ export default {
       let ossId = this.fileList[index].ossId;
       delOss(ossId);
       this.fileList.splice(index, 1);
-      this.$emit("input", this.listToString(this.fileList));
+      this.$emit("update:modelValue", this.listToString(this.fileList));
     },
     // 上传结束处理
     uploadedSuccessfully() {
@@ -179,7 +179,7 @@ export default {
         this.fileList = this.fileList.concat(this.uploadList);
         this.uploadList = [];
         this.number = 0;
-        this.$emit("input", this.listToString(this.fileList));
+        this.$emit("update:modelValue", this.listToString(this.fileList));
         this.$modal.closeLoading();
       }
     },

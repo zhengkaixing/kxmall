@@ -2,7 +2,7 @@
   <div class="app-container">
     <el-form ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
       <el-form-item label="" prop="nickname">
-        <el-input v-model="queryParams.nickname" clearable placeholder="输入用户昵称" @keyup.enter.native="handleQuery" />
+        <el-input v-model="queryParams.nickname" clearable placeholder="输入用户昵称" @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item label="" prop="dateRange">
         <el-date-picker
@@ -11,33 +11,33 @@
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          value-format="yyyy-MM-dd"
+          value-format="YYYY-MM-DD"
           unlink-panels
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
     <el-table v-loading="loading" :data="userBillList">
       <el-table-column type="index" label="序号" align="center">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
       <el-table-column prop="nickname" label="用户昵称" header-align="center" />
       <el-table-column prop="title" label="账单标题" header-align="center" />
       <el-table-column label="明细种类" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span v-if="row.category == 'now_money'">余额</span>
           <span v-else-if="row.category == 'integral'">积分</span>
           <span v-else>未知</span>
         </template>
       </el-table-column>
       <el-table-column label="明细数字" header-align="center" align="right">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span v-if="row.pm == 1">+</span>
           <span v-else>-</span>
           <span>{{ row.number }}</span>
@@ -49,8 +49,8 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 

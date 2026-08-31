@@ -2,11 +2,11 @@
   <div class="app-container">
     <!-- <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="规格名称" prop="ruleName">
-        <el-input v-model="queryParams.ruleName" placeholder="请输入规格名称" clearable @keyup.enter.native="handleQuery" />
+        <el-input v-model="queryParams.ruleName" placeholder="请输入规格名称" clearable @keyup.enter="handleQuery" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form> -->
 
@@ -16,8 +16,8 @@
           v-hasPermi="['product:storeProductRule:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
@@ -26,8 +26,8 @@
           v-hasPermi="['product:storeProductRule:edit']"
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
         >修改</el-button>
@@ -37,18 +37,18 @@
           v-hasPermi="['product:storeProductRule:remove']"
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
         >删除</el-button>
       </el-col>
       <!-- <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport"
+        <el-button type="warning" plain icon="Download" size="small" @click="handleExport"
           v-hasPermi="['product:storeProductRule:export']">导出</el-button>
       </el-col> -->
       <right-toolbar
-        :show-search.sync="showSearch"
+        v-model:show-search="showSearch"
         :search="false"
         :columns="columns"
         @queryTable="getList"
@@ -67,7 +67,7 @@
         :prop="col.prop"
         :width="col.width"
       >
-        <template slot-scope="{row,column,$index}">
+        <template #default="{row,column,$index}">
           <!-- <div v-html="col.render(row, column, $index)"  v-if="col.render"></div> -->
           <CellRender
             v-if="col.render"
@@ -83,19 +83,19 @@
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="120">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
             v-hasPermi="['product:storeProductRule:edit']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
           >修改</el-button>
           <el-button
             v-hasPermi="['product:storeProductRule:remove']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
           >删除</el-button>
         </template>
@@ -105,21 +105,21 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改商品规格对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="700px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" inline size="mini">
+    <el-dialog :title="title" v-model="open" width="700px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" inline size="small">
         <el-form-item label="规格名称" prop="ruleName">
           <el-input v-model="form.ruleName" placeholder="请输入规格名称" />
         </el-form-item>
         <el-row v-for="(item, index) in form.ruleValue" :key="index" style="margin-top: 15px;padding:0 20px">
           <el-col :span="24">
             <div style="margin-bottom: 15px;">
-              <el-tag closable type="info" size="medium" @close="onDelValue(index)">
+              <el-tag closable type="info" size="default" @close="onDelValue(index)">
                 {{ item.value }}
               </el-tag>
             </div>
@@ -129,14 +129,14 @@
                 :key="i"
                 closable
                 style="margin-right: 8px;margin-bottom: 8px;"
-                size="medium"
+                size="default"
                 @close="onDelValueDetail(index, i)"
               >
                 {{ detail }}
               </el-tag>
               <el-form-item label="">
                 <el-input v-model="valueDetails[index]" placeholder="请输入属性名">
-                  <el-button slot="append" @click="onAddValueDetail(index)">添加</el-button>
+                  <template #append><el-button @click="onAddValueDetail(index)">添加</el-button></template>
                 </el-input>
               </el-form-item>
             </div>
@@ -157,15 +157,15 @@
         </el-row>
 
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>
 
-<script>
+<script lang="jsx">
 import { listStoreProductRule, getStoreProductRule, delStoreProductRule, addStoreProductRule, updateStoreProductRule } from '@/api/product/storeProductRule'
 import tableColumnSelect from '@/mixin/tableColumnSelect'
 

@@ -15,20 +15,20 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
     <el-table v-loading="loading" :data="userList">
       <el-table-column type="index" label="序号" align="center">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
       <el-table-column prop="nickname" label="会员昵称" header-align="center" />
       <el-table-column label="会员头像" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-link :href="row.avatar" target="_blank" :underline="false">
             <el-image :src="row.avatar" title="点击打开" class="el-avatar" />
           </el-link>
@@ -40,7 +40,7 @@
       <el-table-column prop="integral" label="会员积分" header-align="center" />
       <el-table-column prop="createTime" label="创建日期" width="170" align="center" />
       <el-table-column label="状态" align="center">
-        <template slot-scope="{row,$index}">
+        <template #default="{row,$index}">
           <div @click="switchStatus($index)">
             <el-tag v-if="row.status == 1" style="cursor: pointer" :type="''">正常</el-tag>
             <el-tag v-else style="cursor: pointer" :type="'info'">禁用</el-tag>
@@ -48,7 +48,7 @@
         </template>
       </el-table-column>
       <el-table-column label="会员来源" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-tag v-if="row.userType == 'wechat'">公众号</el-tag>
           <el-tag v-else-if="row.userType == 'routine'">小程序</el-tag>
           <el-tag v-else>H5</el-tag>
@@ -57,16 +57,16 @@
       <el-table-column prop="spreadUid" label="推荐人" header-align="center" />
       <el-table-column prop="payCount" label="购买次数" header-align="center" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           <el-dropdown
             v-hasPermi="['user:user:edit']"
             trigger="click"
             @command="command => onOpenDialog($index, command)"
           >
             <el-button type="primary" size="small">
-              操作<i class="el-icon-arrow-down el-icon--right" />
+              操作<el-icon  ><ArrowDown /></el-icon>
             </el-button>
-            <el-dropdown-menu slot="dropdown">
+            <template #dropdown><el-dropdown-menu>
               <el-dropdown-item command="spread">
                 查看下级
               </el-dropdown-item>
@@ -76,7 +76,7 @@
               <el-dropdown-item command="money">
                 修改余额
               </el-dropdown-item>
-            </el-dropdown-menu>
+            </el-dropdown-menu></template>
           </el-dropdown>
         </template>
       </el-table-column>
@@ -85,13 +85,13 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改会员对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="600px" append-to-body>
       <el-form v-if="dialogMode.current !== 'spread'" ref="form" :model="form" label-width="75px">
         <template v-if="dialogMode.current === 'money'">
           <el-form-item label="会员昵称">
@@ -133,7 +133,7 @@
         <el-table :data="form.list" border>
           <el-table-column prop="nickname" label="姓名" width="180" header-align="center" />
           <el-table-column label="头像" align="center">
-            <template slot-scope="{row}">
+            <template #default="{row}">
               <el-link :href="row.avatar" target="_blank" :underline="false">
                 <el-image :src="row.avatar" title="点击打开" class="el-avatar" />
               </el-link>
@@ -142,10 +142,10 @@
           <el-table-column prop="time" label="加入时间" width="170" align="center" />
         </el-table>
       </el-tabs>
-      <div v-if="dialogMode.current !== 'spread'" slot="footer" class="dialog-footer">
+      <template #footer><div v-if="dialogMode.current !== 'spread'" class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

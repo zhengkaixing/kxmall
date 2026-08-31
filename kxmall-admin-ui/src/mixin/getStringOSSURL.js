@@ -1,7 +1,12 @@
 export default {
-  filters: {
+  methods: {
     getStringOSSURL(str) {
-      return JSON.parse(str)[0].url
+      if (!str) return ''
+      try {
+        return JSON.parse(str)[0].url
+      } catch (e) {
+        return str
+      }
     }
   }
 }

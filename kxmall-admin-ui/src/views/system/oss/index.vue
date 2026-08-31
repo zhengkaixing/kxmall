@@ -7,7 +7,7 @@
           placeholder="请输入文件名"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="原名" prop="originalName">
@@ -16,7 +16,7 @@
           placeholder="请输入原名"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="文件后缀" prop="fileSuffix">
@@ -25,7 +25,7 @@
           placeholder="请输入文件后缀"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="创建时间">
@@ -33,7 +33,7 @@
           v-model="daterangeCreateTime"
           size="small"
           style="width: 240px"
-          value-format="yyyy-MM-dd"
+          value-format="YYYY-MM-DD"
           type="daterange"
           range-separator="-"
           start-placeholder="开始日期"
@@ -46,7 +46,7 @@
           placeholder="请输入上传人"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="服务商" prop="service">
@@ -55,12 +55,12 @@
           placeholder="请输入服务商"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -69,8 +69,8 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleFile"
           v-hasPermi="['system:oss:upload']"
         >上传文件</el-button>
@@ -79,8 +79,8 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleImage"
           v-hasPermi="['system:oss:upload']"
         >上传图片</el-button>
@@ -89,8 +89,8 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:oss:remove']"
@@ -100,7 +100,7 @@
         <el-button
           :type="previewListResource ? 'danger' : 'warning'"
           plain
-          size="mini"
+          size="small"
           @click="handlePreviewListResource(!previewListResource)"
           v-hasPermi="['system:oss:edit']"
         >预览开关 : {{previewListResource ? "禁用" : "启用"}}</el-button>
@@ -109,13 +109,13 @@
         <el-button
           type="info"
           plain
-          icon="el-icon-s-operation"
-          size="mini"
+          icon="Operation"
+          size="small"
           @click="handleOssConfig"
           v-hasPermi="['system:oss:list']"
         >配置管理</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="ossList" @selection-change="handleSelectionChange"
@@ -128,7 +128,7 @@
       <el-table-column label="原名" align="center" prop="originalName" />
       <el-table-column label="文件后缀" align="center" prop="fileSuffix" />
       <el-table-column label="文件展示" align="center" prop="url">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-image
             v-if="previewListResource && checkFileSuffix(scope.row.fileSuffix)"
             style="width: 100px; height: 100px;"
@@ -140,7 +140,7 @@
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180"
                        sortable="custom">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
@@ -148,18 +148,18 @@
       <el-table-column label="服务商" align="center" prop="service"
                        sortable="custom"/>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleDownload(scope.row)"
             v-hasPermi="['system:oss:download']"
           >下载</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:oss:remove']"
           >删除</el-button>
@@ -170,23 +170,23 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改OSS对象存储对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="文件名">
           <fileUpload v-model="form.file" v-if="type === 0"/>
           <imageUpload v-model="form.file" v-if="type === 1"/>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

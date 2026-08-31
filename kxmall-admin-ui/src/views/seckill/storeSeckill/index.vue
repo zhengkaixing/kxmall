@@ -11,12 +11,12 @@
           v-model="queryParams.title"
           placeholder="请输入活动标题"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -26,24 +26,24 @@
           v-hasPermi="['seckill:storeSeckill:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+      <right-toolbar v-model:show-search="showSearch" @queryTable="getList" />
     </el-row>
 
     <el-table v-loading="loading" :data="storeSeckillList" @selection-change="handleSelectionChange">
       <el-table-column v-if="true" label="id" align="center" prop="id" />
       <el-table-column label="商品id" align="center" prop="productId" />
       <el-table-column label="推荐图" align="center" prop="image" width="100">
-        <template slot-scope="scope">
+        <template #default="scope">
           <image-preview :src="JSON.parse(scope.row.image)[0].url" :width="50" :height="50" />
         </template>
       </el-table-column>
       <el-table-column label="仓库" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           {{ storages.filter(el=>el.id===row.storageId)[0].name }}
         </template>
       </el-table-column>
@@ -53,35 +53,35 @@
       <el-table-column label="库存" align="center" prop="stock" />
       <el-table-column label="销量" align="center" prop="sales" />
       <el-table-column label="开始时间" align="center" prop="startTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.startTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="结束时间" align="center" prop="stopTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.stopTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="产品状态" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           {{ row.status===1?'启用':'不启用' }}
         </template>
       </el-table-column>
       <el-table-column label="限购" align="center" prop="num" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
             v-hasPermi="['seckill:storeSeckill:edit']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
           >修改</el-button>
           <el-button
             v-hasPermi="['seckill:storeSeckill:remove']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
           >删除</el-button>
         </template>
@@ -91,13 +91,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改商品秒杀对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="1000px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="1000px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="仓库" prop="storageId">
           <el-select v-model="form.storageId" placeholder="请选择仓库" clearable :disabled="isUpdateMode" @change="showEditStorageChange">
@@ -130,7 +130,7 @@
             v-model="form.startTime"
             clearable
             type="date"
-            value-format="yyyy-MM-dd"
+            value-format="YYYY-MM-DD"
             placeholder="请选择开始时间"
           />
         </el-form-item>
@@ -139,7 +139,7 @@
             v-model="form.stopTime"
             clearable
             type="date"
-            value-format="yyyy-MM-dd"
+            value-format="YYYY-MM-DD"
             placeholder="请选择结束时间"
           />
         </el-form-item>
@@ -148,22 +148,18 @@
           <el-time-select
             :key="form.seckillStartTime"
             v-model="form.seckillStartTime"
-            :picker-options="{
-              start: '00:00',
-              step: '1:00',
-              end: '23:00',
-            }"
+            start="00:00"
+            step="01:00"
+            end="23:00"
             placeholder="起始时间"
           />
           <el-time-select
             :key="form.seckillStopTime"
             v-model="form.seckillStopTime"
-            :picker-options="{
-              start: '00:00',
-              step: '1:00',
-              end: '23:00',
-              minTime: form.seckillStartTime
-            }"
+            start="00:00"
+            step="01:00"
+            end="23:00"
+            :min-time="form.seckillStartTime"
             placeholder="结束时间"
           />
         </el-form-item>
@@ -190,7 +186,7 @@
         <el-form-item v-if="form.specType === 0">
           <el-table :data="attr" size="small">
             <el-table-column label="图片" align="center">
-              <template slot-scope="{row}">
+              <template #default="{row}">
                 <imageUpload
                   v-model="row.pic"
                   :limit="1"
@@ -201,27 +197,27 @@
               </template>
             </el-table-column>
             <el-table-column label="售价" align="center">
-              <template slot-scope="{row}">
+              <template #default="{row}">
                 <el-input v-model="row.price" type="text" />
               </template>
             </el-table-column>
             <el-table-column label="成本价" align="center">
-              <template slot-scope="{row}">
+              <template #default="{row}">
                 <el-input v-model="row.cost" type="text" />
               </template>
             </el-table-column>
             <el-table-column label="原价" align="center">
-              <template slot-scope="{row}">
+              <template #default="{row}">
                 <el-input v-model="row.otPrice" type="text" />
               </template>
             </el-table-column>
             <el-table-column label="库存" align="center">
-              <template slot-scope="{row}">
+              <template #default="{row}">
                 <el-input v-model="row.stock" type="text" maxlength="7" />
               </template>
             </el-table-column>
             <el-table-column label="销量" align="center">
-              <template slot-scope="{row}">
+              <template #default="{row}">
                 <el-input v-model="row.sales" type="text" maxlength="7" />
               </template>
             </el-table-column>
@@ -238,10 +234,10 @@
         </el-row>
 
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

@@ -6,7 +6,7 @@
           v-model="queryParams.title"
           placeholder="请输入活动标题"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="活动海报" prop="imgUrl">
@@ -14,7 +14,7 @@
           v-model="queryParams.imgUrl"
           placeholder="请输入活动海报"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="海报链接" prop="outUrl">
@@ -22,7 +22,7 @@
           v-model="queryParams.outUrl"
           placeholder="请输入海报链接"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="活动详情" prop="description">
@@ -30,12 +30,12 @@
           v-model="queryParams.description"
           placeholder="请输入活动详情"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -44,8 +44,8 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
           v-hasPermi="['activity:storeActivity:add']"
         >新增</el-button>
@@ -54,8 +54,8 @@
         <el-button
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['activity:storeActivity:edit']"
@@ -65,8 +65,8 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['activity:storeActivity:remove']"
@@ -76,13 +76,13 @@
         <el-button
           type="warning"
           plain
-          icon="el-icon-download"
-          size="mini"
+          icon="Download"
+          size="small"
           @click="handleExport"
           v-hasPermi="['activity:storeActivity:export']"
         >导出</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="storeActivityList" @selection-change="handleSelectionChange">
@@ -90,7 +90,7 @@
       <el-table-column label="活动id" align="center" prop="id" v-if="true"/>
       <el-table-column label="活动标题" align="center" prop="title" />
       <el-table-column label="活动海报" align="center" prop="imgUrl">
-        <template slot-scope="{ row }">
+        <template #default="{ row }">
           <div v-if="row.imgUrl && row.imgUrl.length > 0">
             <el-image :src="JSON.parse(row.imgUrl)[0].url" />
           </div>
@@ -104,18 +104,18 @@
       <el-table-column label="活动详情" align="center" prop="description" />
       <el-table-column label="状态(是否开启)" align="center" prop="status" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['activity:storeActivity:edit']"
           >修改</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['activity:storeActivity:remove']"
           >删除</el-button>
@@ -126,13 +126,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改活动商品对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="活动标题" prop="title">
           <el-input v-model="form.title" placeholder="请输入活动标题" />
@@ -153,10 +153,10 @@
           </el-radio-group>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

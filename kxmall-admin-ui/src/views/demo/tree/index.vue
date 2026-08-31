@@ -7,7 +7,7 @@
           placeholder="请输入树节点名"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="创建时间">
@@ -15,7 +15,7 @@
           v-model="daterangeCreateTime"
           size="small"
           style="width: 240px"
-          value-format="yyyy-MM-dd"
+          value-format="YYYY-MM-DD"
           type="daterange"
           range-separator="-"
           start-placeholder="开始日期"
@@ -23,8 +23,8 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -33,8 +33,8 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
           v-hasPermi="['demo:tree:add']"
         >新增</el-button>
@@ -43,12 +43,12 @@
         <el-button
           type="info"
           plain
-          icon="el-icon-sort"
-          size="mini"
+          icon="Sort"
+          size="small"
           @click="toggleExpandAll"
         >展开/折叠</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table
@@ -71,23 +71,23 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['demo:tree:edit']"
           >修改</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-plus"
+            icon="Plus"
             @click="handleAdd(scope.row)"
             v-hasPermi="['demo:tree:add']"
           >新增</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['demo:tree:remove']"
           >删除</el-button>
@@ -96,10 +96,10 @@
     </el-table>
 
     <!-- 添加或修改测试树表对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="父id" prop="parentId">
-          <treeselect v-model="form.parentId" :options="treeOptions" :normalizer="normalizer" placeholder="请选择父id" />
+          <tree-select v-model="form.parentId" :options="treeOptions" :normalizer="normalizer" placeholder="请选择父id" />
         </el-form-item>
         <el-form-item label="部门id" prop="deptId">
           <el-input v-model="form.deptId" placeholder="请输入部门id" />
@@ -111,18 +111,18 @@
           <el-input v-model="form.treeName" placeholder="请输入树节点名" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { listTree, getTree, delTree, addTree, updateTree } from "@/api/demo/tree";
-import Treeselect from "@riophae/vue-treeselect";
-import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import Treeselect from '@/components/TreeSelect';
+
 
 export default {
   name: "Tree",

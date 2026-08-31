@@ -7,8 +7,8 @@
           v-hasPermi="['user:userLevel:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
@@ -16,12 +16,12 @@
 
     <el-table v-loading="loading" :data="userLevelList">
       <el-table-column type="index" label="序号" align="center">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
       <el-table-column label="等级图标" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-link :href="row.icon[0]?row.icon[0].url:''" target="_blank" :underline="false">
             <el-image :src="row.icon[0]?row.icon[0].url:''" title="点击打开" class="el-avatar" />
           </el-link>
@@ -32,31 +32,31 @@
       <el-table-column prop="discount" label="享受折扣" header-align="center" align="right" />
       <el-table-column prop="validDate" label="有效时间" align="center" />
       <el-table-column label="是否永久" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-tag v-if="row.isForever === 1" style="cursor: pointer" :type="''">是</el-tag>
           <el-tag v-else style="cursor: pointer" :type="'info'">否</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="是否显示" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-tag v-if="row.isShow === 1" style="cursor: pointer" :type="''">是</el-tag>
           <el-tag v-else style="cursor: pointer" :type="'info'">否</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button
             v-hasPermi="['user:userLevel:edit']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(row)"
           >修改</el-button>
           <el-button
             v-hasPermi="['user:userLevel:remove']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(row)"
           >删除</el-button>
         </template>
@@ -66,13 +66,13 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改会员等级对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="等级名称">
           <el-input v-model="form.name" />
@@ -108,10 +108,10 @@
           <el-input v-model="form.explain" rows="3" type="textarea" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

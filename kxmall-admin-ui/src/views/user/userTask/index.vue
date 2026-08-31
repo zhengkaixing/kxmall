@@ -8,7 +8,7 @@
             v-model="queryParams.name"
             placeholder="请输入任务名称"
             clearable
-            @keyup.enter.native="handleQuery"
+            @keyup.enter="handleQuery"
           />
         </el-form-item>
         <el-form-item label="等级ID" prop="levelId">
@@ -16,12 +16,12 @@
             v-model="queryParams.levelId"
             placeholder="请输入等级ID"
             clearable
-            @keyup.enter.native="handleQuery"
+            @keyup.enter="handleQuery"
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-          <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+          <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -30,7 +30,7 @@
     <el-table v-loading="loading" :data="userTaskList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="等级名称" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag :color="getLevelColor(scope.row.levelId)">
             {{ scope.row.levalName }}
           </el-tag>
@@ -41,25 +41,25 @@
       <el-table-column label="限定数" align="center" prop="number" />
       <el-table-column label="排序" align="center" prop="sort" />
       <el-table-column label="是否显示" align="center" prop="isShow">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag :type="scope.row.isShow === 1 ? 'success' : 'info'">
             {{ scope.row.isShow === 1 ? '是' : '否' }}
           </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['user:userTask:edit']"
           >修改</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['user:userTask:remove']"
           >删除</el-button>
@@ -71,13 +71,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改用户任务对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="等级名称" prop="levalName">
           <el-input v-model="form.levalName" placeholder="请输入等级名称" disabled />
@@ -108,10 +108,10 @@
           <el-input v-model="form.illustrate" type="textarea" placeholder="请输入任务说明" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

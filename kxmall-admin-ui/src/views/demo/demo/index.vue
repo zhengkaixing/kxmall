@@ -7,7 +7,7 @@
           placeholder="请输入key键"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="值" prop="value">
@@ -16,7 +16,7 @@
           placeholder="请输入值"
           clearable
           size="small"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="创建时间">
@@ -24,7 +24,7 @@
           v-model="daterangeCreateTime"
           size="small"
           style="width: 240px"
-          value-format="yyyy-MM-dd"
+          value-format="YYYY-MM-DD"
           type="daterange"
           range-separator="-"
           start-placeholder="开始日期"
@@ -32,9 +32,9 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handlePage">搜索(自定义分页接口)</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handlePage">搜索(自定义分页接口)</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -43,8 +43,8 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
           v-hasPermi="['demo:demo:add']"
         >新增</el-button>
@@ -53,8 +53,8 @@
         <el-button
           type="success"
           plain
-          icon="el-icon-edit"
-          size="mini"
+          icon="Edit"
+          size="small"
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['demo:demo:edit']"
@@ -64,8 +64,8 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-delete"
-          size="mini"
+          icon="Delete"
+          size="small"
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['demo:demo:remove']"
@@ -75,8 +75,8 @@
         <el-button
           type="info"
           plain
-          icon="el-icon-upload2"
-          size="mini"
+          icon="Upload"
+          size="small"
           @click="handleImport"
           v-hasPermi="['demo:demo:import']"
         >导入(校验)</el-button>
@@ -85,13 +85,13 @@
         <el-button
           type="warning"
           plain
-          icon="el-icon-download"
-          size="mini"
+          icon="Download"
+          size="small"
           @click="handleExport"
           v-hasPermi="['demo:demo:export']"
         >导出</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="demoList" @selection-change="handleSelectionChange">
@@ -103,30 +103,30 @@
       <el-table-column label="key键" align="center" prop="testKey" />
       <el-table-column label="值" align="center" prop="value" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建人" align="center" prop="createBy" />
       <el-table-column label="更新时间" align="center" prop="updateTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.updateTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="更新人" align="center" prop="updateBy" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['demo:demo:edit']"
           >修改</el-button>
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['demo:demo:remove']"
           >删除</el-button>
@@ -137,13 +137,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改测试单表对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="部门id" prop="deptId">
           <el-input v-model="form.deptId" placeholder="请输入部门id" />
@@ -164,18 +164,18 @@
           <el-date-picker clearable size="small"
                           v-model="form.createTime"
                           type="datetime"
-                          value-format="yyyy-MM-dd HH:mm:ss"
+                          value-format="YYYY-MM-DD HH:mm:ss"
                           placeholder="选择创建时间">
           </el-date-picker>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
     <!-- 用户导入对话框 -->
-    <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
+    <el-dialog :title="upload.title" v-model="upload.open" width="400px" append-to-body>
       <el-upload
         ref="upload"
         :limit="1"
@@ -188,13 +188,13 @@
         :auto-upload="false"
         drag
       >
-        <i class="el-icon-upload"></i>
+        <el-icon ><Upload /></el-icon>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
       </el-upload>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button type="primary" @click="submitFileForm">确 定</el-button>
         <el-button @click="upload.open = false">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>
@@ -242,7 +242,7 @@ export default {
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
         // 上传的地址
-        url: process.env.VUE_APP_BASE_API + "/demo/demo/importData"
+        url: import.meta.env.VITE_APP_BASE_API + "/demo/demo/importData"
       },
       // 查询参数
       queryParams: {

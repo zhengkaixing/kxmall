@@ -7,7 +7,7 @@
           placeholder="请输入用户名称"
           clearable
           style="width: 240px"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="手机号码" prop="phonenumber">
@@ -16,12 +16,12 @@
           placeholder="请输入手机号码"
           clearable
           style="width: 240px"
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
@@ -30,8 +30,8 @@
         <el-button
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="openSelectUser"
           v-hasPermi="['system:role:add']"
         >添加用户</el-button>
@@ -40,8 +40,8 @@
         <el-button
           type="danger"
           plain
-          icon="el-icon-circle-close"
-          size="mini"
+          icon="CircleClose"
+          size="small"
           :disabled="multiple"
           @click="cancelAuthUserAll"
           v-hasPermi="['system:role:remove']"
@@ -51,12 +51,12 @@
         <el-button
           type="warning"
           plain
-          icon="el-icon-close"
-          size="mini"
+          icon="Close"
+          size="small"
           @click="handleClose"
         >关闭</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
@@ -66,21 +66,21 @@
       <el-table-column label="邮箱" prop="email" :show-overflow-tooltip="true" />
       <el-table-column label="手机" prop="phonenumber" :show-overflow-tooltip="true" />
       <el-table-column label="状态" align="center" prop="status">
-        <template slot-scope="scope">
+        <template #default="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-circle-close"
+            icon="CircleClose"
             @click="cancelAuthUser(scope.row)"
             v-hasPermi="['system:role:remove']"
           >取消授权</el-button>
@@ -91,8 +91,8 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
     <select-user ref="select" :roleId="queryParams.roleId" @ok="handleQuery" />

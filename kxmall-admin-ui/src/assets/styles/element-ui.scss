@@ -1,4 +1,4 @@
-// cover some element-ui styles
+/* Element Plus 覆盖样式 */
 
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
@@ -29,7 +29,7 @@
 }
 
 .fixed-width {
-  .el-button--mini {
+  .el-button--small {
     padding: 7px 10px;
     width: 60px;
   }
@@ -46,7 +46,6 @@
   }
 }
 
-// to fixed https://github.com/ElemeFE/element/issues/2461
 .el-dialog {
   transform: none;
   left: 0;
@@ -54,7 +53,6 @@
   margin: 0 auto;
 }
 
-// refine element ui upload
 .upload-container {
   .el-upload {
     width: 100%;
@@ -66,27 +64,23 @@
   }
 }
 
-// dropdown
 .el-dropdown-menu {
   a {
     display: block
   }
 }
 
-// fix date-picker ui bug in filter-item
 .el-range-editor.el-input__inner {
   display: inline-flex !important;
 }
 
-// to fix el-date-picker css style
 .el-range-separator {
   box-sizing: content-box;
 }
 
 .el-menu--collapse
-  > div
-  > .el-submenu
-  > .el-submenu__title
-  .el-submenu__icon-arrow {
+  > .el-sub-menu
+  > .el-sub-menu__title
+  .el-sub-menu__icon-arrow {
   display: none;
 }

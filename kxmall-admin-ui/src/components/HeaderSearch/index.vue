@@ -20,8 +20,8 @@
 <script>
 // fuse is a lightweight fuzzy-search module
 // make search results more in line with expectations
-import Fuse from 'fuse.js/dist/fuse.min.js'
-import path from 'path'
+import Fuse from 'fuse.js'
+import path from '@/utils/path'
 
 export default {
   name: 'HeaderSearch',
@@ -168,7 +168,7 @@ export default {
     display: inline-block;
     vertical-align: middle;
 
-    ::v-deep .el-input__inner {
+    :deep() .el-input__inner {
       border-radius: 0;
       border: 0;
       padding-left: 0;

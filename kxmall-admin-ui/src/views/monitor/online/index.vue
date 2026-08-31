@@ -6,7 +6,7 @@
           v-model="queryParams.ipaddr"
           placeholder="请输入登录地址"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item label="用户名称" prop="userName">
@@ -14,12 +14,12 @@
           v-model="queryParams.userName"
           placeholder="请输入用户名称"
           clearable
-          @keyup.enter.native="handleQuery"
+          @keyup.enter="handleQuery"
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="Search" size="small" @click="handleQuery">搜索</el-button>
+        <el-button icon="Refresh" size="small" @click="resetQuery">重置</el-button>
       </el-form-item>
 
     </el-form>
@@ -29,7 +29,7 @@
       style="width: 100%;"
     >
       <el-table-column label="序号" type="index" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{(pageNum - 1) * pageSize + scope.$index + 1}}</span>
         </template>
       </el-table-column>
@@ -41,16 +41,16 @@
       <el-table-column label="浏览器" align="center" prop="browser" />
       <el-table-column label="操作系统" align="center" prop="os" />
       <el-table-column label="登录时间" align="center" prop="loginTime" width="180">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ parseTime(scope.row.loginTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleForceLogout(scope.row)"
             v-hasPermi="['monitor:online:forceLogout']"
           >强退</el-button>
@@ -58,7 +58,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="pageNum" :limit.sync="pageSize" />
+    <pagination v-show="total>0" :total="total" v-model:page="pageNum" v-model:limit="pageSize" />
   </div>
 </template>
 

@@ -14,7 +14,7 @@
             :show-overflow-tooltip="true"
           />
           <el-table-column label="字段描述" min-width="10%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-input v-model="scope.row.columnComment"></el-input>
             </template>
           </el-table-column>
@@ -25,7 +25,7 @@
             :show-overflow-tooltip="true"
           />
           <el-table-column label="Java类型" min-width="11%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-select v-model="scope.row.javaType">
                 <el-option label="Long" value="Long" />
                 <el-option label="String" value="String" />
@@ -38,33 +38,33 @@
             </template>
           </el-table-column>
           <el-table-column label="java属性" min-width="10%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-input v-model="scope.row.javaField"></el-input>
             </template>
           </el-table-column>
 
           <el-table-column label="插入" min-width="5%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-checkbox true-label="1" false-label="0" v-model="scope.row.isInsert"></el-checkbox>
             </template>
           </el-table-column>
           <el-table-column label="编辑" min-width="5%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-checkbox true-label="1" false-label="0" v-model="scope.row.isEdit"></el-checkbox>
             </template>
           </el-table-column>
           <el-table-column label="列表" min-width="5%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-checkbox true-label="1" false-label="0" v-model="scope.row.isList"></el-checkbox>
             </template>
           </el-table-column>
           <el-table-column label="查询" min-width="5%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-checkbox true-label="1" false-label="0" v-model="scope.row.isQuery"></el-checkbox>
             </template>
           </el-table-column>
           <el-table-column label="查询方式" min-width="10%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-select v-model="scope.row.queryType">
                 <el-option label="=" value="EQ" />
                 <el-option label="!=" value="NE" />
@@ -78,12 +78,12 @@
             </template>
           </el-table-column>
           <el-table-column label="必填" min-width="5%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-checkbox true-label="1" false-label="0" v-model="scope.row.isRequired"></el-checkbox>
             </template>
           </el-table-column>
           <el-table-column label="显示类型" min-width="12%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-select v-model="scope.row.htmlType">
                 <el-option label="文本框" value="input" />
                 <el-option label="文本域" value="textarea" />
@@ -98,7 +98,7 @@
             </template>
           </el-table-column>
           <el-table-column label="字典类型" min-width="12%">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-select v-model="scope.row.dictType" clearable filterable placeholder="请选择">
                 <el-option
                   v-for="dict in dictOptions"

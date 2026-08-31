@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="添加商品" :visible.sync="open" append-to-body>
+  <el-dialog title="添加商品" v-model="open" append-to-body>
     <el-form ref="form" :model="form" inline>
       <el-form-item prop="categoryId">
         <el-cascader
@@ -19,7 +19,7 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="onQuery">查询</el-button>
+        <el-button type="primary" icon="Search" @click="onQuery">查询</el-button>
       </el-form-item>
     </el-form>
 
@@ -29,9 +29,9 @@
       <el-table-column label="商品名称" align="left" header-align="center" prop="productName" />
       <el-table-column label="商品规格" align="left" header-align="center" prop="productAttrName" />
       <el-table-column label="操作" align="center" class-name="small-padding" width="80">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button
-            size="mini"
+            size="small"
             type="primary"
             @click="onAdd(scope.row)"
           >添加</el-button>
@@ -42,14 +42,14 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="form.pageNum"
-      :limit.sync="form.pageSize"
+      v-model:page="form.pageNum"
+      v-model:limit="form.pageSize"
       @pagination="getList"
     />
-    <div slot="footer" class="dialog-footer">
+    <template #footer><div class="dialog-footer">
       <el-button type="primary" @click="onOk">确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
-    </div>
+    </div></template>
   </el-dialog>
 </template>
 <script>

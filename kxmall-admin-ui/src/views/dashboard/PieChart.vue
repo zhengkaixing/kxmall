@@ -4,7 +4,7 @@
 
 <script>
 import * as echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
+import '@/utils/echarts-theme-macarons'
 import resize from './mixins/resize'
 
 export default {
@@ -33,7 +33,7 @@ export default {
       this.initChart()
     })
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (!this.chart) {
       return
     }

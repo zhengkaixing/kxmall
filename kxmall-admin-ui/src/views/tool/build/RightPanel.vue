@@ -6,7 +6,7 @@
     </el-tabs>
     <div class="field-box">
       <a class="document-link" target="_blank" :href="documentLink" title="查看组件文档">
-        <i class="el-icon-link" />
+        <el-icon  ><Link /></el-icon>
       </a>
       <el-scrollbar class="right-scrollbar">
         <!-- 组件属性 -->
@@ -115,16 +115,16 @@
           </el-form-item>
           <el-form-item v-if="activeData['prefix-icon']!==undefined" label="前图标">
             <el-input v-model="activeData['prefix-icon']" placeholder="请输入前图标名称">
-              <el-button slot="append" icon="el-icon-thumb" @click="openIconsDialog('prefix-icon')">
+              <template #append><el-button icon="Thumb" @click="openIconsDialog('prefix-icon')">
                 选择
-              </el-button>
+              </el-button></template>
             </el-input>
           </el-form-item>
           <el-form-item v-if="activeData['suffix-icon'] !== undefined" label="后图标">
             <el-input v-model="activeData['suffix-icon']" placeholder="请输入后图标名称">
-              <el-button slot="append" icon="el-icon-thumb" @click="openIconsDialog('suffix-icon')">
+              <template #append><el-button icon="Thumb" @click="openIconsDialog('suffix-icon')">
                 选择
-              </el-button>
+              </el-button></template>
             </el-input>
           </el-form-item>
           <el-form-item v-if="activeData.tag === 'el-cascader'" label="选项分隔符">
@@ -160,7 +160,7 @@
           </el-form-item>
           <el-form-item v-if="activeData.maxlength !== undefined" label="最多输入">
             <el-input v-model="activeData.maxlength" placeholder="请输入字符长度">
-              <template slot="append">
+              <template #append>
                 个字符
               </template>
             </el-input>
@@ -224,11 +224,11 @@
           </el-form-item>
           <el-form-item v-if="activeData.fileSize !== undefined" label="文件大小">
             <el-input v-model.number="activeData.fileSize" placeholder="请输入文件大小">
-              <el-select slot="append" v-model="activeData.sizeUnit" :style="{ width: '66px' }">
+              <template #append><el-select v-model="activeData.sizeUnit" :style="{ width: '66px' }">
                 <el-option label="KB" value="KB" />
                 <el-option label="MB" value="MB" />
                 <el-option label="GB" value="GB" />
-              </el-select>
+              </el-select></template>
             </el-input>
           </el-form-item>
           <el-form-item v-if="activeData.action !== undefined" label="上传地址">
@@ -274,30 +274,33 @@
             <el-divider>选项</el-divider>
             <draggable
               :list="activeData.options"
+              item-key="value"
               :animation="340"
               group="selectItem"
               handle=".option-drag"
             >
-              <div v-for="(item, index) in activeData.options" :key="index" class="select-item">
-                <div class="select-line-icon option-drag">
-                  <i class="el-icon-s-operation" />
+              <template #item="{ element: item, index }">
+                <div class="select-item">
+                  <div class="select-line-icon option-drag">
+                    <el-icon><Operation /></el-icon>
+                  </div>
+                  <el-input v-model="item.label" placeholder="选项名" size="small" />
+                  <el-input
+                    placeholder="选项值"
+                    size="small"
+                    :model-value="item.value"
+                    @input="setOptionValue(item, $event)"
+                  />
+                  <div class="close-btn select-line-icon" @click="activeData.options.splice(index, 1)">
+                    <el-icon><Remove /></el-icon>
+                  </div>
                 </div>
-                <el-input v-model="item.label" placeholder="选项名" size="small" />
-                <el-input
-                  placeholder="选项值"
-                  size="small"
-                  :value="item.value"
-                  @input="setOptionValue(item, $event)"
-                />
-                <div class="close-btn select-line-icon" @click="activeData.options.splice(index, 1)">
-                  <i class="el-icon-remove-outline" />
-                </div>
-              </div>
+              </template>
             </draggable>
             <div style="margin-left: 20px;">
               <el-button
                 style="padding-bottom: 0"
-                icon="el-icon-circle-plus-outline"
+                icon="CirclePlus"
                 type="text"
                 @click="addSelectItem"
               >
@@ -343,7 +346,7 @@
             <div v-if="activeData.dataType === 'static'" style="margin-left: 20px">
               <el-button
                 style="padding-bottom: 0"
-                icon="el-icon-circle-plus-outline"
+                icon="CirclePlus"
                 type="text"
                 @click="addTreeItem"
               >
@@ -477,12 +480,12 @@
               default-expand-all
               draggable
             >
-              <span slot-scope="{ node, data }">
+              <template #default="{ node, data }">
                 <span class="node-label">
                   <svg-icon class="node-icon" :icon-class="data.tagIcon" />
                   {{ node.label }}
                 </span>
-              </span>
+              </template>
             </el-tree>
           </template>
 
@@ -494,7 +497,7 @@
               class="reg-item"
             >
               <span class="close-btn" @click="activeData.regList.splice(index, 1)">
-                <i class="el-icon-close" />
+                <el-icon  ><Close /></el-icon>
               </span>
               <el-form-item label="表达式">
                 <el-input v-model="item.pattern" placeholder="请输入正则" />
@@ -504,7 +507,7 @@
               </el-form-item>
             </div>
             <div style="margin-left: 20px">
-              <el-button icon="el-icon-circle-plus-outline" type="text" @click="addReg">
+              <el-button icon="CirclePlus" type="text" @click="addReg">
                 添加规则
               </el-button>
             </div>
@@ -566,13 +569,12 @@
       </el-scrollbar>
     </div>
 
-    <treeNode-dialog :visible.sync="dialogVisible" title="添加选项" @commit="addNode" />
-    <icons-dialog :visible.sync="iconsVisible" :current="activeData[currentIconModel]" @select="setIcon" />
+    <treeNode-dialog v-model="dialogVisible" title="添加选项" @commit="addNode" />
+    <icons-dialog v-model="iconsVisible" :current="activeData[currentIconModel]" @select="setIcon" />
   </div>
 </template>
 
-<script>
-import { isArray } from 'util'
+<script lang="jsx">
 import draggable from 'vuedraggable'
 import TreeNodeDialog from './TreeNodeDialog'
 import { isNumberStr } from '@/utils/index'
@@ -584,14 +586,14 @@ import {
 } from '@/utils/generator/config'
 
 const dateTimeFormat = {
-  date: 'yyyy-MM-dd',
-  week: 'yyyy 第 WW 周',
-  month: 'yyyy-MM',
-  year: 'yyyy',
-  datetime: 'yyyy-MM-dd HH:mm:ss',
-  daterange: 'yyyy-MM-dd',
-  monthrange: 'yyyy-MM',
-  datetimerange: 'yyyy-MM-dd HH:mm:ss'
+  date: 'YYYY-MM-DD',
+  week: 'YYYY 第 ww 周',
+  month: 'YYYY-MM',
+  year: 'YYYY',
+  datetime: 'YYYY-MM-DD HH:mm:ss',
+  daterange: 'YYYY-MM-DD',
+  monthrange: 'YYYY-MM',
+  datetimerange: 'YYYY-MM-DD HH:mm:ss'
 }
 
 export default {
@@ -764,7 +766,7 @@ export default {
     },
     append(data) {
       if (!data.children) {
-        this.$set(data, 'children', [])
+        data['children'] = []
       }
       this.dialogVisible = true
       this.currentNode = data.children
@@ -794,53 +796,44 @@ export default {
       return val
     },
     onDefaultValueInput(str) {
-      if (isArray(this.activeData.defaultValue)) {
+      if (Array.isArray(this.activeData.defaultValue)) {
         // 数组
-        this.$set(
-          this.activeData,
-          'defaultValue',
-          str.split(',').map(val => (isNumberStr(val) ? +val : val))
+        this.activeData['defaultValue'] = str.split(','.map(val => (isNumberStr(val) ? +val : val))
         )
       } else if (['true', 'false'].indexOf(str) > -1) {
         // 布尔
-        this.$set(this.activeData, 'defaultValue', JSON.parse(str))
+        this.activeData['defaultValue'] = JSON.parse(str)
       } else {
         // 字符串和数字
-        this.$set(
-          this.activeData,
-          'defaultValue',
-          isNumberStr(str) ? +str : str
+        this.activeData['defaultValue'] = isNumberStr(str ? +str : str
         )
       }
     },
     onSwitchValueInput(val, name) {
       if (['true', 'false'].indexOf(val) > -1) {
-        this.$set(this.activeData, name, JSON.parse(val))
+        this.activeData[name] = JSON.parse(val)
       } else {
-        this.$set(this.activeData, name, isNumberStr(val) ? +val : val)
+        this.activeData[name] = isNumberStr(val ? +val : val)
       }
     },
     setTimeValue(val, type) {
       const valueFormat = type === 'week' ? dateTimeFormat.date : val
-      this.$set(this.activeData, 'defaultValue', null)
-      this.$set(this.activeData, 'value-format', valueFormat)
-      this.$set(this.activeData, 'format', val)
+      this.activeData['defaultValue'] = null
+      this.activeData['value-format'] = valueFormat
+      this.activeData['format'] = val
     },
     spanChange(val) {
       this.formConf.span = val
     },
     multipleChange(val) {
-      this.$set(this.activeData, 'defaultValue', val ? [] : '')
+      this.activeData['defaultValue'] = val ? [] : ''
     },
     dateTypeChange(val) {
       this.setTimeValue(dateTimeFormat[val], val)
     },
     rangeChange(val) {
-      this.$set(
-        this.activeData,
-        'defaultValue',
-        val ? [this.activeData.min, this.activeData.max] : this.activeData.min
-      )
+      this.activeData['defaultValue'] = val ? [this.activeData.min, this.activeData.max] : this.activeData.min
+      
     },
     rateTextChange(val) {
       if (val) this.activeData['show-score'] = false
@@ -917,7 +910,7 @@ export default {
   .el-date-editor {
     width: 227px;
   }
-  ::v-deep .el-icon-time {
+  :deep() .el-icon-time {
     display: none;
   }
 }

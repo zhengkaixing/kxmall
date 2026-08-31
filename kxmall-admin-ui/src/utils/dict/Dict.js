@@ -1,10 +1,9 @@
-import Vue from 'vue'
-import { mergeRecursive } from "@/utils/kxmall";
+import { mergeRecursive } from '@/utils/kxmall'
 import DictMeta from './DictMeta'
 import DictData from './DictData'
 
 const DEFAULT_DICT_OPTIONS = {
-  types: [],
+  types: []
 }
 
 /**
@@ -32,8 +31,8 @@ export default class Dict {
     this._dictMetas = opts.types.map(t => DictMeta.parse(t))
     this._dictMetas.forEach(dictMeta => {
       const type = dictMeta.type
-      Vue.set(this.label, type, {})
-      Vue.set(this.type, type, [])
+      this.label[type] = {}
+      this.type[type] = []
       if (dictMeta.lazy) {
         return
       }
@@ -75,7 +74,7 @@ function loadDict(dict, dictMeta) {
       }
       dict.type[type].splice(0, Number.MAX_SAFE_INTEGER, ...dicts)
       dicts.forEach(d => {
-        Vue.set(dict.label[type], d.value, d.label)
+        dict.label[type][d.value] = d.label
       })
       return dicts
     })

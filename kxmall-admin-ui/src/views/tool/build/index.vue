@@ -14,21 +14,20 @@
           <draggable
             class="components-draggable"
             :list="inputComponents"
+            item-key="label"
             :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
             :clone="cloneComponent"
-            draggable=".components-item"
             :sort="false"
             @end="onEnd"
           >
-            <div
-              v-for="(element, index) in inputComponents" :key="index" class="components-item"
-              @click="addComponent(element)"
-            >
-              <div class="components-body">
-                <svg-icon :icon-class="element.tagIcon" />
-                {{ element.label }}
+            <template #item="{ element }">
+              <div class="components-item" @click="addComponent(element)">
+                <div class="components-body">
+                  <svg-icon :icon-class="element.tagIcon" />
+                  {{ element.label }}
+                </div>
               </div>
-            </div>
+            </template>
           </draggable>
           <div class="components-title">
             <svg-icon icon-class="component" />选择型组件
@@ -36,41 +35,41 @@
           <draggable
             class="components-draggable"
             :list="selectComponents"
+            item-key="label"
             :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
             :clone="cloneComponent"
-            draggable=".components-item"
             :sort="false"
             @end="onEnd"
           >
-            <div
-              v-for="(element, index) in selectComponents"
-              :key="index"
-              class="components-item"
-              @click="addComponent(element)"
-            >
-              <div class="components-body">
-                <svg-icon :icon-class="element.tagIcon" />
-                {{ element.label }}
+            <template #item="{ element }">
+              <div class="components-item" @click="addComponent(element)">
+                <div class="components-body">
+                  <svg-icon :icon-class="element.tagIcon" />
+                  {{ element.label }}
+                </div>
               </div>
-            </div>
+            </template>
           </draggable>
           <div class="components-title">
             <svg-icon icon-class="component" /> 布局型组件
           </div>
           <draggable
-            class="components-draggable" :list="layoutComponents"
-            :group="{ name: 'componentsGroup', pull: 'clone', put: false }" :clone="cloneComponent"
-            draggable=".components-item" :sort="false" @end="onEnd"
+            class="components-draggable"
+            :list="layoutComponents"
+            item-key="label"
+            :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
+            :clone="cloneComponent"
+            :sort="false"
+            @end="onEnd"
           >
-            <div
-              v-for="(element, index) in layoutComponents" :key="index" class="components-item"
-              @click="addComponent(element)"
-            >
-              <div class="components-body">
-                <svg-icon :icon-class="element.tagIcon" />
-                {{ element.label }}
+            <template #item="{ element }">
+              <div class="components-item" @click="addComponent(element)">
+                <div class="components-body">
+                  <svg-icon :icon-class="element.tagIcon" />
+                  {{ element.label }}
+                </div>
               </div>
-            </div>
+            </template>
           </draggable>
         </div>
       </el-scrollbar>
@@ -78,13 +77,13 @@
 
     <div class="center-board">
       <div class="action-bar">
-        <el-button icon="el-icon-download" type="text" @click="download">
+        <el-button icon="Download" type="text" @click="download">
           导出vue文件
         </el-button>
-        <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">
+        <el-button class="copy-btn-main" icon="DocumentCopy" type="text" @click="copy">
           复制代码
         </el-button>
-        <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">
+        <el-button class="delete-btn" icon="Delete" type="text" @click="empty">
           清空
         </el-button>
       </div>
@@ -96,19 +95,19 @@
             :disabled="formConf.disabled"
             :label-width="formConf.labelWidth + 'px'"
           >
-            <draggable class="drawing-board" :list="drawingList" :animation="340" group="componentsGroup">
-              <draggable-item
-                v-for="(element, index) in drawingList"
-                :key="element.renderKey"
-                :drawing-list="drawingList"
-                :element="element"
-                :index="index"
-                :active-id="activeId"
-                :form-conf="formConf"
-                @activeItem="activeFormItem"
-                @copyItem="drawingItemCopy"
-                @deleteItem="drawingItemDelete"
-              />
+            <draggable class="drawing-board" :list="drawingList" item-key="renderKey" :animation="340" group="componentsGroup">
+              <template #item="{ element, index }">
+                <draggable-item
+                  :drawing-list="drawingList"
+                  :element="element"
+                  :index="index"
+                  :active-id="activeId"
+                  :form-conf="formConf"
+                  @activeItem="activeFormItem"
+                  @copyItem="drawingItemCopy"
+                  @deleteItem="drawingItemDelete"
+                />
+              </template>
             </draggable>
             <div v-show="!drawingList.length" class="empty-info">
               从左侧拖入或点选组件进行表单设计
@@ -126,7 +125,7 @@
     />
 
     <code-type-dialog
-      :visible.sync="dialogVisible"
+      v-model="dialogVisible"
       title="选择生成类型"
       :show-file-name="showFileName"
       @confirm="generate"

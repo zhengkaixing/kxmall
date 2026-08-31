@@ -2,14 +2,14 @@
   <div class="top-right-btn" :style="style">
     <el-row>
       <el-tooltip class="item" effect="dark" :content="showSearch ? '隐藏搜索' : '显示搜索'" placement="top" v-if="search">
-        <el-button size="mini" circle icon="el-icon-search" @click="toggleSearch()" />
+        <el-button size="small" circle icon="Search" @click="toggleSearch()" />
       </el-tooltip>
       <el-tooltip class="item" effect="dark" content="刷新" placement="top">
-        <el-button size="mini" circle icon="el-icon-refresh" @click="refresh()" />
+        <el-button size="small" circle icon="Refresh" @click="refresh()" />
       </el-tooltip>
       <el-tooltip class="item" effect="dark" content="显隐列" placement="top" v-if="columns">
         <el-popover placement="bottom" width="120" trigger="click">
-          <el-button size="mini" circle icon="el-icon-menu" slot="reference" style="margin-left: 10px;" />
+          <template #reference><el-button size="small" circle icon="Menu" style="margin-left: 10px;"  /></template>
           <el-checkbox-group v-model="checkedColumnsList" @change="onColumnCheckChange">
             <el-checkbox v-for="item in columns" :key="item.prop" :label="item.prop">
               {{ item.label }}
@@ -18,7 +18,7 @@
         </el-popover>
       </el-tooltip>
     </el-row>
-    <!-- <el-dialog :title="title" :visible.sync="open" append-to-body>
+    <!-- <el-dialog :title="title" v-model="open" append-to-body>
       <el-transfer
         :titles="['显示', '隐藏']"
         v-model="value"
@@ -107,14 +107,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-::v-deep .el-transfer__button {
+:deep() .el-transfer__button {
   border-radius: 50%;
   padding: 12px;
   display: block;
   margin-left: 0px;
 }
 
-::v-deep .el-transfer__button:first-child {
+:deep() .el-transfer__button:first-child {
   margin-bottom: 10px;
 }
 </style>

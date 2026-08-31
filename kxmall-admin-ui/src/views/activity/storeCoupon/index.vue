@@ -7,8 +7,8 @@
           v-hasPermi="['coupon:storeCoupon:add']"
           type="primary"
           plain
-          icon="el-icon-plus"
-          size="mini"
+          icon="Plus"
+          size="small"
           @click="handleAdd"
         >新增</el-button>
       </el-col>
@@ -16,13 +16,13 @@
 
     <el-table v-loading="loading" :data="storeCouponList">
       <el-table-column type="index" label="序号" align="center" width="80">
-        <template slot-scope="{$index}">
+        <template #default="{$index}">
           {{ (queryParams.pageNum - 1) * queryParams.pageSize + $index + 1 }}
         </template>
       </el-table-column>
       <el-table-column prop="title" label="优惠券名称" header-align="center" />
       <el-table-column prop="type" label="优惠券类型" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <div>
             <el-tag v-if="row.type === 1">商品券</el-tag>
             <el-tag v-else type="info">普通券</el-tag>
@@ -32,13 +32,13 @@
       <el-table-column prop="couponPrice" label="优惠券面值" header-align="center" align="right" />
       <el-table-column prop="useMinPrice" label="优惠券最低消费" header-align="center" align="right" />
       <el-table-column label="优惠券有效期限" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.couponTime }}天</span>
         </template>
       </el-table-column>
       <el-table-column prop="sort" label="排序" width="100" align="center" />
       <el-table-column label="状态" width="100" align="center">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <div>
             <el-tag v-if="row.status === 1">开启</el-tag>
             <el-tag v-else type="info">关闭</el-tag>
@@ -47,26 +47,26 @@
       </el-table-column>
       <el-table-column prop="createTime" label="创建时间" width="140" align="center" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="150">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button
             v-hasPermi="['coupon:storeCoupon:edit']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-s-promotion"
+            icon="Promotion"
             @click="handleUpdate(row,'issue')"
           >发布</el-button>
           <el-button
             v-hasPermi="['coupon:storeCoupon:edit']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-edit"
+            icon="Edit"
             @click="handleUpdate(row,'update')"
           >修改</el-button>
           <el-button
             v-hasPermi="['coupon:storeCoupon:remove']"
-            size="mini"
+            size="small"
             type="text"
-            icon="el-icon-delete"
+            icon="Delete"
             @click="handleDelete(row)"
           >删除</el-button>
         </template>
@@ -76,13 +76,13 @@
     <pagination
       v-show="total>0"
       :total="total"
-      :page.sync="queryParams.pageNum"
-      :limit.sync="queryParams.pageSize"
+      v-model:page="queryParams.pageNum"
+      v-model:limit="queryParams.pageSize"
       @pagination="getList"
     />
 
     <!-- 添加或修改优惠券对话框 -->
-    <el-dialog :title="title" :visible.sync="open" :width="width" append-to-body>
+    <el-dialog :title="title" v-model="open" :width="width" append-to-body>
       <el-form v-if="dialogMode.current==='issue'" ref="form" :model="form" size="small" label-width="100px">
         <el-form-item label="优惠券ID" prop="id">
           <el-input v-model="form.id" :disabled="true" />
@@ -151,10 +151,10 @@
           <el-radio v-model="form.status" :label="0">关闭</el-radio>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer><div class="dialog-footer">
         <el-button :loading="buttonLoading" type="primary" @click="submitForm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
-      </div>
+      </div></template>
     </el-dialog>
   </div>
 </template>

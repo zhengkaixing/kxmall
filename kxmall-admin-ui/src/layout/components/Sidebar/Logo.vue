@@ -15,7 +15,7 @@
 
 <script>
 import logoImg from '@/assets/logo/logo.png'
-import variables from '@/assets/styles/variables.scss'
+import variables from '@/assets/styles/variables.module.scss'
 
 export default {
   name: 'SidebarLogo',
@@ -47,8 +47,8 @@ export default {
   transition: opacity 1.5s;
 }
 
-.sidebarLogoFade-enter,
-.sidebarLogoFade-leave-to {
+.sidebarLogoFade-enter-from,
+.sidebarLogoFade-leave-from {
   opacity: 0;
 }
 
