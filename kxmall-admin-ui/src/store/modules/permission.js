@@ -36,6 +36,8 @@ const permission = {
           const rdata = JSON.parse(JSON.stringify(res.data))
           const sidebarRoutes = filterAsyncRouter(sdata)
           const rewriteRoutes = filterAsyncRouter(rdata, false, true)
+          ensureUniqueRouteNames(sidebarRoutes)
+          ensureUniqueRouteNames(rewriteRoutes)
           const asyncRoutes = filterDynamicRoutes(dynamicRoutes)
           asyncRoutes.forEach(route => { router.addRoute(route) })
           rewriteRoutes.push({ path: '/:pathMatch(.*)*', redirect: '/404', hidden: true })
@@ -98,6 +100,27 @@ function filterChildren(childrenMap, lastRouter = false) {
     children = children.concat(el)
   })
   return children
+}
+
+function ensureUniqueRouteNames(routes, used = new Set()) {
+  routes.forEach(route => {
+    if (route.name) {
+      const original = String(route.name)
+      if (used.has(original)) {
+        const suffix = String(route.path || '').replace(/^\/+/, '').replace(/\W+/g, '_') || 'dup'
+        let next = `${original}_${suffix}`
+        let i = 2
+        while (used.has(next)) {
+          next = `${original}_${suffix}_${i++}`
+        }
+        route.name = next
+      }
+      used.add(String(route.name))
+    }
+    if (route.children && route.children.length) {
+      ensureUniqueRouteNames(route.children, used)
+    }
+  })
 }
 
 export function filterDynamicRoutes(routes) {

@@ -26,6 +26,7 @@ import com.kxmall.system.mapper.SysOssConfigMapper;
 import com.kxmall.system.mapper.SysOssMapper;
 import com.kxmall.web.controller.system.service.ISysAppOssService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +38,7 @@ import java.util.Map;
  *
  * @author 郅兴开源团队-小黑
  */
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class SysAppOssServiceImpl implements ISysAppOssService {
@@ -106,10 +108,14 @@ public class SysAppOssServiceImpl implements ISysAppOssService {
      * @return oss 匹配Url的OSS对象
      */
     private SysOssVo matchingUrl(SysOssVo oss) {
-        OssClient storage = OssFactory.instance(oss.getService());
-        // 仅修改桶类型为 private 的URL，临时URL时长为120s
-        if (AccessPolicyType.PRIVATE == storage.getAccessPolicy()) {
-            oss.setUrl(storage.getPrivateUrl(oss.getFileName(), 120));
+        try {
+            OssClient storage = OssFactory.instance(oss.getService());
+            // 仅修改桶类型为 private 的URL，临时URL时长为120s
+            if (AccessPolicyType.PRIVATE == storage.getAccessPolicy()) {
+                oss.setUrl(storage.getPrivateUrl(oss.getFileName(), 120));
+            }
+        } catch (Exception e) {
+            log.warn("匹配OSS访问地址失败，已回退原始地址: {}", e.getMessage());
         }
         return oss;
     }

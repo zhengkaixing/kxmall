@@ -1,46 +1,45 @@
 <template>
   <div class="navbar">
-    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" v-if="!topNav"/>
-    <top-nav id="topmenu-container" class="topmenu-container" v-if="topNav"/>
+    <div class="navbar-left">
+      <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+      <breadcrumb id="breadcrumb-container" v-if="!topNav" class="breadcrumb-container" />
+      <top-nav id="topmenu-container" v-if="topNav" class="topmenu-container" />
+    </div>
 
     <div class="right-menu">
-      <template v-if="device!=='mobile'">
+      <template v-if="device !== 'mobile'">
         <search id="header-search" class="right-menu-item" />
 
-        <!-- <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <ruo-yi-git id="kxmall-git" class="right-menu-item hover-effect" />
+        <el-tooltip content="全屏" effect="dark" placement="bottom">
+          <screenfull id="screenfull" class="right-menu-item hover-effect" />
         </el-tooltip>
-
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
-          <ruo-yi-doc id="kxmall-doc" class="right-menu-item hover-effect" />
-        </el-tooltip> -->
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
-
       </template>
 
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+      <theme-picker class="right-menu-item theme-picker-item" />
+
+      <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar" class="user-avatar">
-          <el-icon  ><CaretBottom /></el-icon>
+          <img :src="avatar" class="user-avatar" alt="avatar">
+          <span v-if="name" class="user-name">{{ name }}</span>
+          <el-icon class="caret-icon"><CaretBottom /></el-icon>
         </div>
-        <template #dropdown><el-dropdown-menu>
-          <router-link to="/user/profile">
-            <el-dropdown-item>个人中心</el-dropdown-item>
-          </router-link>
-          <el-dropdown-item @click="setting = true">
-            <span>布局设置</span>
-          </el-dropdown-item>
-          <el-dropdown-item divided @click="logout">
-            <span>退出登录</span>
-          </el-dropdown-item>
-        </el-dropdown-menu></template>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <router-link to="/user/profile">
+              <el-dropdown-item>个人中心</el-dropdown-item>
+            </router-link>
+            <el-dropdown-item @click="setting = true">
+              <span>布局设置</span>
+            </el-dropdown-item>
+            <el-dropdown-item divided @click="logout">
+              <span>退出登录</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
     </div>
   </div>
@@ -54,8 +53,7 @@ import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-import WMShopGit from '@/components/WMShop/Git'
-import WMShopDoc from '@/components/WMShop/Doc'
+import ThemePicker from '@/components/ThemePicker'
 
 export default {
   components: {
@@ -65,14 +63,14 @@ export default {
     Screenfull,
     SizeSelect,
     Search,
-    WMShopGit,
-    WMShopDoc
+    ThemePicker
   },
   computed: {
     ...mapGetters([
       'sidebar',
       'avatar',
-      'device'
+      'device',
+      'name'
     ]),
     setting: {
       get() {
@@ -102,9 +100,9 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('LogOut').then(() => {
-          location.href = import.meta.env.VITE_APP_CONTEXT_PATH + "index";
+          location.href = import.meta.env.VITE_APP_CONTEXT_PATH + 'index'
         })
-      }).catch(() => {});
+      }).catch(() => {})
     }
   }
 }
@@ -112,86 +110,123 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   height: 50px;
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  padding-right: 16px;
+
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    flex: 1;
+  }
 
   .hamburger-container {
-    line-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 100%;
-    float: left;
+    padding: 0 15px;
     cursor: pointer;
-    transition: background .3s;
-    -webkit-tap-highlight-color:transparent;
+    transition: background 0.3s;
+    -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: rgba(0, 0, 0, 0.025);
     }
   }
 
-  .breadcrumb-container {
-    float: left;
-  }
-
+  .breadcrumb-container,
   .topmenu-container {
-    position: absolute;
-    left: 50px;
-  }
-
-  .errLog-container {
-    display: inline-block;
-    vertical-align: top;
+    min-width: 0;
   }
 
   .right-menu {
-    float: right;
+    display: flex;
+    align-items: center;
     height: 100%;
-    line-height: 50px;
+    flex-shrink: 0;
 
     &:focus {
       outline: none;
     }
 
     .right-menu-item {
-      display: inline-block;
-      padding: 0 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
       height: 100%;
       font-size: 18px;
       color: #5a5e66;
-      vertical-align: text-bottom;
 
       &.hover-effect {
         cursor: pointer;
-        transition: background .3s;
+        transition: background 0.3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: rgba(0, 0, 0, 0.025);
         }
       }
     }
 
+    .theme-picker-item {
+      padding: 0 12px;
+
+      :deep(.el-color-picker__trigger) {
+        width: 22px;
+        height: 22px;
+        padding: 2px;
+        border-radius: 4px;
+      }
+    }
+
     .avatar-container {
-      margin-right: 30px;
+      margin-left: 4px;
 
       .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
+        display: flex;
+        align-items: center;
+        height: 50px;
+        padding: 0 8px;
+        cursor: pointer;
+        outline: none;
 
         .user-avatar {
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          object-fit: cover;
         }
 
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
+        .user-name {
+          max-width: 96px;
+          margin-left: 8px;
+          color: #303133;
+          font-size: 14px;
+          line-height: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .caret-icon {
+          margin-left: 4px;
           font-size: 12px;
+          color: #909399;
+        }
+
+        &:hover {
+          .user-name,
+          .caret-icon {
+            color: var(--el-color-primary);
+          }
         }
       }
     }

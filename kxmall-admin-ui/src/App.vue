@@ -1,17 +1,14 @@
 <template>
   <el-config-provider :size="size" :z-index="3000">
     <router-view />
-    <theme-picker />
   </el-config-provider>
 </template>
 
 <script>
-import ThemePicker from '@/components/ThemePicker'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
-  components: { ThemePicker },
   computed: {
     ...mapGetters(['size'])
   },
@@ -38,8 +35,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-#app .theme-picker {
-  display: none;
-}
-</style>

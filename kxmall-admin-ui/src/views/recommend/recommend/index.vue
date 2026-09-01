@@ -223,7 +223,6 @@ export default {
       this.loading = true
       listRecommendType().then(response => {
         this.recommendTypeList= response.data
-        debugger
         //添加两个固定的id
         this.recommendTypeList.push({id:1,title:"今日特价"})
         this.recommendTypeList.push({id:11,title:"热卖推荐"})

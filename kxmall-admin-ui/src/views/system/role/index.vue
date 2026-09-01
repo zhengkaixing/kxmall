@@ -159,7 +159,7 @@
     />
 
     <!-- 添加或修改角色配置对话框 -->
-    <el-dialog :title="title" v-model="open" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="open" width="580px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="角色名称" prop="roleName">
           <el-input v-model="form.roleName" placeholder="请输入角色名称" />
@@ -185,20 +185,25 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="菜单权限">
-          <el-checkbox v-model="menuExpand" @change="handleCheckedTreeExpand($event, 'menu')">展开/折叠</el-checkbox>
-          <el-checkbox v-model="menuNodeAll" @change="handleCheckedTreeNodeAll($event, 'menu')">全选/全不选</el-checkbox>
-          <el-checkbox v-model="form.menuCheckStrictly" @change="handleCheckedTreeConnect($event, 'menu')">父子联动</el-checkbox>
-          <el-tree
-            class="tree-border"
-            :data="menuOptions"
-            show-checkbox
-            ref="menu"
-            node-key="id"
-            :check-strictly="!form.menuCheckStrictly"
-            empty-text="加载中，请稍候"
-            :props="defaultProps"
-          ></el-tree>
+        <el-form-item label="菜单权限" class="perm-tree-item">
+          <div class="perm-tree">
+            <div class="perm-tree__toolbar">
+              <el-checkbox v-model="menuExpand" @change="handleCheckedTreeExpand($event, 'menu')">展开/折叠</el-checkbox>
+              <el-checkbox v-model="menuNodeAll" @change="handleCheckedTreeNodeAll($event, 'menu')">全选/全不选</el-checkbox>
+              <el-checkbox v-model="form.menuCheckStrictly" @change="handleCheckedTreeConnect($event, 'menu')">父子联动</el-checkbox>
+            </div>
+            <el-tree
+              class="perm-tree__body"
+              :data="menuOptions"
+              show-checkbox
+              ref="menu"
+              node-key="id"
+              :indent="16"
+              :check-strictly="!form.menuCheckStrictly"
+              empty-text="加载中，请稍候"
+              :props="defaultProps"
+            ></el-tree>
+          </div>
         </el-form-item>
         <el-form-item label="备注">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
@@ -211,7 +216,7 @@
     </el-dialog>
 
     <!-- 分配角色数据权限对话框 -->
-    <el-dialog :title="title" v-model="openDataScope" width="500px" append-to-body>
+    <el-dialog :title="title" v-model="openDataScope" width="580px" append-to-body>
       <el-form :model="form" label-width="80px">
         <el-form-item label="角色名称">
           <el-input v-model="form.roleName" :disabled="true" />
@@ -229,21 +234,26 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="数据权限" v-show="form.dataScope == 2">
-          <el-checkbox v-model="deptExpand" @change="handleCheckedTreeExpand($event, 'dept')">展开/折叠</el-checkbox>
-          <el-checkbox v-model="deptNodeAll" @change="handleCheckedTreeNodeAll($event, 'dept')">全选/全不选</el-checkbox>
-          <el-checkbox v-model="form.deptCheckStrictly" @change="handleCheckedTreeConnect($event, 'dept')">父子联动</el-checkbox>
-          <el-tree
-            class="tree-border"
-            :data="deptOptions"
-            show-checkbox
-            default-expand-all
-            ref="dept"
-            node-key="id"
-            :check-strictly="!form.deptCheckStrictly"
-            empty-text="加载中，请稍候"
-            :props="defaultProps"
-          ></el-tree>
+        <el-form-item label="数据权限" v-show="form.dataScope == 2" class="perm-tree-item">
+          <div class="perm-tree">
+            <div class="perm-tree__toolbar">
+              <el-checkbox v-model="deptExpand" @change="handleCheckedTreeExpand($event, 'dept')">展开/折叠</el-checkbox>
+              <el-checkbox v-model="deptNodeAll" @change="handleCheckedTreeNodeAll($event, 'dept')">全选/全不选</el-checkbox>
+              <el-checkbox v-model="form.deptCheckStrictly" @change="handleCheckedTreeConnect($event, 'dept')">父子联动</el-checkbox>
+            </div>
+            <el-tree
+              class="perm-tree__body"
+              :data="deptOptions"
+              show-checkbox
+              default-expand-all
+              ref="dept"
+              node-key="id"
+              :indent="16"
+              :check-strictly="!form.deptCheckStrictly"
+              empty-text="加载中，请稍候"
+              :props="defaultProps"
+            ></el-tree>
+          </div>
         </el-form-item>
       </el-form>
       <template #footer><div class="dialog-footer">
@@ -606,4 +616,76 @@ export default {
   }
 };
 </script>
+
+<style scoped lang="scss">
+.perm-tree-item {
+  align-items: flex-start;
+}
+
+.perm-tree {
+  width: 100%;
+}
+
+.perm-tree__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  margin-bottom: 8px;
+  line-height: 1;
+
+  :deep(.el-checkbox) {
+    height: auto;
+    margin-right: 0;
+  }
+}
+
+.perm-tree__body {
+  width: 100%;
+  max-height: 280px;
+  padding: 6px 8px;
+  overflow: auto;
+  background: #fafbfc;
+  border: 1px solid #ebeef5;
+  border-radius: 8px;
+
+  :deep(.el-tree-node__content) {
+    height: 32px;
+    border-radius: 6px;
+  }
+
+  :deep(.el-tree-node__content:hover),
+  :deep(.el-tree-node:focus > .el-tree-node__content) {
+    background-color: #e8f3ff;
+  }
+
+  :deep(.el-checkbox) {
+    margin-right: 6px;
+    height: 32px;
+  }
+
+  :deep(.el-tree-node__expand-icon) {
+    color: #909399;
+    font-size: 14px;
+  }
+
+  :deep(.el-tree-node__label) {
+    font-size: 13px;
+    color: #303133;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #c0c4cc;
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+</style>
 

@@ -252,24 +252,24 @@
               <el-col :span="12">
                 <el-form-item label="营业状态" prop="operatingState">
                   <el-radio-group v-model="form.operatingState">
-                    <el-radio-button label="1">营业中</el-radio-button>
-                    <el-radio-button label="0">休息中</el-radio-button>
+                    <el-radio-button :value="1">营业中</el-radio-button>
+                    <el-radio-button :value="0">休息中</el-radio-button>
                   </el-radio-group>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
                 <el-form-item label="仓库状态" prop="state">
                   <el-radio-group v-model="form.state">
-                    <el-radio-button label="1">正常</el-radio-button>
-                    <el-radio-button label="0">禁用</el-radio-button>
+                    <el-radio-button :value="1">正常</el-radio-button>
+                    <el-radio-button :value="0">禁用</el-radio-button>
                   </el-radio-group>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
                 <el-form-item label="自动分配" prop="automatic">
                   <el-radio-group v-model="form.automatic">
-                    <el-radio-button label="1">是</el-radio-button>
-                    <el-radio-button label="0">否</el-radio-button>
+                    <el-radio-button :value="1">是</el-radio-button>
+                    <el-radio-button :value="0">否</el-radio-button>
                   </el-radio-group>
                   <span class="form-tip">订单自动分配配送员</span>
                 </el-form-item>

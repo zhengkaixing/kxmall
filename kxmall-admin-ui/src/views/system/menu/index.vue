@@ -46,9 +46,13 @@
         >展开/折叠</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button @click="refreshMenu" type="danger" icon="RefreshRight">
-          刷新菜单缓存
-        </el-button>
+        <el-button
+          type="warning"
+          plain
+          icon="RefreshRight"
+          size="small"
+          @click="refreshMenu"
+        >刷新菜单缓存</el-button>
       </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>

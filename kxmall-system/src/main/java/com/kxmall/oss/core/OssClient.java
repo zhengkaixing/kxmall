@@ -67,8 +67,6 @@ public class OssClient {
                 build.enablePathStyleAccess();
             }
             this.client = build.build();
-
-            createBucket();
         } catch (Exception e) {
             if (e instanceof OssException) {
                 throw e;
@@ -98,6 +96,7 @@ public class OssClient {
     }
 
     public UploadResult upload(InputStream inputStream, String path, String contentType) {
+        createBucket();
         if (!(inputStream instanceof ByteArrayInputStream)) {
             inputStream = new ByteArrayInputStream(IoUtil.readBytes(inputStream));
         }
