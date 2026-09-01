@@ -10,6 +10,8 @@ if ! [ -z "$pid" ]; then
   kill -n 9 $pid
 fi
 
-nohup java -XX:SurvivorRatio=8 -XX:+UseParallelGC -XX:+PrintGCDateStamps -XX:+PrintGCDetails -Xloggc:./gclogs -jar $appName >nohup.out 2>&1 &
+JAVA_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED -XX:+UseG1GC -Xlog:gc*:file=./gclogs:time,tags,level"
+
+nohup java $JAVA_OPTS -jar $appName >nohup.out 2>&1 &
 
 tail -500f nohup.out

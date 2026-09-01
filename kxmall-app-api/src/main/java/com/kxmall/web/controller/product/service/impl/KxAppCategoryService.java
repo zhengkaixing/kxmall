@@ -60,8 +60,8 @@ public class KxAppCategoryService implements IKxAppCategoryService {
         String str = hashAll.get("S" + cateId);
         if (!StringUtils.isEmpty(str)) {
             String[] split = str.split("_");
-            ids.add(new Long(split[0]));
-            ids.add(new Long(split[1]));
+            ids.add(Long.parseLong(split[0]));
+            ids.add(Long.parseLong(split[1]));
         }
         return ids;
     }

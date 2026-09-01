@@ -11,10 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>kxmall-admin-api</artifactId>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-
     <description>
         客户端接口api
     </description>

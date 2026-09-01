@@ -103,7 +103,7 @@ public class OrderUtil {
     public static String stampToDate(String s) {
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        long lt = new Long(s) * 1000;
+        long lt = Long.parseLong(s) * 1000;
         Date date = new Date(lt);
         res = simpleDateFormat.format(date);
         return res;
@@ -113,7 +113,7 @@ public class OrderUtil {
      * 将时间戳转换为date
      */
     public static Date stampToDateObj(String s) {
-        long lt = new Long(s) * 1000;
+        long lt = Long.parseLong(s) * 1000;
         Date date = new Date(lt);
         return date;
     }

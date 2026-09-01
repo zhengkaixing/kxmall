@@ -11,10 +11,6 @@
     <packaging>jar</packaging>
     <artifactId>kxmall-app-api</artifactId>
 
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
-
     <description>
         小程序接口api
     </description>

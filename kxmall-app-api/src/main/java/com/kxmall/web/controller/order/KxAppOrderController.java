@@ -90,7 +90,7 @@ public class KxAppOrderController extends BaseAppController {
                     KxStoreOrder orderDO = KxStoreOrder.builder().build();
                     // 使用建造者模式构建订单
                     OrderDirector orderDirector = new OrderDirector(orderBuilder);
-                    orderDirector.constructOrder(orderDO, orderRequest, "order.getChannel()", userId);
+                    orderDirector.constructOrder(orderDO, orderRequest, orderRequest.getChannel(), userId);
                     // 返回订单ID
                     return R.ok(orderDO.getOrderId());
                 } catch (ServiceException e) {
